@@ -7,6 +7,8 @@ import  {databaseConnection}  from './src/config/database_Connection.js';
 import dotenv from 'dotenv';
 
 import adminRouter from './src/routes/AdminRoutes.js';
+import authRouter from './src/routes/authRoutes.js'; // User Auth routes
+
 
 dotenv.config();
 
@@ -30,6 +32,9 @@ databaseConnection();
 app.get("/" , (request , response) => {response.send("Working")});
 
 app.use('/api/admin' , adminRouter);
+
+// Mount the User auth routes
+app.use('/api/auth', authRouter);
 
 app.listen(PORT , () => console.log(`Server is running on port ${PORT}`));
 
