@@ -2,7 +2,7 @@ import express from 'express'; // this is the express js package
 
 import cors from 'cors'; // this use for cross origin request
 
-import  {databaseConnection}  from './config/database_Connection.js'; 
+import  {databaseConnection}  from './src/config/database_Connection.js'; 
 
 import dotenv from 'dotenv';
 
