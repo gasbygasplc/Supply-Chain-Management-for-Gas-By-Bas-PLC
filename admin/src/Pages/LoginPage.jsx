@@ -1,11 +1,37 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { assets } from '../assets/assets'
+import { AdminContext } from '../Context/AdminContext.jsx';
+
 
 const LoginPage = () => {
 
     const [email , setEmail] = useState('');
 
+    const [state , setState] = useState('Admin');
+
     const [password , setPassword] = useState('');
+
+    const {aToken , SetAToken , backendURL} = useContext(AdminContext);
+
+
+
+    const onsubmitHandler = async(event) => 
+    {
+        event.preventDefault();
+
+        try 
+        {
+
+            
+            
+        } catch (error) 
+        {
+            
+
+
+        }
+    }
+
 
   return (
 
@@ -27,22 +53,22 @@ const LoginPage = () => {
                     <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
 
                         <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl ">
-                            Signin to an account
+                            Signin as an {state === "Admin" ? "Admin" : "Outlet"}
                         </h1>
 
-                        <form className="space-y-4 md:space-y-6" action="#">
+                        <form onSubmit={onsubmitHandler} className="space-y-4 md:space-y-6" action="#">
 
                             <div>
 
-                                <label for="email" className="block mb-2 text-sm font-medium text-gray-900 ">Your email</label>
-                                <input type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 focus:outline-primary-600 block w-full p-2.5 " placeholder="name@company.com" required=""/>
+                                <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 ">Your email</label>
+                                <input onChange={(e) => setEmail(e.target.value)} value={email} type="email" name="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 focus:outline-primary-600 block w-full p-2.5 " placeholder="name@company.com" required=""/>
 
                             </div>
 
                             <div>
 
-                                <label for="password" className="block mb-2 text-sm font-medium text-gray-900">Password</label>
-                                <input type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:outline-primary-600 focus:border-primary-600 block w-full p-2.5" required=""/>
+                                <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900">Password</label>
+                                <input onChange={(e) => setPassword(e.target.value)} value={password} type="password" name="password" id="password" placeholder="••••••••" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:outline-primary-600 focus:border-primary-600 block w-full p-2.5" required=""/>
 
                             </div>
 
@@ -56,7 +82,7 @@ const LoginPage = () => {
 
                                 <div className="ml-3 text-sm">
 
-                                    <label for="terms" className="font-light text-gray-500 ">I accept the <a className="font-medium text-primary-600 hover:underline" href="#">Terms and Conditions</a></label>
+                                    <label htmlFor="terms" className="font-light text-gray-500 ">I accept the <a className="font-medium text-primary-600 hover:underline" href="#">Terms and Conditions</a></label>
 
                                 </div>
 
@@ -65,6 +91,34 @@ const LoginPage = () => {
                             <button type="submit" className="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Signin to an account</button>
 
                         </form>
+
+                        {state === "Admin" ?
+
+                            <p className="mt-10 text-center text-sm/6 text-gray-500">
+
+                                Sign in as an Outlet?
+
+                                <a onClick={() => setState("Outlet")} href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
+
+                                    Outlet Signin
+
+                                </a>
+
+                            </p> 
+                            
+                            :
+
+                            <p className="mt-10 text-center text-sm/6 text-gray-500">
+
+                                Signin as an Admin?
+
+                                <a href="#" onClick={ () => setState("Admin")} className="font-semibold text-indigo-600 hover:text-indigo-500">
+
+                                Admin Signin  
+
+                                </a>
+                            </p>
+                        } 
 
                     </div>
 
