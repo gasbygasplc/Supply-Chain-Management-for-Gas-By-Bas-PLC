@@ -7,6 +7,7 @@ import  {databaseConnection}  from './src/config/database_Connection.js';
 import dotenv from 'dotenv';
 
 import adminRouter from './src/routes/AdminRoutes.js';
+
 import authRouter from './src/routes/authRoutes.js'; // User Auth routes
 
 
