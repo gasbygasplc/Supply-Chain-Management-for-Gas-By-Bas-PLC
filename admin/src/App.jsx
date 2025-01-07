@@ -2,6 +2,7 @@ import React, { useContext } from 'react'
 import LoginPage from './Pages/LoginPage'
 import { ToastContainer, toast } from 'react-toastify';
 import { AdminContext } from './Context/AdminContext';
+import Navbar from './Components/Navbar';
 
 const App = () => {
 
@@ -9,9 +10,11 @@ const App = () => {
   
   return aToken ? (
     
-    <div>
+    <div className='bg-gray-50'>
 
       <ToastContainer/>
+
+      <Navbar/>
 
     </div> 
 
@@ -22,7 +25,7 @@ const App = () => {
     <>
 
       <LoginPage/>
-      
+
       <ToastContainer/>
 
     </>
