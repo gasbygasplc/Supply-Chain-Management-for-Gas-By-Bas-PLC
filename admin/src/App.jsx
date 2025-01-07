@@ -4,6 +4,11 @@ import { ToastContainer, toast } from 'react-toastify';
 import { AdminContext } from './Context/AdminContext';
 import Navbar from './Components/Navbar';
 import Sidebar from './Components/Sidebar';
+import { Route, Routes } from 'react-router-dom';
+import Dashboard from './Pages/Admin/Dashboard';
+import AddOutlet from './Pages/Admin/AddOutlet';
+import AddOutletManager from './Pages/Admin/AddOutletManager';
+import OutletStockRequest from './Pages/Admin/OutletStockRequest';
 
 const App = () => {
 
@@ -20,6 +25,20 @@ const App = () => {
       <div className='flex items-start'>
 
         <Sidebar/>
+
+        <Routes>
+
+          <Route path='/' element={<></>}/>
+
+          <Route path='/admin-dashboard' element={<Dashboard/>}/>
+
+          <Route path='/add-outlet' element={<AddOutlet/>}/>
+
+          <Route path='/add-outlet-manager' element={<AddOutletManager/>}/>
+
+          <Route path='/outlet-stock-request' element={<OutletStockRequest/>}/>
+
+        </Routes>
 
       </div>
 
