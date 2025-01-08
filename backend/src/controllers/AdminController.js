@@ -1,7 +1,5 @@
 import validator from 'validator';
 
-import bcrypt from 'bcrypt';
-
 import jwt from 'jsonwebtoken';
 
 import outletModel from '../models/OutletManagerModule.js';
@@ -10,19 +8,19 @@ const addOutlet = async(req , res) => {
 
     try 
     {
-        const {outletName ,Location , phoneNumber, email , deliveryCapacity , currentStock , maxCapacity ,minimumRequestLevel } = req.body;
+        const {outletName ,location , phoneNumber, email , deliveryCapacity , currentStock , maxCapacity ,minimumRequestLevel } = req.body;
 
-        if(!outletName ,!Location , !phoneNumber, !email , !deliveryCapacity , !currentStock , !maxCapacity ,!minimumRequestLevel)
+        if(!outletName ||!location || !phoneNumber|| !email || !deliveryCapacity || !currentStock || !maxCapacity ||!minimumRequestLevel)
         {
 
             return res.json({success:false , message: "Missing Information"});
 
         }
 
-        if(!validator.isEmail(email))
+        if(!validator.isemail(email))
         {
 
-            return res.json({success : false , message: "Please Enter a valied Email"});
+            return res.json({success : false , message: "Please Enter a valied email"});
 
         }
 
@@ -30,7 +28,7 @@ const addOutlet = async(req , res) => {
 
             outletName,
 
-            Location, 
+            location, 
 
             phoneNumber,
 
@@ -46,6 +44,8 @@ const addOutlet = async(req , res) => {
         }
 
         const newAddOutlet = new outletModel(outletData);
+
+        console.log(newAddOutlet);
 
         await newAddOutlet.save();
 
@@ -71,7 +71,7 @@ const adminLogin = async(req , res) => {
         
         const {email , password} = req.body;
 
-        if(email === process.env.ADMIN_EMAIL && password === process.env.ADMIN_PASSWORD)
+        if(email === process.env.ADMIN_email && password === process.env.ADMIN_PASSWORD)
         {
 
             const atoken = jwt.sign(email + password , process.env.JWT_SECRET);

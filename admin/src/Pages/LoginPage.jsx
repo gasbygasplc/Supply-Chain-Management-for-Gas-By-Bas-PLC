@@ -12,7 +12,7 @@ const LoginPage = () => {
 
     const [password , setPassword] = useState('');
 
-    const {aToken , SetAToken , backendURL} = useContext(AdminContext);
+    const {atoken , Setatoken , backendURL} = useContext(AdminContext);
 
 
 
@@ -28,11 +28,11 @@ const LoginPage = () => {
             if(data.success)
             {
                 
-                localStorage.setItem('aToken' , data.atoken);
+                localStorage.setItem('atoken' , data.atoken);
 
-                SetAToken(data.atoken);
+                Setatoken(data.atoken);
 
-                console.log(aToken);
+                console.log(atoken);
 
 
             }

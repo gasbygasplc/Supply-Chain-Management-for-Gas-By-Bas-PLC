@@ -6,7 +6,7 @@ import {useNavigate} from 'react-router-dom'
 
 const Navbar = () => {
 
-  const { aToken ,SetAToken } = useContext(AdminContext);
+  const { atoken ,Setatoken } = useContext(AdminContext);
 
   const navigate = useNavigate();
 
@@ -14,9 +14,9 @@ const Navbar = () => {
   {
     navigate('/');
 
-    aToken && SetAToken("");
+    atoken && Setatoken("");
 
-    aToken && localStorage.removeItem('aToken')
+    atoken && localStorage.removeItem('atoken')
 
   }
 
@@ -28,7 +28,7 @@ const Navbar = () => {
 
             <img className='w-36 cursor-pointer' src={assets.admin_logo} alt="" />
 
-            <p className='border px-2.5 py-0.5 rounded-full border-gray-500'>{aToken ? "Admin" : "Outlet"}</p>
+            <p className='border px-2.5 py-0.5 rounded-full border-gray-500'>{atoken ? "Admin" : "Outlet"}</p>
 
         </div>
 

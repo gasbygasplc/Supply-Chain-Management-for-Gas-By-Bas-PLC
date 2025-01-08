@@ -4,14 +4,14 @@ export const AdminContext = createContext();
 
 const AdminContextProvider = (props) => {
 
-    const [aToken , SetAToken] = useState(localStorage.getItem('aToken') ? localStorage.getItem('aToken') : "");
+    const [atoken , Setatoken] = useState(localStorage.getItem('atoken') ? localStorage.getItem('atoken') : "");
 
     const backendURL = import.meta.env.VITE_BACKEND_URL
 
     const value = {
 
-        aToken,
-        SetAToken,
+        atoken,
+        Setatoken,
         backendURL
 
     }

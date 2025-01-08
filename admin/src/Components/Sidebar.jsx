@@ -5,7 +5,7 @@ import { assets } from '../assets/assets';
 
 const Sidebar = () => {
 
-    const {aToken} = useContext(AdminContext);
+    const {atoken} = useContext(AdminContext);
 
   return (
 
@@ -13,7 +13,7 @@ const Sidebar = () => {
         
         {
 
-            aToken &&
+            atoken &&
 
             <ul className='text-[#515151] mt-5'>
 

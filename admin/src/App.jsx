@@ -13,9 +13,9 @@ import GasStock from './Pages/Admin/GasStock';
 
 const App = () => {
 
-  const {aToken} = useContext(AdminContext);
+  const {atoken} = useContext(AdminContext);
   
-  return aToken ? (
+  return atoken ? (
     
     <div className='bg-gray-50'>
 

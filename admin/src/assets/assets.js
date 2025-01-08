@@ -7,6 +7,7 @@ import add_outlet from './add_outlet.svg'
 import add_outlet_manager from './outletManager_add.svg'
 import add_stock from './add_stock_gas.svg'
 import stock_request from './Stock_request.svg'
+import upload_area from './upload_area.svg'
 
 export const assets = {
     logo,
@@ -17,5 +18,6 @@ export const assets = {
     add_outlet,
     add_outlet_manager,
     add_stock,
-    stock_request
+    stock_request,
+    upload_area
 }
