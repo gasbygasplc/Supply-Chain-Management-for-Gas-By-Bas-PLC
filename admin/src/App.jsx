@@ -9,6 +9,7 @@ import Dashboard from './Pages/Admin/Dashboard';
 import AddOutlet from './Pages/Admin/AddOutlet';
 import AddOutletManager from './Pages/Admin/AddOutletManager';
 import OutletStockRequest from './Pages/Admin/OutletStockRequest';
+import AddMainStock from './Pages/Admin/AddMainStock';
 
 const App = () => {
 
@@ -37,6 +38,8 @@ const App = () => {
           <Route path='/add-outlet-manager' element={<AddOutletManager/>}/>
 
           <Route path='/outlet-stock-request' element={<OutletStockRequest/>}/>
+
+          <Route path='/manage-stock' element = {<AddMainStock/>}/>
 
         </Routes>
 

@@ -28,11 +28,11 @@ const Navbar = () => {
 
             <img className='w-36 cursor-pointer' src={assets.admin_logo} alt="" />
 
-            <p className='border px-2.5 py-0.5 rounded-full border-gray-500'>{aToken ? "Admin" : "Outlet"}</p>
+            <p className='border hidden sm:block px-2.5 py-0.5 rounded-full border-gray-500'>{aToken ? "Admin" : "Outlet"}</p>
 
         </div>
 
-        <button onClick={logout} className='bg-primary-700 text-white text-sm px-10 py-3 rounded-lg'>Signout</button>
+        <button onClick={logout} className='bg-[#ED1C24] text-white font-medium text-sm px-10 py-3 rounded-lg'>Signout</button>
 
     </div>
 
