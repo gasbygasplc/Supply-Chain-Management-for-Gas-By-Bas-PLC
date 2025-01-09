@@ -29,7 +29,7 @@ const AddOutletManager = () => {
         email,
         password,
         phoneNumber,
-        userRole,
+        userRole
       }
 
       const { data } = await axios.post(
