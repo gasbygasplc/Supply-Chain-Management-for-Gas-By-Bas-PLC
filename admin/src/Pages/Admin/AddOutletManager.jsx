@@ -15,7 +15,7 @@ const AddOutletManager = () => {
 
   const [phoneNumber , setPhoneNumber] = useState("");
 
-  const [userRole , setUserRole] = useState("");
+  const [userRole , setUserRole] = useState("Admin");
 
   const {aToken , backendURL} = useContext(AdminContext)
 
@@ -45,7 +45,7 @@ const AddOutletManager = () => {
         setEmail("")
         setPassword("")
         setPhoneNumber("")
-        setUserRole("")
+        setUserRole("Admin")
       } else {
         toast.error(data.message)
       }
