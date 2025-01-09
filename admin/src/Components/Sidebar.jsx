@@ -10,7 +10,7 @@ const Sidebar = () => {
 
   return (
 
-    <div className='min-h-screen md:min-h-[80%] bg-white border-r '>
+    <div className='min-h-screen max-w-72  bg-white border-r '>
     
       {
 
