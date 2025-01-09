@@ -30,7 +30,7 @@ const AddOutletManager = () => {
         <div className='sm:col-span-3'>
 
           <label className='mb-3 block text-base font-medium text-[#07074D]' htmlFor="Email">Email</label>
-
+b 
           <input className='w-full sm:w-[100%] rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#FED500]' type="email" id='Email'/>
 
         </div>
