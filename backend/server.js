@@ -1,41 +1,35 @@
-import express from 'express'; // this is the express js package
+import express from 'express';
 
-import cors from 'cors'; // this use for cross origin request
-
-import  {databaseConnection}  from './src/config/database_Connection.js'; 
+import cors from 'cors';
 
 import dotenv from 'dotenv';
 
-import adminRouter from './src/routes/AdminRoutes.js';
-
-import authRouter from './src/routes/authRoutes.js'; // User Auth routes
-
-
 dotenv.config();
 
-//===================================================== App Config =========================================================
+import { databaseConnection } from './src/config/database_Connection.js';
+
+import adminRouter from './src/routes/AdminRoutes.js';
+
+//================================================ App Config ================================================
+
 const app = express();
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
-//===================================================== Middlewares =========================================================
+databaseConnection()
+
+//================================================ Middleware ================================================
 
 app.use(express.json());
 
 app.use(cors());
 
-//===================================================== DB Config =========================================================
+//================================================ API Endpoints ================================================
 
-databaseConnection();
+app.get('/', (req , res) => res.status(200).send('Server is running'));
 
-//===================================================== API Endpoints =======================================================
+app.use('/api/admin' , adminRouter) //localhost:4000/api/admin/add-doctor
 
-app.get("/" , (request , response) => {response.send("Working")});
+//================================================ Listener ================================================
 
-app.use('/api/admin' , adminRouter);
-
-// Mount the User auth routes
-app.use('/api/auth', authRouter);
-
-app.listen(PORT , () => console.log(`Server is running on port ${PORT}`));
-
+app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
