@@ -5,54 +5,52 @@ import { AdminContext } from '../../Context/AdminContext';
 
 const AddOutletManager = () => {
 
-  const [name  , setName] = useState("");
+  const [name  , setName] = useState('');
 
-  const [outletName , setOutletName] = useState("");
+  const [outletName , setOutletName] = useState('');
 
-  const [email , setEmail] = useState("");
+  const [email , setEmail] = useState('');
 
-  const [password , setPassword] = useState("");
+  const [password , setPassword] = useState('');
 
-  const [phoneNumber , setPhoneNumber] = useState("");
+  const [phoneNumber , setPhoneNumber] = useState('');
 
-  const [userRole , setUserRole] = useState("");
+  const [userRole , setUserRole] = useState('');
 
   const {aToken , backendURL} = useContext(AdminContext)
 
-  const onsubmitHandler = async (event) => {
-    event.preventDefault()
+  const onsubmitHandler = async(event) => {
 
-    try {
-      const payload = {
-        name,
-        outletName,
-        email,
-        password,
-        phoneNumber,
-        userRole,
-      }
+    event.preventDefault();
 
-      const { data } = await axios.post(
-        `${backendURL}/api/admin/add-outlet-manager`,
-        payload,
-        { headers: { aToken } }
-      )
+    try 
+    {
 
-      if (data.success) {
+      const formData = new FormData();
+
+      formData.append('name' , name );
+      formData.append('outletName' ,  outletName );
+      formData.append('email' ,  email  );
+      formData.append('password' ,password );
+      formData.append('phoneNumber' , phoneNumber );
+      formData.append('userRole' , userRole  );
+
+      const {data} = await axios.post(backendURL + '/api/admin/add-outlet-manager' , formData , {headers:{aToken}});
+
+      if(data.success)
+      {
         toast.success(data.message)
-        setName("")
-        setOutletName("")
-        setEmail("")
-        setPassword("")
-        setPhoneNumber("")
-        setUserRole("")
-      } else {
+      }
+      else
+      {
         toast.error(data.message)
       }
-    } catch (error) {
-      toast.error("An error occurred while adding the outlet manager.")
-      console.error(error)
+      
+    } catch (error) 
+    {
+      
     }
+    
   }
 
   return (
