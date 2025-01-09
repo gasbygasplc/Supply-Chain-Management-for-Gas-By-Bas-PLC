@@ -10,7 +10,7 @@ const Sidebar = () => {
 
   return (
 
-    <div className='min-h-screen md:min-h-[80%] bg-white border-r '>
+    <div className=' min-h-screen bg-white border-r '>
     
       {
 
@@ -18,7 +18,7 @@ const Sidebar = () => {
 
         <ul className='text-[#515151] mt-5'>
   
-          <NavLink to={'/admin-dashboard'} className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#FFEEEF] border-r-4 border-[#ED1C24]' : ''}` }>
+          <NavLink to={'/admin-dashboard'} className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#f2f3ff] border-r-4 border-primary-600' : ''}` }>
 
             <img src={assets.dashboard} alt="" />
 
@@ -26,7 +26,7 @@ const Sidebar = () => {
 
           </NavLink>
 
-          <NavLink to={'/add-outlet'} className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#FFEEEF] border-r-4 border-[#ED1C24]' : ''}`}>
+          <NavLink to={'/add-outlet'} className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#f2f3ff] border-r-4 border-primary-600' : ''}`}>
 
             <img src={assets.outlet} alt="" />
 
@@ -34,7 +34,7 @@ const Sidebar = () => {
 
           </NavLink>
 
-          <NavLink to={'/add-outlet-manager'} className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#FFEEEF] border-r-4 border-[#ED1C24]' : ''}`}>
+          <NavLink to={'/add-outlet-manager'} className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#f2f3ff] border-r-4 border-primary-600' : ''}`}>
 
             <img src={assets.person} alt="" />
 
@@ -42,7 +42,7 @@ const Sidebar = () => {
 
           </NavLink>
 
-          <NavLink to={'/manage-stock'} className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#FFEEEF] border-r-4 border-[#ED1C24]' : ''}`}>
+          <NavLink to={'/manage-stock'} className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#f2f3ff] border-r-4 border-primary-600' : ''}`}>
 
             <img src={assets.stock} alt="" />
 
@@ -50,7 +50,7 @@ const Sidebar = () => {
 
           </NavLink>
 
-          <NavLink to={'/outlet-stock-request'} className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#FFEEEF] border-r-4 border-[#ED1C24]' : ''}`}>
+          <NavLink to={'/outlet-stock-request'} className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#f2f3ff] border-r-4 border-primary-600' : ''}`}>
 
             <img src={assets.request} alt="" />
 

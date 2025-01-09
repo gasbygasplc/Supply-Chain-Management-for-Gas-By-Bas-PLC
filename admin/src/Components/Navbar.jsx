@@ -32,7 +32,7 @@ const Navbar = () => {
 
         </div>
 
-        <button onClick={logout} className='bg-[#ED1C24] text-white font-medium text-sm px-10 py-3 rounded-lg'>Signout</button>
+        <button onClick={logout} className='bg-primary-600 text-white font-medium text-sm px-10 py-3 rounded-lg'>Signout</button>
 
     </div>
 
