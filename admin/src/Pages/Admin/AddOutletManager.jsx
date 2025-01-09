@@ -58,13 +58,13 @@ const AddOutletManager = () => {
 
         <div className='sm:col-span-3'>
 
-          <button className='bg-[#FED500] w-full text-black py-3 rounded'>Add Outlet Manager</button>
+          <button className='border border-gray-400 w-full text-black py-3 rounded'>Clear</button>
 
         </div>
 
         <div className='sm:col-span-3'>
 
-          <button className='border border-gray-400 w-full text-black py-3 rounded'>Clear</button>
+          <button className='bg-[#FED500] w-full text-black py-3 rounded'>Add Outlet Manager</button>
 
         </div>
 
