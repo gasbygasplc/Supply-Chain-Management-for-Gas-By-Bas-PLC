@@ -12,7 +12,7 @@ const AddOutlet = () => {
 
           <div className='sm:col-span-3'>
 
-            <label className='block font-normal mb-3' htmlFor="outletname">Outlet Name</label>
+            <label className='block  text-gray-700 font-normal mb-3' htmlFor="outletname">Outlet Name</label>
 
             <input className='border font-normal border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' type="text" placeholder='OutletName'/>
 
@@ -20,7 +20,7 @@ const AddOutlet = () => {
 
           <div className='sm:col-span-3'>
 
-            <label className='block font-normal mb-3' htmlFor="Location">Location</label>
+            <label className='block text-gray-700  font-normal mb-3' htmlFor="Location">Location</label>
 
             <input className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' type="text" placeholder='Location'/>
 
@@ -28,7 +28,7 @@ const AddOutlet = () => {
 
           <div className='sm:col-span-3'>
 
-            <label className='block font-normal mb-3' htmlFor="Location">Location</label>
+            <label className='block  text-gray-700 font-normal mb-3' htmlFor="Location">Location</label>
 
             <input className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' type="text" placeholder='Location'/>
 
@@ -36,7 +36,7 @@ const AddOutlet = () => {
 
           <div className='sm:col-span-3'>
 
-            <label className='block font-normal mb-3' htmlFor="PhoneNumber">PhoneNumber</label>
+            <label className='block text-gray-700  font-normal mb-3' htmlFor="PhoneNumber">PhoneNumber</label>
 
             <input className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' type="text" placeholder='PhoneNumber'/>
 
@@ -44,7 +44,7 @@ const AddOutlet = () => {
 
           <div className='sm:col-span-3'>
 
-            <label className='block font-normal mb-3' htmlFor="Delivery Capacity">Delivery Capacity</label>
+            <label className='block text-gray-700  font-normal mb-3' htmlFor="Delivery Capacity">Delivery Capacity</label>
 
             <input className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' type="number" placeholder='Delivery Capacity'/>
 
@@ -52,7 +52,7 @@ const AddOutlet = () => {
 
           <div className='sm:col-span-3'>
 
-            <label className='block font-normal mb-3' htmlFor="Maximum Capacity">Maximum Capacity</label>
+            <label className='block text-gray-700  font-normal mb-3' htmlFor="Maximum Capacity">Maximum Capacity</label>
 
             <input className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' id='Maximum Capacity' type="number" placeholder='Maximum Capacity'/>
 
@@ -60,7 +60,7 @@ const AddOutlet = () => {
 
           <div className='sm:col-span-6'>
 
-            <label className='block font-normal mb-3' htmlFor="Minimum Request Level">Minimum Request Level</label>
+            <label className='block text-gray-700  font-normal mb-3' htmlFor="Minimum Request Level">Minimum Request Level</label>
 
             <input className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' id='Minimum Request Level' type="number" placeholder='Minimum Request Level'/>
 
@@ -88,7 +88,14 @@ const AddOutlet = () => {
 
       <div className='sm:col-span-3 max-h-screen border px-3 py-4 rounded-sm'>
 
-        hello
+        <div className='grid grid-cols-1 gap-2 sm:grid-cols-6 text-start'>
+
+          <p className='text-base md:col-span-3 font-medium text-gray-500'>Outlet</p>
+          <p className='text-base md:col-span-3 font-medium text-gray-500'>Stock</p>
+          
+          <hr className='w-full col-span-6 mt-2'/>
+
+        </div>
 
       </div>
 
