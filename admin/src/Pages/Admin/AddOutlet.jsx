@@ -25,6 +25,14 @@ const AddOutlet = () => {
             <input className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' type="text" placeholder='Location'/>
 
           </div>
+
+          <div className='sm:col-span-3'>
+
+            <label className='block font-normal mb-3' htmlFor="Location">Location</label>
+
+            <input className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' type="text" placeholder='Location'/>
+
+          </div>
           
         </div>
 
