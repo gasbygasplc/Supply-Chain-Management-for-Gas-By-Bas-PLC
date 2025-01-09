@@ -1,7 +1,11 @@
 import React from 'react'
 
 const AddOutlet = () => {
+
+
+
   return (
+
     <div className=' w-full gap-4 bg-white my-3 border mx-2 py-5 px-5 rounded-md grid grid-cols-1 sm:grid-cols-7'>
 
       {/* ======================================= LEFT ==================================================== */}
@@ -90,8 +94,8 @@ const AddOutlet = () => {
 
         <div className='grid grid-cols-1 gap-2 sm:grid-cols-6 text-start'>
 
-          <p className='text-base md:col-span-3 font-medium text-gray-500'>Outlet</p>
-          <p className='text-base md:col-span-3 font-medium text-gray-500'>Stock</p>
+          <p className='text-base md:col-span-3 md:text-center font-medium text-gray-500'>Outlet</p>
+          <p className='text-base md:col-span-3 md:text-center font-medium text-gray-500'>Stock</p>
           
           <hr className='w-full col-span-6 mt-2'/>
 
