@@ -8,10 +8,12 @@ const outletManagerSchema = new mongoose.Schema({
 
     email : {type : String , required : true},
 
+    password : { type : String , required : true},
+
     phoneNumber : {type : String , required : true},
 
-    userRole : {type : String , required : true , enum:['Admin' , 'Outlet Manager'] , default : 'Outlet Manager'}
-    
+    userRole : {type : String , required : true }
+
 })
 
 const outletManagermodel = mongoose.models.outletManager || mongoose.model('outletManager' , outletManagerSchema)

@@ -4,6 +4,9 @@ import jwt from 'jsonwebtoken';
 
 import outletModel from '../models/OutletManagerModule.js';
 
+import bcrypt from 'bcrypt'
+import outletManagermodel from '../models/OutletManagerOriginalModules.js';
+
 const addOutlet = async(req , res) => {
 
     try 
@@ -60,6 +63,59 @@ const addOutlet = async(req , res) => {
 
 }
 
+//==================================================== Outlet Manager Create =================================================
+
+const addOutletManager = async(req , res) => {
+
+    try 
+    {
+
+        const {name , outletName , email , password , phoneNumber ,  userRole } = req.body;
+
+        if(!name , !outletName , !email , !password , !phoneNumber , !userRole) 
+        {
+            return res.json({success:false , message : 'Missing information'})
+        }
+
+        if(!validator.isEmail(email))
+        {
+            return res.json({success:false , message : 'Missing information'})
+        }
+
+        if(password.length < 8)
+        {
+            return res.json({success : false , message: "Password must be 8 charactor"})
+        }
+
+        const salt = await bcrypt.genSalt(10)
+
+        const hashPassword = await bcrypt.hash(password , salt)
+
+        const outletManagerData = {
+
+            name ,
+            outletName,
+            email,
+            password :hashPassword,
+            phoneNumber,
+            userRole
+        }
+
+        const newOutletManager = new outletManagermodel(outletManagerData);
+
+        await newOutletManager.save();
+
+        res.json({success: true , message: "Outlet Manager added"})
+        
+    } catch (error) 
+    {
+        console.log(error);
+
+        res.json({success: false , message: error.message});    
+    }
+
+}
+
 //==================================================== API for Admin login =================================================
 
 const adminLogin = async(req , res) => {
@@ -94,4 +150,4 @@ const adminLogin = async(req , res) => {
     }
 }
 
-export {addOutlet , adminLogin};
+export {addOutlet , adminLogin , addOutletManager};
