@@ -112,7 +112,6 @@ const AddOutletManager = () => {
 
             <select onChange={(e) => setUserRole(e.target.value)} value={userRole} className='w-full sm:w-[100%] rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#FED500]' defaultValue="Outlet Manager" name="" id="">
 
-              <option value="Admin">Admin</option>
               <option value="Outlet Manager">Outlet Manager</option>
 
             </select>
