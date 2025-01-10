@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import outletModel from '../models/OutletManagerModule.js';
 
 import bcrypt from 'bcrypt'
+
 import outletManagermodel from '../models/OutletManagerOriginalModules.js';
 
 const addOutlet = async(req , res) => {

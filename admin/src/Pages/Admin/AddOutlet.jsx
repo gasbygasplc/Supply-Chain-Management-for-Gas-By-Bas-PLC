@@ -178,7 +178,7 @@ const AddOutlet = () => {
 
       <div className='sm:col-span-3 max-h-screen border px-3 py-4 rounded-sm'>
 
-        <div className='grid grid-cols-1 gap-2 sm:grid-cols-6 text-start'>
+        <div className='grid grid-cols-1 gap-2 sm:grid-cols-6 items-center justify-items-center'>
 
           <p className='text-base md:col-span-3 font-medium text-gray-500'>Outlet</p>
           <p className='text-base md:col-span-3 font-medium text-gray-500'>Stock</p>
