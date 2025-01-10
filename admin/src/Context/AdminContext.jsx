@@ -45,7 +45,7 @@ const AdminContextProvider = (props) => {
         SetAToken,
         backendURL,
         outletStock,
-        setOutletStock
+        getOutletStock
 
     }
 
