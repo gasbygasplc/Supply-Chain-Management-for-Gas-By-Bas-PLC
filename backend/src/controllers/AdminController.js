@@ -5,6 +5,7 @@ import jwt from 'jsonwebtoken';
 import outletModel from '../models/OutletManagerModule.js';
 
 import bcrypt from 'bcrypt'
+
 import outletManagermodel from '../models/OutletManagerOriginalModules.js';
 
 const addOutlet = async(req , res) => {
@@ -150,4 +151,26 @@ const adminLogin = async(req , res) => {
     }
 }
 
-export {addOutlet , adminLogin , addOutletManager};
+//============================================== get all the Outlet and current Stock =========================================
+
+const getOutletDetails = async(req , res) => {
+
+    try 
+    {
+
+        const outeltDetails = await outletModel.find({} , {outletName : 1, currentStock:1 , _id : 0});
+
+        res.json({success:true , outeltDetails})
+        
+    } 
+    catch (error) 
+    {
+
+        console.error(error);
+        res.json({ success: false, message: error.message });
+        
+    }
+}
+
+
+export {addOutlet , adminLogin , addOutletManager , getOutletDetails};

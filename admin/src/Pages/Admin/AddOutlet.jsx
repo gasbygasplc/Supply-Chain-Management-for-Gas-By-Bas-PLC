@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { AdminContext } from '../../Context/AdminContext';
 import { toast } from 'react-toastify';
 
@@ -21,7 +21,7 @@ const AddOutlet = () => {
 
   const [minimumRequestLevel , setMinimumRequestLevel] = useState(0);
 
-  const {aToken , backendURL} = useContext(AdminContext)
+  const {aToken , backendURL , outletStock , getOutletStock} = useContext(AdminContext)
 
   const clear = () => {
 
@@ -77,6 +77,8 @@ const AddOutlet = () => {
       if(data.success)
       {
         toast.success(data.message)
+        clear()
+        getOutletStock();
       }
       else
       {
@@ -88,6 +90,15 @@ const AddOutlet = () => {
       
     }
   }
+
+  useEffect(() => {
+
+    if(aToken)
+    {
+      getOutletStock()
+    }
+
+  }, [aToken])
 
   return (
     
@@ -178,7 +189,7 @@ const AddOutlet = () => {
 
       <div className='sm:col-span-3 max-h-screen border px-3 py-4 rounded-sm'>
 
-        <div className='grid grid-cols-1 gap-2 sm:grid-cols-6 text-start'>
+        <div className='grid grid-cols-1 gap-2 sm:grid-cols-6 items-center justify-items-center'>
 
           <p className='text-base md:col-span-3 font-medium text-gray-500'>Outlet</p>
           <p className='text-base md:col-span-3 font-medium text-gray-500'>Stock</p>
@@ -186,6 +197,23 @@ const AddOutlet = () => {
           <hr className='w-full col-span-6 mt-2'/>
 
         </div>
+
+        {
+
+          outletStock.map((outlet , index) => (
+
+            <div key={index} className='grid py-2 grid-cols-1 gap-2 sm:grid-cols-6 items-center justify-items-center'>
+
+              <p className='text-sm md:col-span-3 font-normal text-gray-500'>{outlet.outletName}</p>
+              <p className='text-sm md:col-span-3 font-normal text-gray-500'>{outlet.currentStock}</p>
+            
+              <hr className='w-full col-span-6'/>
+
+            </div>
+
+          ))
+
+        }
 
       </div>
 
