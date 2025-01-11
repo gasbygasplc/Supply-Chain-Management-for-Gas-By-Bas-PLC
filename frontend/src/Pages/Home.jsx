@@ -1,5 +1,6 @@
 import React from 'react'
 import Header from '../Components/Header'
+import PriceingCart from '../Components/PriceingCart'
 
 const Home = () => {
     
@@ -8,6 +9,8 @@ const Home = () => {
     <div>
       
       <Header/>
+
+      <PriceingCart/>
 
     </div>
 
