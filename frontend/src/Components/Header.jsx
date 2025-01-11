@@ -4,9 +4,9 @@ const Header = () => {
 
   return (
 
-    <div className="header">
+    <section className="">
         
-      <div className="header-contents">
+      <div className="">
 
         <h2>Your Trusted Partner for Safe Gas Solutions!</h2>
 
@@ -20,7 +20,7 @@ const Header = () => {
 
       </div>
 
-    </div>
+    </section>
 
   )
 
