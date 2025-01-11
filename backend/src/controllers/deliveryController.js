@@ -1,68 +1,101 @@
+import Delivery from '../models/Delivery.js';
 import GasRequest from '../models/GasRequest.js';
-import User from '../models/User.js';
-import { generateToken } from '../utils/tokenService.js';
-import { sendSms } from '../utils/smsService.js';
-import { generateQrCode } from '../utils/qrCodeService.js';
 import { sendEmail } from '../utils/emailService.js';
+import { sendSms } from '../utils/smsService.js';
 
-export const submitGasRequest = async (req, res) => {
-    const { userId, gasType, quantity } = req.body;
+export const scheduleDelivery = async (req, res) => {
+  const { requestId, driverName, vehicleNumber, scheduledDate } = req.body;
 
-    if (!userId || !gasType || !quantity) {
-        return res.status(400).json({ success: false, message: 'Missing required fields' });
+  if (!requestId || !driverName || !vehicleNumber || !scheduledDate) {
+    return res.status(400).json({ success: false, message: 'Missing required fields' });
+  }
+
+  try {
+    const gasRequest = await GasRequest.findById(requestId);
+    if (!gasRequest) {
+      return res.status(404).json({ success: false, message: 'Gas request not found' });
     }
 
-    try {
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json({ success: false, message: 'User not found' });
-        }
+    const delivery = new Delivery({
+      deliveryId: `DEL-${Date.now()}`,
+      requestId,
+      driverName,
+      vehicleNumber,
+      scheduledDate,
+    });
 
-        const { email, phone } = user;
-        const normalizedPhone = phone.startsWith('+94') ? phone : `+94${phone.replace(/^0/, '')}`;
+    await delivery.save();
 
-        const tokenNumber = generateToken();
-        const qrCodeUrl = await generateQrCode({ tokenNumber, gasType, quantity, userId });
+    // Notify the user via email and SMS
+    const emailSubject = 'Delivery Scheduled';
+    const emailText = `Your delivery is scheduled on ${scheduledDate}.`;
+    const emailHtml = `
+      <h1>Delivery Scheduled</h1>
+      <p>Your delivery is scheduled on <strong>${scheduledDate}</strong>.</p>
+      <p>Driver: ${driverName}, Vehicle: ${vehicleNumber}</p>
+    `;
+    const emailResponse = await sendEmail(gasRequest.userId.email, emailSubject, emailText, emailHtml);
 
-        const gasRequest = new GasRequest({
-            userId,
-            requestId: `REQ-${Date.now()}`,
-            tokenNumber,
-            qrCodeUrl,
-            gasType,
-            quantity,
-        });
-        await gasRequest.save();
+    const smsMessage = `Your delivery is scheduled on ${scheduledDate}. Driver: ${driverName}, Vehicle: ${vehicleNumber}`;
+    const smsResponse = await sendSms(gasRequest.userId.phone, smsMessage, '94');
 
-        const smsMessage = `Gas Request Confirmation:\nToken: ${tokenNumber}\nQR Code: ${qrCodeUrl}`;
-        const smsResponse = await sendSms(normalizedPhone, smsMessage, '94');
-        if (!smsResponse.success) {
-            console.error(`Failed to send SMS to ${normalizedPhone}: ${smsResponse.message}`);
-        }
-
-        const emailSubject = 'Gas Request Confirmation';
-        const emailText = `Your gas request has been submitted successfully.\nToken: ${tokenNumber}\nPlease show this token or scan the QR code to pick up your gas.`;
-        const emailHtml = `
-            <h1>Gas Request Confirmation</h1>
-            <p>Your gas request has been submitted successfully.</p>
-            <p><strong>Token:</strong> ${tokenNumber}</p>
-            <p>QR Code:</p>
-            <img src="${qrCodeUrl}" alt="QR Code" />
-            <p>Thank you for using our service!</p>
-        `;
-        const emailResponse = await sendEmail(email, emailSubject, emailText, emailHtml);
-        if (!emailResponse.success) {
-            console.error(`Failed to send email to ${email}: ${emailResponse.message}`);
-        }
-
-        return res.status(201).json({
-            success: true,
-            message: 'Gas request submitted successfully',
-            tokenNumber,
-            qrCodeUrl,
-        });
-    } catch (error) {
-        console.error('Error submitting gas request:', error);
-        return res.status(500).json({ success: false, message: 'Error submitting gas request' });
-    }
+    res.status(201).json({
+      success: true,
+      message: 'Delivery scheduled successfully',
+      delivery,
+      emailResponse,
+      smsResponse,
+    });
+  } catch (error) {
+    console.error('Error scheduling delivery:', error);
+    res.status(500).json({ success: false, message: 'Error scheduling delivery' });
+  }
 };
+
+export const updateDeliveryStatus = async (req, res) => {
+  const { id } = req.params;
+  const { status } = req.body;
+
+  if (!status) {
+    return res.status(400).json({ success: false, message: 'Missing status' });
+  }
+
+  try {
+    const delivery = await Delivery.findById(id);
+    if (!delivery) {
+      return res.status(404).json({ success: false, message: 'Delivery not found' });
+    }
+
+    delivery.status = status;
+    await delivery.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Delivery status updated successfully',
+      delivery,
+    });
+  } catch (error) {
+    console.error('Error updating delivery status:', error);
+    res.status(500).json({ success: false, message: 'Error updating delivery status' });
+  }
+};
+
+export const getDeliveryDetails = async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const delivery = await Delivery.findById(id).populate('requestId');
+    if (!delivery) {
+      return res.status(404).json({ success: false, message: 'Delivery not found' });
+    }
+
+    res.status(200).json({
+      success: true,
+      delivery,
+    });
+  } catch (error) {
+    console.error('Error fetching delivery details:', error);
+    res.status(500).json({ success: false, message: 'Error fetching delivery details' });
+  }
+};
+
