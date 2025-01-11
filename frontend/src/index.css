@@ -3,11 +3,10 @@
 @tailwind components;
 @tailwind utilities;
 
-body
+*
 {
-  min-height: 100vh;
+  font-family: Outfit;
 }
-
 a
 {
   text-decoration: none;
