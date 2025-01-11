@@ -3,6 +3,7 @@ import GasRequest from '../models/GasRequest.js';
 import { sendEmail } from '../utils/emailService.js';
 import { sendSms } from '../utils/smsService.js';
 
+// Schedule a Delivery
 export const scheduleDelivery = async (req, res) => {
   const { requestId, driverName, vehicleNumber, scheduledDate } = req.body;
 
@@ -11,31 +12,31 @@ export const scheduleDelivery = async (req, res) => {
   }
 
   try {
-    const gasRequest = await GasRequest.findById(requestId);
+    const gasRequest = await GasRequest.findById(requestId).populate('userId');
     if (!gasRequest) {
       return res.status(404).json({ success: false, message: 'Gas request not found' });
     }
 
     const delivery = new Delivery({
-      deliveryId: `DEL-${Date.now()}`,
-      requestId,
-      driverName,
-      vehicleNumber,
-      scheduledDate,
+      orderId: `DEL-${Date.now()}`,
+      customerName: gasRequest.userId.name,
+      address: gasRequest.address,
+      deliveryDate: scheduledDate,
     });
 
     await delivery.save();
 
-    // Notify the user via email and SMS
+    // Send Email Notification
     const emailSubject = 'Delivery Scheduled';
     const emailText = `Your delivery is scheduled on ${scheduledDate}.`;
     const emailHtml = `
       <h1>Delivery Scheduled</h1>
-      <p>Your delivery is scheduled on <strong>${scheduledDate}</strong>.</p>
+      <p>Your delivery is scheduled on <strong>${new Date(scheduledDate).toLocaleDateString()}</strong>.</p>
       <p>Driver: ${driverName}, Vehicle: ${vehicleNumber}</p>
     `;
     const emailResponse = await sendEmail(gasRequest.userId.email, emailSubject, emailText, emailHtml);
 
+    // Send SMS Notification
     const smsMessage = `Your delivery is scheduled on ${scheduledDate}. Driver: ${driverName}, Vehicle: ${vehicleNumber}`;
     const smsResponse = await sendSms(gasRequest.userId.phone, smsMessage, '94');
 
@@ -52,8 +53,9 @@ export const scheduleDelivery = async (req, res) => {
   }
 };
 
+// Update Delivery Status
 export const updateDeliveryStatus = async (req, res) => {
-  const { id } = req.params;
+  const { deliveryId } = req.params;
   const { status } = req.body;
 
   if (!status) {
@@ -61,7 +63,7 @@ export const updateDeliveryStatus = async (req, res) => {
   }
 
   try {
-    const delivery = await Delivery.findById(id);
+    const delivery = await Delivery.findById(deliveryId);
     if (!delivery) {
       return res.status(404).json({ success: false, message: 'Delivery not found' });
     }
@@ -80,11 +82,12 @@ export const updateDeliveryStatus = async (req, res) => {
   }
 };
 
+// Get Delivery Details
 export const getDeliveryDetails = async (req, res) => {
-  const { id } = req.params;
+  const { deliveryId } = req.params;
 
   try {
-    const delivery = await Delivery.findById(id).populate('requestId');
+    const delivery = await Delivery.findById(deliveryId).populate('requestId');
     if (!delivery) {
       return res.status(404).json({ success: false, message: 'Delivery not found' });
     }
