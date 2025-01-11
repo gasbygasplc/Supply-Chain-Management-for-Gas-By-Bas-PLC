@@ -44,5 +44,9 @@ section
   @apply block
 }
 
+::-webkit-scrollbar{
+  @apply hidden
+}
+
 
 
