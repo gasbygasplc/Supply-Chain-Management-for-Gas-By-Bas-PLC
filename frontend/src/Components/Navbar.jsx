@@ -20,7 +20,7 @@ const Navbar = () => {
 
             </NavLink>
 
-            <NavLink to='/Pricing'>
+            <NavLink to='/Pricing-Cart'>
 
                 <li className='py-1'>Pricing</li>
 
