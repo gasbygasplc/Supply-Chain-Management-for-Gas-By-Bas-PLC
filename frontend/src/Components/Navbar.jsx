@@ -8,7 +8,7 @@ const Navbar = () => {
 
     <div className='py-5 px-0 flex justify-between items-center bg-white'>
 
-        <Link to={'/'}><img className='w-[150px] cursor-pointer' src={asstets.logo} alt="" /></Link>
+        <Link to={'/'}><img className='w-28 md:w-[150px] cursor-pointer' src={asstets.logo} alt="" /></Link>
 
         <ul className=' hidden md:flex list-none gap-6 text-[#49577e] text-lg'>
 
@@ -54,11 +54,11 @@ const Navbar = () => {
         
         </ul>
 
-        <div className='flex items-center gap-8'>
+        <div className='flex items-center gap-4 sm:gap-8'>
 
             <div className='relative'>
 
-                <img className='cursor-pointer w-8' src={asstets.bucket_icon} alt="" />
+                <img className='cursor-pointer w-6 sm:w-8' src={asstets.bucket_icon} alt="" />
 
                 <div className='absolute min-w-[8px] min-h-[8px] bg-primary top-[-3px] right-[-3px] rounded-full'></div>
 
