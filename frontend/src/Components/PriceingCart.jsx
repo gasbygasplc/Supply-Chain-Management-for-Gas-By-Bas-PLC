@@ -2,7 +2,7 @@ import React from 'react'
 
 const PriceingCart = () => {
   return (
-    <div>PriceingCart</div>
+    <div id='Pricing-Cart'>PriceingCart</div>
   )
 }
 

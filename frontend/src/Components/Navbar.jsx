@@ -14,14 +14,17 @@ const Navbar = () => {
 
             <NavLink to='/'>
 
+
                 <li className='py-1'>Home</li>
 
                 <hr className='border-none outline-none h-0.5 bg-primary w-full m-auto hidden' />
+
 
             </NavLink>
 
             <NavLink to='/Pricing-Cart'>
 
+                
                 <li className='py-1'>Pricing</li>
 
                 <hr className='border-none outline-none h-0.5 bg-primary w-full m-auto hidden' />
