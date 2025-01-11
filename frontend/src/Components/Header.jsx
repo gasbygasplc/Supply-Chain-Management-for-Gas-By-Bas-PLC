@@ -14,6 +14,8 @@ const Header = () => {
               Welcome to GasByGas, your one-stop destination for all gas cylinder needs. Order, refill, and receive cylinders at your doorstep, ensuring safety and quality every step of the way!
             </p>
 
+            <button>View Menu</button>
+
         </div>
 
     </div>
