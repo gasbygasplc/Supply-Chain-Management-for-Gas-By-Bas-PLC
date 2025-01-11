@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { asstets } from '../assets/Assets'
 
 const Navbar = () => {
@@ -8,31 +8,63 @@ const Navbar = () => {
 
     <div className='py-5 px-0 flex justify-between items-center bg-white'>
 
-        <Link to={'/'}><img className='w-[150px]' src={asstets.logo} alt="" /></Link>
+        <Link to={'/'}><img className='w-[150px] cursor-pointer' src={asstets.logo} alt="" /></Link>
 
-        <ul>
+        <ul className=' hidden md:flex list-none gap-6 text-[#49577e] text-lg'>
 
-            <li>Home</li>
+            <NavLink to='/'>
 
-            <li>Gas Menu</li>
+                <li className='py-1'>Home</li>
 
-            <li>About Us</li>
+                <hr className='border-none outline-none h-0.5 bg-primary w-full m-auto hidden' />
 
-            <li>ContactUs</li>
+            </NavLink>
+
+            <NavLink to='/Pricing'>
+
+                <li className='py-1'>Pricing</li>
+
+                <hr className='border-none outline-none h-0.5 bg-primary w-full m-auto hidden' />
+
+            </NavLink>
+
+            <NavLink to='/shop'>
+
+                <li className='py-1'>Shop</li>
+
+                <hr className='border-none outline-none h-0.5 bg-primary w-full m-auto hidden' />
+
+            </NavLink>
+
+            <NavLink to='/Contact'>
+
+                <li className='py-1'>Contact</li>
+
+                <hr className='border-none outline-none h-0.5 bg-primary w-full m-auto hidden' />
+
+            </NavLink>
+
+            <NavLink to='/About-Us'>
+
+                <li className='py-1'>About Us</li>
+
+                <hr className='border-none outline-none h-0.5 bg-primary w-full m-auto hidden' />
+
+            </NavLink>
         
         </ul>
 
-        <div>
+        <div className='flex items-center gap-8'>
 
-            <div>
+            <div className='relative'>
 
-                <img src={asstets.bucket_icon} alt="" />
+                <img className='cursor-pointer w-8' src={asstets.bucket_icon} alt="" />
 
-                <div></div>
+                <div className='absolute min-w-[8px] min-h-[8px] bg-primary top-[-3px] right-[-3px] rounded-full'></div>
 
             </div>
 
-            <button>Sign In</button>
+            <button className=' text-white bg-primary text-base font-medium border-2 hover:bg-transparent hover:border-primary hover:text-gray-800 transition duration-300 px-8 py-2.5 rounded-full cursor-pointer text-center'>Sign In</button>
             
         </div>        
 

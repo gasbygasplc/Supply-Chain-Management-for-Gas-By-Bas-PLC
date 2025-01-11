@@ -35,5 +35,10 @@ section
   min-height: 100vh;
 }
 
+.active hr
+{
+  @apply block
+}
+
 
 
