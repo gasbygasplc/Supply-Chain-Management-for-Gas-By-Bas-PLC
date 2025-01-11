@@ -5,6 +5,7 @@ import bucket_icon from './add_shopping_cart.svg'
 export const asstets = {
 
     logo,
-    bucket_icon
+    bucket_icon,
+    header_image
 
 }
