@@ -5,7 +5,7 @@ const Header = () => {
 
   return (
 
-    <section className="min-h-[38vw] sm:min-h-[34vw] my-8 bg-[url('/header.png')] bg-no-repeat bg-contain relative" style={{backgroundImage:`url(${asstets.header_image})`}}>
+    <section id='Home' className="min-h-[38vw] sm:min-h-[34vw] my-8 bg-[url('/header.png')] bg-no-repeat bg-contain relative" style={{backgroundImage:`url(${asstets.header_image})`}}>
         
       <div className="absolute flex flex-col items-start gap-0.5 sm:gap-[1.5vw] max-w-[65%] sm:max-w-[50%] md:max-w-[45%] bottom-[8%] sm:bottom-[4.5%] left-5 sm:left-[2.5vw] animate-fadeIn">
 
