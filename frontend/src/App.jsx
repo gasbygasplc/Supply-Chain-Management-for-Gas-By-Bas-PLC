@@ -1,16 +1,30 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Registration from './pages/Registration';
+
+import React from 'react'
+import { Route, Routes } from 'react-router-dom'
+import Home from './Pages/Home'
+import Navbar from './Components/Navbar'
+import PriceingCart from './Components/PriceingCart'
 
 const App = () => {
-    return (
-        <Router>
-            <Routes>
-                <Route path="/" element={<h1>Welcome to the App</h1>} />
-                <Route path="/register" element={<Registration />} />
-            </Routes>
-        </Router>
-    );
-};
 
-export default App;
+  return (
+
+    <div className='mx-4 sm:mx-[10%]'>
+
+      <Navbar/>
+
+      <Routes>
+
+        <Route path='/' element ={<Home/>}/>
+
+        <Route path='/Pricing-Cart' element={<PriceingCart/>} />
+
+      </Routes>
+
+    </div>
+
+  )
+
+}
+
+export default App

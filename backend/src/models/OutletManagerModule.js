@@ -14,7 +14,7 @@ const outLet = new mongoose.Schema(
 
         deliveryCapacity : {type:Number , required : true},
 
-        currentStock : {type:Number , required : true},
+        currentStock : {type:Number , required : true },
 
         maxCapacity : {type:Number , required : true},
 
