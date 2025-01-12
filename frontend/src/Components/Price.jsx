@@ -21,9 +21,9 @@ const Price = () => {
 
                 <div className='flex gap-4 bg-gray-100 py-1 px-1.5 rounded-full'>
 
-                    <button className={priceMenu === 'Gas Refill' ? "bg-white py-0.5 px-2 text-[15px] text-base text-gray-800 rounded-full" : "bg-transparent py-0.5 px-2 text-[15px] text-base text-gray-800"} onClick={() => setPriceMenu('Gas Refill')}>Gas Refill</button>
+                    <button className={priceMenu === 'Gas Refill' ? "bg-white py-0.5 px-3 text-[15px] text-base text-gray-800 rounded-full" : "bg-transparent py-0.5 px-3 text-[15px] text-base text-gray-800"} onClick={() => setPriceMenu('Gas Refill')}>Refill Your Gas</button>
                     
-                    <button className={priceMenu === 'Buy Gas' ? 'bg-white py-0.5 px-2 text-[15px] text-base text-gray-800 rounded-full' : 'bg-transparent py-0.5 px-2 text-[15px] text-base text-gray-800'} onClick={() => setPriceMenu('Buy Gas')}>Buy Gas</button>
+                    <button className={priceMenu === 'Buy Gas' ? 'bg-white py-0.5 px-3 text-[15px] text-base text-gray-800 rounded-full' : 'bg-transparent py-0.5 px-3 text-[15px] text-base text-gray-800'} onClick={() => setPriceMenu('Buy Gas')}>Buy Your New Gas</button>
 
                 </div>
 
