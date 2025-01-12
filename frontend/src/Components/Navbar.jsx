@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { asstets } from '../assets/Assets'
 
 const Navbar = () => {
+
+    const [menu , setMenu] = useState('Home');
 
   return (
 
@@ -12,7 +14,7 @@ const Navbar = () => {
 
         <ul className=' hidden md:flex list-none gap-6 text-[#49577e] text-lg'>
 
-            <NavLink to='/'>
+            {/* <NavLink to='/'>
 
 
                 <li className='py-1'>Home</li>
@@ -54,7 +56,13 @@ const Navbar = () => {
                 <hr className='border-none outline-none h-0.5 bg-primary w-full m-auto hidden' />
 
             </NavLink>
-        
+         */}
+
+         <Link to={'/'} className={menu === 'Home' ? "pb-[1.5px] border-b-[3px] border-primary rounded-[2px]" : ""} onClick={() => setMenu('Home')}>Home</Link>
+         <a href="#Pricing-Cart" className={menu === 'Price' ? "pb-[1.5px] border-b-[3px] border-primary rounded-[2px]" : ""} onClick={() => setMenu('Price')}>Price</a>
+         <a href="">Shopping</a>
+         <a href="">About Us</a>
+         <a href="">Contact Us</a>
         </ul>
 
         <div className='flex items-center gap-4 sm:gap-8'>
