@@ -9,9 +9,9 @@ const Price = () => {
 
         <section id='pricing-cart' className='min-h-screen flex justify-center py-12 px-6'>
 
-            <div className='text-center flex flex-col justify-self-center items-center gap-2'>
+            <div className='text-center flex flex-col justify-self-center items-center gap-2.5'>
 
-                <div className='flex justify-self-center w-auto gap-2 text-base bg-gray-200 py-1 px-3 rounded-full'>
+                <div className='flex justify-center items-center w-auto text-base bg-gray-200 py-1 px-3 rounded-full'>
 
                     <img src={asstets.payment}/>
 
