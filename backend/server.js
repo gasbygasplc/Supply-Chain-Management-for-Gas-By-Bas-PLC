@@ -12,6 +12,7 @@ import adminRouter from './src/routes/AdminRoutes.js';
 import authRouter from './src/routes/authRoutes.js'; // User Auth routes
 import smsRouter from './src/routes/smsRoutes.js'; // SMS Routes
 import gasRouter from './src/routes/gasRoutes.js'; // Gas Routes
+import connectCloudinary from './src/config/Cloudinary.js';
 
 
 
@@ -22,6 +23,8 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 databaseConnection()
+
+connectCloudinary()
 
 //================================================ Middleware ================================================
 
