@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from '../Components/Header'
-import PriceingCart from '../Components/PriceingCart'
+import Price from '../Components/Price'
 
 const Home = () => {
     
@@ -10,7 +10,7 @@ const Home = () => {
       
       <Header/>
 
-      <PriceingCart/>
+      <Price/>
 
     </div>
 
