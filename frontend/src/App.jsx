@@ -3,7 +3,7 @@ import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Home from './Pages/Home'
 import Navbar from './Components/Navbar'
-import PriceingCart from './Components/PriceingCart'
+import Price from './Components/Price'
 
 const App = () => {
 
@@ -17,7 +17,7 @@ const App = () => {
 
         <Route path='/' element ={<Home/>}/>
 
-        <Route path='/Pricing-Cart' element={<PriceingCart/>} />
+        <Route path='/Pricing-Cart' element={<Price/>} />
 
       </Routes>
 
