@@ -5,7 +5,8 @@ export const databaseConnection = async() => {
     try 
     {
 
-        await mongoose.connect(
+        await mongoose.connect
+        (
             `mongodb+srv://gasbygasplc:${process.env.DB_PASSWORD}@gasbygas.lrxn8.mongodb.net/GasByGas`,
             {
                 useNewUrlParser: true, 
