@@ -7,7 +7,7 @@ const addStock = async(req, res) => {
 
         const {type , weightKG , image , price , totalStock , stockHistroy} = req.body;
 
-        
+
         
     } catch (error) 
     {
@@ -15,4 +15,7 @@ const addStock = async(req, res) => {
 
         
     }
+
 }
+
+export {addStock}
