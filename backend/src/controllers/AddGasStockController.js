@@ -1,90 +1,141 @@
-import {v2 as cloudinary} from 'cloudinary'
+import { v2 as cloudinary } from 'cloudinary';
 import gasStockmodel from '../models/GasStockModels.js';
 
-const addStock = async(req, res) => {
+const addStock = async (req, res) => {
 
-    try 
-    {
+    try {
 
-        const {type , weightKG , price , totalStock , stockHistroy} = req.body;
+        const { type, weightKG, price, totalStock, stockHistroy } = req.body;
 
         const imageFile = req.file;
 
-        if(!type || !weightKG || !price || !totalStock || !stockHistroy )
+
+        if (!type || !weightKG || !price || totalStock === undefined) 
         {
 
-            return res.json({success:false , message : "Missing Information"})
+            return res.status(400).json({ success: false, message: "Missing required fields: type, weightKG, price, or totalStock" });
 
         }
 
-        if(totalStock < 0)
+        if (totalStock < 0) 
         {
-            
-            return res.json({success: false , message: "Please Enter valid Stock Amount"});
+
+            return res.status(400).json({ success: false, message: "Please enter a valid stock amount" });
 
         }
 
-        const existingStockType = await gasStockmodel.findOne({type});
-
-        if(existingStockType)
+        if (!imageFile) 
         {
-            existingStockType.totalStock += Number(totalStock);
 
-            const newStockHistory = JSON.parse(stockHistroy);
+            return res.status(400).json({ success: false, message: "Image file is required" });
 
-            existingStockType.stockHistroy.push(...newStockHistory);
-
-            await existingStockType.save();
-
-            res.json({success:true , message:`Gas stock updated successfully.`})
         }
-        else
+
+        // Parse or default stock history
+
+        let parsedStockHistory = [];
+
+        if (stockHistroy) 
         {
+
             try 
             {
 
-                const imageUpload = await cloudinary.uploader.upload(imageFile.path, {resource_type:"image"});
+                parsedStockHistory = JSON.parse(stockHistroy);
+
+            } 
+            catch (error) 
+            {
+
+                return res.status(400).json({ success: false, message: "Invalid JSON format for stockHistroy" });
+
+            }
+
+        }
+
+        const existingStockType = await gasStockmodel.findOne({ type });
+
+        const newGasStockHistory = 
+        {
+
+            dateReceived: new Date(),
+
+            quantity: Number(totalStock),
+
+        };
+
+        if (existingStockType) 
+        {
+
+            existingStockType.totalStock += Number(totalStock);
+
+            existingStockType.stockHistroy.push(newGasStockHistory);
+
+            await existingStockType.save();
+
+            return res.status(200).json({ success: true, message: "Gas stock updated successfully." });
+
+        } 
+        else 
+        {
+
+            try 
+            {
+
+                const imageUpload = await cloudinary.uploader.upload(imageFile.path, 
+                {
+
+                    resource_type: "image",
+
+                });
 
                 const imageURL = imageUpload.secure_url;
 
-                const gasStockData = {
+                const gasStockData = 
+                {
 
                     type,
-                    weightKG,
-                    price,
-                    image : imageURL,
-                    totalStock,
-                    stockHistroy : JSON.parse(stockHistroy)
 
-                }
+                    weightKG,
+
+                    price,
+
+                    image: imageURL,
+
+                    totalStock,
+
+                    stockHistroy: parsedStockHistory, // Use the parsed stock history here
+
+                };
 
                 const gasStock = new gasStockmodel(gasStockData);
 
                 await gasStock.save();
 
-                res.json({success:true , message: "Gas Stock Added"});
 
-                
+                return res.status(201).json({ success: true, message: "Gas Stock Added" });
+
             } catch (error) 
             {
 
-                console.log(error);
+                console.error(error);
 
-                res.json({success:false , message: error.message})
-                
+                return res.status(500).json({ success: false, message: "Error uploading image or saving stock" });
+
             }
-            
+
         }
 
-        
-    } catch (error) 
+    } 
+    catch (error) 
     {
 
-        console.log(error);
-        res.json({success:false , message: error.message})
-        
+        console.error(error);
+
+        return res.status(500).json({ success: false, message: "Internal Server Error" });
+
     }
 
-}
+};
 
-export {addStock}
+export { addStock };
