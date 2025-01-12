@@ -60,7 +60,7 @@ const Price = () => {
 
                         </div>
 
-                        <button className='bg-primary mt-4 w-[80%] mx-auto py-2 rounded-md text-white'>Start Your Purchase</button>
+                        <button className='bg-primary mt-4 w-[80%] mx-auto py-2 rounded-md text-white hover:bg-transparent border hover:border-primary hover:text-gray-800 transition duration-300'>Start Your Purchase</button>
 
                     </div>
 
@@ -93,7 +93,7 @@ const Price = () => {
 
                         </div>
 
-                        <button className='bg-primary mt-4 w-[80%] mx-auto py-2 rounded-md text-white'>Start Your Purchase</button>
+                        <button className='bg-primary mt-4 w-[80%] mx-auto py-2 rounded-md text-white  hover:bg-transparent border hover:border-primary hover:text-gray-800 transition duration-300'>Start Your Purchase</button>
 
                     </div>
 
@@ -126,7 +126,7 @@ const Price = () => {
 
                         </div>
 
-                        <button className='bg-primary mt-4 w-[80%] mx-auto py-2 rounded-md text-white'>Start Your purchase</button>
+                        <button className='bg-primary mt-4 w-[80%] mx-auto py-2 rounded-md text-white hover:bg-transparent border hover:border-primary hover:text-gray-800 transition duration-300'>Start Your purchase</button>
                         
                     </div>
 
