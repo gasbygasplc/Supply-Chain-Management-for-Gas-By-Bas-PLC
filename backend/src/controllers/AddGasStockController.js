@@ -5,7 +5,11 @@ const addStock = async(req, res) => {
     try 
     {
 
-        const {type , weightKG , image , price , totalStock , stockHistroy} = req.body;
+        const {type , weightKG , price , totalStock , stockHistroy} = req.body;
+
+        const imageFile = req.file;
+
+        console.log({type , weightKG , price , totalStock , stockHistroy}, imageFile)
 
 
         
