@@ -13,7 +13,7 @@ import authRouter from './src/routes/authRoutes.js'; // User Auth routes
 import smsRouter from './src/routes/smsRoutes.js'; // SMS Routes
 import gasRouter from './src/routes/gasRoutes.js'; // Gas Routes
 import deliveryRouter from './src/routes/deliveryRoutes.js'; // Delivery Routes
-import gasRequestRouter from './src/routes/gasRequestRoutes.js'; // Gas Request Routes
+
 
 
 //================================================ App Config ================================================
@@ -44,7 +44,6 @@ app.use('/api/gas', gasRouter); // User Gas routes
 
 app.use('/api/delivery', deliveryRouter); // Delivery scheduling routes
 
-app.use('/api/gas-request', gasRequestRouter); // Gas request routes
 //================================================ Listener ================================================
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
