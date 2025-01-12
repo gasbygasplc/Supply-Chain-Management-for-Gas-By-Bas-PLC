@@ -5,26 +5,26 @@ const addStock = async (req, res) => {
 
     try {
 
-        const { type, weightKG, price, totalStock, stockHistroy } = req.body;
+        const { type, weightKG, price, totalStock, stockHistroy } = req.body; //fetch the Data from the request
 
-        const imageFile = req.file;
+        const imageFile = req.file; //store the image from selected file
 
 
-        if (!type || !weightKG || !price || totalStock === undefined) 
+        if (!type || !weightKG || !price || totalStock === undefined)  // check empty validation
         {
 
             return res.status(400).json({ success: false, message: "Missing required fields: type, weightKG, price, or totalStock" });
 
         }
 
-        if (totalStock < 0) 
+        if (totalStock < 0) //check stock is empty
         {
 
             return res.status(400).json({ success: false, message: "Please enter a valid stock amount" });
 
         }
 
-        if (!imageFile) 
+        if (!imageFile) //file validation
         {
 
             return res.status(400).json({ success: false, message: "Image file is required" });
@@ -53,18 +53,18 @@ const addStock = async (req, res) => {
 
         }
 
-        const existingStockType = await gasStockmodel.findOne({ type });
+        const existingStockType = await gasStockmodel.findOne({ type }); //find the type of gas from all the document
 
         const newGasStockHistory = 
         {
 
-            dateReceived: new Date(),
+            dateReceived: new Date(), //set current date
 
-            quantity: Number(totalStock),
+            quantity: Number(totalStock), //set quantity as the same quantity of stock
 
         };
 
-        if (existingStockType) 
+        if (existingStockType) //if type is available data will updated
         {
 
             existingStockType.totalStock += Number(totalStock);
@@ -76,7 +76,7 @@ const addStock = async (req, res) => {
             return res.status(200).json({ success: true, message: "Gas stock updated successfully." });
 
         } 
-        else 
+        else //else new data will create
         {
 
             try 
