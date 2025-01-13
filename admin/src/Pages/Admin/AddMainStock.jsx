@@ -1,7 +1,18 @@
 import React from 'react'
+import { useState } from 'react'
 
 const AddMainStock = () => {
+
+  const [type , setType] = useState("");
+
+  const [weight , setWeight] = useState("");
+
+  const [price , setPrice] = useState("");
+
+  const [stock , setStock] = useState("");
+
   return (
+
     <div className=' w-full gap-4 bg-white my-3 border mx-2 py-5 px-5 rounded-md grid grid-cols-1 sm:grid-cols-7'>
       
 
