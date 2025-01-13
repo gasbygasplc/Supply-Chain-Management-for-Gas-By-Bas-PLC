@@ -70,7 +70,7 @@ const AddMainStock = () => {
 
             <div className='relative mb-5.5 block w-full cursor-pointer appearance-none rounded border border-dashed border-primary-700 bg-gray-50 px-4 py-4 sm:py-7.5'>
 
-             <input accept='image/*' className='absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none '  type="file" placeholder='Gas Image'/>
+             <input onChange={(e) => setGasImg(e.target.files[0])} accept='image/*' className='absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none '  type="file" placeholder='Gas Image'/>
 
              <div className='flex flex-col items-center justify-center space-y-3'>
 
