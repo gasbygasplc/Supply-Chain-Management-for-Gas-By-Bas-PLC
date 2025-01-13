@@ -1,5 +1,7 @@
 import React from 'react'
+import { useContext } from 'react';
 import { useState } from 'react'
+import { AdminContext } from '../../Context/AdminContext';
 
 const AddMainStock = () => {
 
@@ -12,6 +14,8 @@ const AddMainStock = () => {
   const [stock , setStock] = useState(0);
 
   const [gasImg , setGasImg] = useState(false);
+
+  const {backendURL , aToken , } = useContext(AdminContext)
 
 
   //================================================= OnsubmitHandler =====================================================
