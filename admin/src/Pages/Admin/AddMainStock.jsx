@@ -9,7 +9,7 @@ const AddMainStock = () => {
 
   const [price , setPrice] = useState("");
 
-  const [stock , setStock] = useState("");
+  const [stock , setStock] = useState(0);
 
   const [gasImg , setGasImg] = useState(false);
 
