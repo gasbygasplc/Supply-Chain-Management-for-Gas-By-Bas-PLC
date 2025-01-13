@@ -6,7 +6,15 @@ const GasRequest = () => {
 
     <section id='gas-request'>
 
-        
+        <div>
+
+            
+
+            <div></div>
+            <div></div>
+            <div></div>
+
+        </div>
 
     </section>
 
