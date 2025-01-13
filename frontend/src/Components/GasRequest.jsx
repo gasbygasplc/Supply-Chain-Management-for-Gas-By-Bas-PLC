@@ -4,9 +4,9 @@ const GasRequest = () => {
 
   return (
 
-    <section id='gas-request w-full'>
+    <section id='gas-request' className=' w-full'>
 
-        <h1>Order your gas</h1>
+        <h1 className='py-4 mt-4 text-4xl font-bold text-center text-gray-900 sm:text-4xl'><span className='text-primary'>Refill</span> your gas Here </h1>
 
         <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
 
