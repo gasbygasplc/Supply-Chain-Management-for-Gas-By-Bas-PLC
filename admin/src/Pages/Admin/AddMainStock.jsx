@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { AdminContext } from '../../Context/AdminContext';
 import { toast } from 'react-toastify';
 import axios from 'axios';
+import { useEffect } from 'react';
 
 const AddMainStock = () => {
 
@@ -17,7 +18,7 @@ const AddMainStock = () => {
 
   const [gasImg , setGasImg] = useState(false);
 
-  const {backendURL , aToken } = useContext(AdminContext)
+  const {backendURL , aToken , gasStock , getGasStock } = useContext(AdminContext)
 
 
   //================================================= OnsubmitHandler =====================================================
@@ -71,10 +72,20 @@ const AddMainStock = () => {
       
     }
 
-
-
-
   }
+
+  //============================================== USE Effect for hold the data ===========================================
+
+  useEffect(() => {
+
+    if(aToken)
+    {
+
+      getGasStock();
+
+    }
+
+  } , [aToken])
 
   return (
 
@@ -188,14 +199,20 @@ const AddMainStock = () => {
 
         </div>
 
-          <div  className='grid py-2 grid-cols-1 gap-2 sm:grid-cols-6 items-center justify-items-center'>
+          {
 
-            <p className='text-sm md:col-span-3 font-normal text-gray-500'>Small Gas</p>
-            <p className='text-sm md:col-span-3 font-normal text-gray-500'>10000</p>
+            gasStock.map((stock , index) => (
+
+              <div key={index} className='grid py-2 grid-cols-1 gap-2 sm:grid-cols-6 items-center justify-items-center'>
+
+                <p className='text-sm md:col-span-3 font-normal text-gray-500'>{stock.type}</p>
+                <p className='text-sm md:col-span-3 font-normal text-gray-500'>{stock.totalStock}</p>
             
-            <hr className='w-full col-span-6'/>
+                <hr className='w-full col-span-6'/>
 
-          </div>
+              </div>
+            ))
+          }
 
       </div>
 

@@ -75,7 +75,8 @@ const AdminContextProvider = (props) => {
         backendURL,
         outletStock,
         getOutletStock,
-        getGasStock
+        getGasStock,
+        gasStock
 
     }
 
