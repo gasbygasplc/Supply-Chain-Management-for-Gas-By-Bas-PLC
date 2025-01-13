@@ -144,9 +144,9 @@ const getGasStock = async(req , res) => {
 
     try 
     {
-        const data = gasStockmodel.find({} , {type:1 , totalStock:1 , _id:0 });
+        const data = await gasStockmodel.find({} , {type:1 , totalStock:1 , _id:0 });
 
-        res,json({success:true , data})
+        res.json({success:true , data})
         
     } catch (error) 
     {

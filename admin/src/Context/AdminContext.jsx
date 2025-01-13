@@ -48,10 +48,22 @@ const AdminContextProvider = (props) => {
         try 
         {
 
-            const {data} = await axios.post(backendURL + '/api/admin/get-gas-stock')
+            const {data} = await axios.post(backendURL + '/api/admin/get-gas-stock' , {} , {headers:{aToken}})
+
+            if(data.success)
+            {
+                setGasStock(data.data);
+                console.log(data.data)
+            }
+            else
+            {
+                toast.error(data.message)
+            }
             
         } catch (error) 
         {
+
+            toast.error(error.message)
             
         }
     }
@@ -62,7 +74,8 @@ const AdminContextProvider = (props) => {
         SetAToken,
         backendURL,
         outletStock,
-        getOutletStock
+        getOutletStock,
+        getGasStock
 
     }
 
