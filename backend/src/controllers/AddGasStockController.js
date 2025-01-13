@@ -142,8 +142,20 @@ const addStock = async (req, res) => {
 
 const getGasStock = async(req , res) => {
 
-    const data = gasStockmodel.find({})
+    try 
+    {
+        const data = gasStockmodel.find({} , {type:1 , totalStock:1 , _id:0 });
+
+        res,json({success:true , data})
+        
+    } catch (error) 
+    {
+
+        console.error(error);
+        res.json({ success: false, message: error.message });
+        
+    }
 
 }
 
-export { addStock };
+export { addStock , getGasStock };
