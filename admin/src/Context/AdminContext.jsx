@@ -43,7 +43,18 @@ const AdminContextProvider = (props) => {
 
     //============================================== Get Gas Stock ========================================================
 
-    
+    const getGasStock = async() => {
+
+        try 
+        {
+
+            const {data} = await axios.post(backendURL + '/api/admin/get-gas-stock')
+            
+        } catch (error) 
+        {
+            
+        }
+    }
 
     const value = {
 
