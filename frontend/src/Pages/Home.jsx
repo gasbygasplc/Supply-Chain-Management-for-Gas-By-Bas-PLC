@@ -1,6 +1,7 @@
 import React from 'react'
 import Header from '../Components/Header'
 import Price from '../Components/Price'
+import GasRequest from '../Components/GasRequest'
 
 const Home = () => {
     
@@ -11,6 +12,8 @@ const Home = () => {
       <Header/>
 
       <Price/>
+
+      <GasRequest/>
 
     </div>
 
