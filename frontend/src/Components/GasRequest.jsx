@@ -8,10 +8,14 @@ const GasRequest = () => {
 
         <div>
 
-            
+            {/* Gas type */}
 
             <div></div>
+
+            {/* Gas quantity */}
             <div></div>
+
+            {/* payment option */}
             <div></div>
 
         </div>
