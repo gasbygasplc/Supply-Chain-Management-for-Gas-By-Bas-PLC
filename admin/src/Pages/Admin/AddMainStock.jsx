@@ -2,6 +2,7 @@ import React from 'react'
 import { useContext } from 'react';
 import { useState } from 'react'
 import { AdminContext } from '../../Context/AdminContext';
+import { toast } from 'react-toastify';
 
 const AddMainStock = () => {
 
@@ -23,6 +24,27 @@ const AddMainStock = () => {
   const onsubmitHandler = async(event) => {
 
     event.preventDefault();
+
+    if(!gasImg)
+    {
+
+      toast.error('Gas image does not selected.')
+
+    }
+
+    const formData = new FormData();
+
+    formData.append('image' , gasImg);
+
+    formData.append('type' , type);
+
+    formData.append('weight' , weight);
+
+    formData.append('price' , price);
+
+    formData.append('stock' , stock)
+
+
 
 
   }
