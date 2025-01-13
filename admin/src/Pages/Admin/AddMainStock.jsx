@@ -38,11 +38,11 @@ const AddMainStock = () => {
 
     formData.append('type' , type);
 
-    formData.append('weight' , weight);
+    formData.append('weightKG' , Number(weight));
 
-    formData.append('price' , price);
+    formData.append('price' , Number(price));
 
-    formData.append('stock' , stock)
+    formData.append('totalStock' , Number(stock));
 
 
 
