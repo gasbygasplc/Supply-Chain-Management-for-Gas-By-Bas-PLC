@@ -26,11 +26,17 @@ const AddOutlet = () => {
   const clear = () => {
 
     setOutletName("");
+    
     setLocation("");
+    
     setEmail("");
+    
     setPhoneNumber("");
+    
     setDeliveryCapacity(0);
+    
     setMaximumCapacity(0);
+    
     setMinimumRequestLevel(0);
 
   }
@@ -87,6 +93,8 @@ const AddOutlet = () => {
       
     } catch (error) 
     {
+
+      toast.error(error)
       
     }
   }
@@ -95,7 +103,9 @@ const AddOutlet = () => {
 
     if(aToken)
     {
-      getOutletStock()
+
+      getOutletStock();
+
     }
 
   }, [aToken])

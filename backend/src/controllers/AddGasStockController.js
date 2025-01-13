@@ -138,4 +138,24 @@ const addStock = async (req, res) => {
 
 };
 
-export { addStock };
+//================================================ GET STOCK AND GAS TYPE =================================================
+
+const getGasStock = async(req , res) => {
+
+    try 
+    {
+        const data = await gasStockmodel.find({} , {type:1 , totalStock:1 , _id:0 });
+
+        res.json({success:true , data})
+        
+    } catch (error) 
+    {
+
+        console.error(error);
+        res.json({ success: false, message: error.message });
+        
+    }
+
+}
+
+export { addStock , getGasStock };
