@@ -31,12 +31,12 @@ const Price = () => {
 
                     {/* =========================================== Small Gas ============================================== */}
 
-                    <div  className='bg-white py-4  max-w-96 border rounded-md shadow-sm'>
+                    <div  className='bg-white py-4  max-w-96 border border-primary rounded-md shadow-lg hover:cursor-pointer'>
 
-                        <div  className='flex flex-col gap-3 mb-6 text-center cursor-pointer'>
+                        <div  className='flex flex-col gap-3 mb-6 text-center'>
 
                             <p className='text-base font-semibold text-gray-700'>Small Gas</p>
-                            <h1 className='text-2xl font-semibold text-gray-800'>LKR 820.94</h1>
+                            <h1 className='text-2xl font-semibold text-primary'>LKR 820.94</h1>
 
                         </div>
 
@@ -52,11 +52,11 @@ const Price = () => {
 
                         <div className='flex flex-col gap-3 justify-start items-start mx-auto ml-9'>
 
-                            <p> <span className='text-primary'>&#10003;</span> Lightweight and portable </p>
-                            <p> <span className='text-primary'>&#10003;</span> Easy to store in compact spaces</p>
-                            <p> <span className='text-primary'>&#10003;</span> Affordable pricing for small users</p>
-                            <p> <span className='text-primary'>&#10003;</span> Safe for indoor and outdoor use</p>
-                            <p> <span className='text-primary'>&#10003;</span> 24/7 customer support included</p>
+                            <p className='text-gray-500'> <span className='text-primary'>&#10003;</span> Lightweight and portable </p>
+                            <p className='text-gray-500'> <span className='text-primary'>&#10003;</span> Easy to store in compact spaces</p>
+                            <p className='text-gray-500'> <span className='text-primary'>&#10003;</span> Affordable pricing for small users</p>
+                            <p className='text-gray-500'> <span className='text-primary'>&#10003;</span> Safe for indoor and outdoor use</p>
+                            <p className='text-gray-500'> <span className='text-primary'>&#10003;</span> 24/7 customer support included</p>
 
                         </div>
 
@@ -64,12 +64,12 @@ const Price = () => {
 
                     </div>
 
-                    <div className='bg-white py-4  max-w-96 border rounded-md  shadow-sm'>
+                    <div className='bg-white py-4  max-w-96 border border-primary rounded-md  shadow-lg'>
 
                         <div className='flex flex-col gap-3 text-center mb-6 cursor-pointer'>
 
                             <p className='text-base font-semibold text-gray-700'>Medium Gas</p>
-                            <h1 className='text-2xl font-semibold text-gray-800'>LKR 800.59</h1>
+                            <h1 className='text-2xl font-semibold text-primary'>LKR 800.59</h1>
 
                         </div>
 
@@ -85,11 +85,11 @@ const Price = () => {
 
                         <div className='flex flex-col gap-3 justify-start items-start mx-auto ml-9'>
 
-                            <p> <span className='text-primary'>&#10003;</span> Balanced size for home cooking needs </p>
-                            <p> <span className='text-primary'>&#10003;</span> 24/7 customer support included</p>
-                            <p> <span className='text-primary'>&#10003;</span> Transparent pricing with no hidden costs</p>
-                            <p> <span className='text-primary'>&#10003;</span> Standard compatibility</p>
-                            <p> <span className='text-primary'>&#10003;</span> Great value for regular household use</p>
+                            <p className='text-gray-500'> <span className='text-primary'>&#10003;</span> Balanced size for home cooking needs </p>
+                            <p className='text-gray-500'> <span className='text-primary'>&#10003;</span> 24/7 customer support included</p>
+                            <p className='text-gray-500'> <span className='text-primary'>&#10003;</span> Transparent pricing with no hidden costs</p>
+                            <p className='text-gray-500'> <span className='text-primary'>&#10003;</span> Standard compatibility</p>
+                            <p className='text-gray-500'> <span className='text-primary'>&#10003;</span> Great value for regular household use</p>
 
                         </div>
 
@@ -97,12 +97,12 @@ const Price = () => {
 
                     </div>
 
-                    <div className='bg-white py-4  max-w-96 border rounded-md  shadow-sm'>
+                    <div className='bg-white py-4  max-w-96 border border-primary rounded-md  shadow-lg'>
 
                         <div className='flex flex-col gap-3 mb-6 text-center cursor-pointer'>
 
                             <p className='text-base font-semibold text-gray-700'>Large Gas</p>
-                            <h1 className='text-2xl font-semibold text-gray-800'>LKR 3922.24</h1>
+                            <h1 className='text-2xl font-semibold text-primary'>LKR 3922.24</h1>
 
                         </div>
 
@@ -118,11 +118,11 @@ const Price = () => {
 
                         <div className='flex flex-col gap-3 justify-start items-start mx-auto ml-9'>
 
-                            <p> <span className='text-primary'>&#10003;</span> High capacity for extended use </p>
-                            <p> <span className='text-primary'>&#10003;</span> Express delivery for bulk orders</p>
-                            <p> <span className='text-primary'>&#10003;</span> Durable design for long-term use</p>
-                            <p> <span className='text-primary'>&#10003;</span> Eco-friendly and recyclable material</p>
-                            <p> <span className='text-primary'>&#10003;</span> Compatible with most small stoves</p>
+                            <p className='text-gray-500'> <span className='text-primary'>&#10003;</span> High capacity for extended use </p>
+                            <p className='text-gray-500'> <span className='text-primary'>&#10003;</span> Express delivery for bulk orders</p>
+                            <p className='text-gray-500'> <span className='text-primary'>&#10003;</span> Durable design for long-term use</p>
+                            <p className='text-gray-500'> <span className='text-primary'>&#10003;</span> Eco-friendly and recyclable material</p>
+                            <p className='text-gray-500'> <span className='text-primary'>&#10003;</span> Compatible with most small stoves</p>
 
                         </div>
 
