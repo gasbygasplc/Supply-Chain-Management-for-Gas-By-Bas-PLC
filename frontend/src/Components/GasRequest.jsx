@@ -4,19 +4,33 @@ const GasRequest = () => {
 
   return (
 
-    <section id='gas-request'>
+    <section id='gas-request w-full'>
 
-        <div>
+        <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+
+            
 
             {/* Gas type */}
 
-            <div></div>
+            <div>
+
+                <h1>img</h1>
+
+            </div>
 
             {/* Gas quantity */}
-            <div></div>
+            <div>
+
+                <h1>img2</h1>
+
+            </div>
 
             {/* payment option */}
-            <div></div>
+            <div>
+
+                <h1>img3</h1>
+
+            </div>
 
         </div>
 
