@@ -12,6 +12,8 @@ const AdminContextProvider = (props) => {
 
     const [outletStock , setOutletStock] = useState([]);
 
+    const [gasStock , setGasStock] = useState([]);
+
     const getOutletStock = async() => 
     {
 
@@ -38,6 +40,10 @@ const AdminContextProvider = (props) => {
             
         }
     }
+
+    //============================================== Get Gas Stock ========================================================
+
+    
 
     const value = {
 
