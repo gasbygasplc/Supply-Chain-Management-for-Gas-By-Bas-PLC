@@ -13,6 +13,16 @@ const AddMainStock = () => {
 
   const [gasImg , setGasImg] = useState(false);
 
+
+  //================================================= OnsubmitHandler =====================================================
+
+  const onsubmitHandler = async(event) => {
+
+    event.preventDefault();
+
+
+  }
+
   return (
 
     <div className=' w-full gap-4 bg-white my-3 border mx-2 py-5 px-5 rounded-md grid grid-cols-1 sm:grid-cols-7'>
@@ -24,13 +34,13 @@ const AddMainStock = () => {
 
         <h2 className='font-bold text-2xl text-black pb-6'>Add Stock </h2>
 
-        <form className='grid grid-cols-1 gap-3 sm:grid-cols-6'>
+        <form onSubmit={onsubmitHandler} className='grid grid-cols-1 gap-3 sm:grid-cols-6'>
 
           <div className='sm:col-span-3'>
 
             <label className='block  text-gray-700 font-normal mb-3' htmlFor="outletname">Gas Type</label>
 
-            <select className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' name="" id="">
+            <select onChange={(e) => setType(e.target.value)} value={type} className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' name="" id="">
 
               <option value="Small Gas">Small Gas</option>
               <option value="Medium Gas">Medium Gas</option>
@@ -44,7 +54,7 @@ const AddMainStock = () => {
 
             <label className='block text-gray-700  font-normal mb-3' htmlFor="Location">Weight</label>
 
-            <input  className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' type="number" placeholder='Weight'/>
+            <input onChange={(e) => setWeight(e.target.value)} value={weight}  className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' type="number" placeholder='Weight'/>
 
           </div>
 
@@ -52,7 +62,7 @@ const AddMainStock = () => {
 
             <label className='block  text-gray-700 font-normal mb-3' htmlFor="Price">Price</label>
 
-            <input  className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' type="number" placeholder='Price'/>
+            <input onChange={(e) => setPrice(e.target.value)} value={price} className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' type="number" placeholder='Price'/>
 
           </div>
 
@@ -60,7 +70,7 @@ const AddMainStock = () => {
 
             <label className='block text-gray-700  font-normal mb-3' htmlFor="Stock">Stock</label>
 
-            <input  className='border  border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' type="Number" placeholder='Stock'/>
+            <input onChange={(e) => setStock(e.target.value)} value={stock} className='border  border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' type="Number" placeholder='Stock'/>
 
           </div>
 
