@@ -188,14 +188,14 @@ const AddMainStock = () => {
 
         </div>
 
-            <div  className='grid py-2 grid-cols-1 gap-2 sm:grid-cols-6 items-center justify-items-center'>
+          <div  className='grid py-2 grid-cols-1 gap-2 sm:grid-cols-6 items-center justify-items-center'>
 
-              <p className='text-sm md:col-span-3 font-normal text-gray-500'>Small Gas</p>
-              <p className='text-sm md:col-span-3 font-normal text-gray-500'>10000</p>
+            <p className='text-sm md:col-span-3 font-normal text-gray-500'>Small Gas</p>
+            <p className='text-sm md:col-span-3 font-normal text-gray-500'>10000</p>
             
-              <hr className='w-full col-span-6'/>
+            <hr className='w-full col-span-6'/>
 
-            </div>
+          </div>
 
       </div>
 

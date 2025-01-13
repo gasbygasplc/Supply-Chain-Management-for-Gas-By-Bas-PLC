@@ -138,4 +138,12 @@ const addStock = async (req, res) => {
 
 };
 
+//================================================ GET STOCK AND GAS TYPE =================================================
+
+const getGasStock = async(req , res) => {
+
+    const data = gasStockmodel.find({})
+
+}
+
 export { addStock };
