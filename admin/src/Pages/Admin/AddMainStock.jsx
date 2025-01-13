@@ -95,9 +95,9 @@ const AddMainStock = () => {
 
             <select onChange={(e) => setType(e.target.value)} value={type} className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' name="" id="type">
 
-              <option value="Small Gas">Small</option>
-              <option value="Medium Gas">Medium</option>
-              <option value="Large Gas">Large</option>
+              <option value="Small">Small</option>
+              <option value="Medium">Medium</option>
+              <option value="Large">Large</option>
 
             </select>
 
