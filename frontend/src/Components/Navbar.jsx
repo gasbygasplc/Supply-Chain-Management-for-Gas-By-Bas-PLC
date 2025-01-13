@@ -8,7 +8,7 @@ const Navbar = () => {
 
   return (
 
-    <div className='py-5 px-0 flex justify-between items-center bg-white'>
+    <div className=' bg-white py-5 px-0 flex justify-between items-center'>
 
         <Link to={'/'}><img className='w-28 md:w-[150px] cursor-pointer' src={asstets.logo} alt="" /></Link>
 
@@ -65,7 +65,7 @@ const Navbar = () => {
          <a href="">Contact Us</a>
         </ul>
 
-        <div className='flex items-center gap-4 sm:gap-8'>
+        <div className='flex items-center gap-4 sm:gap-8 '>
 
             <div className='relative'>
 
