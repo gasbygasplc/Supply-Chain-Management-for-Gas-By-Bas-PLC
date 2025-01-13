@@ -1,4 +1,5 @@
 import React from 'react'
+import { asstets } from '../assets/Assets'
 
 const GasRequest = () => {
 
@@ -8,34 +9,54 @@ const GasRequest = () => {
 
         <h1 className='py-6 mt-4 text-4xl font-bold text-center text-gray-900 sm:text-4xl'><span className='text-primary'>Refill</span> your gas Here </h1>
 
-        <div className='flex flex-col md:flex-row justify-between items-center gap-4 px-4 py-4 bg-white rounded-lg md:px-8 md:py-8 md:gap-8'>
+        <div className='flex flex-col w-full md:flex-row justify-between items-center gap-4 px-4 py-4 bg-white rounded-lg md:px-8 md:py-8 md:gap-8'>
 
 
             {/* Gas type */}
+            
+            <div className='w-full'>
 
-            <div className=''>
-
-                <div>
-
+                <div className='bg-white border border-gray-300  h-72 md:h-96 rounded-lg flex justify-center items-center '>
+                    
+                    <img className='w-[450px] bg-cover' src={asstets.small_gas} />
 
                 </div>
 
-                <div>
+                <div className='flex w-full  justify-between items-center gap-4 mt-6'>
 
+                    <div  className='w-full py-4 bg-white border hover:border-primary border-gray-300  rounded-lg flex justify-center items-center cursor-pointer '>
+
+                        <img  className='w-full' src={asstets.small_gas} alt="" />
+
+                    </div>
+
+                    <div className='w-full py-4 bg-white border  hover:border-primary border-gray-300 rounded-lg flex justify-center items-center cursor-pointer '>
+
+                        <img className='w-full'  src={asstets.medium_gas} alt="" />
+
+                    </div>
+
+                    <div className='w-full py-4 bg-white border hover:border-primary  border-gray-300  rounded-lg flex justify-center items-center cursor-pointer '>
+
+                        <img className='w-full'  src={asstets.large_gas} alt="" />
+
+                    </div>
 
                 </div>
 
             </div>
 
             {/* Gas quantity */}
-            <div>
+
+            <div className='w-full'>
 
                 <h1>img2</h1>
 
             </div>
 
             {/* payment option */}
-            <div>
+
+            <div className='w-full'>
 
                 <h1>img3</h1>
 
