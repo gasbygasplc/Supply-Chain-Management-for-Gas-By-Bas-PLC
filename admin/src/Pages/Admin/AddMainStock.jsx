@@ -11,6 +11,8 @@ const AddMainStock = () => {
 
   const [stock , setStock] = useState("");
 
+  const [gasImg , setGasImg] = useState(false);
+
   return (
 
     <div className=' w-full gap-4 bg-white my-3 border mx-2 py-5 px-5 rounded-md grid grid-cols-1 sm:grid-cols-7'>
