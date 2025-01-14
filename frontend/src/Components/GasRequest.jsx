@@ -62,13 +62,13 @@ const GasRequest = () => {
 
                     <p>Quantity:</p>
 
-                    <div className='flex gap-2 items-center'>
+                    <div className='flex gap-4 items-center justify-center py-[10px] px-[18px] bg-gray-100 rounded-full border border-gray-300'>
 
-                        <img src={asstets.remove_icon} alt="" />
+                        <img className='w-[30px] cursor-pointer' src={asstets.remove_icon} alt="" />
 
                         <p>1</p>
 
-                        <img src={asstets.add_icon} alt="" />
+                        <img className='w-[30px] cursor-pointer' src={asstets.add_icon} alt="" />
 
                     </div>
 
