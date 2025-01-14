@@ -101,9 +101,9 @@ const GasRequest = () => {
 
                 <div className='flex flex-col justify-normal w-full gap-4 sm:flex-row sm:justify-between'>
 
-                    <button className='bg-primary text-white py-[10px] px-[18px] w-full'>Buy Now</button>
+                    <button className='bg-primary text-white py-[10px] px-[18px] w-full rounded-md '>Buy Now</button>
 
-                    <button className='bg-primary text-white py-[10px] px-[18px] w-full'>Cash On Delivery</button>
+                    <button className='bg-green-600 text-white py-[10px] px-[18px] w-full rounded-md'>Cash On Delivery</button>
 
                 </div>
 
