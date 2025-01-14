@@ -91,11 +91,11 @@ const GasRequest = () => {
 
             <div className='w-full flex flex-col gap-8'>
 
-                <div>
+                <div className='flex flex-col justify-center gap-4'>
 
-                    <h1>Gas By Gas</h1>
+                    <h1 className='text-2xl text-gray-600 font-bold'>Gas By Gas</h1>
 
-                    <p>Gas By Gas is a brand who's provide LPEG gas cylinder for home and organization they quality is much better than others.</p>
+                    <p className='text-sm'>Gas By Gas is a brand who's provide LPEG gas cylinder for home and organization they quality is much better than others.</p>
                     
                 </div>
 
