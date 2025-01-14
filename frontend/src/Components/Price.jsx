@@ -13,13 +13,13 @@ const Price = () => {
 
             <div className='text-center flex flex-col justify-items-center items-center gap-4'>
 
-                <p className='py-1 px-3 bg-gray-200 rounded-full text-gray-700'> &#36; Pricing</p>
+                <p className='py-[10px] px-[18px] bg-gray-200 rounded-full text-gray-700'> &#36; Pricing</p>
 
                 <h1 className='font-bold text-4xl'> <span className='text-[#0D6EFD]'>GasByGas</span> Pricing Solutions</h1>
 
                 <p className='text-[14.5px] text-gray-500'>No hidden fees, just simple and affordable plans tailored to your needs</p>
 
-                <div className='flex gap-4 bg-gray-100 py-1 px-1.5 rounded-full'>
+                <div className='flex flex-row gap-4 bg-gray-100 py-1 px-1.5 rounded-full'>
 
                     <button className={priceMenu === 'Gas Refill' ? "bg-white py-[10px] px-[18px] text-[15px] text-base text-gray-800 rounded-[100px]" : "bg-transparent py-[10] px-[18px] text-[15px] text-base text-gray-800"} onClick={() => setPriceMenu('Gas Refill')}>Refill Your Gas</button>
                     
@@ -31,7 +31,7 @@ const Price = () => {
 
                     {/* =========================================== Small Gas ============================================== */}
 
-                    <div  className='bg-white py-4  max-w-96 border border-primary rounded-md shadow-lg hover:cursor-pointer'>
+                    <div  className='bg-white py-4  max-w-96 border border-primary rounded-md hover:cursor-pointer'>
 
                         <div  className='flex flex-col gap-3 mb-6 text-center'>
 
@@ -64,7 +64,7 @@ const Price = () => {
 
                     </div>
 
-                    <div className='bg-white py-4  max-w-96 border border-primary rounded-md  shadow-lg'>
+                    <div className='bg-white py-4  max-w-96 border border-primary rounded-md '>
 
                         <div className='flex flex-col gap-3 text-center mb-6 cursor-pointer'>
 
@@ -97,7 +97,7 @@ const Price = () => {
 
                     </div>
 
-                    <div className='bg-white py-4  max-w-96 border border-primary rounded-md  shadow-lg'>
+                    <div className='bg-white py-4  max-w-96 border border-primary rounded-md'>
 
                         <div className='flex flex-col gap-3 mb-6 text-center cursor-pointer'>
 
