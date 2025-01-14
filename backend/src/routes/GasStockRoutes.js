@@ -1,8 +1,9 @@
 import express from 'express';
+
 import { getGasDetails } from '../controllers/AddGasStockController.js';
 
-const gasRouter = express.Router();
+const fetchGasRouter = express.Router();
 
-gasRouter.get('/gas-data' , getGasDetails);
+fetchGasRouter.get('/gas-data' , getGasDetails);
 
-export default gasRouter;
+export default fetchGasRouter;

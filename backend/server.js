@@ -13,7 +13,6 @@ import authRouter from './src/routes/authRoutes.js'; // User Auth routes
 import smsRouter from './src/routes/smsRoutes.js'; // SMS Routes
 import gasRouter from './src/routes/gasRoutes.js'; // Gas Routes
 import connectCloudinary from './src/config/Cloudinary.js';
-import gasGetRouter from './src/routes/gasRoutes.js';
 
 
 
@@ -43,7 +42,7 @@ app.use('/api/auth', authRouter); // User Auth routes
 
 app.use('/api/sms', smsRouter); // User Sms routes
 
-app.use('/api/gas', gasGetRouter)
+app.use('/api/gas', gasRouter); // User Gas routes
 
 //================================================ Listener ================================================
 
