@@ -2,7 +2,7 @@ import { createContext } from "react";
 
 export const gasContext = createContext();
 
-const gasContectProvider = (props) => {
+const GasContectProvider = (props) => {
 
     const value = {
 
@@ -18,3 +18,5 @@ const gasContectProvider = (props) => {
         </gasContext.Provider>
     )
 }
+
+export default GasContectProvider;
