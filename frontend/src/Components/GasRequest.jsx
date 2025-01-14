@@ -64,24 +64,24 @@ const GasRequest = () => {
 
                     <div>
 
-                        <img src="" alt="" />
+                        <img src={asstets.remove_icon} alt="" />
 
-                        <p></p>
+                        <p>1</p>
 
-                        <img src="" alt="" />
+                        <img src={asstets.add_icon} alt="" />
 
                     </div>
 
-                    <p></p>
+                    <p>1</p>
 
 
                 </div>
 
                 <div>
 
-                    <p></p>
+                    <p>3780.90</p>
 
-                    <p></p>
+                    <p>3780.90</p>
 
                 </div>
 
