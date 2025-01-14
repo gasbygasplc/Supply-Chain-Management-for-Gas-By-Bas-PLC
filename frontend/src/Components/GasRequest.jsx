@@ -48,9 +48,9 @@ const GasRequest = () => {
 
             {/* Gas quantity */}
 
-            <div className='w-full'>
+            <div className='w-full flex flex-col gap-10'>
 
-                <div>
+                <div className='flex justify-between items-center' >
 
                     <p>Weight</p>
 
@@ -58,11 +58,11 @@ const GasRequest = () => {
 
                 </div>
 
-                <div>
+                <div className='flex justify-between'>
 
                     <p>Quantity:</p>
 
-                    <div>
+                    <div className='flex gap-2 items-center'>
 
                         <img src={asstets.remove_icon} alt="" />
 
@@ -77,7 +77,7 @@ const GasRequest = () => {
 
                 </div>
 
-                <div>
+                <div className='flex justify-between items-center'>
 
                     <p>3780.90</p>
 
