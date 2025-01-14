@@ -5,7 +5,7 @@ const AboutUsPage = () => {
 
   return (
 
-    <section id='about-us' className='py-3 md:py-6'>
+    <section id='about-us' className='py-3 md:py-8'>
 
       {/* ============================================ Our Company ============================================== */}
 
