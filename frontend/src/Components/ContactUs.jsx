@@ -4,10 +4,13 @@ const ContactUs = () => {
 
   return (
 
-    <div>ContactUs</div>
+    <section id='contact-us'>
+
+
+    </section>
 
   )
-  
+
 }
 
 export default ContactUs
