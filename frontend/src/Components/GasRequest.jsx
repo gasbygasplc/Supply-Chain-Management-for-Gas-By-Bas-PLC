@@ -1,9 +1,12 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { asstets } from '../assets/Assets'
+import { GasContext } from '../Context/GasContext';
 
 const GasRequest = () => {
 
     const [itemValue , setItemValue] = useState(0);
+
+    const {gas , setGas , getgas , setSelectedGas , selectedGas} = useContext(GasContext);
 
   return (
 
