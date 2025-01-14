@@ -50,9 +50,9 @@ const GasRequest = () => {
 
             <div className='w-full flex flex-col '>
 
-                <div>
+                <div className='w-full flex flex-col gap-4'>
 
-                    <h1>Gas By Gas</h1>
+                    <h1 className='text-2xl'>Gas By Gas</h1>
 
                     <p>Gas By Gas is a brand who's provide LPEG gas cylinders for home and organization they quality is much better than others.</p>
 
