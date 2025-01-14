@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { asstets } from '../assets/Assets'
 
 const GasRequest = () => {
+
+    const [itemValue , setItemValue] = useState(0);
 
   return (
 
@@ -66,7 +68,7 @@ const GasRequest = () => {
 
                         <img className='w-[30px] cursor-pointer' src={asstets.remove_icon} alt="" />
 
-                        <p>1</p>
+                        <p>{itemValue}</p>
 
                         <img className='w-[30px] cursor-pointer' src={asstets.add_icon} alt="" />
 
