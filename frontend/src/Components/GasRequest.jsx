@@ -52,19 +52,36 @@ const GasRequest = () => {
 
                 <div>
 
-                    <p></p>
+                    <p>Weight</p>
 
-                    <p></p>
-
-                </div>
-
-                <div>
-
+                    <p>12.9 Kg</p>
 
                 </div>
 
                 <div>
 
+                    <p>Quantity:</p>
+
+                    <div>
+
+                        <img src="" alt="" />
+
+                        <p></p>
+
+                        <img src="" alt="" />
+
+                    </div>
+
+                    <p></p>
+
+
+                </div>
+
+                <div>
+
+                    <p></p>
+
+                    <p></p>
 
                 </div>
 
