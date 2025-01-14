@@ -5,15 +5,15 @@ const Footer = () => {
 
   return (
 
-    <footer>
+    <footer className='flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 mt-40 text-sm'>
 
-        {/* ========================================= Left Side ================================================= */}
+      {/* ========================================= Left Side ================================================= */}
 
         <div>
 
-          <img src={asstets.logo} alt="" />
+          <img className='mb-5 w-30' src={asstets.logo} alt="" />
 
-          <p></p>
+          <p>Gas by Gas is your trusted partner for reliable, affordable, and eco-friendly gas solutions. We’re committed to delivering exceptional service and top-quality products to meet your energy needs.</p>
 
         </div>
 
@@ -21,15 +21,15 @@ const Footer = () => {
 
         <div>
 
-          <p></p>
+          <p>Gas By Gas</p>
 
           <ul>
 
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
-            <li></li>
+            <li>Home</li>
+            <li>price</li>
+            <li>Gas Request</li>
+            <li>About Us</li>
+            <li>Contact Us</li>
 
           </ul>
 
@@ -39,12 +39,12 @@ const Footer = () => {
 
         <div>
 
-          <p></p>
+          <p>Get in touch</p>
 
           <ul>
 
-            <li></li>
-            <li></li>
+            <li>0750136869</li>
+            <li>gasbygasplc@gmail.com</li>
 
           </ul>
 

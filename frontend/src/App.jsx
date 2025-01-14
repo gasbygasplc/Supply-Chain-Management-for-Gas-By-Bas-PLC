@@ -4,6 +4,7 @@ import { Route, Routes } from 'react-router-dom'
 import Home from './Pages/Home'
 import Navbar from './Components/Navbar'
 import Price from './Components/Price'
+import Footer from './Components/Footer'
 
 const App = () => {
 
@@ -20,6 +21,8 @@ const App = () => {
         <Route path='/Pricing-Cart' element={<Price/>} />
 
       </Routes>
+
+      <Footer/>
 
     </div>
 
