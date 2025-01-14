@@ -93,17 +93,17 @@ const GasRequest = () => {
 
                 <div className='flex flex-col justify-center gap-4'>
 
-                    <h1 className='text-2xl text-gray-600 font-bold'>Gas By Gas</h1>
+                    <h1 className='text-2xl text-gray-700 font-bold'>Gas By Gas</h1>
 
-                    <p className='text-sm'>Gas By Gas is a brand who's provide LPEG gas cylinder for home and organization they quality is much better than others.</p>
+                    <p className='text-sm leading-6'>Gas By Gas is a brand who's provide LPEG gas cylinder for home and organization they quality is much better than others.</p>
                     
                 </div>
 
-                <div>
+                <div className='flex flex-col justify-normal w-full gap-4 sm:flex-row sm:justify-between'>
 
-                    <button>Buy Now</button>
+                    <button className='bg-primary text-white py-[10px] px-[18px] w-full'>Buy Now</button>
 
-                    <button>Cash On Delivery</button>
+                    <button className='bg-primary text-white py-[10px] px-[18px] w-full'>Cash On Delivery</button>
 
                 </div>
 
