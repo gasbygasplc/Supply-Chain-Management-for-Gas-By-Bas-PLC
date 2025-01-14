@@ -1,8 +1,8 @@
 import express from 'express';
 import { submitGasRequest } from '../controllers/gasRequestController.js';
 
-const router = express.Router();
+const gasGetRouter = express.Router();
 
-router.post('/request', submitGasRequest);
+gasGetRouter.post('/request', submitGasRequest);
 
-export default router;
+export default gasGetRouter;
