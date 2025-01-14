@@ -101,7 +101,9 @@ const GasRequest = () => {
 
                 <div>
 
+                    <button>Buy Now</button>
 
+                    <button>Cash On Delivery</button>
 
                 </div>
 
