@@ -5,9 +5,11 @@ const Footer = () => {
 
   return (
 
-    <footer className='flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] gap-14 my-10 mt-20 text-sm'>
+    <footer className='flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] w-full gap-14 my-10 mt-20 text-sm'>
 
-      {/* ========================================= Left Side ================================================= */}
+      <div className=''>
+
+        {/* ========================================= Left Side ================================================= */}
 
         <div>
 
@@ -56,9 +58,11 @@ const Footer = () => {
 
           <hr />
 
-          <p>Copyright 2025@ GasByGas - All Rights Reserved</p>
+          <p className='py-5 text-sm text-center'>Copyright 2025@ GasByGas - All Rights Reserved</p>
 
         </div>
+
+      </div>
 
     </footer>
 
