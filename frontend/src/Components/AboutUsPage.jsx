@@ -11,7 +11,7 @@ const AboutUsPage = () => {
 
       <div className='text-center flex flex-col justify-items-center items-center'>
 
-        <p className='py-1 px-3 bg-gray-200 rounded-full text-gray-700'> &#9432; About Us</p>
+        <p className='py-[10px] px-[18px] bg-gray-200 rounded-full text-gray-700'> &#9432; About Us</p>
 
         <h1 className='font-bold py-4 text-4xl'>Why <span className='text-[#0D6EFD]'>Choose</span> Our Company</h1>
 
