@@ -5,9 +5,9 @@ const Footer = () => {
 
   return (
 
-    <footer className='flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] w-full gap-14 my-10 mt-20 text-sm'>
+    <footer >
 
-      <div className=''>
+      <div className='flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] w-full gap-14 my-10 mt-20 text-sm'>
 
         {/* ========================================= Left Side ================================================= */}
 
@@ -52,15 +52,15 @@ const Footer = () => {
 
         </div>
 
-        {/* ============================================== Footer Copyrights ==================================== */}
+      </div>
 
-        <div>
+      {/* ============================================== Footer Copyrights ==================================== */}
 
-          <hr />
+      <div>
 
-          <p className='py-5 text-sm text-center'>Copyright 2025@ GasByGas - All Rights Reserved</p>
+        <hr />
 
-        </div>
+        <p className='py-5 text-sm text-center'>Copyright 2025@ GasByGas - All Rights Reserved</p>
 
       </div>
 
