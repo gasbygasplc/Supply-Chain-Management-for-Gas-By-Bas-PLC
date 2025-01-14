@@ -61,7 +61,7 @@ const Navbar = () => {
          <Link to={'/'} className={menu === 'Home' ? "pb-[1.5px] border-b-[3px] border-primary rounded-[2px]" : ""} onClick={() => setMenu('Home')}>Home</Link>
          <a href="#pricing-cart" className={menu === 'Price' ? "pb-[1.5px] border-b-[3px] border-primary rounded-[2px]" : ""} onClick={() => setMenu('Price')}>Price</a>
          <a href="">Shopping</a>
-         <a href="">About Us</a>
+         <a href="#about-us">About Us</a>
          <a href="">Contact Us</a>
         </ul>
 
