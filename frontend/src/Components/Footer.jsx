@@ -27,11 +27,11 @@ const Footer = () => {
 
           <ul className='flex flex-col gap-2 text-gray-600'>
 
-            <li>Home</li>
-            <li>price</li>
-            <li>Gas Request</li>
-            <li>About Us</li>
-            <li>Contact Us</li>
+            <li  className='hover:text-primary'><a href="/">Home</a></li>
+            <li className='hover:text-primary'><a href="#pricing-cart">price</a></li>
+            <li className='hover:text-primary'><a href="#gas-request">Gas Request</a></li>
+            <li className='hover:text-primary'><a href="#about-us">About Us</a></li>
+            <li className='hover:text-primary'><a href="#contact-us">Contact Us</a></li>
 
           </ul>
 
