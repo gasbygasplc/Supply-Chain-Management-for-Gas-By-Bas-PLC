@@ -158,4 +158,25 @@ const getGasStock = async(req , res) => {
 
 }
 
-export { addStock , getGasStock };
+//================================================= get All Gas Data =====================================================
+
+const getGasDetails = async(req , res) => {
+
+    try 
+    {
+
+        const gasData = await gasStockmodel.find({});
+
+        res.status(200).json({success: true , gasData});
+        
+    } catch (error) 
+    {
+        
+        console.log("Error featching gas data: ", error);
+
+        res.status(500).json({success:false , message:"Error featching gas data"});
+
+    }
+}
+
+export { addStock , getGasStock , getGasDetails};
