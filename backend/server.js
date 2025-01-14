@@ -44,6 +44,8 @@ app.use('/api/sms', smsRouter); // User Sms routes
 
 app.use('/api/gas', gasRouter); // User Gas routes
 
+app.use('/api/gas', gasRouter)
+
 //================================================ Listener ================================================
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`));
