@@ -10,7 +10,21 @@ const GasContectProvider = (props) => {
 
     //========================================== fetch Gas Details =================================================
 
-    
+    const getGasDetails = async() =>
+    {
+
+        try 
+        {
+
+
+            
+        } catch (error) 
+        {
+
+            
+            
+        }
+    }
 
     const value = {
 
