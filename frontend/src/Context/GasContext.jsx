@@ -1,8 +1,16 @@
-import { createContext } from "react";
+import { createContext, useState } from "react";
 
 export const gasContext = createContext();
 
 const GasContectProvider = (props) => {
+
+    const [gasDetails , setGasDetails] = useState([]);
+
+    const backendURL = import.meta.env.VITE_BACKEND_URL;
+
+    //========================================== fetch Gas Details =================================================
+
+    
 
     const value = {
 
