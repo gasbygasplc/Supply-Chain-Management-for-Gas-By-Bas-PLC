@@ -5,13 +5,13 @@ const AboutUsPage = () => {
 
   return (
 
-    <section id='about-us' className='py-3 md:py-4'>
+    <section id='about-us' className='py-3 md:py-6'>
 
       {/* ============================================ Our Company ============================================== */}
 
       <div className='text-center'>
 
-        <h1 className='font-bold py-4 text-4xl'><span className='text-[#0D6EFD]'>Our</span> Company</h1>
+        <h1 className='font-bold py-4 text-4xl'>Why <span className='text-[#0D6EFD]'>Choose</span> Our Company</h1>
 
         <p className='text-sm text-gray-500 py-0'>Fueling Your Home, Business, and Beyond – Reliable Gas Cylinders Delivered and Refilled with Care. <br/> Let Us Power Your Everyday Moments!</p>
 
@@ -24,6 +24,8 @@ const AboutUsPage = () => {
         <img className='w-full md:max-w-[360px] rounded-md' src={asstets.about_us} alt="" />
 
         <div className=' flex flex-col justify-center gap-6 md:w-2/4 text-sm text-gray-500'>
+
+          <b className='text-primary text-lg'>Gas By Gas</b>
 
           <p>Welcome to Gas By Gas, your reliable partner for all your gas cylinder refill and purchase needs. At GasEase, we understand the importance of a steady and safe supply of cooking and industrial gas for your home or business. Our platform is designed to make ordering gas cylinders and scheduling refills seamless, ensuring convenience and safety every step of the way. With a commitment to quality and timely delivery, GasEase is here to simplify your gas management and keep your daily operations running smoothly</p>
 
