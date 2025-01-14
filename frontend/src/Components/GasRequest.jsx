@@ -93,7 +93,9 @@ const GasRequest = () => {
 
                 <div>
 
-                    
+                    <h1>Gas By Gas</h1>
+
+                    <p>Gas By Gas is a brand who's provide LPEG gas cylinder for home and organization they quality is much better than others.</p>
                     
                 </div>
 
