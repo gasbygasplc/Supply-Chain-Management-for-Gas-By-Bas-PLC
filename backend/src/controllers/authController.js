@@ -4,7 +4,7 @@ import User from '../models/User.js';
 import { sendSms } from '../utils/smsService.js';
 import { sendEmail } from '../utils/emailService.js';
 
-export const registerUser = async (req, res) => {
+export const registerUser = async (req, res) => {   
     const { name, nic, phone, email, password } = req.body;
 
     try {
