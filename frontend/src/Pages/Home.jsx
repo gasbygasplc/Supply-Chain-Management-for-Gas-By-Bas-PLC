@@ -2,6 +2,8 @@ import React from 'react'
 import Header from '../Components/Header'
 import Price from '../Components/Price'
 import GasRequest from '../Components/GasRequest'
+import AboutUsPage from '../Components/AboutUsPage'
+import ContactUs from '../Components/ContactUs'
 
 const Home = () => {
     
@@ -14,6 +16,10 @@ const Home = () => {
       <Price/>
 
       <GasRequest/>
+    
+      <AboutUsPage/>
+
+      <ContactUs/>
 
     </div>
 

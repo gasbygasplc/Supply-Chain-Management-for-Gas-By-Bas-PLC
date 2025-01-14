@@ -7,6 +7,12 @@ import medium_gas from './medium.png';
 import large_gas from './large.png';
 import add_icon from './add_icon_green.png';
 import remove_icon from './remove_icon_red.png';
+import about_us from './about.jpeg';
+import contact_us from './contact-us.svg'
+import chat_to_purchase from './chat_to_support.svg';
+import chat_to_support from './chat_to_purchase.svg';
+import location from './Visit_us.svg';
+import call from './call.svg'
 
 export const asstets = {
 
@@ -19,5 +25,11 @@ export const asstets = {
     large_gas,
     add_icon,
     remove_icon
+    about_us,
+    contact_us,
+    chat_to_purchase,
+    chat_to_support,
+    location,
+    call
 
 }
