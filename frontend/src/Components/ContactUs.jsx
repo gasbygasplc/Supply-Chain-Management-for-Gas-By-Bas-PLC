@@ -18,11 +18,11 @@ const ContactUs = () => {
 
         <div className='flex flex-col w-full gap-2 items-center'>
 
-            <img className='w-[60%] bg-white border border-primary rounded mt-4' src={asstets.contact_us} alt="" />
+            <img className='w-full md:w-[60%]  bg-white border-2 rounded mt-4' src={asstets.contact_us} alt="" />
 
-            <div className='flex flex-col w-full md:flex-row gap-4 mt-3 text-sm'>
+            <div className='flex flex-col w-full md:flex-row items-center gap-4 mt-3 text-sm'>
 
-                <div className='w-[80%] gap-3 p-3 rounded-md cursor-pointer flex flex-col justify-center items-start white border '>
+                <div className='w-[80%] gap-3 p-3 rounded-md cursor-pointer flex flex-col justify-center items-start white border-2 '>
 
                     <div className='p-1 bg-white border rounded-md'>
 
@@ -34,11 +34,11 @@ const ContactUs = () => {
 
                     <p className='text-gray-500'>Speak to our friendly team.</p>
 
-                    <button>sales@gasbygas.com</button>
+                    <button className='bg-white py-2 w-full text-center border-2 px-3 rounded-md hover:bg-primary hover:text-white transition duration-300 hover:border-primary'>sales@gasbygas.com</button>
 
                 </div>
 
-                <div className='w-[80%] items-start gap-3 p-3 rounded-md cursor-pointer flex flex-col   bg-white border text-sm'>
+                <div className='w-[80%] items-start gap-3 p-3 rounded-md cursor-pointer flex flex-col   bg-white border-2 text-sm'>
 
                     <div className='p-1 bg-white border rounded-md'>
 
@@ -50,11 +50,11 @@ const ContactUs = () => {
 
                     <p className='text-gray-500'>we are here to help.</p>
 
-                    <button>support@gasbygas.com</button>
+                    <button className='bg-white py-2 w-full text-center border-2 px-3 rounded-md hover:bg-primary hover:text-white transition duration-300 hover:border-primary'>support@gasbygas.com</button>
 
                 </div>
 
-                <div className='w-[80%] items-start gap-3 p-3 rounded-md cursor-pointer flex flex-col   bg-white border text-sm'>
+                <div className='w-[80%] items-start gap-3 p-3 rounded-md cursor-pointer flex flex-col   bg-white border-2 text-sm'>
 
                     <div className='p-1 bg-white border rounded-md'>
 
@@ -66,11 +66,11 @@ const ContactUs = () => {
 
                     <p className='text-gray-500'>Visit your near by Outlet</p>
 
-                    <button>call to near outlet</button>
+                    <button className='bg-white py-2 w-full text-center border-2 px-3 rounded-md hover:bg-primary hover:text-white transition duration-300 hover:border-primary'>call to near outlet</button>
 
                 </div>
 
-                <div className='w-[80%] items-start gap-3 p-3 rounded-md cursor-pointer flex flex-col   bg-white border text-sm'>
+                <div className='w-[80%] items-start gap-3 p-3 rounded-md cursor-pointer flex flex-col   bg-white border-2 text-sm'>
 
                     <div className='p-1 bg-white border rounded-md'>
 
@@ -82,7 +82,7 @@ const ContactUs = () => {
 
                     <p className='text-gray-500'>Mon - Sun from 8am to 7pm</p>
 
-                    <button>0094-76 413 2578</button>
+                    <button className='bg-white py-2 w-full text-center border-2 px-3 rounded-md hover:bg-primary hover:text-white transition duration-300 hover:border-primary'>0094-76 413 2578</button>
 
                 </div>
 
