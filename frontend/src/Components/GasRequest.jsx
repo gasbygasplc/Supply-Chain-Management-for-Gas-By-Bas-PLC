@@ -9,7 +9,7 @@ const GasRequest = () => {
 
         <h1 className='py-6 mt-4 text-4xl font-bold text-center text-gray-900 sm:text-4xl'><span className='text-primary'>Refill</span> your gas Here </h1>
 
-        <div className='flex flex-col w-full md:flex-row justify-between items-center gap-4 px-4 py-4 bg-white rounded-lg md:px-8 md:py-8 md:gap-8'>
+        <div className='flex flex-col w-full md:flex-row justify-between items-center sm:items-start gap-4 px-4 py-4 bg-white rounded-lg md:px-8 md:py-8 md:gap-8'>
 
 
             {/* Gas type */}
@@ -48,9 +48,23 @@ const GasRequest = () => {
 
             {/* Gas quantity */}
 
-            <div className='w-full'>
+            <div className='w-full flex flex-col '>
 
-                <h1>img2</h1>
+                <div>
+
+                    <h1>Gas By Gas</h1>
+
+                    <p>Gas By Gas is a brand who's provide LPEG gas cylinders for home and organization they quality is much better than others.</p>
+
+                </div>
+
+                <div>
+
+                    <button></button>
+
+                    <button></button>
+
+                </div>
 
             </div>
 
