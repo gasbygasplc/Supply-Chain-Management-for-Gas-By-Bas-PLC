@@ -24,7 +24,7 @@ export const asstets = {
     medium_gas,
     large_gas,
     add_icon,
-    remove_icon
+    remove_icon,
     about_us,
     contact_us,
     chat_to_purchase,
