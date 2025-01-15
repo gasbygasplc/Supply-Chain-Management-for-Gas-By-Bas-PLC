@@ -6,62 +6,54 @@ export const GasContext = createContext();
 
 const GasContectProvider = (props) => {
 
-    const [gas , setGas] = useState([]);
-
-    const [selectedGas , setSelectedGas] = useState(null)
+    const [gasDetails , setGasDetails] = useState(null);
 
     const backendURL = import.meta.env.VITE_BACKEND_URL;
 
     //========================================== fetch Gas Details =================================================
 
-    const getgas = async() =>
-    {
+    const fetchGasDetails = async(type) => {
 
         try 
         {
 
-            const {gasData} = await axios.get(backendURL + '/api/gas/gas-data');
+            const response = await axios.get(`${backendURL}/api/gas/${type}`);
 
-            if(gasData.success)
+            if(response.status === 200)
             {
-                setGas(gasData.gasData);
 
-                setSelectedGas(gasData.gasData[0]);
-
-                console.log(gasData.gasData);
+                setGasDetails(response.data);
+                console.log(response.data)
+                
             }
             else
             {
-                toast.error(gasData.message)
+
+                toast.error("Failed to fetch gas details")
             }
             
         } catch (error) 
         {
 
-            toast.error(error.message)
+            toast.error(`Error fetching gas details: ${error.message}`);
             
         }
     }
 
     //============================================= Handle Gas selection code ===========================================
 
-    const handleGasSelection = gasId => {
+    const handleGasSelection = (type) => {
 
-        const selected = gas.find((gas) => gas._id === gasId);
-
-        setSelectedGas(selected);
-
+        fetchGasDetails(type);
     }
 
 
 
     const value = {
 
-        getgas,
-        gas,
-        setGas,
-        setSelectedGas,
-        selectedGas
+        gasDetails,
+        fetchGasDetails,
+        handleGasSelection
     }
 
     return(
