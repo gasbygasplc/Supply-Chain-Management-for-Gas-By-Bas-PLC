@@ -165,9 +165,18 @@ const getGasDetails = async(req , res) => {
     try 
     {
 
-        const gasData = await gasStockmodel.find({});
+        const gasType = req.params.type;
 
-        res.status(200).json({success: true , gasData});
+        const gasDetails = await gasStockmodel.findOne({type:gasType})
+
+        if(!gasDetails)
+        {
+
+            return res.status(404).json({message:'Gas type is not found'});
+
+        }
+
+        res.status(200).json(gasDetails)
         
     } catch (error) 
     {

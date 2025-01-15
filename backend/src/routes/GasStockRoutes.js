@@ -4,6 +4,6 @@ import { getGasDetails } from '../controllers/AddGasStockController.js';
 
 const fetchGasRouter = express.Router();
 
-fetchGasRouter.get('/gas-data' , getGasDetails);
+fetchGasRouter.get('/:type' , getGasDetails);
 
 export default fetchGasRouter;

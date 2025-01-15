@@ -1,9 +1,27 @@
-import React, { useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { asstets } from '../assets/Assets'
+import { GasContext } from '../Context/GasContext'
 
 const GasRequest = () => {
 
-    const [itemValue , setItemValue] = useState(0);
+    
+    const {gasDetails , handleGasSelection} = useContext(GasContext);
+
+    const [selectedType , setSelectedType] = useState('Small');
+
+
+        const selectedGas = type => {
+
+            setSelectedType(type);
+
+            handleGasSelection(type)
+        }
+
+        useEffect(() => {
+
+            selectedGas("Small");
+        } , [])
+
 
   return (
 
@@ -19,26 +37,26 @@ const GasRequest = () => {
             <div className='w-full'>
 
                 <div className='bg-white border border-gray-300  h-72 md:h-96 rounded-lg flex justify-center items-center '>
-                    
-                    <img className='w-[450px] bg-cover' src={asstets.small_gas} />
+            
+                    <img className='w-[450px] bg-cover' src={ gasDetails ? gasDetails.image : asstets.small_gas} />
 
                 </div>
 
                 <div className='flex w-full  justify-between items-center gap-4 mt-6'>
 
-                    <div  className='w-full py-4 bg-white border hover:border-primary border-gray-300  rounded-lg flex justify-center items-center cursor-pointer '>
+                    <div onClick={() => selectedGas("Small")} className= {`w-full py-4 bg-white border ${selectedType === 'Small' ? 'border-primary' : 'border-gray-300'} rounded-lg flex justify-center items-center cursor-pointer`}>
 
                         <img  className='w-full' src={asstets.small_gas} alt="" />
 
                     </div>
 
-                    <div className='w-full py-4 bg-white border  hover:border-primary border-gray-300 rounded-lg flex justify-center items-center cursor-pointer '>
+                    <div onClick={() => selectedGas("Medium")} className={`w-full py-4 bg-white border ${selectedType === 'Medium' ? 'border-primary' : 'border-gray-300'} rounded-lg flex justify-center items-center cursor-pointer`}>
 
                         <img className='w-full'  src={asstets.medium_gas} alt="" />
 
                     </div>
 
-                    <div className='w-full py-4 bg-white border hover:border-primary  border-gray-300  rounded-lg flex justify-center items-center cursor-pointer '>
+                    <div onClick={() => selectedGas("Large")} className={`w-full py-4 bg-white border ${selectedType === 'Large' ? 'border-primary' : 'border-gray-300'} rounded-lg flex justify-center items-center cursor-pointer`}>
 
                         <img className='w-full'  src={asstets.large_gas} alt="" />
 
@@ -56,7 +74,7 @@ const GasRequest = () => {
 
                     <p>Weight</p>
 
-                    <p>12.9 Kg</p>
+                    <p>{gasDetails ? gasDetails.weightKG + "Kg" : "12.5 Kg"}</p>
 
                 </div>
 
@@ -68,7 +86,7 @@ const GasRequest = () => {
 
                         <img className='w-[30px] cursor-pointer' src={asstets.remove_icon} alt="" />
 
-                        <p>{itemValue}</p>
+                        <p>1</p>
 
                         <img className='w-[30px] cursor-pointer' src={asstets.add_icon} alt="" />
 
@@ -81,9 +99,9 @@ const GasRequest = () => {
 
                 <div className='flex justify-between items-center'>
 
-                    <p>3780.90</p>
+                    <p>LKR {gasDetails ? gasDetails.price : ""}</p>
 
-                    <p>3780.90</p>
+                    <p>LKR {gasDetails ? gasDetails.price  : ""}</p>
 
                 </div>
 
