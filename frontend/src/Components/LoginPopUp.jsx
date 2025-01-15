@@ -10,7 +10,8 @@ const LoginPopUp = () => {
         <form className='bg-white flex flex-col gap-6 p-6 rounded-lg w-[90%] sm:w-[330px] md:w-[24vw] fadeIn'>
 
 
-            <div >
+
+            <div className=''>
 
                 <h2>Sign In</h2>
 
