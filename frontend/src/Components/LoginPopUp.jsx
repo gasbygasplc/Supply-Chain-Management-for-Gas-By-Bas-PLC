@@ -11,21 +11,21 @@ const LoginPopUp = () => {
 
 
 
-            <div className=''>
+            <div className='flex justify-between items-center text-black'>
 
-                <h2>Sign In</h2>
+                <h2 className='text-lg font-semibold'>Sign In</h2>
 
-                <img src={asstets.cross_icon} />
+                <img className='w-4 cursor-pointer' src={asstets.cross_icon} alt='closer' />
 
             </div>
 
-            <div>
+            <div className='flex flex-col gap-4'>
 
-                <input type="text" />
-                <input type="email" />
-                <input type="password" />
-                <input type="text" />
-                <select defaultValue={'User'}>
+                <input type="text" placeholder='Gas by Gas' className='outline-none  border border-primary p-2 rounded-md'/>
+                <input type="email" placeholder='Gasbygas@gmail.com' className='outline-none  border border-primary p-2 rounded-md'/>
+                <input type="password" placeholder='**********' className='outline-none  border border-primary p-2 rounded-md'/>
+                <input type="text" placeholder='0094771234567' className='outline-none  border border-primary p-2 rounded-md'/>
+                <select defaultValue={'User'} className='outline-none  border border-primary p-2 rounded-md'>
 
                     <option value="User">User</option>
                     <option value="Organization">Organization</option>
@@ -34,17 +34,17 @@ const LoginPopUp = () => {
 
             </div>
 
-            <button>Sign In</button>
+            <button className='bg-primary text-white py-2 rounded-md text-sm font-medium cursor-pointer'>Sign In</button>
 
-            <div>
+            <div className='flex items-center gap-2 mt-4'>
 
                 <input type="checkbox" />
 
-                <p>By Continuing, i agree to the terms of use & Privacy Policy</p>
+                <p className='text-sm'>By Continuing, i agree to the terms of use & Privacy Policy</p>
 
             </div>
 
-            <p>Create a new Account? <span>Click Here</span></p>
+            <p className='text-sm'>Create a new Account? <span className='text-sm font-semibold cursor-pointer'>Click Here</span></p>
 
 
         </form>
