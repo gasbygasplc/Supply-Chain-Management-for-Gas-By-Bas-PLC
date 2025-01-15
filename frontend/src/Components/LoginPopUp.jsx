@@ -19,13 +19,13 @@ const LoginPopUp = () => {
 
             </div>
 
-            <div>
+            <div className='flex flex-col gap-4'>
 
-                <input type="text" />
-                <input type="email" />
-                <input type="password" />
-                <input type="text" />
-                <select defaultValue={'User'}>
+                <input type="text" placeholder='Gas by Gas' className='outline-none  border border-primary p-2 rounded-md'/>
+                <input type="email" placeholder='Gasbygas@gmail.com' className='outline-none  border border-primary p-2 rounded-md'/>
+                <input type="password" placeholder='**********' className='outline-none  border border-primary p-2 rounded-md'/>
+                <input type="text" placeholder='0094771234567' className='outline-none  border border-primary p-2 rounded-md'/>
+                <select defaultValue={'User'} className='outline-none  border border-primary p-2 rounded-md'>
 
                     <option value="User">User</option>
                     <option value="Organization">Organization</option>
@@ -34,7 +34,7 @@ const LoginPopUp = () => {
 
             </div>
 
-            <button>Sign In</button>
+            <button className='bg-primary'>Sign In</button>
 
             <div>
 
