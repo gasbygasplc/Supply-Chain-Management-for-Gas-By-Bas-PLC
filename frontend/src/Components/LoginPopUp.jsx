@@ -36,15 +36,15 @@ const LoginPopUp = () => {
 
             <button className='bg-primary text-white py-2 rounded-md text-sm font-medium cursor-pointer'>Sign In</button>
 
-            <div className=''>
+            <div className='flex items-center gap-2 mt-4'>
 
                 <input type="checkbox" />
 
-                <p>By Continuing, i agree to the terms of use & Privacy Policy</p>
+                <p className='text-sm'>By Continuing, i agree to the terms of use & Privacy Policy</p>
 
             </div>
 
-            <p>Create a new Account? <span>Click Here</span></p>
+            <p className='text-sm'>Create a new Account? <span className='text-sm font-semibold cursor-pointer'>Click Here</span></p>
 
 
         </form>
