@@ -34,7 +34,7 @@ const LoginPopUp = () => {
 
             </div>
 
-            <button className='bg-primary'>Sign In</button>
+            <button className='bg-primary text-white py-2 rounded-md text-sm font-medium cursor-pointer'>Sign In</button>
 
             <div>
 
