@@ -126,30 +126,51 @@ export const loginUser = async (req, res) =>
             user: userWithoutPassword,
 
             token,
-            
+
         });
-    } catch (error) {
+    } catch (error) 
+    {
+
         console.error("Error during login:", error);
+
         res.status(500).json({ message: "Error logging in.", error });
+
     }
+
 };
 
-export const resetPassword = async (req, res) => {
+export const resetPassword = async (req, res) => 
+{
+
     const { email, newPassword } = req.body;
 
-    try {
+    try 
+    {
+
         const user = await User.findOne({ email });
-        if (!user) {
+
+        if (!user) 
+        {
+
             return res.status(404).json({ message: "User not found." });
+
         }
 
         const hashedPassword = await bcrypt.hash(newPassword, 10);
+
         user.password = hashedPassword;
+
         await user.save();
 
         res.status(200).json({ message: "Password reset successful." });
-    } catch (error) {
+
+    } catch (error) 
+    {
+
         console.error("Error resetting password:", error);
+
         res.status(500).json({ message: "Error resetting password.", error });
+
     }
+    
 };
