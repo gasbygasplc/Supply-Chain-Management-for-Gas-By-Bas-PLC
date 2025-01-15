@@ -23,8 +23,9 @@ export const registerUser = async (req, res) => {
 
         if (existingUser) 
         {
-            
+
             return res.status(400).json({ success: false, message: "User already exists." });
+            
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
@@ -36,13 +37,20 @@ export const registerUser = async (req, res) => {
         const { password: _, ...userWithoutPassword } = newUser.toObject();
 
         const smsMessage = `Welcome to Gas By Gas, ${name}! Your account has been successfully created.\nEmail: ${email}`;
+
         const smsResponse = await sendSms(`94${normalizedPhone}`, smsMessage, '');
-        if (!smsResponse.success) {
+
+        if (!smsResponse.success) 
+        {
+
             console.error(`Failed to send SMS to 94${normalizedPhone}: ${smsResponse.message}`);
+
         }
 
         const emailSubject = 'Welcome to Gas By Gas!';
+
         const emailText = `Dear ${name},\n\nWelcome to Gas By Gas! Your account has been successfully created.\n\nEmail: ${email}\nPhone: ${normalizedPhone}\n\nThank you for joining us!\nGas By Gas Team`;
+        
         const emailHtml = `
             <h1>Welcome to Gas By Gas!</h1>
             <p>Dear ${name},</p>
@@ -54,32 +62,57 @@ export const registerUser = async (req, res) => {
         `;
 
         const emailResponse = await sendEmail(email, emailSubject, emailText, emailHtml);
-        if (!emailResponse.success) {
+
+        if (!emailResponse.success) 
+        {
+
             console.error(`Failed to send email to ${email}: ${emailResponse.message}`);
+
         }
 
         res.status(201).json({
+
             message: "User registered successfully.",
+
             user: userWithoutPassword,
+
         });
-    } catch (error) {
+
+    } 
+    catch (error) 
+    {
+
         console.error("Error during registration:", error);
+
         res.status(500).json({ message: "Error registering user.", error });
+
     }
+
 };
 
-export const loginUser = async (req, res) => {
+export const loginUser = async (req, res) => 
+{
     const { email, password } = req.body;
 
-    try {
+    try 
+    {
+
         const user = await User.findOne({ email });
-        if (!user) {
+
+        if (!user) 
+        {
+
             return res.status(404).json({ message: "User not found." });
+
         }
 
         const isPasswordValid = await bcrypt.compare(password, user.password);
-        if (!isPasswordValid) {
+
+        if (!isPasswordValid) 
+        {
+
             return res.status(401).json({ message: "Invalid credentials." });
+
         }
 
         const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
@@ -87,9 +120,13 @@ export const loginUser = async (req, res) => {
         const { password: _, ...userWithoutPassword } = user.toObject();
 
         res.status(200).json({
+
             message: "Login successful.",
+            
             user: userWithoutPassword,
+
             token,
+            
         });
     } catch (error) {
         console.error("Error during login:", error);
