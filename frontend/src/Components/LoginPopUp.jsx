@@ -41,17 +41,23 @@ const LoginPopUp = () => {
 
             </div>
 
-            <button className='bg-primary text-white py-2 rounded-md text-sm font-medium cursor-pointer'>Sign In</button>
+            <button className='bg-primary text-white py-[10px] rounded-md text-sm font-medium cursor-pointer'>{currentState}</button>
 
             <div className='flex items-center gap-2'>
 
-                <input type="checkbox" />
+                <input type="checkbox" required/>
 
                 <p className='text-sm'>By Continuing, i agree to the terms of use & Privacy Policy</p>
 
             </div>
 
-            <p className='text-sm'>Create a new Account? <span className='text-sm font-semibold cursor-pointer text-primary'>Click Here</span></p>
+            {
+                currentState === "Sign In" ? 
+
+                (<p className='text-sm'>Create a new account? <span  onClick={() => setCurrentState('Sign Up')} className='text-sm font-semibold cursor-pointer text-primary'>Click Here</span></p>) :
+
+                (<p className='text-sm'>Sign In to your Account? <span onClick={() => setCurrentState('Sign In')} className='text-sm font-semibold cursor-pointer text-primary'>Click Here</span></p>)
+            }
 
 
         </form>
