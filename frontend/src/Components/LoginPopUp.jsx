@@ -5,12 +5,12 @@ const LoginPopUp = () => {
 
   return (
 
-    <div>
+    <div className='absolute inset-0 z-10 bg-black bg-opacity-70 grid place-items-center'>
         
-        <form >
+        <form className='bg-white flex flex-col gap-6 p-6 rounded-lg w-[90%] sm:w-[330px] md:w-[24vw] fadeIn'>
 
 
-            <div>
+            <div >
 
                 <h2>Sign In</h2>
 
