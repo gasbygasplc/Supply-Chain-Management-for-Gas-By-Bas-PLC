@@ -13,7 +13,7 @@ const LoginPopUp = () => {
 
             <div className='flex justify-between items-center text-black'>
 
-                <h2 className='text-lg font-semibold'>Sign In</h2>
+                <h2 className='text-lg font-semibold'>Create Your Account</h2>
 
                 <img className='w-4 cursor-pointer' src={asstets.cross_icon} alt='closer' />
 
@@ -40,7 +40,7 @@ const LoginPopUp = () => {
 
                 <input type="checkbox" />
 
-                <p className='text-sm'>By Continuing, i agree to the terms of use & Privacy Policy</p>
+                <p className='text-sm'>i agree to the terms of use & Privacy Policy</p>
 
             </div>
 
