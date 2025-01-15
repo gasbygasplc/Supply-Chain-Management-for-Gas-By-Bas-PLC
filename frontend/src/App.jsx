@@ -5,12 +5,17 @@ import Home from './Pages/Home'
 import Navbar from './Components/Navbar'
 import Price from './Components/Price'
 import Footer from './Components/Footer'
+import LoginPopUp from './Components/LoginPopUp'
 
 const App = () => {
 
   return (
 
-    <div className='mx-4 sm:mx-[10%]'>
+    <>
+
+      <LoginPopUp/>
+
+      <div className='mx-4 sm:mx-[10%]'>
 
       <Navbar/>
 
@@ -22,7 +27,9 @@ const App = () => {
 
       <Footer/>
 
-    </div>
+      </div>
+    
+    </>
 
   )
 
