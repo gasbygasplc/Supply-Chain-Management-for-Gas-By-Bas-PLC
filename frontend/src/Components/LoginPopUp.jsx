@@ -11,11 +11,11 @@ const LoginPopUp = () => {
 
 
 
-            <div className=''>
+            <div className='flex justify-between items-center text-black'>
 
-                <h2>Sign In</h2>
+                <h2 className='text-lg font-semibold'>Sign In</h2>
 
-                <img src={asstets.cross_icon} />
+                <img className='w-4 cursor-pointer' src={asstets.cross_icon} alt='closer' />
 
             </div>
 
