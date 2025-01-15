@@ -13,6 +13,7 @@ import chat_to_purchase from './chat_to_support.svg';
 import chat_to_support from './chat_to_purchase.svg';
 import location from './Visit_us.svg';
 import call from './call.svg'
+import cross_icon from './cross_icon.png';
 
 export const asstets = {
 
@@ -30,6 +31,7 @@ export const asstets = {
     chat_to_purchase,
     chat_to_support,
     location,
-    call
+    call,
+    cross_icon
 
 }
