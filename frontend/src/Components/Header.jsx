@@ -3,6 +3,7 @@ import { asstets } from '../assets/Assets'
 
 const Header = () => {
 
+
   return (
 
     <section id='Home' className="min-h-[38vw] sm:min-h-[34vw] my-8 bg-no-repeat bg-contain relative" style={{backgroundImage:`url(${asstets.header_image})`}}>
@@ -17,7 +18,7 @@ const Header = () => {
           
         </p>
 
-        <button className='border-none  text-black font-medium py-[2vw] sm:py-[2vw] md:py-[1vw] px-[4vw] sm:px-[4vw] md:px-[2.3vw] bg-white text-[3vw] sm:text-[max(1.5vw,13px)] md:text-[max(1vw,13px)] rounded-full cursor-pointer'>View Menu</button>
+        <a href='#gas-request'  className='border-none  text-black font-medium py-[2vw] sm:py-[2vw] md:py-[1vw] px-[4vw] sm:px-[4vw] md:px-[2.3vw] bg-white text-[3vw] sm:text-[max(1.5vw,13px)] md:text-[max(1vw,13px)] rounded-full cursor-pointer'>Request Gas</a>
 
       </div>
 
