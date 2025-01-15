@@ -36,7 +36,7 @@ const LoginPopUp = () => {
 
             <button className='bg-primary text-white py-2 rounded-md text-sm font-medium cursor-pointer'>Sign In</button>
 
-            <div>
+            <div className=''>
 
                 <input type="checkbox" />
 
