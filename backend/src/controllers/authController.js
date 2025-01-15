@@ -5,19 +5,25 @@ import { sendSms } from '../utils/smsService.js';
 import { sendEmail } from '../utils/emailService.js';
 
 export const registerUser = async (req, res) => {   
+
     const { name, nic, phone, email, password } = req.body;
 
     try {
-        let normalizedPhone = phone.startsWith('94') 
-            ? phone.slice(2) 
-            : phone.replace(/^0/, '');
 
-        if (!/^\d{9}$/.test(normalizedPhone)) {
+        let normalizedPhone = phone.startsWith('94') ? phone.slice(2) : phone.replace(/^0/, '');
+
+        if (!/^\d{9}$/.test(normalizedPhone)) 
+        {
+
             return res.status(400).json({ success: false, message: "Invalid phone number format." });
+
         }
 
         const existingUser = await User.findOne({ $or: [{ nic }, { phone: normalizedPhone }, { email }] });
-        if (existingUser) {
+
+        if (existingUser) 
+        {
+            
             return res.status(400).json({ success: false, message: "User already exists." });
         }
 
