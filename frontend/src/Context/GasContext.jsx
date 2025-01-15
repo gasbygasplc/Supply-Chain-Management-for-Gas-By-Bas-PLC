@@ -23,7 +23,6 @@ const GasContectProvider = (props) => {
             {
 
                 setGasDetails(response.data);
-                console.log(response.data)
                 
             }
             else

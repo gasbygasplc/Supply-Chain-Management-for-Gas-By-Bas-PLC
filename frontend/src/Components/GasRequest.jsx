@@ -10,17 +10,19 @@ const GasRequest = () => {
     const [selectedType , setSelectedType] = useState('Small');
 
 
-        const selectedGas = type => {
+    const selectedGas = type => {
 
-            setSelectedType(type);
+        setSelectedType(type);
 
-            handleGasSelection(type)
-        }
+        handleGasSelection(type);
 
-        useEffect(() => {
+    }
 
-            selectedGas("Small");
-        } , [])
+    useEffect(() => {
+
+        selectedGas("Small");
+
+    } , [])
 
 
   return (
