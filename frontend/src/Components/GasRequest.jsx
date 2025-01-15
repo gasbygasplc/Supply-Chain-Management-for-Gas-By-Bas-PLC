@@ -1,12 +1,9 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { asstets } from '../assets/Assets'
 import { GasContext } from '../Context/GasContext';
 
 const GasRequest = () => {
 
-    const [itemValue , setItemValue] = useState(0);
-
-    const {gas , setGas , getgas , setSelectedGas , selectedGas} = useContext(GasContext);
 
   return (
 
@@ -22,8 +19,8 @@ const GasRequest = () => {
             <div className='w-full'>
 
                 <div className='bg-white border border-gray-300  h-72 md:h-96 rounded-lg flex justify-center items-center '>
-                    
-                    <img className='w-[450px] bg-cover' src={asstets.small_gas} />
+            
+                    <img className='w-[450px] bg-cover' src={selectedGas.image} />
 
                 </div>
 
