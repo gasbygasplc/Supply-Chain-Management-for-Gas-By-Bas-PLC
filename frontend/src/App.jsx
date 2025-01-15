@@ -1,5 +1,5 @@
 
-import React from 'react'
+import React, { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Home from './Pages/Home'
 import Navbar from './Components/Navbar'
@@ -9,15 +9,17 @@ import LoginPopUp from './Components/LoginPopUp'
 
 const App = () => {
 
+  const [showSignIn , setShowSignIn] = useState(false);
+
   return (
 
     <>
 
-      <LoginPopUp/>
+      {showSignIn ? <LoginPopUp setShowSignIn = {setShowSignIn}/> : <></>}
 
       <div className='mx-4 sm:mx-[10%]'>
 
-      <Navbar/>
+      <Navbar setShowSignIn = {setShowSignIn}/>
 
       <Routes>
 

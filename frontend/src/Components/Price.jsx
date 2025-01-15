@@ -27,7 +27,7 @@ const Price = () => {
 
                 </div>
 
-                <div className='grid grid-cols-1 w-full gap-10 mx-auto mt-4 md:grid-cols-3 '>
+                <div className='grid grid-cols-1 w-full gap-10 mx-auto mt-1 md:grid-cols-3 '>
 
                     {/* =========================================== Small Gas ============================================== */}
 
