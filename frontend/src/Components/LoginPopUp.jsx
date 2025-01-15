@@ -44,7 +44,7 @@ const LoginPopUp = () => {
 
             </div>
 
-            <p className='text-sm'>Create a new Account? <span className='text-sm font-semibold cursor-pointer'>Click Here</span></p>
+            <p className='text-sm text-center'>Create a new Account? <span className='text-sm font-semibold cursor-pointer'>Click Here</span></p>
 
 
         </form>
