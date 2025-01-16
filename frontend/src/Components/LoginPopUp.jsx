@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { asstets } from '../assets/Assets';
+import {toast} from 'react-toastify'
 
 const LoginPopUp = ({ setShowSignIn }) => {
 
@@ -60,16 +61,17 @@ const LoginPopUp = ({ setShowSignIn }) => {
 
         if (response.ok) 
         {
-            alert(currentState === 'Sign In' ? 'Login successful!' : 'Registration successful!');
+            toast.success(currentState === 'Sign In' ? 'Login successful!' : 'Registration successful!');
 
-            setShowSignIn(false); // Close the popup
+            setShowSignIn(false); 
 
         } else 
         {
 
-            alert(result.message || 'Something went wrong!');
+            toast.error(result.message || 'Something went wrong!');
             
         }
+        
     } catch (error) 
     {
       console.error('Error:', error);
