@@ -22,21 +22,19 @@ const LoginPopUp = ({setShowSignIn}) => {
 
             <div className='flex flex-col gap-4'>
 
-                <input type="email" placeholder='Gasbygas@gmail.com' className='outline-none  border border-primary p-2 rounded-md'/>
-                <input type="password" placeholder='**********' className='outline-none  border border-primary p-2 rounded-md'/>
-
                 {currentState === 'Sign In' ? <></> : <>
                     
-                    <input type="text" placeholder='Gas by Gas' className='outline-none  border border-primary p-2 rounded-md'/>
-                    <input type="text" placeholder='0094771234567' className='outline-none  border border-primary p-2 rounded-md'/>
-                    <select defaultValue={'User'} className='outline-none  border border-primary p-2 rounded-md'>
+                <input type="text" placeholder='Gas by Gas' className='outline-none  border border-primary p-2 rounded-md'/>
+                <input type="text" placeholder='0094771234567' className='outline-none  border border-primary p-2 rounded-md'/>
+                <select defaultValue={'User'} className='outline-none  border border-primary p-2 rounded-md'>
 
-                        <option value="User">User</option>
-                        <option value="Organization">Organization</option>
+                    <option value="User">User</option>
+                    <option value="Organization">Organization</option>
 
-                    </select>
+                </select> </>}
 
-                </>}
+                <input type="email" placeholder='Gasbygas@gmail.com' className='outline-none  border border-primary p-2 rounded-md'/>
+                <input type="password" placeholder='**********' className='outline-none  border border-primary p-2 rounded-md'/>
 
             </div>
 
