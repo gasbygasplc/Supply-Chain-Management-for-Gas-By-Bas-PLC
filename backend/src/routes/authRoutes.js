@@ -5,7 +5,7 @@ const router = express.Router();
 
 const validateRegistration = (req, res, next) => {
 
-    const { name, nic, phone, email, password } = req.body;
+    const { name, nic, phone, email, password} = req.body;
 
     if (!name || !nic || !phone || !email || !password) {
 
