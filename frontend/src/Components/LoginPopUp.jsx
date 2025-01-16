@@ -5,7 +5,10 @@ const LoginPopUp = ({setShowSignIn}) => {
 
     const [currentState , setCurrentState] = useState('Sign In');
 
-    
+    const [data , setData] = useState({
+
+        
+    })
 
   return (
 
@@ -28,13 +31,13 @@ const LoginPopUp = ({setShowSignIn}) => {
                     
                 <input type="text" placeholder='Gas by Gas' className='outline-none  border border-primary p-2 rounded-md'/>
                 <input type="text" placeholder='0094771234567' className='outline-none  border border-primary p-2 rounded-md'/>
+                <input type="text" placeholder='200118706543V' className='outline-none  border border-primary p-2 rounded-md'/>
                 <select defaultValue={'User'} className='outline-none  border border-primary p-2 rounded-md'>
 
                     <option value="User">User</option>
                     <option value="Organization">Organization</option>
 
                 </select> </>}
-
                 <input type="email" placeholder='Gasbygas@gmail.com' className='outline-none  border border-primary p-2 rounded-md'/>
                 <input type="password" placeholder='**********' className='outline-none  border border-primary p-2 rounded-md'/>
 
