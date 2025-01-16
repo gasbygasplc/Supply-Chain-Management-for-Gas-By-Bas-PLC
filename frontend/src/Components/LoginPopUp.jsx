@@ -7,8 +7,21 @@ const LoginPopUp = ({setShowSignIn}) => {
 
     const [data , setData] = useState({
 
-        
-    })
+        name: '',
+
+        phone : '',
+
+        nic : '',
+
+        role : '',
+
+        email : '',
+
+        password : ''
+
+    });
+
+    
 
   return (
 
@@ -29,7 +42,7 @@ const LoginPopUp = ({setShowSignIn}) => {
 
                 {currentState === 'Sign In' ? <></> : <>
                     
-                <input type="text" placeholder='Gas by Gas' className='outline-none  border border-primary p-2 rounded-md'/>
+                <input type="text" placeholder='Mathumitha' className='outline-none  border border-primary p-2 rounded-md'/>
                 <input type="text" placeholder='0094771234567' className='outline-none  border border-primary p-2 rounded-md'/>
                 <input type="text" placeholder='200118706543V' className='outline-none  border border-primary p-2 rounded-md'/>
                 <select defaultValue={'User'} className='outline-none  border border-primary p-2 rounded-md'>
