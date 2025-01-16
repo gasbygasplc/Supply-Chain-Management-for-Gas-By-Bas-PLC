@@ -6,7 +6,7 @@ import { sendEmail } from '../utils/emailService.js';
 
 export const registerUser = async (req, res) => {   
 
-    const { name, nic, phone, email, password } = req.body;
+    const { name, nic, phone, email, password , role} = req.body;
 
     try {
 
@@ -30,7 +30,7 @@ export const registerUser = async (req, res) => {
 
         const hashedPassword = await bcrypt.hash(password, 10);
 
-        const newUser = new User({ name, nic, phone: normalizedPhone, email, password: hashedPassword });
+        const newUser = new User({ name, nic, phone: normalizedPhone, email, password: hashedPassword , role});
 
         await newUser.save();
 
