@@ -1,48 +1,36 @@
 import axios from 'axios';
-import moment from 'moment-timezone';
 import dotenv from 'dotenv';
 
 dotenv.config();
 
-export const sendSms = async (to, strCode, countryCode, scheduledTime = null) => {
+export const sendSms = async (recipient, message, senderId = 'GasByGas', scheduleTime = null) => {
   try {
-    const url = "https://richcommunication.dialog.lk/api/sms/send";
-    const formattedNumber = `${countryCode}${to}`;
-
-    // Updated payload structure
+    const url = 'https://app.text.lk/api/v3/sms/send';
     const payload = {
-      messages: [
-        {
-          clientRef: `${Date.now()}`, // Unique reference for the SMS
-          number: formattedNumber, // E.g., 94771234567
-          mask: process.env.SMS_MASK || "GASBYGAS",
-          text: strCode || "Your verification code is 1234",
-          campaignName: process.env.SMS_CAMPAIGN_NAME || "GASBYGAS",
-          ...(scheduledTime && { scheduledTime }), // Include scheduledTime if provided
-        },
-      ],
+      recipient,
+      sender_id: process.env.SMS_SENDER_ID,
+      type: 'plain',
+      message,
+      ...(scheduleTime && { schedule_time: scheduleTime }),
     };
 
-    const now = moment().tz("Asia/Colombo").format("YYYY-MM-DDTHH:mm:ss");
     const headers = {
-      Authorization: `Bearer ${process.env.SMS_AUTH_KEY}`,
-      USER: process.env.SMS_USER,
-      DIGEST: process.env.SMS_DIGEST,
-      CREATED: now,
-      "Content-Type": "application/json",
+      Authorization: `Bearer ${process.env.SMS_API_TOKEN}`,
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
     };
 
     const response = await axios.post(url, payload, { headers });
 
-    if (response.status >= 200 && response.status < 300) {
-      console.log("SMS sent successfully:", response.data);
-      return { success: true, message: "SMS sent successfully" };
+    if (response.data.status === 'success') {
+      console.log('SMS sent successfully:', response.data);
+      return { success: true, data: response.data };
     } else {
-      console.error("Failed to send SMS:", response.statusText);
-      return { success: false, message: `Failed to send SMS: ${response.statusText}` };
+      console.error('Failed to send SMS:', response.data.message);
+      return { success: false, message: response.data.message };
     }
   } catch (error) {
-    console.error("Error sending SMS:", error.message);
+    console.error('Error sending SMS:', error.message);
     return { success: false, message: `Error sending SMS: ${error.message}` };
   }
 };
