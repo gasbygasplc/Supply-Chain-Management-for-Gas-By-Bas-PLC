@@ -5,6 +5,8 @@ const LoginPopUp = ({setShowSignIn}) => {
 
     const [currentState , setCurrentState] = useState('Sign In');
 
+    
+
   return (
 
     <div className='absolute inset-0 z-10 bg-black bg-opacity-70 grid place-items-center'>
