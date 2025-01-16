@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { asstets } from '../assets/Assets';
-import {toast} from 'react-toastify'
+import { toast } from 'react-toastify';
 
 const LoginPopUp = ({ setShowSignIn }) => {
 
@@ -61,7 +61,7 @@ const LoginPopUp = ({ setShowSignIn }) => {
 
         if (response.ok) 
         {
-            toast.success(currentState === 'Sign In' ? 'Login successful!' : 'Registration successful!');
+            toast.success(currentState === 'Sign In' ? 'Login successful!' : 'Registration successful!')
 
             setShowSignIn(false); 
 

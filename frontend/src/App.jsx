@@ -3,9 +3,9 @@ import React, { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Home from './Pages/Home'
 import Navbar from './Components/Navbar'
-import Price from './Components/Price'
 import Footer from './Components/Footer'
 import LoginPopUp from './Components/LoginPopUp'
+import { ToastContainer } from 'react-toastify'
 
 const App = () => {
 
@@ -28,6 +28,8 @@ const App = () => {
       </Routes>
 
       <Footer/>
+
+      <ToastContainer/>
 
       </div>
     
