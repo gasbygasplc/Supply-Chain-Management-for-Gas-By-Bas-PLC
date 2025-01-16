@@ -21,7 +21,26 @@ const LoginPopUp = ({setShowSignIn}) => {
 
     });
 
-    
+    //onchange handler function
+
+    const onchangeHandler = (e) => {
+
+        const name = e.target.name;
+
+        const value = e.target.value;
+
+        setData(previousData => ({...previousData , [name] : value}));
+
+    };
+
+    //onsubmit handler function
+
+    const onSubmitHandler = (e) => {
+
+        e.preventDefault();
+
+        
+    }
 
   return (
 
