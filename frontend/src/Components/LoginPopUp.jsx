@@ -1,159 +1,159 @@
-import React, { useContext, useState } from 'react'
-import { asstets } from '../assets/Assets'
-import { GasContext } from '../Context/GasContext';
-import axios from 'axios';
+import React, { useState } from 'react';
+import { asstets } from '../assets/Assets';
 import { toast } from 'react-toastify';
 
-const LoginPopUp = ({setShowSignIn}) => {
+const LoginPopUp = ({ setShowSignIn }) => {
 
-    const [currentState , setCurrentState] = useState('Sign In');
+  const [currentState, setCurrentState] = useState('Sign In');
 
-    const {backendURL} = useContext(GasContext);
+  const [formData, setFormData] = useState({
 
-    const [data , setData] = useState({
+    name: '',
 
-        name: '',
+    phone: '',
 
-        phone : '',
+    nic: '',
 
-        nic : '',
+    role: 'User',
 
-        role : '',
+    email: '',
 
-        email : '',
+    password: '',
 
-        password : ''
+  });
 
-    });
+  // Handle input changes
 
-    //onchange handler function
+  const handleChange = (e) => {
 
-    const onchangeHandler = (e) => {
+    const { name, value } = e.target;
 
-        const name = e.target.name;
+    setFormData({ ...formData, [name]: value });
 
-        const value = e.target.value;
+  };
 
-        setData(previousData => ({...previousData , [name] : value}));
+  // Handle form submission
 
-    };
+  const handleSubmit = async (e) => {
 
-    //onsubmit handler function
+    e.preventDefault();
 
-    const onSubmitHandler = async (e) => {
+    const url = currentState === 'Sign In' ? 'http://localhost:4000/api/auth/login' : 'http://localhost:4000/api/auth/register'; 
 
-        e.preventDefault();
+    try 
+    {
 
-        const normalizedPhone  = data.phone.startsWith('94') ? data.phone : `94${data.phone.replace(/^0/, '')}`;
+      const response = await fetch(url, {
 
-        const payLoad = {...data , phone : normalizedPhone};
+        method: 'POST',
 
-        let localHost = 'http://localhost:4000';
+        headers: {
 
-        if(currentState === 'Sign In')
+          'Content-Type': 'application/json',
+
+        },
+
+        body: JSON.stringify(formData),
+
+      });
+
+      const result = await response.json();
+
+        if (response.ok) 
+        {
+            toast.success(currentState === 'Sign In' ? 'Login successful!' : 'Registration successful!')
+
+            setShowSignIn(false); 
+
+        } else 
         {
 
-            localHost += '/api/auth/login';
-        }
-        else
-        {
-
-            localHost += '/api/auth/register';
-
-        }
-
-        try
-        {
-
-            const response  = await axios.post(localHost , payLoad);
-
-            if(response.status === 201)
-            {
-
-                toast.success(response.message);
-                data.name = '';
-                data.phone = '';
-                data.nic = '';
-                data.role = '';
-                data.email = '';    
-                data.password = '';
-
-            }
-            else
-            {
-
-                toast.error(response.message);
-            }
-
-        }
-        catch(error)
-        {
-
-            console.error("Error submitting form:", error);
-            toast.error("Error submitting form");
-
+            toast.error(result.message || 'Something went wrong!');
+            
         }
         
+    } catch (error) 
+    {
+      console.error('Error:', error);
+
+      alert('Error connecting to the server.');
+
     }
+
+  };
 
   return (
 
     <div className='absolute inset-0 z-10 bg-black bg-opacity-70 grid place-items-center'>
-        
-        <form onSubmit={onSubmitHandler} className='bg-white flex flex-col gap-6 p-6 rounded-lg w-[95%] sm:w-[330px] md:w-[24vw] fadeIn'>
 
+      <form onSubmit={handleSubmit} className='bg-white flex flex-col gap-6 p-6 rounded-lg w-[95%] sm:w-[330px] md:w-[24vw] fadeIn'>
 
-            <div className='flex justify-between items-center text-black'>
+        <div className='flex justify-between items-center text-black'>
 
-                <h2 className='text-lg font-semibold'>{currentState}</h2>
+          <h2 className='text-lg font-semibold'>{currentState}</h2>
 
-                <img onClick={() => setShowSignIn(previous => previous ? false : true)} className='w-4 cursor-pointer' src={asstets.cross_icon} alt='closer' />
+          <img onClick={() => setShowSignIn((previous) => !previous)} className='w-4 cursor-pointer'  src={asstets.cross_icon} alt='closer'/>
 
-            </div>
+        </div>
 
-            <div className='flex flex-col gap-4'>
+        <div className='flex flex-col gap-4'>
 
-                {currentState === 'Sign In' ? <></> : <>
-                    
-                <input onChange={onchangeHandler} value={data.name} name='name' type="text" placeholder='Mathumitha' className='outline-none  border border-primary p-2 rounded-md'/>
-                <input onChange={onchangeHandler} value={data.phone} name='phone' type="text" placeholder='0094771234567' className='outline-none  border border-primary p-2 rounded-md'/>
-                <input onChange={onchangeHandler} value={data.nic} name='nic' type="text" placeholder='200118706543V' className='outline-none  border border-primary p-2 rounded-md'/>
-                <select onChange={onchangeHandler} value={data.role} name='role' className='outline-none  border border-primary p-2 rounded-md'>
+          {currentState === 'Sign In' ? null : (
 
-                    <option value="User">User</option>
-                    <option value="Organization">Organization</option>
+            <>
+            
+              <input name='name' type='text' placeholder='Mathumitha' className='outline-none border border-primary p-2 rounded-md' value={formData.name} onChange={handleChange}/>
 
-                </select> </>}
-                <input onChange={onchangeHandler} value={data.email} name='email' type="email" placeholder='Gasbygas@gmail.com' className='outline-none  border border-primary p-2 rounded-md'/>
-                <input onChange={onchangeHandler} value={data.password} name='password' type="password" placeholder='**********' className='outline-none  border border-primary p-2 rounded-md'/>
+              <input name='phone' type='text' placeholder='0094771234567' className='outline-none border border-primary p-2 rounded-md' value={formData.phone} onChange={handleChange}/>
 
-            </div>
+              <input name='nic' type='text' placeholder='200118706543V' className='outline-none border border-primary p-2 rounded-md' value={formData.nic} onChange={handleChange} />
 
-            <button type='submit' className='bg-primary text-white py-[10px] rounded-md text-sm font-medium cursor-pointer'>{currentState}</button>
+              <select name='role' className='outline-none border border-primary p-2 rounded-md' value={formData.role} onChange={handleChange} >
 
-            <div className='flex items-center gap-2'>
+                <option value='User'>User</option>
 
-                <input type="checkbox" required/>
+                <option value='Organization'>Organization</option>
 
-                <p className='text-sm'>By Continuing, i agree to the terms of use & Privacy Policy</p>
+              </select>
 
-            </div>
+            </>
 
-            {
-                currentState === "Sign In" ? 
+          )}
 
-                (<p className='text-sm'>Create a new account? <span  onClick={() => setCurrentState('Sign Up')} className='text-sm font-semibold cursor-pointer text-primary'>Click Here</span></p>) :
+          <input name='email' type='email' placeholder='Gasbygas@gmail.com' className='outline-none border border-primary p-2 rounded-md' value={formData.email} onChange={handleChange}  />
 
-                (<p className='text-sm'>Sign In to your Account? <span onClick={() => setCurrentState('Sign In')} className='text-sm font-semibold cursor-pointer text-primary'>Click Here</span></p>)
-            }
+          <input name='password' type='password' placeholder='**********' className='outline-none border border-primary p-2 rounded-md' value={formData.password} onChange={handleChange} />
 
+        </div>
 
-        </form>
+        <button type='submit' className='bg-primary text-white py-[10px] rounded-md text-sm font-medium cursor-pointer'> {currentState} </button>
+
+        <div className='flex items-center gap-2'>
+
+          <input type='checkbox' required />
+
+          <p className='text-sm'>By Continuing, I agree to the terms of use & Privacy Policy</p>
+
+        </div>
+
+        {currentState === 'Sign In' ? (
+
+          <p className='text-sm'> Create a new account?{' '} <span onClick={() => setCurrentState('Sign Up')} className='text-sm font-semibold cursor-pointer text-primary'> Click Here </span> </p> ) 
+
+          : 
+
+          (
+
+          <p className='text-sm'> Sign In to your Account?{' '} <span onClick={() => setCurrentState('Sign In')} className='text-sm font-semibold cursor-pointer text-primary'> Click Here </span> </p>
+
+        )}
+
+      </form>
 
     </div>
 
-  )
+  );
 
-}
+};
 
-export default LoginPopUp
+export default LoginPopUp;
