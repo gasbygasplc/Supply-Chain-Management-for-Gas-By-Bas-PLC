@@ -2,7 +2,7 @@ import React from 'react'
 
 const OutletStockRequest = () => {
   return (
-    <div>OutletStockRequest test</div>
+    <div>OutletStockRequest new</div>
   )
 }
 
