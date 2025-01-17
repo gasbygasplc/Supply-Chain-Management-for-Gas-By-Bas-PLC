@@ -5,7 +5,7 @@ const Footer = () => {
 
   return (
 
-    <footer >
+    <>
 
       <div className='flex flex-col sm:grid grid-cols-[3fr_1fr_1fr] w-full gap-14 my-10 mt-20 text-sm'>
 
@@ -64,7 +64,7 @@ const Footer = () => {
 
       </div>
 
-    </footer>
+    </>
 
   )
 
