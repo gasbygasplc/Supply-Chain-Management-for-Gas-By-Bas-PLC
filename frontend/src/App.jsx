@@ -29,8 +29,6 @@ const App = () => {
 
       <Footer/>
 
-      <ToastContainer/>
-
       </div>
     
     </>
