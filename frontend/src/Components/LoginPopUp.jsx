@@ -62,10 +62,17 @@ const LoginPopUp = ({ setShowSignIn }) => {
           setToken(token);
 
           localStorage.setItem('token' , token)
+
+          setShowSignIn(false)
           
         }
+        else
+        {
 
-        setShowSignIn(false)
+          setShowSignIn(false);
+        }
+
+        
 
       } 
         
@@ -125,13 +132,27 @@ const LoginPopUp = ({ setShowSignIn }) => {
 
         <button type='submit' className='bg-primary text-white py-[10px] rounded-md text-sm font-medium cursor-pointer'> {currentState} </button>
 
-        <div className='flex items-center gap-2'>
+        {
 
-          <input type='checkbox' required />
+          currentState === 'Sign Up' ?
 
-          <p className='text-sm'>By Continuing, I agree to the terms of use & Privacy Policy</p>
+          (
 
-        </div>
+            <div className='flex items-center gap-2'>
+
+              <input type='checkbox' required />
+
+              <p className='text-sm'>By Continuing, I agree to the terms of use & Privacy Policy</p>
+
+            </div>
+
+          ) 
+
+          :
+
+          ''
+
+        }
 
         {currentState === 'Sign In' ? (
 
