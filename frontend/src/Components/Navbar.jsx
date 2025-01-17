@@ -1,12 +1,13 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { asstets } from '../assets/Assets'
+import { GasContext } from '../Context/GasContext';
 
 const Navbar = ({setShowSignIn}) => {
 
     const [menu , setMenu] = useState('Home');
 
-    const [token , setToken] = useState(false);
+    const {token , setToken} = useContext(GasContext)
 
   return (
 
@@ -56,7 +57,7 @@ const Navbar = ({setShowSignIn}) => {
                     <p className='hover:text-primary hover:font-semibold'>My Gas Orders</p>
                     <p className='hover:text-primary hover:font-semibold'>Notifications</p>
                     <p className='hover:text-primary hover:font-semibold'>Reset Password</p>
-                    <p className='hover:text-primary hover:font-semibold'>LogOut</p>
+                    <p onClick={() => setToken(localStorage.removeItem('token'))} className='hover:text-red-700 hover:font-semibold'>LogOut</p>
 
                   </div>
 
