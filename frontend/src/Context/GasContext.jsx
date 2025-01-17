@@ -10,6 +10,8 @@ const GasContectProvider = (props) => {
 
     const backendURL = import.meta.env.VITE_BACKEND_URL;
 
+    const [token , setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : '');
+
     //========================================== fetch Gas Details =================================================
 
     const fetchGasDetails = async(type) => {
@@ -52,7 +54,9 @@ const GasContectProvider = (props) => {
 
         gasDetails,
         fetchGasDetails,
-        handleGasSelection
+        handleGasSelection,
+        token,
+        setToken
     }
 
     return(

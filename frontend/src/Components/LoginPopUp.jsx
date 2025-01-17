@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { asstets } from '../assets/Assets';
 import { toast } from 'react-toastify';
+import { GasContext } from '../Context/GasContext';
+import axios from 'axios';
 
 const LoginPopUp = ({ setShowSignIn }) => {
 
   const [currentState, setCurrentState] = useState('Sign In');
+
+  const {setToken} = useContext(GasContext)
 
   const [formData, setFormData] = useState({
 
@@ -43,34 +47,27 @@ const LoginPopUp = ({ setShowSignIn }) => {
     try 
     {
 
-      const response = await fetch(url, {
+      const response = await axios.post(url , formData);
 
-        method: 'POST',
+      if(response.status === 201 || response.status === 200)
+      {
 
-        headers: {
+        toast.success(currentState === 'Sign In' ? 'Login successful!' : 'Registration successful!');
 
-          'Content-Type': 'application/json',
-
-        },
-
-        body: JSON.stringify(formData),
-
-      });
-
-      const result = await response.json();
-
-        if (response.ok) 
-        {
-            toast.success(currentState === 'Sign In' ? 'Login successful!' : 'Registration successful!')
-
-            setShowSignIn(false); 
-
-        } else 
+        if(currentState === 'Sign In')
         {
 
-            toast.error(result.message || 'Something went wrong!');
-            
+          const {token} = response.data;
+
+          setToken(token);
+
+          localStorage.setItem('token' , token)
+          
         }
+
+        setShowSignIn(false)
+
+      } 
         
     } catch (error) 
     {
