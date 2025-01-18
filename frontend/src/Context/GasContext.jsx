@@ -73,9 +73,10 @@ const GasContectProvider = (props) => {
 
             setUserId(decodeToken.id);
 
-            console.log('DecodedId: ' , userId)
+            console.log(decodeToken.id)
+
         }
-    } , [token])
+    } , [userId , token ])
 
     const value = {
 
