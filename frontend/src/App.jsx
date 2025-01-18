@@ -1,30 +1,34 @@
-
-import React from 'react'
-import { Route, Routes } from 'react-router-dom'
-import Home from './Pages/Home'
-import Navbar from './Components/Navbar'
-import PriceingCart from './Components/PriceingCart'
+import React from 'react';
+import { Route, Routes } from 'react-router-dom';
+import Home from './Pages/Home';
+import Navbar from './Components/Navbar';
+import Price from './Components/Price';
+import Footer from './Components/Footer';
+import DeliveryStatus from './Components/DeliveryStatus'; 
 
 const App = () => {
 
   return (
 
-    <div className='mx-4 sm:mx-[10%]'>
+    <div className="mx-4 sm:mx-[10%]">
 
-      <Navbar/>
+      <Navbar />
 
       <Routes>
+        
+        <Route path="/" element={<Home />} />
 
-        <Route path='/' element ={<Home/>}/>
-
-        <Route path='/Pricing-Cart' element={<PriceingCart/>} />
+        
+        <Route path="/delivery-status/:deliveryId" element={<DeliveryStatus />} />
 
       </Routes>
 
+      <Footer />
+
     </div>
 
-  )
+  );
+  
+};
 
-}
-
-export default App
+export default App;
