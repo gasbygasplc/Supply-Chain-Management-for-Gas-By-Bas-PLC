@@ -65,23 +65,32 @@ const GasContectProvider = (props) => {
     //     })
     // }
 
-    useEffect(() => {
+    //============================================= User Increment of quantity ===========================================
 
-        if(token) {
+    const updateGasQuantity = (operation) => {
 
-            const decodeToken = jwtDecode(token)
+        setGasQuantity((previousData) => {
 
-            setUserId(decodeToken.id);
+            const maximumQuantity = userData.role === "Organization" ? 10 : 2;
 
-            console.log(decodeToken.id);
+            if(operation === '+')
+            {
 
-            console.log(userData)
+                return previousData + 1;
 
-        }
-    } , [ token ]);
+            }
+            else if (operation === '-')
+            {
+
+                return previousData - 1;
+
+            }
+
+            return previousData
+        })
 
 
-
+    }
 
     const value = {
 
