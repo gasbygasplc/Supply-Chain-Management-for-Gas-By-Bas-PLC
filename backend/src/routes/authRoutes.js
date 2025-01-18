@@ -13,7 +13,7 @@ const validateRegistration = (req, res, next) => {
 
     }
 
-    if (!/^[0-9]{12}[VXvx]$/.test(nic)) {
+    if (!/^[0-9]{12}[VXvx]?$/.test(nic)) {
 
         return res.status(400).json({ success: false, message: "Invalid NIC format." });
 

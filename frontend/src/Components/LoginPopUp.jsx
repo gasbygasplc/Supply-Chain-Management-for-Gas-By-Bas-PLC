@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { asstets } from '../assets/Assets';
 import { toast } from 'react-toastify';
+import { GasContext } from '../Context/GasContext';
+import axios from 'axios';
 
 const LoginPopUp = ({ setShowSignIn }) => {
 
   const [currentState, setCurrentState] = useState('Sign In');
+
+  const {setToken} = useContext(GasContext)
 
   const [formData, setFormData] = useState({
 
@@ -43,34 +47,34 @@ const LoginPopUp = ({ setShowSignIn }) => {
     try 
     {
 
-      const response = await fetch(url, {
+      const response = await axios.post(url , formData);
 
-        method: 'POST',
+      if(response.status === 201 || response.status === 200)
+      {
 
-        headers: {
+        toast.success(currentState === 'Sign In' ? 'Login successful!' : 'Registration successful!');
 
-          'Content-Type': 'application/json',
-
-        },
-
-        body: JSON.stringify(formData),
-
-      });
-
-      const result = await response.json();
-
-        if (response.ok) 
-        {
-            toast.success(currentState === 'Sign In' ? 'Login successful!' : 'Registration successful!')
-
-            setShowSignIn(false); 
-
-        } else 
+        if(currentState === 'Sign In')
         {
 
-            toast.error(result.message || 'Something went wrong!');
-            
+          const {token} = response.data;
+
+          setToken(token);
+
+          localStorage.setItem('token' , token)
+
+          setShowSignIn(false)
+          
         }
+        else
+        {
+
+          setShowSignIn(false);
+        }
+
+        
+
+      } 
         
     } catch (error) 
     {
@@ -128,13 +132,27 @@ const LoginPopUp = ({ setShowSignIn }) => {
 
         <button type='submit' className='bg-primary text-white py-[10px] rounded-md text-sm font-medium cursor-pointer'> {currentState} </button>
 
-        <div className='flex items-center gap-2'>
+        {
 
-          <input type='checkbox' required />
+          currentState === 'Sign Up' ?
 
-          <p className='text-sm'>By Continuing, I agree to the terms of use & Privacy Policy</p>
+          (
 
-        </div>
+            <div className='flex items-center gap-2'>
+
+              <input type='checkbox' required />
+
+              <p className='text-sm'>By Continuing, I agree to the terms of use & Privacy Policy</p>
+
+            </div>
+
+          ) 
+
+          :
+
+          ''
+
+        }
 
         {currentState === 'Sign In' ? (
 
