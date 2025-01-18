@@ -128,6 +128,8 @@ export const loginUser = async (req, res) =>
 
             token,
 
+            user
+
         });
     } catch (error) 
     {
