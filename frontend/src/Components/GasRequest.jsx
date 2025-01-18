@@ -10,6 +10,7 @@ const GasRequest = () => {
     const [selectedType , setSelectedType] = useState('Small');
 
 
+
     const selectedGas = type => {
 
         setSelectedType(type);

@@ -8,7 +8,7 @@ const LoginPopUp = ({ setShowSignIn }) => {
 
   const [currentState, setCurrentState] = useState('Sign In');
 
-  const {setToken} = useContext(GasContext)
+  const {setToken , setUserData} = useContext(GasContext)
 
   const [formData, setFormData] = useState({
 
@@ -57,9 +57,11 @@ const LoginPopUp = ({ setShowSignIn }) => {
         if(currentState === 'Sign In')
         {
 
-          const {token} = response.data;
+          const {token , user} = response.data;
 
           setToken(token);
+
+          setUserData(user)
 
           localStorage.setItem('token' , token)
 

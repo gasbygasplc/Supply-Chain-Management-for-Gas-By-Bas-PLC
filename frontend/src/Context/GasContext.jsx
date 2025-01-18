@@ -11,6 +11,8 @@ const GasContectProvider = (props) => {
 
     const [gasQuantity , setGasQuantity] = useState(1);
 
+    const [userData , setUserData] = useState({});
+
     const [userId , setUserId] = useState(null);
 
     const backendURL = import.meta.env.VITE_BACKEND_URL;
@@ -63,10 +65,6 @@ const GasContectProvider = (props) => {
     //     })
     // }
 
-    //============================================= fetch the user details ===========================================
-
-    
-
     useEffect(() => {
 
         if(token) {
@@ -75,10 +73,12 @@ const GasContectProvider = (props) => {
 
             setUserId(decodeToken.id);
 
-            console.log(decodeToken.id)
+            console.log(decodeToken.id);
+
+            console.log(userData)
 
         }
-    } , [userId , token ]);
+    } , [ token ]);
 
 
 
@@ -90,7 +90,10 @@ const GasContectProvider = (props) => {
         handleGasSelection,
         token,
         setToken,
-        userId
+        userId,
+        userData,
+        setUserData
+
     }
 
     return(
