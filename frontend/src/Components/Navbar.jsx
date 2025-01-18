@@ -52,11 +52,11 @@ const Navbar = ({setShowSignIn}) => {
 
                   <div className='min-w-48 bg-[#ffffff] border shadow-md flex flex-col gap-3 p-4 rounded-md'>
 
-                    <p className='hover:text-primary hover:font-semibold'>My Profile</p>
-                    <p className='hover:text-primary hover:font-semibold'>My Gas Orders</p>
-                    <p className='hover:text-primary hover:font-semibold'>Notifications</p>
-                    <p className='hover:text-primary hover:font-semibold'>Reset Password</p>
-                    <p className='hover:text-primary hover:font-semibold'>LogOut</p>
+                    <p className='hover:text-primary'>My Profile</p>
+                    <p className='hover:text-primary'>My Gas Orders</p>
+                    <p className='hover:text-primary'>Notifications</p>
+                    <p className='hover:text-primary'>Reset Password</p>
+                    <p className='hover:text-primary'>LogOut</p>
 
                   </div>
 
