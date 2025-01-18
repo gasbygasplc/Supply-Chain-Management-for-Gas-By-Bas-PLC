@@ -21,7 +21,7 @@ const GasRequest = () => {
     useEffect(() => {
 
         selectedGas("Small");
-
+        
     } , [])
 
 
