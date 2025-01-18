@@ -66,8 +66,15 @@ const GasContectProvider = (props) => {
 
     useEffect(() => {
 
+        const StoreUserData = localStorage.getItem('userdata');
 
-    }, [userData])
+        if(StoreUserData)
+        {
+            setUserData(JSON.parse(StoreUserData))
+        }
+
+
+    }, [])
 
     //============================================= User Increment of quantity ===========================================
 
