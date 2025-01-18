@@ -7,7 +7,7 @@ const Navbar = ({setShowSignIn}) => {
 
     const [menu , setMenu] = useState('Home');
 
-    const {token , setToken} = useContext(GasContext)
+    const {token , setToken , setUserData , setGasQuantity} = useContext(GasContext)
 
   return (
 
@@ -57,7 +57,19 @@ const Navbar = ({setShowSignIn}) => {
                     <p className='hover:text-primary'>My Gas Orders</p>
                     <p className='hover:text-primary'>Notifications</p>
                     <p className='hover:text-primary'>Reset Password</p>
-                    <p onClick={() => setToken(localStorage.removeItem('token'))} className='hover:text-red-700'>LogOut</p>
+                    <p onClick={() => {
+
+                      localStorage.removeItem('token');
+
+                      localStorage.removeItem('userdata');
+
+                      setToken(null);
+
+                      setUserData(null)
+
+                      setGasQuantity(1)
+
+                    } } className='hover:text-red-700'>LogOut</p>
 
                   </div>
 

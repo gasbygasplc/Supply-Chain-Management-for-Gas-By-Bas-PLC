@@ -3,12 +3,13 @@ import { asstets } from '../assets/Assets';
 import { toast } from 'react-toastify';
 import { GasContext } from '../Context/GasContext';
 import axios from 'axios';
+import { use } from 'react';
 
 const LoginPopUp = ({ setShowSignIn }) => {
 
   const [currentState, setCurrentState] = useState('Sign In');
 
-  const {setToken} = useContext(GasContext)
+  const {setToken , setUserData} = useContext(GasContext)
 
   const [formData, setFormData] = useState({
 
@@ -57,11 +58,13 @@ const LoginPopUp = ({ setShowSignIn }) => {
         if(currentState === 'Sign In')
         {
 
-          const {token} = response.data;
+          const {token , user} = response.data;
 
           setToken(token);
 
-          localStorage.setItem('token' , token)
+          localStorage.setItem('token' , token);
+
+          localStorage.setItem('userdata' , JSON.stringify(user));
 
           setShowSignIn(false)
           
@@ -106,7 +109,7 @@ const LoginPopUp = ({ setShowSignIn }) => {
 
             <>
             
-              <input name='name' type='text' placeholder='Mathumitha' className='outline-none border border-primary p-2 rounded-md' value={formData.name} onChange={handleChange}/>
+              <input name='name' type='text' placeholder='Gayathri Varatharajan' className='outline-none border border-primary p-2 rounded-md' value={formData.name} onChange={handleChange}/>
 
               <input name='phone' type='text' placeholder='0094771234567' className='outline-none border border-primary p-2 rounded-md' value={formData.phone} onChange={handleChange}/>
 

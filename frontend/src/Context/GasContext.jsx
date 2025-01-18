@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import axios from 'axios';
 import { toast } from "react-toastify";
 
@@ -7,6 +7,12 @@ export const GasContext = createContext();
 const GasContectProvider = (props) => {
 
     const [gasDetails , setGasDetails] = useState(null);
+
+    const [gasQuantity , setGasQuantity] = useState(1);
+
+    const [userData , setUserData] = useState({});
+
+    const [userId , setUserId] = useState(null);
 
     const backendURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -48,7 +54,61 @@ const GasContectProvider = (props) => {
         fetchGasDetails(type);
     }
 
+    //============================================= Quantity Increment ===========================================
 
+    // const updateQuantity = async(operation) =>{
+
+    //     setGasQuantity((previousQuantity) => {
+
+    //         const updateQuantity = operation === 'Increment' ? previousQuantity + 1
+    //     })
+    // }
+
+    useEffect(() => {
+
+        const StoreUserData = localStorage.getItem('userdata');
+
+        if(StoreUserData)
+        {
+            setUserData(JSON.parse(StoreUserData))
+        }
+
+
+    }, [token])
+
+    //============================================= User Increment of quantity ===========================================
+
+    const updateGasQuantity = (operation) => {
+
+        setGasQuantity((previousData) => {
+
+            if(!userData.role)
+            {
+
+                alert("Please Login");
+
+            }
+
+            const maximumQuantity = userData.role === "Organization" ? 10 : 2;
+
+            if(operation === '+' && previousData < maximumQuantity)
+            {
+
+                return previousData + 1;
+
+            }
+            else if (operation === '-' && previousData > 1)
+            {
+
+                return previousData - 1;
+
+            }
+
+            return previousData
+        })
+
+
+    }
 
     const value = {
 
@@ -56,7 +116,14 @@ const GasContectProvider = (props) => {
         fetchGasDetails,
         handleGasSelection,
         token,
-        setToken
+        setToken,
+        userId,
+        userData,
+        setUserData,
+        gasQuantity,
+        setGasQuantity,
+        updateGasQuantity
+
     }
 
     return(

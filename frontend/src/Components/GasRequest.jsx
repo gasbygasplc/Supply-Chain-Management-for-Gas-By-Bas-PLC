@@ -5,9 +5,10 @@ import { GasContext } from '../Context/GasContext'
 const GasRequest = () => {
 
     
-    const {gasDetails , handleGasSelection} = useContext(GasContext);
+    const {gasDetails , handleGasSelection , gasQuantity , updateGasQuantity , userData} = useContext(GasContext);
 
     const [selectedType , setSelectedType] = useState('Small');
+
 
 
     const selectedGas = type => {
@@ -22,6 +23,8 @@ const GasRequest = () => {
 
         selectedGas("Small");
 
+        console.log(userData)
+        
     } , [])
 
 
@@ -84,17 +87,45 @@ const GasRequest = () => {
 
                     <p>Quantity:</p>
 
-                    <div className='flex gap-4 items-center justify-center py-[10px] px-[18px] bg-gray-100 rounded-full border border-gray-300'>
+                    <div className='flex gap-4 items-center justify-center py-[8px] px-[16px] bg-white rounded-full border border-gray-300'>
 
-                        <img className='w-[30px] cursor-pointer' src={asstets.remove_icon} alt="" />
+                        <img onClick={() =>  updateGasQuantity('-')} className='w-[22px] cursor-pointer' src={asstets.remove_icon} alt="" />
 
-                        <p>1</p>
+                        <p>{gasQuantity}</p>
 
-                        <img className='w-[30px] cursor-pointer' src={asstets.add_icon} alt="" />
+                        <img onClick={() => {
+
+                            if(userData.role)
+                            {
+
+                                const maximumQuantity = userData.role === "Organization" ? 10 : 3;  
+
+                                if(gasQuantity < maximumQuantity)
+                                {
+
+                                    updateGasQuantity('+');
+
+                                }
+                                else
+                                {
+
+                                    alert(`You cannot add more than ${maximumQuantity} gases.`);
+
+                                }
+
+                            }
+                            else
+                            {
+
+                                alert(`Please Sign in`);
+
+                            }
+                            
+                        }} className='w-[22px] cursor-pointer' src={asstets.add_icon} alt="" />
 
                     </div>
 
-                    <p>1</p>
+                    <p>{gasQuantity}</p>
 
 
                 </div>
