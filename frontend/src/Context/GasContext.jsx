@@ -1,12 +1,17 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import axios from 'axios';
 import { toast } from "react-toastify";
+import {jwtDecode} from 'jwt-decode'
 
 export const GasContext = createContext();
 
 const GasContectProvider = (props) => {
 
     const [gasDetails , setGasDetails] = useState(null);
+
+    const [gasQuantity , setGasQuantity] = useState(1);
+
+    const [userId , setUserId] = useState(null);
 
     const backendURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -48,7 +53,29 @@ const GasContectProvider = (props) => {
         fetchGasDetails(type);
     }
 
+    //============================================= Quantity Increment ===========================================
 
+    // const updateQuantity = async(operation) =>{
+
+    //     setGasQuantity((previousQuantity) => {
+
+    //         const updateQuantity = operation === 'Increment' ? previousQuantity + 1
+    //     })
+    // }
+
+    //============================================= fetch the user contect Increment ===========================================
+
+    useEffect(() => {
+
+        if(token) {
+
+            const decodeToken = jwtDecode(token)
+
+            setUserId(decodeToken.id);
+
+            console.log('DecodedId: ' , userId)
+        }
+    } , [token])
 
     const value = {
 
@@ -56,7 +83,8 @@ const GasContectProvider = (props) => {
         fetchGasDetails,
         handleGasSelection,
         token,
-        setToken
+        setToken,
+        userId
     }
 
     return(
