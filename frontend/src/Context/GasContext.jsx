@@ -74,13 +74,20 @@ const GasContectProvider = (props) => {
         }
 
 
-    }, [])
+    }, [token])
 
     //============================================= User Increment of quantity ===========================================
 
     const updateGasQuantity = (operation) => {
 
         setGasQuantity((previousData) => {
+
+            if(!userData.role)
+            {
+
+                alert("Please Login");
+                
+            }
 
             const maximumQuantity = userData.role === "Organization" ? 10 : 3;
 
