@@ -86,10 +86,10 @@ const GasContectProvider = (props) => {
             {
 
                 alert("Please Login");
-                
+
             }
 
-            const maximumQuantity = userData.role === "Organization" ? 10 : 3;
+            const maximumQuantity = userData.role === "Organization" ? 10 : 2;
 
             if(operation === '+' && previousData < maximumQuantity)
             {
