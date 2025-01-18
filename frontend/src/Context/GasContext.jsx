@@ -114,6 +114,7 @@ const GasContectProvider = (props) => {
         userData,
         setUserData,
         gasQuantity,
+        setGasQuantity,
         updateGasQuantity
 
     }

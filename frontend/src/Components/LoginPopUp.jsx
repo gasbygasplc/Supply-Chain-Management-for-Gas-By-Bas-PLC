@@ -62,8 +62,6 @@ const LoginPopUp = ({ setShowSignIn }) => {
 
           setToken(token);
 
-          setUserData(user)
-
           localStorage.setItem('token' , token);
 
           localStorage.setItem('userdata' , JSON.stringify(user));
