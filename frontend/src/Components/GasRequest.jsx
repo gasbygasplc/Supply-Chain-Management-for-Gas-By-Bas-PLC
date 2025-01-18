@@ -5,7 +5,7 @@ import { GasContext } from '../Context/GasContext'
 const GasRequest = () => {
 
     
-    const {gasDetails , handleGasSelection , gasQuantity , setGasQuantity} = useContext(GasContext);
+    const {gasDetails , handleGasSelection , gasQuantity , updateGasQuantity , userData} = useContext(GasContext);
 
     const [selectedType , setSelectedType] = useState('Small');
 
@@ -87,11 +87,25 @@ const GasRequest = () => {
 
                     <div className='flex gap-4 items-center justify-center py-[8px] px-[16px] bg-white rounded-full border border-gray-300'>
 
-                        <img onClick={() => setGasQuantity('+')} className='w-[22px] cursor-pointer' src={asstets.remove_icon} alt="" />
+                        <img onClick={() =>  updateGasQuantity('-')} className='w-[22px] cursor-pointer' src={asstets.remove_icon} alt="" />
 
                         <p>{gasQuantity}</p>
 
-                        <img onClick={() => setGasQuantity('-')} className='w-[22px] cursor-pointer' src={asstets.add_icon} alt="" />
+                        <img onClick={() => {
+
+                            if(userData?.role)
+                            {
+
+                                updateGasQuantity('+');
+
+                            }
+                            else
+                            {
+
+                                alert('Sorry You reached your limit');
+                                
+                            }
+                        }} className='w-[22px] cursor-pointer' src={asstets.add_icon} alt="" />
 
                     </div>
 
