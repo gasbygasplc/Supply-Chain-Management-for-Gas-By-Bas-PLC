@@ -1,7 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import axios from 'axios';
 import { toast } from "react-toastify";
-import {jwtDecode} from 'jwt-decode'
 
 export const GasContext = createContext();
 
@@ -65,21 +64,26 @@ const GasContectProvider = (props) => {
     //     })
     // }
 
+    useEffect(() => {
+
+
+    }, [userData])
+
     //============================================= User Increment of quantity ===========================================
 
     const updateGasQuantity = (operation) => {
 
         setGasQuantity((previousData) => {
 
-            const maximumQuantity = userData.role === "Organization" ? 10 : 2;
+            const maximumQuantity = userData.role === "Organization" ? 10 : 3;
 
-            if(operation === '+')
+            if(operation === '+' && previousData < maximumQuantity)
             {
 
                 return previousData + 1;
 
             }
-            else if (operation === '-')
+            else if (operation === '-' && previousData > 1)
             {
 
                 return previousData - 1;

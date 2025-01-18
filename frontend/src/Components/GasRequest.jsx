@@ -22,6 +22,8 @@ const GasRequest = () => {
     useEffect(() => {
 
         selectedGas("Small");
+
+        console.log(userData)
         
     } , [])
 
@@ -93,18 +95,32 @@ const GasRequest = () => {
 
                         <img onClick={() => {
 
-                            if(userData?.role)
+                            if(userData.role)
                             {
 
-                                updateGasQuantity('+');
+                                const maximumQuantity = userData.role === "Organization" ? 10 : 3;  
+
+                                if(gasQuantity < maximumQuantity)
+                                {
+
+                                    updateGasQuantity('+');
+
+                                }
+                                else
+                                {
+
+                                    alert(`You cannot add more than ${maximumQuantity} gases.`);
+
+                                }
 
                             }
                             else
                             {
 
-                                alert('Sorry You reached your limit');
-                                
+                                alert(`Please Sign in`);
+
                             }
+                            
                         }} className='w-[22px] cursor-pointer' src={asstets.add_icon} alt="" />
 
                     </div>
