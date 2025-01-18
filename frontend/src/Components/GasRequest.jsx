@@ -5,7 +5,7 @@ import { GasContext } from '../Context/GasContext'
 const GasRequest = () => {
 
     
-    const {gasDetails , handleGasSelection} = useContext(GasContext);
+    const {gasDetails , handleGasSelection , gasQuantity , setGasQuantity} = useContext(GasContext);
 
     const [selectedType , setSelectedType] = useState('Small');
 
@@ -87,15 +87,15 @@ const GasRequest = () => {
 
                     <div className='flex gap-4 items-center justify-center py-[8px] px-[16px] bg-white rounded-full border border-gray-300'>
 
-                        <img className='w-[22px] cursor-pointer' src={asstets.remove_icon} alt="" />
+                        <img onClick={() => setGasQuantity('+')} className='w-[22px] cursor-pointer' src={asstets.remove_icon} alt="" />
 
-                        <p>1</p>
+                        <p>{gasQuantity}</p>
 
-                        <img className='w-[22px] cursor-pointer' src={asstets.add_icon} alt="" />
+                        <img onClick={() => setGasQuantity('-')} className='w-[22px] cursor-pointer' src={asstets.add_icon} alt="" />
 
                     </div>
 
-                    <p>1</p>
+                    <p>{gasQuantity}</p>
 
 
                 </div>
