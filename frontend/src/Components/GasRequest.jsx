@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { asstets } from '../assets/Assets'
 import { GasContext } from '../Context/GasContext'
+import { toast } from 'react-toastify';
 
 const GasRequest = () => {
 
@@ -109,7 +110,7 @@ const GasRequest = () => {
                                 else
                                 {
 
-                                    alert(`You cannot add more than ${maximumQuantity} gases.`);
+                                    toast.error(`You cannot add more than ${maximumQuantity} gases.`)
 
                                 }
 
@@ -117,7 +118,7 @@ const GasRequest = () => {
                             else
                             {
 
-                                alert(`Please Sign in`);
+                                toast.warning("Please Sign In")
 
                             }
                             

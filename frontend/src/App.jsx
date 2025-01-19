@@ -5,7 +5,7 @@ import Home from './Pages/Home'
 import Navbar from './Components/Navbar'
 import Footer from './Components/Footer'
 import LoginPopUp from './Components/LoginPopUp'
-import { ToastContainer } from 'react-toastify'
+import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
@@ -14,7 +14,9 @@ const App = () => {
 
   return (
 
-    <>
+    <div>
+
+      <ToastContainer/>
 
       {showSignIn ? <LoginPopUp setShowSignIn = {setShowSignIn}/> : <></>}
 
@@ -26,15 +28,13 @@ const App = () => {
 
         <Route path='/' element ={<Home/>}/>
 
-        
-
       </Routes>
 
       <Footer/>
 
       </div>
     
-    </>
+    </div>
 
   )
 
