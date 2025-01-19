@@ -85,7 +85,7 @@ const GasContectProvider = (props) => {
             if(!userData.role)
             {
 
-                alert("Please Login");
+                toast.error("Please Login.")
 
             }
 
