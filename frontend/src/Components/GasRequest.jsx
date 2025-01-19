@@ -110,7 +110,7 @@ const GasRequest = () => {
                                 else
                                 {
 
-                                    alert(`You cannot add more than ${maximumQuantity} gases.`);
+                                    toast.error(`You cannot add more than ${maximumQuantity} gases.`)
 
                                 }
 
@@ -118,7 +118,7 @@ const GasRequest = () => {
                             else
                             {
 
-                                toast.error("Please Sign In")
+                                toast.warning("Please Sign In")
 
                             }
                             
