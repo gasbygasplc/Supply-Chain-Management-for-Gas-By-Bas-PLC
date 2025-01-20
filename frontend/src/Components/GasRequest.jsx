@@ -140,15 +140,7 @@ const GasRequest = () => {
 
                 <div className='flex justify-between items-center'>
 
-                    <p>
-
-                        {
-                            
-                            (gasPriceAmount)
-
-                        }
-                    
-                    </p>
+                    <p> {gasPriceAmount}</p>
 
                 </div>
 
