@@ -44,7 +44,7 @@ const GasRequest = () => {
         }
 
         saveGasOrder(order);
-        toast.success("Gas order saved successfully!");
+        toast.success("Your Gas Added into Cart!");
         Navigate('/gas-cart');
 
     };
