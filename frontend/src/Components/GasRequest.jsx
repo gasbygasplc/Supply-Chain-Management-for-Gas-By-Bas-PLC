@@ -7,11 +7,41 @@ import { useNavigate } from 'react-router-dom';
 const GasRequest = () => {
 
     
-    const {gasDetails , handleGasSelection , gasQuantity , updateGasQuantity , userData} = useContext(GasContext);
+    const {gasDetails , handleGasSelection , gasQuantity , updateGasQuantity , userData , saveGasOrder} = useContext(GasContext);
 
     const [selectedType , setSelectedType] = useState('Small');
 
     const Navigate = useNavigate();
+
+    //===================================== handle save order ======================================================
+
+    const handleSaveOrder = paymentMethod => 
+    {
+
+        if(!gasDetails)
+        {
+
+            toast.error("Please select a gas type.");
+
+            return;
+
+        }
+
+        const order = {
+
+            type: selectedType,
+    
+            gasQuantity: gasQuantity,
+    
+            price : (gasDetails.price * gasQuantity).toFixed(2)
+
+        }
+
+        saveGasOrder(order);
+        toast.success("Gas order saved successfully!");
+        Navigate('/gas-cart');
+
+    };
 
 
 
