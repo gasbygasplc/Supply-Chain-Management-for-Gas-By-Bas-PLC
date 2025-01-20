@@ -2,13 +2,52 @@ import React, { useContext, useEffect, useState } from 'react'
 import { asstets } from '../assets/Assets'
 import { GasContext } from '../Context/GasContext'
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const GasRequest = () => {
 
     
-    const {gasDetails , handleGasSelection , gasQuantity , updateGasQuantity , userData} = useContext(GasContext);
+    const {gasDetails , handleGasSelection , gasQuantity , updateGasQuantity , userData , saveGasOrder} = useContext(GasContext);
 
     const [selectedType , setSelectedType] = useState('Small');
+
+    const Navigate = useNavigate();
+
+    //===================================== handle save order ======================================================
+
+    const handleSaveOrder = paymentMethod => 
+    {
+
+        if(!gasDetails)
+        {
+
+            toast.error("Please select a gas type.");
+
+            return;
+
+        }
+
+        const order = {
+
+            type: selectedType,
+
+            quantity: gasQuantity, 
+
+            price: gasDetails.price, 
+
+            totalPrice: (gasDetails.price * gasQuantity).toFixed(2), 
+
+            weightKG: gasDetails.weightKG,    
+
+            image: gasDetails.image, 
+
+        }
+
+        saveGasOrder(order);
+        toast.success("Your Gas Added into Cart!");
+        Navigate('/gas-cart');
+
+    };
 
 
 
@@ -94,35 +133,39 @@ const GasRequest = () => {
 
                         <p>{gasQuantity}</p>
 
-                        <img onClick={() => {
+                        <img className='w-[22px] cursor-pointer'
 
-                            if(userData.role)
-                            {
-
-                                const maximumQuantity = userData.role === "Organization" ? 10 : 3;  
-
-                                if(gasQuantity < maximumQuantity)
+                            onClick={() => {
+                            
+                                if(userData.role)
                                 {
 
-                                    updateGasQuantity('+');
+                                    const maximumQuantity = userData.role === "Organization" ? 10 : 2;
+
+                                    if(gasQuantity < maximumQuantity)
+                                    {
+
+                                        updateGasQuantity('+');
+
+                                    }
+                                    else
+                                    {
+
+                                        toast.error(`You cannot add more than ${maximumQuantity} gases.`)
+                                    }
 
                                 }
                                 else
                                 {
 
-                                    toast.error(`You cannot add more than ${maximumQuantity} gases.`)
+                                    toast.warning("Please Sign In")
 
                                 }
 
-                            }
-                            else
-                            {
+                            }} 
 
-                                toast.warning("Please Sign In")
-
-                            }
-                            
-                        }} className='w-[22px] cursor-pointer' src={asstets.add_icon} alt="" />
+                            src={asstets.add} alt="" 
+                        />
 
                     </div>
 
@@ -133,9 +176,9 @@ const GasRequest = () => {
 
                 <div className='flex justify-between items-center'>
 
-                    <p>LKR {gasDetails ? gasDetails.price : ""}</p>
+                    <p>LKR {gasDetails ? (gasDetails.price * gasQuantity).toFixed(2) : "" }</p>
 
-                    <p>LKR {gasDetails ? gasDetails.price  : ""}</p>
+                    <p>LKR {gasDetails ? (gasDetails.price * gasQuantity).toFixed(2) : ""}</p>
 
                 </div>
 
@@ -155,9 +198,7 @@ const GasRequest = () => {
 
                 <div className='flex flex-col justify-normal w-full gap-4 sm:flex-row sm:justify-between'>
 
-                    <button className='bg-primary text-white py-[10px] px-[18px] w-full rounded-md '>Buy Now</button>
-
-                    <button className='bg-green-600 text-white py-[10px] px-[18px] w-full rounded-md'>Cash On Delivery</button>
+                    <button onClick={() => handleSaveOrder('Add To Cart')} className='bg-primary text-white py-[10px] px-[18px] w-full rounded-md '>Add To Cart</button>
 
                 </div>
 
