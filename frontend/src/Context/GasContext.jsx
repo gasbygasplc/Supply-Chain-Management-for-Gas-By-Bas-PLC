@@ -31,8 +31,6 @@ const GasContectProvider = (props) => {
             {
 
                 setGasDetails(response.data);
-
-                setGasPrice(response.data.price)
                 
             }
             else
@@ -75,10 +73,10 @@ const GasContectProvider = (props) => {
             setUserData(JSON.parse(StoreUserData))
         }
 
-        gasPrice();
+        console.log(gasDetails)
 
 
-    }, [token , gasDetails , gasQuantity]);
+    }, [token , gasDetails]);
 
 
     //============================================= User Increment of quantity ===========================================
@@ -128,7 +126,6 @@ const GasContectProvider = (props) => {
         gasQuantity,
         setGasQuantity,
         updateGasQuantity,
-        gaspriceAmount
 
     }
 

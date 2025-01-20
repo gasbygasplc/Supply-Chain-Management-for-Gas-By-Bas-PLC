@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const GasRequest = () => {
 
     
-    const {gasDetails , handleGasSelection , gasQuantity , updateGasQuantity , userData , gasPriceAmount} = useContext(GasContext);
+    const {gasDetails , handleGasSelection , gasQuantity , updateGasQuantity , userData} = useContext(GasContext);
 
     const [selectedType , setSelectedType] = useState('Small');
 
@@ -140,7 +140,9 @@ const GasRequest = () => {
 
                 <div className='flex justify-between items-center'>
 
-                    <p> {gasPriceAmount}</p>
+                    <p>LKR {gasDetails ? (gasDetails.price * gasQuantity).toFixed(2) : "" }</p>
+
+                    <p>LKR {gasDetails ? (gasDetails.price * gasQuantity).toFixed(2) : ""}</p>
 
                 </div>
 
