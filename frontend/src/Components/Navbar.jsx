@@ -7,7 +7,7 @@ const Navbar = ({setShowSignIn}) => {
 
     const [menu , setMenu] = useState('Home');
 
-    const {token , setToken , setUserData , setGasQuantity} = useContext(GasContext);
+    const {token , setToken , setUserData , setGasQuantity , gasOrder} = useContext(GasContext);
 
     const Navigate = useNavigate();
 
@@ -37,7 +37,7 @@ const Navbar = ({setShowSignIn}) => {
 
               <img className='cursor-pointer w-6 sm:w-8' src={asstets.bucket_icon} alt="" />
 
-              <div className='absolute min-w-[8px] min-h-[8px] bg-primary top-[-3px] right-[-3px] rounded-full'></div>
+              {gasOrder.length > 0 && (<div className='absolute min-w-[8px] min-h-[8px] bg-primary top-[-3px] right-[-3px] rounded-full'></div>)}
 
             </div>
 
