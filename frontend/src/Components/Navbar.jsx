@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { asstets } from '../assets/Assets'
 import { GasContext } from '../Context/GasContext';
 
@@ -7,7 +7,9 @@ const Navbar = ({setShowSignIn}) => {
 
     const [menu , setMenu] = useState('Home');
 
-    const {token , setToken , setUserData , setGasQuantity} = useContext(GasContext)
+    const {token , setToken , setUserData , setGasQuantity} = useContext(GasContext);
+
+    const Navigate = useNavigate();
 
   return (
 
@@ -31,11 +33,11 @@ const Navbar = ({setShowSignIn}) => {
 
         <div className='flex items-center justify-center gap-4 sm:gap-8 '>
 
-            <div className='relative'>
+            <div onClick={() => Navigate('/gas-cart')} className='relative'>
 
-                <img className='cursor-pointer w-6 sm:w-8' src={asstets.bucket_icon} alt="" />
+              <img className='cursor-pointer w-6 sm:w-8' src={asstets.bucket_icon} alt="" />
 
-                <div className='absolute min-w-[8px] min-h-[8px] bg-primary top-[-3px] right-[-3px] rounded-full'></div>
+              <div className='absolute min-w-[8px] min-h-[8px] bg-primary top-[-3px] right-[-3px] rounded-full'></div>
 
             </div>
 

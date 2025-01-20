@@ -5,7 +5,7 @@ import payment from './payments.svg'
 import small_gas from './small.png';
 import medium_gas from './medium.png';
 import large_gas from './large.png';
-import add_icon from './add_icon_green.png';
+import add from './add_icon_green.png'
 import remove_icon from './remove_icon_red.png';
 import about_us from './about.jpeg';
 import contact_us from './contact-us.svg'
@@ -26,7 +26,7 @@ export const asstets = {
     small_gas,
     medium_gas,
     large_gas,
-    add_icon,
+    add,
     remove_icon,
     about_us,
     contact_us,

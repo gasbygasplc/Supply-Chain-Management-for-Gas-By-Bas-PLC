@@ -97,35 +97,39 @@ const GasRequest = () => {
 
                         <p>{gasQuantity}</p>
 
-                        <img onClick={() => {
+                        <img className='w-[22px] cursor-pointer'
 
-                            if(userData.role)
-                            {
-
-                                const maximumQuantity = userData.role === "Organization" ? 10 : 3;  
-
-                                if(gasQuantity < maximumQuantity)
+                            onClick={() => {
+                            
+                                if(userData.role)
                                 {
 
-                                    updateGasQuantity('+');
+                                    const maximumQuantity = userData.role === "Organization" ? 10 : 2;
+
+                                    if(gasQuantity < maximumQuantity)
+                                    {
+
+                                        updateGasQuantity('+');
+
+                                    }
+                                    else
+                                    {
+
+                                        toast.error(`You cannot add more than ${maximumQuantity} gases.`)
+                                    }
 
                                 }
                                 else
                                 {
 
-                                    toast.error(`You cannot add more than ${maximumQuantity} gases.`)
+                                    toast.warning("Please Sign In")
 
                                 }
 
-                            }
-                            else
-                            {
+                            }} 
 
-                                toast.warning("Please Sign In")
-
-                            }
-                            
-                        }} className='w-[22px] cursor-pointer' src={asstets.add_icon} alt="" />
+                            src={asstets.add} alt="" 
+                        />
 
                     </div>
 
@@ -136,9 +140,15 @@ const GasRequest = () => {
 
                 <div className='flex justify-between items-center'>
 
-                    <p>LKR {gasDetails ? gasDetails.price : ""}</p>
+                    <p>
 
-                    <p>LKR {gasDetails ? gasDetails.price  : ""}</p>
+                        {
+                            
+                            gasDetails ? `LKR: ${(gasDetails.price * gasQuantity).toFixed(2)}` : "LKR: 0.00"
+
+                        }
+                    
+                    </p>
 
                 </div>
 
