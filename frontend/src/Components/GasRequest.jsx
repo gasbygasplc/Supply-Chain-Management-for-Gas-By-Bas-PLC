@@ -30,10 +30,16 @@ const GasRequest = () => {
         const order = {
 
             type: selectedType,
-    
-            gasQuantity: gasQuantity,
-    
-            price : (gasDetails.price * gasQuantity).toFixed(2)
+
+            quantity: gasQuantity, 
+
+            price: gasDetails.price, 
+
+            totalPrice: (gasDetails.price * gasQuantity).toFixed(2), 
+
+            weightKG: gasDetails.weightKG,    
+
+            image: gasDetails.image, 
 
         }
 
