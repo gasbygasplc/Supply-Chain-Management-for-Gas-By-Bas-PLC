@@ -73,10 +73,10 @@ const GasContectProvider = (props) => {
             setUserData(JSON.parse(StoreUserData))
         }
 
-        console.log(gasDetails)
+        console.log(gasOrder)
 
 
-    }, [token , gasDetails]);
+    }, [token , gasDetails , gasOrder]);
 
 
     //============================================= User Increment of quantity ===========================================
