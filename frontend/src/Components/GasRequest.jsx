@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { asstets } from '../assets/Assets'
 import { GasContext } from '../Context/GasContext'
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
 
 const GasRequest = () => {
 
@@ -9,6 +10,8 @@ const GasRequest = () => {
     const {gasDetails , handleGasSelection , gasQuantity , updateGasQuantity , userData} = useContext(GasContext);
 
     const [selectedType , setSelectedType] = useState('Small');
+
+    const Navigate = useNavigate();
 
 
 
@@ -155,9 +158,9 @@ const GasRequest = () => {
 
                 <div className='flex flex-col justify-normal w-full gap-4 sm:flex-row sm:justify-between'>
 
-                    <button className='bg-primary text-white py-[10px] px-[18px] w-full rounded-md '>Buy Now</button>
+                    <button onClick={() => Navigate('/gas-cart')} className='bg-primary text-white py-[10px] px-[18px] w-full rounded-md '>Buy Now</button>
 
-                    <button className='bg-green-600 text-white py-[10px] px-[18px] w-full rounded-md'>Cash On Delivery</button>
+                    <button onClick={() => Navigate('/gas-cart')} className='bg-green-600 text-white py-[10px] px-[18px] w-full rounded-md'>Cash On Delivery</button>
 
                 </div>
 
