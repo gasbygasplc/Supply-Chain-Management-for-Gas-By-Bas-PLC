@@ -14,6 +14,8 @@ const GasContectProvider = (props) => {
 
     const [userId , setUserId] = useState(null);
 
+    const [gasOrder , setGasOrder] = useState([]);
+
     const backendURL = import.meta.env.VITE_BACKEND_URL;
 
     const [token , setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : '');
@@ -54,15 +56,13 @@ const GasContectProvider = (props) => {
         fetchGasDetails(type);
     }
 
-    //============================================= Quantity Increment ===========================================
+    //============================================= update gas details ===========================================
 
-    // const updateQuantity = async(operation) =>{
+    const saveGasOrder = order => {
 
-    //     setGasQuantity((previousQuantity) => {
-
-    //         const updateQuantity = operation === 'Increment' ? previousQuantity + 1
-    //     })
-    // }
+        setGasOrder((previousOrder) => [...previousOrder , order])
+    }
+    
 
     useEffect(() => {
 
@@ -126,6 +126,8 @@ const GasContectProvider = (props) => {
         gasQuantity,
         setGasQuantity,
         updateGasQuantity,
+        gasOrder,
+        saveGasOrder
 
     }
 
