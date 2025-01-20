@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 const GasRequest = () => {
 
     
-    const {gasDetails , handleGasSelection , gasQuantity , updateGasQuantity , userData} = useContext(GasContext);
+    const {gasDetails , handleGasSelection , gasQuantity , updateGasQuantity , userData , gasPriceAmount} = useContext(GasContext);
 
     const [selectedType , setSelectedType] = useState('Small');
 
@@ -144,7 +144,7 @@ const GasRequest = () => {
 
                         {
                             
-                            gasDetails ? `LKR: ${(gasDetails.price * gasQuantity).toFixed(2)}` : "LKR: 0.00"
+                            (gasPriceAmount)
 
                         }
                     

@@ -16,6 +16,8 @@ const GasContectProvider = (props) => {
 
     const backendURL = import.meta.env.VITE_BACKEND_URL;
 
+    const [gaspriceAmount , setGasPrice] = useState(0);
+
     const [token , setToken] = useState(localStorage.getItem('token') ? localStorage.getItem('token') : '');
 
     //========================================== fetch Gas Details =================================================
@@ -73,8 +75,29 @@ const GasContectProvider = (props) => {
             setUserData(JSON.parse(StoreUserData))
         }
 
+        gasPrice();
 
-    }, [token])
+
+    }, [token , gasDetails]);
+
+    //============================================ Gas Price ============================================================
+
+    const gasPrice = () => {
+
+        if(gasDetails)
+        {
+
+            setGasPrice(gasDetails.price);
+
+        }
+
+        if(gasQuantity > 1)
+        {
+            
+            return (gasPrice * gasQuantity).toFixed(2);
+
+        }
+    }
 
     //============================================= User Increment of quantity ===========================================
 
@@ -122,7 +145,8 @@ const GasContectProvider = (props) => {
         setUserData,
         gasQuantity,
         setGasQuantity,
-        updateGasQuantity
+        updateGasQuantity,
+        gaspriceAmount
 
     }
 
