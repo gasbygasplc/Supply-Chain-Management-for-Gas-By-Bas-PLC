@@ -15,6 +15,8 @@ const UserSchema = new mongoose.Schema(
     phone: { type: String, unique: true, required: true },
 
     role: { type: String, enum: ['User', 'Organization'], default: 'User' },
+
+    cartData: {type:Object , default:{}}
     
   },
 
