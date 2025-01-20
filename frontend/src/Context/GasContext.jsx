@@ -101,7 +101,7 @@ const GasContectProvider = (props) => {
 
             }
             else if (operation === '-' && previousData > 1)
-            {
+            { 
 
                 return previousData - 1;
 
