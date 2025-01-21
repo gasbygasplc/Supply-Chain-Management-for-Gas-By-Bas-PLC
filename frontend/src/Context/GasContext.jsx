@@ -4,17 +4,36 @@ import { toast } from "react-toastify";
 
 export const GasContext = createContext();
 
-const GasContectProvider = (props) => {
+const GasContextProvider = (props) => {
     const [gasDetails, setGasDetails] = useState(null);
     const [gasQuantity, setGasQuantity] = useState(1);
     const [userData, setUserData] = useState({});
     const [userId, setUserId] = useState(null);
-    const [gasOrder, setGasOrder] = useState([]);
+    const [gasOrder, setGasOrder] = useState(() => {
+        const savedCart = localStorage.getItem("gasOrder");
+        return savedCart ? JSON.parse(savedCart) : [];
+    });
     const backendURL = import.meta.env.VITE_BACKEND_URL;
     const [token, setToken] = useState(localStorage.getItem("token") || "");
     const [isProcessingCheckout, setIsProcessingCheckout] = useState(false);
 
     //========================================== fetch Gas Details =================================================
+    const saveGasOrder = (order) => {
+        if (!order.type || !order.quantity || !order.price) {
+            toast.error("Invalid gas order details.");
+            return;
+        }
+        const updatedOrder = [...gasOrder, order];
+        setGasOrder(updatedOrder);
+        localStorage.setItem("gasOrder", JSON.stringify(updatedOrder)); // Save to localStorage
+    };
+
+    const clearCart = () => {
+        setGasOrder([]);
+        localStorage.removeItem("gasOrder");
+    };
+
+
     const fetchGasDetails = async (type) => {
         try {
             const response = await axios.get(`${backendURL}/api/gas/${type}`);
@@ -35,14 +54,6 @@ const GasContectProvider = (props) => {
     };
 
     //============================================= update gas details ===========================================
-    const saveGasOrder = (order) => {
-        if (!order.type || !order.quantity || !order.price) {
-            toast.error("Invalid gas order details.");
-            return;
-        }
-        setGasOrder((previousOrder) => [...previousOrder, order]);
-    };
-
     const checkoutCart = async () => {
         if (isProcessingCheckout) return;
         setIsProcessingCheckout(true);
@@ -83,7 +94,7 @@ const GasContectProvider = (props) => {
 
             if (response.status === 201) {
                 toast.success("Checkout successful! You will receive notifications shortly.");
-                setGasOrder([]);
+                clearCart();
             } else {
                 toast.error("Checkout failed. Please try again later.");
             }
@@ -148,4 +159,4 @@ const GasContectProvider = (props) => {
     return <GasContext.Provider value={value}>{props.children}</GasContext.Provider>;
 };
 
-export default GasContectProvider;
+export default GasContextProvider;
