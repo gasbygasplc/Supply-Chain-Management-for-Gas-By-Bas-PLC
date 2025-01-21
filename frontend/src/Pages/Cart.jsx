@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { GasContext } from '../Context/GasContext';
 import { toast } from 'react-toastify';
 
@@ -37,6 +37,12 @@ const Cart = () => {
     checkoutCart();
 
   };
+
+  useEffect(() => {
+
+    console.log(gasOrder);
+
+  }, [gasOrder]);
 
   return (
 
@@ -105,9 +111,9 @@ const Cart = () => {
       </div>
 
     </section>
-    
+
   );
-  
+
 };
 
 export default Cart;
