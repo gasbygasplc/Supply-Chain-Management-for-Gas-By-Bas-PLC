@@ -1,6 +1,6 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import app from '../src/server'; // Adjust the path to your server.js file
+import app from 'C:\Users\Renu\Desktop\NewGasByGas\Supply-Chain-Management-for-Gas-By-Bas-PLC\backend\server.js'; // Adjust the path to your server.js file
 
 const { expect } = chai;
 
@@ -9,7 +9,7 @@ chai.use(chaiHttp);
 describe('Delivery Schedule API Tests', () => {
     it('should schedule a delivery successfully', (done) => {
         chai.request(app)
-            .post('/api/delivery/schedule') // The actual endpoint for scheduling delivery
+            .post('C:\Users\Renu\Desktop\NewGasByGas\Supply-Chain-Management-for-Gas-By-Bas-PLC\backend\tests\deliveryScheduleTest.js') // The actual endpoint for scheduling delivery
             .send({
                 requestId: '12345', // Replace with a valid requestId from your database
                 driverName: 'John Doe',
