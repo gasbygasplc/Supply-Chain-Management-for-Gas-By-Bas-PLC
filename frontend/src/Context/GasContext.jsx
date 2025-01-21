@@ -4,7 +4,11 @@ import { toast } from "react-toastify";
 
 export const GasContext = createContext();
 
+
 const GasContectProvider = (props) => {
+
+
+const GasContextProvider = (props) => {
 
     const [gasDetails, setGasDetails] = useState(null);
 
@@ -16,6 +20,15 @@ const GasContectProvider = (props) => {
 
     const [gasOrder, setGasOrder] = useState([]);
 
+  
+    const [gasOrder, setGasOrder] = useState(() => 
+    {
+      
+        const savedCart = localStorage.getItem("gasOrder");
+      
+        return savedCart ? JSON.parse(savedCart) : [];
+    });
+
     const backendURL = import.meta.env.VITE_BACKEND_URL;
 
     const [token, setToken] = useState(localStorage.getItem("token") || "");
@@ -24,6 +37,22 @@ const GasContectProvider = (props) => {
 
 
     //========================================== fetch Gas Details =================================================
+
+    const saveGasOrder = (order) => {
+        if (!order.type || !order.quantity || !order.price) {
+            toast.error("Invalid gas order details.");
+            return;
+        }
+        const updatedOrder = [...gasOrder, order];
+        setGasOrder(updatedOrder);
+        localStorage.setItem("gasOrder", JSON.stringify(updatedOrder)); // Save to localStorage
+    };
+
+    const clearCart = () => {
+        setGasOrder([]);
+        localStorage.removeItem("gasOrder");
+    };
+
 
     const fetchGasDetails = async (type) => {
 
@@ -65,6 +94,7 @@ const GasContectProvider = (props) => {
     };
 
     //============================================= update gas details ===========================================
+
     const saveGasOrder = (order) => 
     {
 
@@ -84,6 +114,8 @@ const GasContectProvider = (props) => {
     const checkoutCart = async () => 
     
         {
+
+    const checkoutCart = async () => {
 
         if (isProcessingCheckout) return;
 
@@ -147,10 +179,15 @@ const GasContectProvider = (props) => {
 
                 toast.success("Checkout successful! You will receive notifications shortly.");
 
+
                 setGasOrder([]);
 
             } 
             else 
+            {
+                clearCart();
+              
+            } else 
             {
 
                 toast.error("Checkout failed. Please try again later.");
@@ -259,4 +296,4 @@ const GasContectProvider = (props) => {
     return <GasContext.Provider value={value}>{props.children}</GasContext.Provider>;
 };
 
-export default GasContectProvider;
+export default GasContextProvider;
