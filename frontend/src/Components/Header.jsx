@@ -8,9 +8,9 @@ const Header = () => {
 
     <section id='Home' className="min-h-[38vw] sm:min-h-[34vw] my-8 bg-no-repeat bg-contain relative" style={{backgroundImage:`url(${asstets.header_image})`}}>
         
-      <div className="absolute flex flex-col items-start gap-0.5 sm:gap-[1.5vw] max-w-[65%] sm:max-w-[50%] md:max-w-[45%] bottom-[8%] sm:bottom-[4.5%] left-5 sm:left-[2.5vw] animate-fadeIn">
+      <div className="absolute hidden  sm:flex flex-col items-start gap-5 sm:gap-[1.5vw] max-w-[65%] sm:max-w-[50%] md:max-w-[45%] bottom-[8%] sm:bottom-[4.5%] left-5 sm:left-[2.5vw] animate-fadeIn">
 
-        <h2 className='font-medium text-white text-[max(6vw,12px)] sm:text-[max(4.5vw,22px)]'>Your Trusted Partner for Safe Gas Solutions!</h2>
+        <h2 className='font-medium text-white text-[max(5vw,8px)] sm:text-[max(4.5vw,22px)]'>Your Trusted Partner for Safe Gas Solutions!</h2>
 
         <p className='hidden sm:block text-white text-[3vw] sm:text-[1.5vw] md:text-[1vw] leading-[25px] sm:leading-[30px]'>
 

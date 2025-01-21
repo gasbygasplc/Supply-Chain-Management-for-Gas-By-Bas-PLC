@@ -9,10 +9,9 @@ const ContactUs = () => {
 
         <div className='text-center flex flex-col gap-1 justify-center items-center'>
 
-            <p className='py-[10px] px-[18px] bg-gray-200 rounded-full text-gray-700'><span className='text-lg'>&#9743; </span> Contact Us</p>
+            <p className='py-[8px] px-[16px] md:py-[10px] md:px-[18px] bg-gray-200 rounded-full text-gray-700'><span className='text-lg'>&#9743; </span> Contact Us</p>
 
-            <h1 className='font-bold py-2 text-4xl'> Get in touch <span className='text-primary'> with our team.</span></h1>
-
+            <h1 className='font-bold py-2 text-2xl md:text-4xl'> Get in touch <span className='text-primary'> with our team.</span></h1>
 
         </div>
 
