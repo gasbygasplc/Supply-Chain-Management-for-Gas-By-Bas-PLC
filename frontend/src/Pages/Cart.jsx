@@ -23,7 +23,7 @@ const Cart = () => {
   };
 
   return (
-    <div className="max-w-full p-4">
+    <section className="max-w-full p-4">
       <div className="overflow-x-scroll max-w-full">
         <table className="min-w-full table-auto text-sm text-gray-700">
           <thead className="bg-gray-100">
@@ -31,7 +31,7 @@ const Cart = () => {
               <th className="px-4 py-2 text-left">Type</th>
               <th className="px-4 py-2 text-left">Price</th>
               <th className="px-4 py-2 text-left">Quantity</th>
-              <th className="px-4 py-2 text-left">Total Price</th>
+              <th className="px-4 py-2 text-left">Total</th>
               <th className="px-4 py-2 text-left">Weight</th>
               <th className="px-4 py-2 text-left">Remove</th>
             </tr>
@@ -58,15 +58,15 @@ const Cart = () => {
         </table>
       </div>
 
-      <div className="mt-4 flex justify-end">
+      <div className="mt-4 justify-end flex ">
         <button
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+          className="bg-primary text-white px-4 py-2 rounded hover:bg-blue-600"
           onClick={handleCheckout}
         >
           Checkout
         </button>
       </div>
-    </div>
+    </section>
   );
 };
 
