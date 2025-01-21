@@ -13,17 +13,17 @@ const Price = () => {
 
             <div className='text-center flex flex-col justify-items-center items-center gap-4'>
 
-                <p className='py-[10px] px-[18px] bg-gray-200 rounded-full text-gray-700'> &#36; Pricing</p>
+                <p className=' py-[8px] px-[16px] md:py-[10px] md:px-[18px] bg-gray-200 rounded-full text-gray-700'> &#36; Pricing</p>
 
-                <h1 className='font-bold text-4xl'> <span className='text-[#0D6EFD]'>GasByGas</span> Pricing Solutions</h1>
+                <h1 className='font-bold text-2xl sm:text-4xl'> <span className='text-[#0D6EFD]'>GasByGas</span> Pricing Solutions</h1>
 
                 <p className='text-[14.5px] text-gray-500'>No hidden fees, just simple and affordable plans tailored to your needs</p>
 
-                <div className='flex flex-row gap-4 bg-gray-100 py-1 px-1.5 rounded-full'>
+                <div className='flex flex-row gap-4 bg-gray-100 py-1 px-1.5 rounded-full' >
 
-                    <button className={priceMenu === 'Gas Refill' ? "bg-white py-[10px] px-[18px] text-[15px] text-base text-gray-800 rounded-[100px]" : "bg-transparent py-[10] px-[18px] text-[15px] text-base text-gray-800"} onClick={() => setPriceMenu('Gas Refill')}>Refill Your Gas</button>
+                    <button className={priceMenu === 'Gas Refill' ? "bg-white py-[10px] px-[18px] text-[15px] text-base text-gray-800 rounded-[100px]" : "bg-transparent py-[10] px-[18px] text-[15px] text-base text-gray-800"} onClick={() => setPriceMenu('Gas Refill')}>Refill Gas</button>
                     
-                    <button className={priceMenu === 'Buy Gas' ? 'bg-white py-[10px] px-[18px] text-[15px] text-base text-gray-800 rounded-[100px]' : 'bg-transparent py-[10] px-[18px] text-[15px] text-base text-gray-800'} onClick={() => setPriceMenu('Buy Gas')}>Buy Your New Gas</button>
+                    <button className={priceMenu === 'Buy Gas' ? 'bg-white py-[10px] px-[18px] text-[15px] text-base text-gray-800 rounded-[100px]' : 'bg-transparent py-[10] px-[18px] text-[15px] text-base text-gray-800'} onClick={() => setPriceMenu('Buy Gas')}>Buy Gas</button>
 
                 </div>
 
@@ -50,7 +50,7 @@ const Price = () => {
 
                         <hr className='max-w-[80%] border mx-auto mb-6'/>
 
-                        <div className='flex flex-col gap-3 justify-start items-start mx-auto ml-9'>
+                        <div className='flex flex-col gap-3 text-start text-sm sm:text-base justify-start items-start mx-auto ml-9'>
 
                             <p className='text-gray-500'> <span className='text-primary'>&#10003;</span> Lightweight and portable </p>
                             <p className='text-gray-500'> <span className='text-primary'>&#10003;</span> Easy to store in compact spaces</p>
@@ -83,7 +83,7 @@ const Price = () => {
 
                         <hr className='max-w-[80%] border mx-auto mb-6'/>
 
-                        <div className='flex flex-col gap-3 justify-start items-start mx-auto ml-9'>
+                        <div className='flex flex-col text-start text-sm sm:text-base gap-3 justify-start items-start mx-auto ml-9'>
 
                             <p className='text-gray-500'> <span className='text-primary'>&#10003;</span> Balanced size for home cooking needs </p>
                             <p className='text-gray-500'> <span className='text-primary'>&#10003;</span> 24/7 customer support included</p>
@@ -116,7 +116,7 @@ const Price = () => {
 
                         <hr className='max-w-[80%] border border-gray-200 mx-auto mb-6'/>
 
-                        <div className='flex flex-col gap-3 justify-start items-start mx-auto ml-9'>
+                        <div className='flex flex-col gap-3 text-start text-sm sm:text-base justify-start items-start mx-auto ml-9'>
 
                             <p className='text-gray-500'> <span className='text-primary'>&#10003;</span> High capacity for extended use </p>
                             <p className='text-gray-500'> <span className='text-primary'>&#10003;</span> Express delivery for bulk orders</p>
