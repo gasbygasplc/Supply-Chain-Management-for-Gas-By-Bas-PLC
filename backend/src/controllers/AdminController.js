@@ -12,9 +12,9 @@ const addOutlet = async(req , res) => {
 
     try 
     {
-        const {outletName ,Location , phoneNumber, email , deliveryCapacity , currentStock , maxCapacity ,minimumRequestLevel } = req.body;
+        const {outletName ,Location , phoneNumber, email ,password , deliveryCapacity , currentStock , maxCapacity ,minimumRequestLevel } = req.body;
 
-        if(!outletName ,!Location , !phoneNumber, !email , !deliveryCapacity , !currentStock , !maxCapacity ,!minimumRequestLevel)
+        if(!outletName ||!Location || !phoneNumber|| !email || !password || !deliveryCapacity || !currentStock || !maxCapacity ||!minimumRequestLevel)
         {
 
             return res.json({success:false , message: "Missing Information"});
@@ -28,6 +28,18 @@ const addOutlet = async(req , res) => {
 
         }
 
+        if(password.length < 8)
+        {
+
+            return res.json({success : false , message: "Password must be 8 charactor"});
+
+        }
+
+        const salt = await bcrypt.genSalt(10)
+
+        const hashPassword = await bcrypt.hash(password , salt)
+
+
         const outletData = {
 
             outletName,
@@ -35,6 +47,8 @@ const addOutlet = async(req , res) => {
             Location, 
 
             phoneNumber,
+
+            password : hashPassword,
 
             email, 
 
@@ -106,7 +120,7 @@ const addOutletManager = async(req , res) => {
 
         await newOutletManager.save();
 
-        res.json({success: true , message: "Outlet Manager added"})
+        res.json({success: true , message: "Outlet Manager added" })
         
     } catch (error) 
     {
