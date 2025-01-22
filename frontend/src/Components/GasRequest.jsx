@@ -14,6 +14,8 @@ const GasRequest = () => {
 
     const [selectedType , setSelectedType] = useState('Small');
 
+    const [selectedLocation , setSelectedLocation] = useState('');
+
     const Navigate = useNavigate();
 
     //===================================== handle save order ======================================================
@@ -25,6 +27,15 @@ const GasRequest = () => {
         {
 
             toast.error("Please select a gas type.");
+
+            return;
+
+        }
+
+        if(!selectedLocation)
+        {
+
+            toast.warn("Please select a location.");
 
             return;
 
@@ -43,6 +54,8 @@ const GasRequest = () => {
             weightKG: gasDetails.weightKG,    
 
             image: gasDetails.image, 
+
+            location: selectedLocation,
 
         }
 
