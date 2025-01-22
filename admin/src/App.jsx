@@ -35,6 +35,8 @@ const App = () => {
 
         <Routes>
 
+          {/* ++++++++++++++++++++++++++++++++++++++++++ Admin Route ++++++++++++++++++++++++++++++++++++++++++++ */}
+
           <Route path='/' element={<></>}/>
 
           <Route path='/admin-dashboard' element={<Dashboard/>}/>
@@ -46,6 +48,8 @@ const App = () => {
           <Route path='/outlet-stock-request' element={<OutletStockRequest/>}/>
 
           <Route path='/manage-stock' element = {<AddMainStock/>}/>
+
+          {/* ++++++++++++++++++++++++++++++++++++++++++ Outlet Route ++++++++++++++++++++++++++++++++++++++++++++ */}
 
           <Route path='/gas-request' element = {<GasRequest/>}/>
 
