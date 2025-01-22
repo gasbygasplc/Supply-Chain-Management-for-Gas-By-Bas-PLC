@@ -203,7 +203,7 @@ const GasRequest = () => {
 
                 <div className='flex flex-col gap-4 w-full'>
 
-                <select className='outline-none border border-primary p-3 rounded-md' name="districts" id="districts">
+                <select onChange={(e) => setSelectedLocation(e.target.value)} className='outline-none border border-primary p-3 rounded-md' name="districts" id="districts">
 
                     {
 
