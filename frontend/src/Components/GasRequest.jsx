@@ -55,7 +55,7 @@ const GasRequest = () => {
 
             image: gasDetails.image, 
 
-            location: selectedLocation,
+            locationId: selectedLocation,
 
         }
 
