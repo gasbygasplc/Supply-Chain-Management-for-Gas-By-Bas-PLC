@@ -10,12 +10,15 @@ import AddOutlet from './Pages/Admin/AddOutlet';
 import AddOutletManager from './Pages/Admin/AddOutletManager';
 import OutletStockRequest from './Pages/Admin/OutletStockRequest';
 import AddMainStock from './Pages/Admin/AddMainStock';
+import { OutletContext } from './Context/OutletContext';
 
 const App = () => {
 
   const {aToken} = useContext(AdminContext);
+
+  const {Otoken} = useContext(OutletContext);
   
-  return aToken ? (
+  return aToken || Otoken ? (
     
     <div className='bg-gray-50'>
 
