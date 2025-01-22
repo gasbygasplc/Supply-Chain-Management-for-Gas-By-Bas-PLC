@@ -30,6 +30,15 @@ const addOutlet = async(req , res) => {
 
         }
 
+        const location = await outletModel.findOne({Location});
+
+        if(location)
+        {
+
+            return res.status(400).json({success:false , message:"Location already exist"});
+            
+        }
+
         if(password.length < 8)
         {
 
