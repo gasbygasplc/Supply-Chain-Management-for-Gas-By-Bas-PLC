@@ -3,6 +3,7 @@ import { assets } from '../assets/assets'
 import { AdminContext } from '../Context/AdminContext.jsx';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { OutletContext } from '../Context/OutletContext.jsx';
 
 const LoginPage = () => {
 
@@ -14,7 +15,7 @@ const LoginPage = () => {
 
     const {aToken , SetAToken , backendURL} = useContext(AdminContext);
 
-
+    const {Otoken , setOtoken} = useContext(OutletContext);
 
     const onsubmitHandler = async(event) => 
     {
@@ -50,14 +51,31 @@ const LoginPage = () => {
 
                 const {data} = await axios.post(backendURL + '/api/outlet/login' , {email , password});
 
-                
+                if(data.success)
+                {
 
+                    toast.success(data.message);
+
+                    setOtoken(data.Otoken);
+
+                    localStorage.setItem('Otoken' , data.Otoken);
+
+                }
+                else
+                {
+
+                    toast.error(data.message);
+
+                }
+                
             }
             
         } catch (error) 
         {
             
-
+            console.error('Login error:', error);
+            
+            toast.error('An error occurred. Please try again later.');
 
         }
     }

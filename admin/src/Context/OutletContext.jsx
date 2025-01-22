@@ -4,11 +4,13 @@ export const OutletContext = createContext();
 
 const OutletContextProvider = (props) => {
 
+    const [Otoken , setOtoken] = useState('');
+
 
     const value = {
 
-       
-
+        Otoken,
+        setOtoken
     }
 
     return (
