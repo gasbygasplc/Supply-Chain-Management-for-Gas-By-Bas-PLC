@@ -55,7 +55,7 @@ export const submitGasRequest = async (req, res) =>
 
             tokenNumber,
 
-            locationId: OlocationId,
+            locationId,
 
             qrCodeUrl,
 
