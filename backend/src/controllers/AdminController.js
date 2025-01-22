@@ -2,11 +2,13 @@ import validator from 'validator';
 
 import jwt from 'jsonwebtoken';
 
-import outletModel from '../models/OutletManagerModule.js';
+import outletModel from '../models/OutletModule.js';
 
 import bcrypt from 'bcrypt'
 
-import outletManagermodel from '../models/OutletManagerOriginalModules.js';
+import outletManagermodel from '../models/outletManager.js';
+
+
 
 const addOutlet = async(req , res) => {
 

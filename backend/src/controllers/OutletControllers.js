@@ -1,6 +1,7 @@
-import outletModel from "../models/OutletManagerModule.js";
+
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import outletModel from '../models/OutletModule.js';
 
 const outletLogin = async(req , res) => {
 
