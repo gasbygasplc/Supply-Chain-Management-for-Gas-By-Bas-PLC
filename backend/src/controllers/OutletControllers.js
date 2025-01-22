@@ -50,4 +50,35 @@ const outletLogin = async(req , res) => {
 
 }
 
-export {outletLogin};
+//============================================== get the outlet Location ====================================================
+
+const getOutletLocation = async(req , res) => {
+
+    try 
+    {
+
+        const location = await outletModel.find({} , 'location _id');
+
+        if(!location.length)
+        {
+
+            return res.status(400).json({success:false , message:"No Location Found"});
+
+        }
+
+        res.status(200).json({success:true , message: 'Outlet locations and IDs retrieved successfully.' , location});
+
+
+        
+    } catch (error) 
+    {
+
+        console.error(error);
+
+        res.status(500).json({ message: 'An error occurred while fetching outlet locations and IDs.' });
+        
+    }
+
+}
+
+export {outletLogin , getOutletLocation};
