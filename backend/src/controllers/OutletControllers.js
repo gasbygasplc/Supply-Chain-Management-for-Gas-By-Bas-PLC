@@ -57,7 +57,7 @@ const getOutletLocation = async(req , res) => {
     try 
     {
 
-        const location = await outletModel.find({} , 'location _id');
+        const location = await outletModel.find({} , 'Location _id');
 
         if(!location.length)
         {
