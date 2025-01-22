@@ -3,11 +3,14 @@ import { asstets } from '../assets/Assets'
 import { GasContext } from '../Context/GasContext'
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { OutletContext } from '../Context/OutletContext';
 
 const GasRequest = () => {
 
     
     const {gasDetails , handleGasSelection , gasQuantity , updateGasQuantity , userData , saveGasOrder} = useContext(GasContext);
+
+    const {outletlocation , getOutletLocation} = useContext(OutletContext);
 
     const [selectedType , setSelectedType] = useState('Small');
 
@@ -44,7 +47,9 @@ const GasRequest = () => {
         }
 
         saveGasOrder(order);
+
         toast.success("Your Gas Added into Cart!");
+
         Navigate('/gas-cart');
 
     };
@@ -63,7 +68,7 @@ const GasRequest = () => {
 
         selectedGas("Small");
 
-        console.log(userData)
+        getOutletLocation();
         
     } , [])
 
@@ -187,31 +192,14 @@ const GasRequest = () => {
 
                 <select className='outline-none border border-primary p-3 rounded-md' name="districts" id="districts">
 
-                    <option value="ampara">Ampara</option>
-                    <option value="anuradhapura">Anuradhapura</option>
-                    <option value="badulla">Badulla</option>
-                    <option value="batticaloa">Batticaloa</option>
-                    <option value="colombo">Colombo</option>
-                    <option value="galle">Galle</option>
-                    <option value="gampaha">Gampaha</option>
-                    <option value="hambantota">Hambantota</option>
-                    <option value="jaffna">Jaffna</option>
-                    <option value="kalutara">Kalutara</option>
-                    <option value="kandy">Kandy</option>
-                    <option value="kegalle">Kegalle</option>
-                    <option value="kilinochchi">Kilinochchi</option>
-                    <option value="kurunegala">Kurunegala</option>
-                    <option value="mannar">Mannar</option>
-                    <option value="matale">Matale</option>
-                    <option value="matara">Matara</option>
-                    <option value="monaragala">Monaragala</option>
-                    <option value="mullaitivu">Mullaitivu</option>
-                    <option value="nuwara-eliya">Nuwara Eliya</option>
-                    <option value="polonnaruwa">Polonnaruwa</option>
-                    <option value="puttalam">Puttalam</option>
-                    <option value="ratnapura">Ratnapura</option>
-                    <option value="trincomalee">Trincomalee</option>
-                    <option value="vavuniya">Vavuniya</option>
+                    {
+
+                        outletlocation.map((location , index) => (
+
+                            <option key={index} value={location._id}>{location.Location}</option>
+                            
+                        ))
+                    }
 
                 </select>
 
