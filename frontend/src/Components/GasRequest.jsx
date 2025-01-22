@@ -113,7 +113,7 @@ const GasRequest = () => {
 
             {/* Gas quantity */}
 
-            <div className='w-full flex flex-col gap-10'>
+            <div className='w-full flex flex-col gap-5'>
 
                 <div className='flex justify-between items-center' >
 
@@ -123,11 +123,11 @@ const GasRequest = () => {
 
                 </div>
 
-                <div className='flex justify-between'>
+                <div className='flex justify-between flex-row items-center'>
 
                     <p>Quantity:</p>
 
-                    <div className='flex gap-4 items-center justify-center py-[8px] px-[16px] bg-white rounded-full border border-gray-300'>
+                    <div className='flex flex-row sm:flex-row gap-4 py-[8px] px-[16px] bg-white rounded-full border border-gray-300'>
 
                         <img onClick={() =>  updateGasQuantity('-')} className='w-[22px] cursor-pointer' src={asstets.remove_icon} alt="" />
 
@@ -180,6 +180,41 @@ const GasRequest = () => {
                     <p>LKR {gasDetails ? (gasDetails.price * gasQuantity).toFixed(2) : "" }</p>
 
                     <p>LKR {gasDetails ? (gasDetails.price * gasQuantity).toFixed(2) : ""}</p>
+
+                </div>
+
+                <div className='flex flex-col gap-4 w-full'>
+
+                <select className='outline-none border border-primary p-3 rounded-md' name="districts" id="districts">
+
+                    <option value="ampara">Ampara</option>
+                    <option value="anuradhapura">Anuradhapura</option>
+                    <option value="badulla">Badulla</option>
+                    <option value="batticaloa">Batticaloa</option>
+                    <option value="colombo">Colombo</option>
+                    <option value="galle">Galle</option>
+                    <option value="gampaha">Gampaha</option>
+                    <option value="hambantota">Hambantota</option>
+                    <option value="jaffna">Jaffna</option>
+                    <option value="kalutara">Kalutara</option>
+                    <option value="kandy">Kandy</option>
+                    <option value="kegalle">Kegalle</option>
+                    <option value="kilinochchi">Kilinochchi</option>
+                    <option value="kurunegala">Kurunegala</option>
+                    <option value="mannar">Mannar</option>
+                    <option value="matale">Matale</option>
+                    <option value="matara">Matara</option>
+                    <option value="monaragala">Monaragala</option>
+                    <option value="mullaitivu">Mullaitivu</option>
+                    <option value="nuwara-eliya">Nuwara Eliya</option>
+                    <option value="polonnaruwa">Polonnaruwa</option>
+                    <option value="puttalam">Puttalam</option>
+                    <option value="ratnapura">Ratnapura</option>
+                    <option value="trincomalee">Trincomalee</option>
+                    <option value="vavuniya">Vavuniya</option>
+
+                </select>
+
 
                 </div>
 
