@@ -10,6 +10,8 @@ const GasRequestSchema = new mongoose.Schema(
 
     requestedDate: { type: Date, default: Date.now },
 
+    locationId : {type: mongoose.Schema.Types.ObjectId, ref:'outlets', required: true},
+
     tokenNumber: { type: String, required: true },
 
     qrCodeUrl: { type: String, required: true },

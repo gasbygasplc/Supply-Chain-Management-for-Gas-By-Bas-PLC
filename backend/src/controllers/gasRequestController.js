@@ -4,45 +4,84 @@ import { generateToken } from '../utils/tokenService.js';
 import { sendSms } from '../utils/smsService.js';
 import { generateQrCode } from '../utils/qrCodeService.js';
 import { sendEmail } from '../utils/emailService.js';
+import outletModel from '../models/OutletModule.js';
 
-export const submitGasRequest = async (req, res) => {
-    const { userId, gasType, quantity } = req.body;
+export const submitGasRequest = async (req, res) => 
+{
 
-    if (!userId || !gasType || !quantity) {
+    const { userId, gasType, quantity , locationId } = req.body;
+
+
+    if (!userId || !gasType || !quantity , !locationId) 
+    {
+    
         return res.status(400).json({ success: false, message: 'Missing required fields' });
+    
     }
 
-    try {
+    try 
+    {
         const user = await User.findById(userId);
 
-        if (!user) {
+        if (!user) 
+        {
+
             return res.status(404).json({ success: false, message: 'User not found' });
+
+        }
+
+        const OlocationId = await outletModel.findById(locationId);
+
+        if(!OlocationId)
+        {
+
+            return res.status(404).json({ success: false, message: 'Outlet Location not found' });
+
         }
 
         const { email, phone } = user;
+
         const normalizedPhone = phone.startsWith('94') ? phone : `94${phone.replace(/^0/, '')}`;
+
         const tokenNumber = generateToken();
+
         const qrCodeUrl = await generateQrCode({ tokenNumber, gasType, quantity, userId });
 
         const gasRequest = new GasRequest({
+
             userId,
+
             requestId: `REQ-${Date.now()}`,
+
             tokenNumber,
+
+            locationId: OlocationId,
+
             qrCodeUrl,
+
             gasType,
+
             quantity,
+
         });
 
         await gasRequest.save();
 
         const smsMessage = `Gas Request Confirmation:\nToken: ${tokenNumber}\nQR Code: ${qrCodeUrl}`;
+
         const smsResponse = await sendSms(normalizedPhone, smsMessage, 'GasByGas');
-        if (!smsResponse.success) {
+
+        if (!smsResponse.success) 
+        {
+        
             console.error(`Failed to send SMS to ${normalizedPhone}: ${smsResponse.message}`);
+
         }
 
         const emailSubject = 'Gas Request Confirmation';
+
         const emailText = `Your gas request has been submitted successfully.\nToken: ${tokenNumber}\nPlease show this token or scan the QR code to pick up your gas.`;
+
         const emailHtml = `
             <h1>Gas Request Confirmation</h1>
             <p>Your gas request has been submitted successfully.</p>
@@ -53,37 +92,61 @@ export const submitGasRequest = async (req, res) => {
         `;
 
         const emailResponse = await sendEmail(email, emailSubject, emailText, emailHtml);
-        if (!emailResponse.success) {
+
+        if (!emailResponse.success) 
+        {
+        
             console.error(`Failed to send email to ${email}: ${emailResponse.message}`);
+        
         }
 
         return res.status(201).json({
+
             success: true,
+
             message: 'Gas request submitted successfully',
+
             tokenNumber,
+
             qrCodeUrl,
+
         });
-    } catch (error) {
+
+    } catch (error) 
+    {
+
         console.error('Error submitting gas request:', error);
+
         return res.status(500).json({ success: false, message: 'Error submitting gas request' });
+
     }
 };
 
 export const handleCheckout = async (req, res) => {
+
     const { userId, items } = req.body;
 
-    if (!userId || !items || items.length === 0) {
+    if (!userId || !items || items.length === 0) 
+    {
+    
         return res.status(400).json({ success: false, message: 'Missing required fields or cart is empty.' });
+
     }
 
-    try {
+    try 
+    {
+
         const user = await User.findById(userId);
 
-        if (!user) {
+        if (!user) 
+        {
+        
             return res.status(404).json({ success: false, message: 'User not found.' });
+        
         }
 
         const { email, phone } = user;
+
         const normalizedPhone = phone.startsWith('94') ? phone : `94${phone.replace(/^0/, '')}`;
 
         const requests = await Promise.all(
