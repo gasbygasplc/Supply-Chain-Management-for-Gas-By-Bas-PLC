@@ -46,7 +46,7 @@ const LoginPage = () => {
                 }
 
             }
-            else
+            if(state === "Outlet")
             {
 
                 const {data} = await axios.post(backendURL + '/api/outlet/login' , {email , password});
@@ -74,7 +74,7 @@ const LoginPage = () => {
         {
             
             console.error('Login error:', error);
-            
+
             toast.error('An error occurred. Please try again later.');
 
         }
