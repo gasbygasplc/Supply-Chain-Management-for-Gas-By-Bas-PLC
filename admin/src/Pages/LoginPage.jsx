@@ -23,22 +23,35 @@ const LoginPage = () => {
         try 
         {
 
-            const {data} = await axios.post(backendURL +'/api/admin/login' , {email , password});
-
-            if(data.success)
+            if(state === "Admin")
             {
-                
-                localStorage.setItem('aToken' , data.atoken);
 
-                SetAToken(data.atoken);
+                const {data} = await axios.post(backendURL +'/api/admin/login' , {email , password});
 
-                console.log(aToken);
+                if(data.success)
+                {
+                    
+                    localStorage.setItem('aToken' , data.atoken);
 
+                    SetAToken(data.atoken);
+
+                    console.log(aToken);
+
+
+                }
+                else
+                {
+                    toast.error(data.message);
+                }
 
             }
             else
             {
-                toast.error(data.message);
+
+                const {data} = await axios.post(backendURL + '/api/outlet/login' , {email , password});
+
+                
+
             }
             
         } catch (error) 
