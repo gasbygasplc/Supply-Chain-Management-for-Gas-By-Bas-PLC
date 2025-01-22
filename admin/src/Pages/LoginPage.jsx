@@ -148,7 +148,7 @@ const LoginPage = () => {
 
                                 <a onClick={() => setState("Outlet")} href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
 
-                                    Outlet Signin
+                                    Outlet
 
                                 </a>
 
@@ -162,7 +162,7 @@ const LoginPage = () => {
 
                                 <a href="#" onClick={ () => setState("Admin")} className="font-semibold text-indigo-600 hover:text-indigo-500">
 
-                                Admin Signin  
+                                Admin  
 
                                 </a>
                             </p>
