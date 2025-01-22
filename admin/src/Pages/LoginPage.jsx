@@ -3,6 +3,7 @@ import { assets } from '../assets/assets'
 import { AdminContext } from '../Context/AdminContext.jsx';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { OutletContext } from '../Context/OutletContext.jsx';
 
 const LoginPage = () => {
 
@@ -14,7 +15,7 @@ const LoginPage = () => {
 
     const {aToken , SetAToken , backendURL} = useContext(AdminContext);
 
-
+    const {Otoken , setOtoken} = useContext(OutletContext);
 
     const onsubmitHandler = async(event) => 
     {
@@ -23,28 +24,58 @@ const LoginPage = () => {
         try 
         {
 
-            const {data} = await axios.post(backendURL +'/api/admin/login' , {email , password});
-
-            if(data.success)
+            if(state === "Admin")
             {
-                
-                localStorage.setItem('aToken' , data.atoken);
 
-                SetAToken(data.atoken);
+                const {data} = await axios.post(backendURL +'/api/admin/login' , {email , password});
 
-                console.log(aToken);
+                if(data.success)
+                {
+                    
+                    localStorage.setItem('aToken' , data.atoken);
 
+                    SetAToken(data.atoken);
+
+                    console.log(aToken);
+
+
+                }
+                else
+                {
+                    toast.error(data.message);
+                }
 
             }
-            else
+            if(state === "Outlet")
             {
-                toast.error(data.message);
+
+                const {data} = await axios.post(backendURL + '/api/outlet/login' , {email , password});
+
+                if(data.success)
+                {
+
+                    toast.success(data.message);
+
+                    setOtoken(data.Otoken);
+
+                    localStorage.setItem('Otoken' , data.Otoken);
+
+                }
+                else
+                {
+
+                    toast.error(data.message);
+
+                }
+                
             }
             
         } catch (error) 
         {
             
+            console.error('Login error:', error);
 
+            toast.error('An error occurred. Please try again later.');
 
         }
     }
@@ -117,7 +148,7 @@ const LoginPage = () => {
 
                                 <a onClick={() => setState("Outlet")} href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
 
-                                    Outlet Signin
+                                    Outlet
 
                                 </a>
 
@@ -131,7 +162,7 @@ const LoginPage = () => {
 
                                 <a href="#" onClick={ () => setState("Admin")} className="font-semibold text-indigo-600 hover:text-indigo-500">
 
-                                Admin Signin  
+                                Admin  
 
                                 </a>
                             </p>

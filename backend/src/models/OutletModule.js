@@ -10,6 +10,8 @@ const outLet = new mongoose.Schema(
 
         phoneNumber : {type:String , required : true},
 
+        password : {type:String , required : true},
+
         email : {type:String , required : true},
 
         deliveryCapacity : {type:Number , required : true},
@@ -18,8 +20,9 @@ const outLet = new mongoose.Schema(
 
         maxCapacity : {type:Number , required : true},
 
-        minimumRequestLevel : {type:Number , required : true}
+        minimumRequestLevel : {type:Number , required : true},
 
+        outletManager : {type: mongoose.Schema.Types.ObjectId , ref: 'outletManager'}
     }
 )
 

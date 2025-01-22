@@ -10,12 +10,18 @@ import AddOutlet from './Pages/Admin/AddOutlet';
 import AddOutletManager from './Pages/Admin/AddOutletManager';
 import OutletStockRequest from './Pages/Admin/OutletStockRequest';
 import AddMainStock from './Pages/Admin/AddMainStock';
+import { OutletContext } from './Context/OutletContext';
+import GasRequest from './Pages/Outlet/GasRequest';
+import StockRequest from './Pages/Outlet/StockRequest';
+import Delivery from './Pages/Outlet/Delivery';
 
 const App = () => {
 
   const {aToken} = useContext(AdminContext);
+
+  const {Otoken} = useContext(OutletContext);
   
-  return aToken ? (
+  return aToken || Otoken ? (
     
     <div className='bg-gray-50'>
 
@@ -29,6 +35,8 @@ const App = () => {
 
         <Routes>
 
+          {/* ++++++++++++++++++++++++++++++++++++++++++ Admin Route ++++++++++++++++++++++++++++++++++++++++++++ */}
+
           <Route path='/' element={<></>}/>
 
           <Route path='/admin-dashboard' element={<Dashboard/>}/>
@@ -40,6 +48,14 @@ const App = () => {
           <Route path='/outlet-stock-request' element={<OutletStockRequest/>}/>
 
           <Route path='/manage-stock' element = {<AddMainStock/>}/>
+
+          {/* ++++++++++++++++++++++++++++++++++++++++++ Outlet Route ++++++++++++++++++++++++++++++++++++++++++++ */}
+
+          <Route path='/gas-request' element = {<GasRequest/>}/>
+
+          <Route path='/stock-request' element = {<StockRequest/>}/>
+
+          <Route path='/delivery-status' element = {<Delivery/>}/>
 
         </Routes>
 

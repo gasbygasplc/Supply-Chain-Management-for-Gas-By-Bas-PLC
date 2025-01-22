@@ -14,6 +14,7 @@ import smsRouter from './src/routes/smsRoutes.js'; // SMS Routes
 import gasRouter from './src/routes/gasRoutes.js'; // Gas Routes
 import connectCloudinary from './src/config/Cloudinary.js';
 import fetchGasRouter from './src/routes/GasStockRoutes.js';
+import outletRouter from './src/routes/OutletRoute.js';
 
 
 
@@ -46,6 +47,8 @@ app.use('/api/sms', smsRouter); // User Sms routes
 app.use('/api/gas', gasRouter); // User Gas routes
 
 app.use('/api/gas' , fetchGasRouter);
+
+app.use('/api/outlet' , outletRouter)
 
 //================================================ Listener ================================================
 

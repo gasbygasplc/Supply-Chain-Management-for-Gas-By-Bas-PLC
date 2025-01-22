@@ -11,6 +11,8 @@ const AddOutlet = () => {
 
   const [email , setEmail] = useState("");
 
+  const [password , setPassword] = useState("");
+
   const [phoneNumber , setPhoneNumber] = useState("");
 
   const [deliveryCapacity , setDeliveryCapacity] = useState(0);
@@ -30,6 +32,8 @@ const AddOutlet = () => {
     setLocation("");
     
     setEmail("");
+
+    setPassword("");
     
     setPhoneNumber("");
     
@@ -72,6 +76,7 @@ const AddOutlet = () => {
         Location,
         phoneNumber,
         email,
+        password,
         deliveryCapacity,
         currentStock,
         maxCapacity,
@@ -147,6 +152,14 @@ const AddOutlet = () => {
 
           <div className='sm:col-span-3'>
 
+            <label className='block  text-gray-700 font-normal mb-3' htmlFor="password">password</label>
+
+            <input onChange={(e) => setPassword(e.target.value)} value={password} className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' type="password" placeholder='password'/>
+
+          </div>
+
+          <div className='sm:col-span-3'>
+
             <label className='block text-gray-700  font-normal mb-3' htmlFor="PhoneNumber">PhoneNumber</label>
 
             <input onChange={(e) => setPhoneNumber(e.target.value)} value={phoneNumber} className='border  border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' type="text" placeholder='PhoneNumber'/>
@@ -169,7 +182,7 @@ const AddOutlet = () => {
 
           </div>
 
-          <div className='sm:col-span-6'>
+          <div className='sm:col-span-3'>
 
             <label className='block text-gray-700  font-normal mb-3' htmlFor="Minimum Request Level">Minimum Request Level</label>
 
