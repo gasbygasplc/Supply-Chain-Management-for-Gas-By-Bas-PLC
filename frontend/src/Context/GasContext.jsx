@@ -38,7 +38,7 @@ const GasContextProvider = (props) =>
     const saveGasOrder = (order) => 
     {
     
-        if (!order.type || !order.quantity || !order.price) 
+        if (!order.type || !order.quantity || !order.price || !order.locationId) 
         {
         
             toast.error("Invalid gas order details.");
@@ -50,6 +50,8 @@ const GasContextProvider = (props) =>
         const updatedOrder = [...gasOrder, order];
     
         setGasOrder(updatedOrder);
+
+        console.log("Location ID:", order.locationId);
     
         localStorage.setItem("gasOrder", JSON.stringify(updatedOrder)); // Save to localStorage
     

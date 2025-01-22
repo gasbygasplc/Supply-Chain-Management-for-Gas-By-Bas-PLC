@@ -11,6 +11,8 @@ export const submitGasRequest = async (req, res) =>
 
     const { userId, gasType, quantity , locationId } = req.body;
 
+    console.log(req.body);
+
 
     if (!userId || !gasType || !quantity , !locationId) 
     {
@@ -55,7 +57,7 @@ export const submitGasRequest = async (req, res) =>
 
             tokenNumber,
 
-            locationId: OlocationId,
+            locationId,
 
             qrCodeUrl,
 
@@ -64,6 +66,8 @@ export const submitGasRequest = async (req, res) =>
             quantity,
 
         });
+
+
 
         await gasRequest.save();
 
@@ -126,7 +130,7 @@ export const handleCheckout = async (req, res) => {
 
     const { userId, items } = req.body;
 
-    if (!userId || !items || items.length === 0) 
+    if (!userId || !items || items.length === 0 || items.some(item => !item.locationId)) 
     {
     
         return res.status(400).json({ success: false, message: 'Missing required fields or cart is empty.' });
@@ -166,6 +170,7 @@ export const handleCheckout = async (req, res) => {
                     qrCodeUrl,
                     gasType: item.type,
                     quantity: item.quantity,
+                    locationId: item.locationId,
                 });
 
                 await gasRequest.save();
