@@ -145,7 +145,7 @@ const GasRequest = () => {
 
     const handleOutletSelection = (e) => {
 
-        setSelectedCity(e.target.value);
+        setSelectedOutlet(e.target.value);
     }
 
 
@@ -286,7 +286,7 @@ const GasRequest = () => {
 
                     UniqueCity.length > 0 && (
                         
-                        <select onChange={handleCitySelction} value={selectedCity} name="" id="" className='outline-none border border-primary p-3 rounded-md'>
+                        <select onChange={handleCitySelction} value={selectedCity} className={`outline-none border border-primary p-3 rounded-md ${outletName.length ? 'bg-gray-100 cursor-not-allowed outline-none border-gray-400' : 'border-primary' }`} name="city" id="city" disabled={outletName.length ? true : false}>
 
                             <option value="" disabled> Choose Your City </option>
                             
