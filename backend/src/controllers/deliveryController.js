@@ -1,170 +1,177 @@
 import Delivery from '../models/Delivery.js';
-import GasRequest from '../models/GasRequest.js';
 import { sendEmail } from '../utils/emailService.js';
 import { sendSms } from '../utils/smsService.js';
 
-// Schedule a Delivery
-export const scheduleDelivery = async (req, res) => 
-  {
 
-  const { requestId, driverName, vehicleNumber, scheduledDate 
+//***************************// Schedule a Delivery to Outlets //***************************//
 
-  } = req.body;
 
-  if (!requestId || !driverName || !vehicleNumber || !scheduledDate) 
-  {
-    
-    return res.status(400).json({ success: false, message: 'Missing required fields' });
-  }
+export const scheduleDeliveryToOutlet = async (req, res) => {
 
-  try {
-    
-    const gasRequest = await GasRequest.findById(requestId).populate('userId');
+    const { outletName, location, deliveryDate, stockQuantity } = req.body;
 
-    if (!gasRequest) 
+
+    if (!outletName || !location || !deliveryDate || !stockQuantity) 
     {
 
-      return res.status(404).json({ success: false, message: 'Gas request not found' });
+        return res.status(400).json({ success: false, message: 'Missing required fields' });
+
     }
 
-    const delivery = new Delivery
-  (
+
+    try {
+        const delivery = new Delivery({
+
+            outletName,
+            location,
+            deliveryDate,
+            stockQuantity,
+            status: 'Scheduled',
+
+        });
+
+        await delivery.save();
+
+
+
+
+        //*****************// Send Email to the Outlet //*****************//
+
+        const emailSubject = `Delivery Scheduled for Outlet: ${outletName}`;
+
+        const emailText = `Your gas delivery is scheduled for ${new Date(deliveryDate).toLocaleDateString()}.\nStock Quantity: ${stockQuantity}.\nPlease ensure the outlet is prepared to receive the stock.`;
+
+        const emailHtml = `
+
+            <h1>Delivery Scheduled!</h1>
+
+            <p>Outlet: <strong>${outletName}</strong></p>
+
+            <p>Delivery Date: <strong>${new Date(deliveryDate).toLocaleDateString()}</strong></p>
+
+            <p>Stock Quantity: <strong>${stockQuantity}</strong></p>
+
+            <p>Please ensure the outlet is ready to receive the stock.</p>
+
+        `;
+
+
+        await sendEmail(outletName, emailSubject, emailText, emailHtml);
+
+
+
+
+        //******************// Send SMS to the Outlet //******************//
+
+
+        const smsMessage = `Delivery scheduled for Outlet: ${outletName}. Date: ${new Date(deliveryDate).toLocaleDateString()}. Stock: ${stockQuantity}.`;
+
+        await sendSms(location, smsMessage, '94');
+
+        res.status(201).json({ success: true, message: 'Delivery scheduled successfully', delivery });
+
+    } catch (error) 
     {
-      orderId: `DEL-${Date.now()}`,
+        console.error('Error scheduling delivery:', error.message);
 
-      customerName: gasRequest.userId.name,
-
-      address: gasRequest.address,
-      
-      deliveryDate: scheduledDate,
-    }
-   );
-
-    await delivery.save();
-
-    // Send Email Notification
-
-    const emailSubject = 'Delivery Scheduled';
-
-    const emailText = `Your delivery is scheduled on ${scheduledDate}.`;
-
-    const emailHtml = `
-      <h1>Delivery Scheduled</h1>
-
-      <p>Your delivery is scheduled on <strong>${new Date(scheduledDate).toLocaleDateString()}</strong>.</p>
-
-      <p>Driver: ${driverName}, Vehicle: ${vehicleNumber}</p>
-
-    `;
-
-    const emailResponse = await sendEmail(gasRequest.userId.email, emailSubject, emailText, emailHtml);
-
-    // Send SMS Notification
-    const smsMessage = `Your delivery is scheduled on ${scheduledDate}. Driver: ${driverName}, Vehicle: ${vehicleNumber}`;
-
-    const smsResponse = await sendSms(gasRequest.userId.phone, smsMessage, '94');
-
-    res.status(201).json(
-
-    {
-
-      success: true,
-      message: 'Delivery scheduled successfully',
-      delivery,
-      emailResponse,
-      smsResponse,
+        res.status(500).json({ success: false, message: 'Error scheduling delivery' });
 
     }
-  );
 
-  } catch (error) 
-  
-  {
-    console.error('Error scheduling delivery:', error);
-
-    res.status(500).json({ success: false, message: 'Error scheduling delivery' });
-    
-  }
 };
 
-// Update Delivery Status
+
+
+//***************************// Update Delivery Status //***************************//
+
+
 export const updateDeliveryStatus = async (req, res) => {
-  
-  const { deliveryId } = req.params;
 
-  const { status } = req.body;
+    const { deliveryId } = req.params;
 
-  if (!status) {
+    const { status } = req.body;
 
-    return res.status(400).json({ success: false, message: 'Missing status' });
+    if (!status) 
+    {
 
-  }
-
-  try {
-
-    const delivery = await Delivery.findById(deliveryId);
-
-    if (!delivery) {
-
-      return res.status(404).json({ success: false, message: 'Delivery not found' });
+        return res.status(400).json({ success: false, message: 'Missing status' });
 
     }
 
-    delivery.status = status;
 
-    await delivery.save();
+    try {
+        const delivery = await Delivery.findById(deliveryId);
 
-    res.status(200).json({
+        if (!delivery) 
+        {
 
-      success: true,
+            return res.status(404).json({ success: false, message: 'Delivery not found' });
 
-      message: 'Delivery status updated successfully',
+        }
 
-      delivery,
+        delivery.status = status;
 
-    });
+        await delivery.save();
 
-  } catch (error) 
 
-  {
-    console.error('Error updating delivery status:', error);
+        res.status(200).json({ success: true, message: 'Delivery status updated successfully', delivery });
 
-    res.status(500).json({ success: false, message: 'Error updating delivery status' });
+    } catch (error) 
+    {
+        console.error('Error updating delivery status:', error.message);
 
-  }
+        res.status(500).json({ success: false, message: 'Error updating delivery status' });
+
+    }
 
 };
 
 
-// Get Delivery Details
-export const getDeliveryDetails = async (req, res) => {
-  
-  const { deliveryId } = req.params;
 
-  try {
+//***************************// Dispatch Delivery Notification //***************************//
 
-    const delivery = await Delivery.findById(deliveryId).populate('requestId');
+export const dispatchDelivery = async (req, res) => {
 
-    if (!delivery) {
+    const { deliveryId } = req.params;
 
-      return res.status(404).json({ success: false, message: 'Delivery not found' });
+    try {
+
+        const delivery = await Delivery.findById(deliveryId);
+
+        if (!delivery) 
+        {
+
+            return res.status(404).json({ success: false, message: 'Delivery not found' });
+
+        }
+
+
+
+        //****************// Update status to Dispatched //****************//
+
+        delivery.status = 'Dispatched';
+
+        await delivery.save();
+
+
+
+        //****************// Send SMS to the Outlet //****************//
+
+
+        const smsMessage = `Gas delivery has been dispatched to Outlet: ${delivery.outletName}. Location: ${delivery.location}.`;
+
+        await sendSms(delivery.location, smsMessage, '94');
+
+
+        res.status(200).json({ success: true, message: 'Delivery dispatched successfully', delivery });
+
+    } catch (error) 
+    {
+
+        console.error('Error dispatching delivery:', error.message);
+
+        res.status(500).json({ success: false, message: 'Error dispatching delivery' });
 
     }
-
-    res.status(200).json({
-
-      success: true,
-
-      delivery,
-
-    });
-
-  } catch (error) {
-
-    console.error('Error fetching delivery details:', error);
-
-    res.status(500).json({ success: false, message: 'Error fetching delivery details' });
-
-  }
-  
+    
 };
