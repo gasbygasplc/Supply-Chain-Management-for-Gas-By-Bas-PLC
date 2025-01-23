@@ -21,6 +21,7 @@ router.post('/send', async (req, res) => {
 
   const result = await sendSms(to, smsMessage, countryCode);
   res.status(result.success ? 200 : 500).json(result);
+  
 });
 
 export default router;
