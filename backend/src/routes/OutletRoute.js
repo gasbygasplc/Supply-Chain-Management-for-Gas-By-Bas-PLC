@@ -9,6 +9,6 @@ outletRouter.get('/location' , getOutletLocation);
 
 outletRouter.get('/city/:district' , getCity);
 
-outletRouter.get('/outletName' , getOutletName);
+outletRouter.get('/outletName/:city' , getOutletName);
 
 export default outletRouter;

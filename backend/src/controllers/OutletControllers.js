@@ -120,7 +120,9 @@ const getOutletName = async(req , res) => {
     try 
     {
 
-        const outletName = await outletModel.find({} , 'outletName _id');
+        const {city} = req.params;
+
+        const outletName = await outletModel.find({city} , 'outletName _id');
 
         if(!outletName.length)
         {

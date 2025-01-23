@@ -10,7 +10,7 @@ const GasRequest = () => {
     
     const {gasDetails , handleGasSelection , gasQuantity , updateGasQuantity , userData , saveGasOrder} = useContext(GasContext);
 
-    const {outletlocation , getOutletLocation , setDistricts , getCity , cities} = useContext(OutletContext);
+    const {outletlocation , getOutletLocation , setDistricts , getCity , cities , outletName , getOutletName} = useContext(OutletContext);
 
     const [selectedType , setSelectedType] = useState('Small');
 
@@ -19,6 +19,10 @@ const GasRequest = () => {
     const [uniqueDistricts, setUniqueDistricts] = useState([]);
 
     const [selectedCity , setSelectedCity] = useState('');
+
+    const [selectedOutlet , setSelectedOutlet] = useState('');
+
+    const [UniqueCity , setUniqueCity] = useState([]);
 
     const Navigate = useNavigate();
 
@@ -40,6 +44,15 @@ const GasRequest = () => {
         {
 
             toast.warn('Please select your city.');
+            return;
+
+        }
+
+        if(!selectedOutlet)
+        {
+
+            toast.warn('Please select your nearby outlet');
+            return;
 
         }
 
@@ -59,7 +72,7 @@ const GasRequest = () => {
 
             image: gasDetails.image, 
 
-            locationId: selectedCity,
+            locationId: selectedOutlet,
 
         }
 
@@ -98,6 +111,16 @@ const GasRequest = () => {
         setUniqueDistricts(districts);
 
     }, [outletlocation]); 
+
+    useEffect(() => {
+
+        const cit = [...new Set(cities.map((city) => city.city))]; 
+
+        setUniqueCity(cit); 
+        
+    }, [cities]);
+    
+
     
     const handleDistricts = (e) => {
 
@@ -112,8 +135,17 @@ const GasRequest = () => {
 
     const handleCitySelction = (e) => {
 
-        setSelectedCity(e.target.value);
+        const city = e.target.value;
 
+        setSelectedCity(city);
+
+        getOutletName(city)
+
+    }
+
+    const handleOutletSelection = (e) => {
+
+        setSelectedOutlet(e.target.value);
     }
 
 
@@ -252,16 +284,16 @@ const GasRequest = () => {
 
                 {
 
-                    cities.length > 0 && (
+                    UniqueCity.length > 0 && (
                         
-                        <select onChange={handleCitySelction} value={selectedCity} name="" id="" className='outline-none border border-primary p-3 rounded-md'>
+                        <select onChange={handleCitySelction} value={selectedCity} className={`outline-none border border-primary p-3 rounded-md ${outletName.length ? 'bg-gray-100 cursor-not-allowed outline-none border-gray-400' : 'border-primary' }`} name="city" id="city" disabled={outletName.length ? true : false}>
 
                             <option value="" disabled> Choose Your City </option>
                             
                             {
-                                cities.map((city , index) => (
+                                UniqueCity.map((city , index) => (
 
-                                    <option key={index} value={city._id}>{city.city}</option>
+                                    <option key={index} value={city._id}>{city}</option>
                                     
                                 ))
                             }
@@ -269,6 +301,35 @@ const GasRequest = () => {
                         </select>
 
                     )
+                }
+
+                {/* =================================== Outlet Drop Down ===========================================*/}
+
+                {
+
+                    outletName.length > 0 && (
+
+                        <select onChange={handleOutletSelection} value={selectedOutlet} className="outline-none border border-primary p-3 rounded-md" >
+
+                            <option value="" disabled> Select Your Outlet </option>
+
+                            {
+
+                                outletName.map((outlet , index) => (
+
+                                    <option key={index} value={outlet._id}>
+
+                                        {outlet.outletName}
+
+                                    </option>
+                                ))
+
+                            }
+
+                        </select>
+                        
+                    )
+
                 }
 
 

@@ -68,7 +68,6 @@ export const submitGasRequest = async (req, res) =>
         });
 
 
-
         await gasRequest.save();
 
         const smsMessage = `Gas Request Confirmation:\nToken: ${tokenNumber}\nQR Code: ${qrCodeUrl}`;
@@ -84,7 +83,7 @@ export const submitGasRequest = async (req, res) =>
 
         const emailSubject = 'Gas Request Confirmation';
 
-        const emailText = `Your gas request has been submitted successfully.\nToken: ${tokenNumber}\nPlease show this token or scan the QR code to pick up your gas.`;
+       const emailText = `Your gas request has been submitted successfully.\nToken: ${tokenNumber}\nPlease show this token or scan the QR code to pick up your gas\nPickup Deadline: ${pickupDeadline.toDateString()}\nTolerance Deadline: ${toleranceDeadline.toDateString()}`;
 
         const emailHtml = `
             <h1>Gas Request Confirmation</h1>
