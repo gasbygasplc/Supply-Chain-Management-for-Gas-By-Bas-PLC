@@ -57,16 +57,16 @@ const getOutletLocation = async(req , res) => {
     try 
     {
 
-        const location = await outletModel.find({} , 'Location _id');
+        const district = await outletModel.find({} , 'district _id');
 
-        if(!location.length)
+        if(!district.length)
         {
 
             return res.status(400).json({success:false , message:"No Location Found"});
 
         }
 
-        res.status(200).json({success:true , message: 'Outlet locations and IDs retrieved successfully.' , location});
+        res.status(200).json({success:true , message: 'Outlet locations and IDs retrieved successfully.' , district});
 
 
         
@@ -81,4 +81,34 @@ const getOutletLocation = async(req , res) => {
 
 }
 
-export {outletLogin , getOutletLocation};
+//============================================== Fetch the Cities ====================================================
+
+const getCity = async(req , res) => {
+
+    try 
+    {
+
+        const {district} = req.params;
+
+        const city = await outletModel.find({district} , 'city _id');
+
+        if(!city.length)
+        {
+
+            return res.status(400).json({success:false , message:"No City Found"});
+
+        }
+
+        res.status(200).json({ success: true, message: "Cities retrieved successfully.", city });
+        
+    } catch (error) 
+    {
+
+        console.error(error);
+
+        res.status(500).json({ success: false, message: "Server error." });
+        
+    }
+}
+
+export {outletLogin , getOutletLocation , getCity};

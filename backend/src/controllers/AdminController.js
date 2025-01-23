@@ -14,9 +14,9 @@ const addOutlet = async(req , res) => {
 
     try 
     {
-        const {outletName ,Location , phoneNumber, email ,password , deliveryCapacity , currentStock , maxCapacity ,minimumRequestLevel } = req.body;
+        const {outletName ,district ,city , phoneNumber, email ,password , deliveryCapacity , currentStock , maxCapacity ,minimumRequestLevel } = req.body;
 
-        if(!outletName ||!Location || !phoneNumber|| !email || !password || !deliveryCapacity || !currentStock || !maxCapacity ||!minimumRequestLevel)
+        if(!outletName || !district ||!city || !phoneNumber|| !email || !password || !deliveryCapacity || !currentStock || !maxCapacity ||!minimumRequestLevel)
         {
 
             return res.json({success:false , message: "Missing Information"});
@@ -28,15 +28,6 @@ const addOutlet = async(req , res) => {
 
             return res.json({success : false , message: "Please Enter a valied Email"});
 
-        }
-
-        const location = await outletModel.findOne({Location});
-
-        if(location)
-        {
-
-            return res.status(400).json({success:false , message:"Location already exist"});
-            
         }
 
         if(password.length < 8)
@@ -55,7 +46,9 @@ const addOutlet = async(req , res) => {
 
             outletName,
 
-            Location, 
+            city, 
+
+            district,
 
             phoneNumber,
 

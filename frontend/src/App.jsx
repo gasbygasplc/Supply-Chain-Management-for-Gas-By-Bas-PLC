@@ -8,6 +8,7 @@ import LoginPopUp from './Components/LoginPopUp'
 import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Cart from './Pages/Cart'
+import DeliveryShedule from './Pages/DeliveryShedule'
 
 const App = () => {
 
@@ -30,6 +31,8 @@ const App = () => {
         <Route path='/' element ={<Home/>}/>
 
         <Route path='/gas-cart' element={<Cart/>}/>
+
+        <Route path='/delivery-shedule' element = {<DeliveryShedule/>}/>
 
       </Routes>
 

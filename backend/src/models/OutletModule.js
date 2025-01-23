@@ -4,25 +4,16 @@ const outLet = new mongoose.Schema(
 
     {
 
-        outletName : {type:String , required : true},
-
-        Location : {type:String , required : true},
-
-        phoneNumber : {type:String , required : true},
-
-        password : {type:String , required : true},
-
-        email : {type:String , required : true},
-
-        deliveryCapacity : {type:Number , required : true},
-
-        currentStock : {type:Number , required : true },
-
-        maxCapacity : {type:Number , required : true},
-
-        minimumRequestLevel : {type:Number , required : true},
-
-        outletManager : {type: mongoose.Schema.Types.ObjectId , ref: 'outletManager'}
+        outletName: { type: String, required: true },
+        district: { type: String, required: true },
+        city: { type: String, required: true }, // This acts as Location
+        phoneNumber: { type: String, required: true },
+        password: { type: String, required: true },
+        email: { type: String, required: true },
+        deliveryCapacity: { type: Number, required: true },
+        currentStock: { type: Number, required: true },
+        maxCapacity: { type: Number, required: true },
+        minimumRequestLevel: { type: Number, required: true },
     }
 )
 
