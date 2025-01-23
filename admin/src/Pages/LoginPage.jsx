@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { assets } from '../assets/assets'
 import { AdminContext } from '../Context/AdminContext.jsx';
 import axios from 'axios';
@@ -13,6 +13,11 @@ const LoginPage = () => {
     const [password , setPassword] = useState('');
 
     const {aToken , SetAToken , backendURL} = useContext(AdminContext);
+
+    useEffect(()=>{
+        console.log(email)
+        console.log(password)
+    },[email, password])
 
 
 
