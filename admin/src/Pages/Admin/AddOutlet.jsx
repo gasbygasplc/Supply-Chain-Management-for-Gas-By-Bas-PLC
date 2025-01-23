@@ -7,7 +7,9 @@ const AddOutlet = () => {
 
   const [outletName , setOutletName] = useState("");
 
-  const [Location , setLocation] = useState("");
+  const [city , setCity] = useState("");
+
+  const [district , setDistrict] = useState("");
 
   const [email , setEmail] = useState("");
 
@@ -29,7 +31,9 @@ const AddOutlet = () => {
 
     setOutletName("");
     
-    setLocation("");
+    setCity("");
+
+    setDistrict("");
     
     setEmail("");
 
@@ -45,64 +49,77 @@ const AddOutlet = () => {
 
   }
 
-  const onsubmitHandler = async(event) => {
-
+  const onsubmitHandler = async (event) => {
+  
     event.preventDefault();
+  
+
+    if (!outletName || !city || !district || !email || !password || !phoneNumber) 
+    {
+    
+      toast.error("Please fill in all required fields");
+    
+      return;
+      
+    }
+
+    const payload = {
+    
+        outletName,
+
+        city,
+      
+        district,
+      
+        phoneNumber,
+      
+        email,
+      
+        password,
+      
+        deliveryCapacity,
+      
+        currentStock,
+      
+        maxCapacity,
+      
+        minimumRequestLevel,
+      
+    };
 
     try 
     {
+      console.log("Payload:", payload);
 
-      // const formData = new FormData();
+      const { data } = await axios.post(`${backendURL}/api/admin/add-outlet`,payload, { headers:{aToken}});
 
-      // formData.append('outletName' , outletName);
-
-      // formData.append('Location' , outletLocation);
-
-      // formData.append('phoneNumber' , phoneNumber);
-
-      // formData.append('email' , email);
-
-      // formData.append('deliveryCapacity', Number(deliveryCapacity));
-
-      // formData.append('currentStock' , Number(currentStock));
-
-      // formData.append('maxCapacity' , Number(maximumCapacity));
-
-      // formData.append('minimumRequestLevel' , Number(minimumRequestLevel));
-
-      const payload = {
-
-        outletName,
-        Location,
-        phoneNumber,
-        email,
-        password,
-        deliveryCapacity,
-        currentStock,
-        maxCapacity,
-        minimumRequestLevel
-      }
-
-      const {data} = await axios.post(backendURL + '/api/admin/add-outlet' , payload , {headers:{aToken}})
-
-      if(data.success)
+      if (data.success) 
       {
-        toast.success(data.message)
-        clear()
+      
+        toast.success(data.message);
+        
+        clear();
+        
         getOutletStock();
-      }
-      else
+        
+      } 
+      else 
       {
-        toast.error(data.message)
+      
+        toast.error(data.message);
+        
       }
-      
-    } catch (error) 
+    } 
+    catch (error) 
     {
-
-      toast.error(error)
       
+      console.error("Error:", error);
+
+      toast.error(error.response?.data?.message || "An error occurred");
+
     }
-  }
+};
+
 
   useEffect(() => {
 
@@ -136,17 +153,53 @@ const AddOutlet = () => {
 
           <div className='sm:col-span-3'>
 
-            <label className='block text-gray-700  font-normal mb-3' htmlFor="Location">Location</label>
+            <label className='block  text-gray-700 font-normal mb-3' htmlFor="District">District</label>
 
-            <input onChange={(e) => setLocation(e.target.value)} value={Location} className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' type="text" placeholder='Location'/>
+              <select name="District" id="District" onChange={(e) => setDistrict(e.target.value)} value={district}  className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm'>
+
+                <option value="Ampara">Ampara</option>
+                <option value="Anuradhapura">Anuradhapura</option>
+                <option value="Badulla">Badulla</option>
+                <option value="Batticaloa">Batticaloa</option>
+                <option value="Colombo">Colombo</option>
+                <option value="Galle">Galle</option>
+                <option value="Gampaha">Gampaha</option>
+                <option value="Hambantota">Hambantota</option>
+                <option value="Jaffna">Jaffna</option>
+                <option value="Kalutara">Kalutara</option>
+                <option value="Kandy">Kandy</option>
+                <option value="Kegalle">Kegalle</option>
+                <option value="Kilinochchi">Kilinochchi</option>
+                <option value="Kurunegala">Kurunegala</option>
+                <option value="Mannar">Mannar</option>
+                <option value="Matale">Matale</option>
+                <option value="Matara">Matara</option>
+                <option value="Monaragala">Monaragala</option>
+                <option value="Mullaitivu">Mullaitivu</option>
+                <option value="Nuwara Eliya">Nuwara Eliya</option>
+                <option value="Polonnaruwa">Polonnaruwa</option>
+                <option value="Puttalam">Puttalam</option>
+                <option value="Ratnapura">Ratnapura</option>
+                <option value="Trincomalee">Trincomalee</option>
+                <option value="Vavuniya">Vavuniya</option>
+
+              </select>
+
+            </div>
+
+          <div className='sm:col-span-6'>
+
+            <label className='block  text-gray-700 font-normal mb-3' htmlFor="email">Email</label>
+
+            <input onChange={(e) => setEmail(e.target.value)} value={email} className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' type="email" placeholder='Email'/>
 
           </div>
 
           <div className='sm:col-span-3'>
 
-            <label className='block  text-gray-700 font-normal mb-3' htmlFor="email">Email</label>
+            <label className='block text-gray-700  font-normal mb-3' htmlFor="city">city</label>
 
-            <input onChange={(e) => setEmail(e.target.value)} value={email} className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' type="email" placeholder='Email'/>
+            <input onChange={(e) => setCity(e.target.value)} value={city} className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' type="text" placeholder='City'/>
 
           </div>
 
