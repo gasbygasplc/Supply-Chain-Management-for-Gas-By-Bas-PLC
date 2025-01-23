@@ -67,6 +67,8 @@ const GasRequest = () => {
 
     };
 
+    
+
 
 
     const selectedGas = type => {
@@ -82,6 +84,8 @@ const GasRequest = () => {
         selectedGas("Small");
 
         getOutletLocation();
+
+        console.log(outletlocation);
         
     } , [])
 
@@ -209,7 +213,7 @@ const GasRequest = () => {
 
                         outletlocation.map((location , index) => (
 
-                            <option key={index} value={location._id}>{location.Location}</option>
+                            <option key={index} value={location._id}>{location.district}</option>
                             
                         ))
                     }

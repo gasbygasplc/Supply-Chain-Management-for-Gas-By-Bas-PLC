@@ -19,7 +19,7 @@ const OutletContextProvider = (props) => {
             if(response.data.success)
             {   
 
-                setOutletLocation(response.data.location)
+                setOutletLocation(response.data.district);
 
             }
             else
