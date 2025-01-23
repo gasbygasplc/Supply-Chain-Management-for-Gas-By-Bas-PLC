@@ -22,6 +22,8 @@ const GasRequest = () => {
 
     const [selectedOutlet , setSelectedOutlet] = useState('');
 
+    const [UniqueCity , setUniqueCity] = useState([]);
+
     const Navigate = useNavigate();
 
     //===================================== handle save order ======================================================
@@ -109,6 +111,15 @@ const GasRequest = () => {
         setUniqueDistricts(districts);
 
     }, [outletlocation]); 
+
+    useEffect(() => {
+
+        const cit = [...new Set(cities.map((city) => city.city))]; 
+
+        setUniqueCity(cit); 
+        
+    }, [cities]);
+    
 
     
     const handleDistricts = (e) => {
@@ -273,16 +284,16 @@ const GasRequest = () => {
 
                 {
 
-                    cities.length > 0 && (
+                    UniqueCity.length > 0 && (
                         
                         <select onChange={handleCitySelction} value={selectedCity} name="" id="" className='outline-none border border-primary p-3 rounded-md'>
 
                             <option value="" disabled> Choose Your City </option>
                             
                             {
-                                cities.map((city , index) => (
+                                UniqueCity.map((city , index) => (
 
-                                    <option key={index} value={city._id}>{city.city}</option>
+                                    <option key={index} value={city._id}>{city}</option>
                                     
                                 ))
                             }
