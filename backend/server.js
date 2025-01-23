@@ -12,6 +12,7 @@ import adminRouter from './src/routes/AdminRoutes.js';
 import authRouter from './src/routes/authRoutes.js'; // User Auth routes
 import smsRouter from './src/routes/smsRoutes.js'; // SMS Routes
 import gasRouter from './src/routes/gasRoutes.js'; // Gas Routes
+import deliveryRouter from './src/routes/deliveryRoutes.js'; // Delivery Routes
 
 
 
@@ -40,6 +41,10 @@ app.use('/api/auth', authRouter); // User Auth routes
 app.use('/api/sms', smsRouter); // User Sms routes
 
 app.use('/api/gas', gasRouter); // User Gas routes
+
+app.use('/api/delivery', deliveryRouter); // Delivery Routes
+
+
 
 //================================================ Listener ================================================
 
