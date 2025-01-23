@@ -10,13 +10,15 @@ const GasRequest = () => {
     
     const {gasDetails , handleGasSelection , gasQuantity , updateGasQuantity , userData , saveGasOrder} = useContext(GasContext);
 
-    const {outletlocation , getOutletLocation , setDistricts} = useContext(OutletContext);
+    const {outletlocation , getOutletLocation , setDistricts , getCity , cities} = useContext(OutletContext);
 
     const [selectedType , setSelectedType] = useState('Small');
 
     const [selectedLocation , setSelectedLocation] = useState('');
 
     const [uniqueDistricts, setUniqueDistricts] = useState([]);
+
+    const [selectedCity , setSelectedCity] = useState('');
 
     const Navigate = useNavigate();
 
@@ -34,14 +36,14 @@ const GasRequest = () => {
 
         }
 
-        if(!selectedLocation)
+        if(!selectedCity)
         {
 
-            toast.warn("Please select a location.");
-
-            return;
+            toast.warn('Please select your city.');
 
         }
+
+        
 
         const order = {
 
@@ -57,7 +59,7 @@ const GasRequest = () => {
 
             image: gasDetails.image, 
 
-            locationId: selectedLocation,
+            locationId: selectedCity,
 
         }
 
@@ -87,14 +89,32 @@ const GasRequest = () => {
 
         getOutletLocation();
 
-        const districts = [...new Set(outletlocation.map(location => location.district))];
+    }, []); 
+    
+    useEffect(() => {
+
+        const districts = [...new Set(outletlocation.map((location) => location.district))];
 
         setUniqueDistricts(districts);
 
-        setDistricts(selectedLocation);
+    }, [outletlocation]); 
+    
+    const handleDistricts = (e) => {
 
-        
-    } , [outletlocation])
+        const selectedDistrict = e.target.value;
+
+        setDistricts(selectedDistrict);
+
+        setSelectedLocation(selectedDistrict);
+
+        getCity(selectedDistrict);
+    }
+
+    const handleCitySelction = (e) => {
+
+        setSelectedCity(e.target.value);
+
+    }
 
 
   return (
@@ -214,7 +234,7 @@ const GasRequest = () => {
 
                 <div className='flex flex-col gap-4 w-full'>
 
-                <select onChange={(e) => setSelectedLocation(e.target.value)} className='outline-none border border-primary p-3 rounded-md' name="districts" id="districts">
+                <select  onChange={handleDistricts} className={`outline-none border border-primary p-3 rounded-md ${cities.length ? 'bg-gray-100 cursor-not-allowed border-gray-400' : 'border-primary' }`} name="districts" id="districts" disabled={cities.length ? true : false}>
 
                     {
 
@@ -226,6 +246,26 @@ const GasRequest = () => {
                     }
 
                 </select>
+
+                {
+
+                    cities.length > 0 && (
+                        
+                        <select onChange={handleCitySelction} value={selectedCity} name="" id="" className='outline-none border border-primary p-3 rounded-md'>
+                            
+                            <option value="">Select Your City </option>
+
+                            {
+                                cities.map((city , index) => (
+
+                                    <option key={index} value={city._id}>{city.city}</option>
+                                ))
+                            }
+
+                        </select>
+
+                    )
+                }
 
 
                 </div>

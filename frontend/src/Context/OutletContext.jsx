@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 export const OutletContext = createContext();
 
@@ -8,6 +8,8 @@ const OutletContextProvider = (props) => {
     const [outletlocation , setOutletLocation] = useState([]);
 
     const [districts , setDistricts] = useState('');
+
+    const [cities , setCities] = useState([]);
 
     //++++++++++++++++++++++++++++++++++++++++++++++++++ Get outlet Location ++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -42,7 +44,39 @@ const OutletContextProvider = (props) => {
 
     //+++++++++++++++++++++++++++++++++++++++++++++ Get City Using Districts ++++++++++++++++++++++++++++++++++++++++++++++++
 
-    
+    const getCity = async(district) => {
+
+        try 
+        {
+
+            const response = await axios.get(`http://localhost:4000/api/outlet/city/${district}`)
+
+            if(response.data.success)
+            {
+
+                setCities(response.data.city);
+
+            }
+            else
+            {
+
+                console.error("Failed to fetch cities:", response.data.message);
+
+            }
+            
+        } catch (error) 
+        {
+
+            console.error("Error fetching cities:", error.response ? error.response.data : error.message);
+
+        }
+    }
+
+    useEffect(() => {
+
+        console.log(cities);
+
+    }, [cities]);
     
 
     const value = 
@@ -52,6 +86,8 @@ const OutletContextProvider = (props) => {
         getOutletLocation,
         setDistricts,
         districts,
+        cities,
+        getCity
     }
 
     return (
