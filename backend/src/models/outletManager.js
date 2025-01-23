@@ -4,7 +4,7 @@ const outletManagerSchema = new mongoose.Schema({
 
     name : {type : String , required : true},
 
-    outletName : {type : String , required : true},
+    outletId : {type : mongoose.Schema.Types.ObjectId , ref:'outlets' , required : true},
 
     email : {type : String , required : true},
 
