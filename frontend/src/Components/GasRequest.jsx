@@ -10,7 +10,7 @@ const GasRequest = () => {
     
     const {gasDetails , handleGasSelection , gasQuantity , updateGasQuantity , userData , saveGasOrder} = useContext(GasContext);
 
-    const {outletlocation , getOutletLocation , setDistricts} = useContext(OutletContext);
+    const {outletlocation , getOutletLocation , setDistricts , getCity} = useContext(OutletContext);
 
     const [selectedType , setSelectedType] = useState('Small');
 
@@ -87,14 +87,26 @@ const GasRequest = () => {
 
         getOutletLocation();
 
-        const districts = [...new Set(outletlocation.map(location => location.district))];
+    }, []); 
+    
+    useEffect(() => {
+
+        const districts = [...new Set(outletlocation.map((location) => location.district))];
 
         setUniqueDistricts(districts);
 
-        setDistricts(selectedLocation);
+    }, [outletlocation]); 
+    
+    const handleDistricts = (e) => {
 
+        const selectedDistrict = e.target.value;
+
+        setDistricts(selectedDistrict);
         
-    } , [outletlocation])
+        setSelectedLocation(selectedDistrict);
+
+        getCity(selectedDistrict);
+    }
 
 
   return (
@@ -214,7 +226,7 @@ const GasRequest = () => {
 
                 <div className='flex flex-col gap-4 w-full'>
 
-                <select onChange={(e) => setSelectedLocation(e.target.value)} className='outline-none border border-primary p-3 rounded-md' name="districts" id="districts">
+                <select  onChange={handleDistricts} className='outline-none border border-primary p-3 rounded-md' name="districts" id="districts">
 
                     {
 
