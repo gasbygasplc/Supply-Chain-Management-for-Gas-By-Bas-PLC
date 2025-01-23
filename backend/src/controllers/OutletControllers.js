@@ -57,16 +57,16 @@ const getOutletLocation = async(req , res) => {
     try 
     {
 
-        const location = await outletModel.find({} , 'Location _id');
+        const city = await outletModel.find({} , 'city _id');
 
-        if(!location.length)
+        if(!city.length)
         {
 
             return res.status(400).json({success:false , message:"No Location Found"});
 
         }
 
-        res.status(200).json({success:true , message: 'Outlet locations and IDs retrieved successfully.' , location});
+        res.status(200).json({success:true , message: 'Outlet locations and IDs retrieved successfully.' , city});
 
 
         
