@@ -26,7 +26,40 @@ const AddOutlet = () => {
 
   const [minimumRequestLevel , setMinimumRequestLevel] = useState(0);
 
-  const {aToken , backendURL , outletStock , getOutletStock} = useContext(AdminContext)
+  const [cities , setCIties] = useState([]);
+
+  const {aToken , backendURL , outletStock , getOutletStock} = useContext(AdminContext);
+
+
+  //============================================= Districts ===========================================================
+
+  const districtCities = {
+    Ampara: ["Addalaichenai", "Akkaraipattu", "Alayadiwembu", "Ampara Town", "Damana", "Dehiattakandiya", "Kalmunai", "Karaitivu", "Lahugala", "Ninthavur", "Padiyathalawa", "Sainthamaruthu", "Thirukkovil", "Uhana"],
+    Anuradhapura: ["Anuradhapura Town", "Kekirawa", "Medawachchiya", "Eppawala"],
+    Badulla: ["Badulla Town", "Bandarawela", "Hali-Ela", "Welimada"],
+    Batticaloa: ["Batticaloa Town", "Valachchenai", "Eravur", "Kattankudy"],
+    Colombo: ["Fort", "Kollupitiya", "Bambalapitiya", "Wellawatte", "Cinnamon Gardens"],
+    Galle: ["Galle Town", "Hikkaduwa", "Ambalangoda", "Karapitiya"],
+    Gampaha: ["Negombo", "Gampaha", "Wattala", "Kadawatha", "Ja-Ela"],
+    Hambantota: ["Hambantota Town", "Tangalle", "Tissamaharama", "Ambalantota"],
+    Jaffna: ["Jaffna Town", "Nallur", "Chavakachcheri", "Point Pedro"],
+    Kalutara: ["Kalutara Town", "Panadura", "Beruwala", "Aluthgama"],
+    Kandy: ["Kandy City", "Peradeniya", "Gampola", "Katugastota"],
+    Kegalle: ["Kegalle Town", "Mawanella", "Warakapola", "Rambukkana"],
+    Kilinochchi: ["Kilinochchi Town", "Kandawalai", "Pooneryn"],
+    Kurunegala: ["Kurunegala Town", "Kuliyapitiya", "Narammala", "Maho"],
+    Mannar: ["Mannar Town", "Murunkan", "Poonakary"],
+    Matale: ["Matale Town", "Dambulla", "Sigiriya", "Galewela"],
+    Matara: ["Matara Town", "Weligama", "Akurassa", "Devinuwara"],
+    Monaragala: ["Monaragala Town", "Wellawaya", "Bibile", "Siyambalanduwa"],
+    Mullaitivu: ["Mullaitivu Town", "Puthukudiyiruppu", "Thunukkai"],
+    NuwaraEliya: ["Nuwara Eliya Town", "Hatton", "Talawakelle", "Kotagala"],
+    Polonnaruwa: ["Polonnaruwa Town", "Hingurakgoda", "Medirigiriya"],
+    Puttalam: ["Puttalam Town", "Chilaw", "Wennappuwa", "Dankotuwa"],
+    Ratnapura: ["Ratnapura Town", "Balangoda", "Pelmadulla", "Kuruwita"],
+    Trincomalee: ["Trincomalee Town", "Kinniya", "Mutur", "Nilaveli"],
+    Vavuniya: ["Vavuniya Town", "Nedunkerny", "Cheddikulam"]
+  };
 
 
 
@@ -51,6 +84,18 @@ const AddOutlet = () => {
     setMinimumRequestLevel(0);
 
   }
+  
+  const handleDistrictChange = (event) => {
+
+    const selectedDistrict = event.target.value; // Get the selected district
+
+    setDistrict(selectedDistrict); // Update the district state
+
+    setCIties(districtCities[selectedDistrict] || []); // Update the cities based on the selected district
+
+    setCity(""); // Clear the city selection
+    
+  };
 
   const onsubmitHandler = async (event) => {
   
@@ -159,7 +204,7 @@ const AddOutlet = () => {
 
             <label className='block  text-gray-700 font-normal mb-3' htmlFor="District">District</label>
 
-              <select name="District" id="District" onChange={(e) => setDistrict(e.target.value)} value={district}  className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm'>
+              <select name="District" id="District" onChange={handleDistrictChange} value={district}  className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm'>
 
                 <option value="Ampara">Ampara</option>
                 <option value="Anuradhapura">Anuradhapura</option>
@@ -203,7 +248,21 @@ const AddOutlet = () => {
 
             <label className='block text-gray-700  font-normal mb-3' htmlFor="city">city</label>
 
-            <input onChange={(e) => setCity(e.target.value)} value={city} className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm' type="text" placeholder='City'/>
+            <select onChange={(e) => setCity(e.target.value)} value={city} disabled={!district} className='border border-gray-400 focus:outline-gray-400 outline-0 py-1.5 px-2 w-full rounded-sm'>
+
+            <option value="">-- Select City --</option>
+
+              {cities.map((city) => (
+
+                <option key={city} value={city}>
+
+                  {city}
+
+                </option>
+
+              ))}
+            
+            </select>
 
           </div>
 
