@@ -4,9 +4,15 @@ import { GasContext } from '../Context/GasContext';
 
 import { toast } from 'react-toastify';
 
+import { useNavigate } from 'react-router-dom';
+
+
+
 const Cart = () => {
 
   const { gasOrder, checkoutCart, setGasOrder } = useContext(GasContext);
+
+  const Navigate = useNavigate();
 
   const handleRemoveItem = (index) => {
 
@@ -36,7 +42,8 @@ const Cart = () => {
     }
   
     checkoutCart();
-  
+    
+    Navigate('/delivery-shedule');
   };
 
   return (
