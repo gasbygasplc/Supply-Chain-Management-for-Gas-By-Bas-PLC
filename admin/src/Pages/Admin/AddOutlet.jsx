@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AdminContext } from '../../Context/AdminContext';
 import { toast } from 'react-toastify';
 
+
 const AddOutlet = () => {
 
   const [outletName , setOutletName] = useState("");
@@ -26,6 +27,8 @@ const AddOutlet = () => {
   const [minimumRequestLevel , setMinimumRequestLevel] = useState(0);
 
   const {aToken , backendURL , outletStock , getOutletStock} = useContext(AdminContext)
+
+
 
   const clear = () => {
 
@@ -131,6 +134,7 @@ const AddOutlet = () => {
     }
 
   }, [aToken])
+
 
   return (
     

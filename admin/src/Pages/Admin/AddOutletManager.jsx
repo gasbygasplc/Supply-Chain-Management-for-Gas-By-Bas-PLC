@@ -2,6 +2,8 @@ import React, { useContext, useState } from 'react'
 import {toast} from 'react-toastify'
 import axios from 'axios'
 import { AdminContext } from '../../Context/AdminContext';
+import { OutletContext } from '../../Context/OutletContext';
+import { useEffect } from 'react';
 
 const AddOutletManager = () => {
 
@@ -17,15 +19,18 @@ const AddOutletManager = () => {
 
   const [userRole , setUserRole] = useState("Admin");
 
-  const {aToken , backendURL} = useContext(AdminContext)
+  const {aToken , backendURL} = useContext(AdminContext);
+
+  const { getOutletName,outletNames } = useContext(OutletContext);
 
   const onsubmitHandler = async (event) => {
+
     event.preventDefault()
 
     try {
       const payload = {
         name,
-        outletName,
+        outletId : outletName,
         email,
         password,
         phoneNumber,
@@ -55,6 +60,13 @@ const AddOutletManager = () => {
     }
   }
 
+  useEffect(() => {
+
+    getOutletName()
+
+
+  }, [outletName])
+
   return (
     
     <div className='bg-white border my-5 mx-auto sm:mx-10 px-5 sm:px-[5%] sm:py-7 w-[80%]'>
@@ -78,7 +90,17 @@ const AddOutletManager = () => {
 
             <label className='mb-3 block text-base font-medium text-[#07074D]' htmlFor="Outlet-name">Outlet Name</label>
 
-            <input onChange={(e) => setOutletName(e.target.value)} value={outletName} className='w-full  rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#FED500]' type="text" id='Outlet-name'/>
+            <select onChange={(e) => setOutletName(e.target.value)} value={outletName} className='w-full  rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#FED500]' id="">
+
+              {
+
+                outletNames.map((outlet , index) => (
+
+                  <option key={outlet._id} value={outlet._id}>{outlet.outletName}</option>
+
+                ))
+              }
+            </select>
 
           </div>
 
@@ -112,6 +134,7 @@ const AddOutletManager = () => {
 
             <select onChange={(e) => setUserRole(e.target.value)} value={userRole} className='w-full sm:w-[100%] rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#FED500]' defaultValue="Outlet Manager" name="" id="">
 
+              <option value="" disabled>Select Role</option>
               <option value="Outlet Manager">Outlet Manager</option>
 
             </select>

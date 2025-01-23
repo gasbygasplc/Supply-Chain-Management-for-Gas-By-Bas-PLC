@@ -89,9 +89,9 @@ const addOutletManager = async(req , res) => {
     try 
     {
 
-        const {name , outletName , email , password , phoneNumber ,  userRole } = req.body;
+        const {name , outletId , email , password , phoneNumber ,  userRole } = req.body;
 
-        if(!name , !outletName , !email , !password , !phoneNumber , !userRole) 
+        if(!name , !outletId , !email , !password , !phoneNumber , !userRole) 
         {
             return res.json({success:false , message : 'Missing information'})
         }
@@ -113,7 +113,7 @@ const addOutletManager = async(req , res) => {
         const outletManagerData = {
 
             name ,
-            outletName,
+            outletId,
             email,
             password :hashPassword,
             phoneNumber,

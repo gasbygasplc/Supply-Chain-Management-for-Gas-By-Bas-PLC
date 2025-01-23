@@ -234,7 +234,7 @@ const GasRequest = () => {
 
                 <div className='flex flex-col gap-4 w-full'>
 
-                <select value={selectedLocation}  onChange={handleDistricts} className={`outline-none border border-primary p-3 rounded-md ${cities.length ? 'bg-gray-100 cursor-not-allowed border-gray-400' : 'border-primary' }`} name="districts" id="districts" disabled={cities.length ? true : false}>
+                <select value={selectedLocation}  onChange={handleDistricts} className={`outline-none border border-primary p-3 rounded-md ${cities.length ? 'bg-gray-100 cursor-not-allowed outline-none border-gray-400' : 'border-primary' }`} name="districts" id="districts" disabled={cities.length ? true : false}>
 
                     <option value="" disabled> Choose Your District </option>
 
