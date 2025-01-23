@@ -2,11 +2,14 @@ import React, { useContext } from 'react';
 import { assets } from '../assets/assets';
 import { AdminContext } from '../Context/AdminContext';
 import {useNavigate} from 'react-router-dom'
+import { OutletContext } from '../Context/OutletContext';
 
 
 const Navbar = () => {
 
   const { aToken ,SetAToken } = useContext(AdminContext);
+
+  const {Otoken , setOtoken} = useContext(OutletContext);
 
   const navigate = useNavigate();
 
@@ -18,7 +21,9 @@ const Navbar = () => {
 
     aToken && localStorage.removeItem('aToken')
 
-    
+    Otoken && setOtoken("");
+
+    Otoken && localStorage.removeItem('Otoken');
 
   }
 
