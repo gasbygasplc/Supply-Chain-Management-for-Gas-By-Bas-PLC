@@ -1,11 +1,21 @@
 import express from 'express';
 
-import { scheduleDelivery, updateDeliveryStatus } from '../controllers/deliveryController.js';
+import { scheduleDeliveryToOutlet, updateDeliveryStatus, dispatchDelivery } from '../controllers/deliveryController.js';
+
 
 const router = express.Router();
 
-router.post('/schedule', scheduleDelivery);
+//**************// Route for scheduling a delivery //**************//
 
+router.post('/schedule', scheduleDeliveryToOutlet);
+
+
+//**************// Route for updating delivery status //**************//
 router.put('/status/:deliveryId', updateDeliveryStatus);
+
+
+//**************// Route for dispatching a delivery //**************//
+router.put('/dispatch/:deliveryId', dispatchDelivery);
+
 
 export default router;
