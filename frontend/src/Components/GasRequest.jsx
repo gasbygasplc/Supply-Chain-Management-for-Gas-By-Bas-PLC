@@ -10,7 +10,7 @@ const GasRequest = () => {
     
     const {gasDetails , handleGasSelection , gasQuantity , updateGasQuantity , userData , saveGasOrder} = useContext(GasContext);
 
-    const {outletlocation , getOutletLocation , setDistricts , getCity , cities} = useContext(OutletContext);
+    const {outletlocation , getOutletLocation , setDistricts , getCity , cities , outletName , getOutletName} = useContext(OutletContext);
 
     const [selectedType , setSelectedType] = useState('Small');
 
@@ -19,6 +19,8 @@ const GasRequest = () => {
     const [uniqueDistricts, setUniqueDistricts] = useState([]);
 
     const [selectedCity , setSelectedCity] = useState('');
+
+    const [selectedOutlet , setSelectedOutlet] = useState('');
 
     const Navigate = useNavigate();
 
@@ -40,6 +42,15 @@ const GasRequest = () => {
         {
 
             toast.warn('Please select your city.');
+            return;
+
+        }
+
+        if(!selectedOutlet)
+        {
+
+            toast.warn('Please select your nearby outlet');
+            return;
 
         }
 
@@ -59,7 +70,7 @@ const GasRequest = () => {
 
             image: gasDetails.image, 
 
-            locationId: selectedCity,
+            locationId: selectedOutlet,
 
         }
 
@@ -97,7 +108,11 @@ const GasRequest = () => {
 
         setUniqueDistricts(districts);
 
-    }, [outletlocation]); 
+        const ucities = [...new Set(cities.map((city) => city.city))]
+
+        setUniqueCity(ucities);
+
+    }, [outletlocation , cities]); 
     
     const handleDistricts = (e) => {
 
@@ -112,7 +127,11 @@ const GasRequest = () => {
 
     const handleCitySelction = (e) => {
 
-        setSelectedCity(e.target.value);
+        const selectedCity = e.target.value;
+
+        getOutletName(selectedCity);
+
+        setSelectedOutlet(selectedCity)
 
     }
 
