@@ -234,7 +234,9 @@ const GasRequest = () => {
 
                 <div className='flex flex-col gap-4 w-full'>
 
-                <select  onChange={handleDistricts} className={`outline-none border border-primary p-3 rounded-md ${cities.length ? 'bg-gray-100 cursor-not-allowed border-gray-400' : 'border-primary' }`} name="districts" id="districts" disabled={cities.length ? true : false}>
+                <select value={selectedLocation}  onChange={handleDistricts} className={`outline-none border border-primary p-3 rounded-md ${cities.length ? 'bg-gray-100 cursor-not-allowed border-gray-400' : 'border-primary' }`} name="districts" id="districts" disabled={cities.length ? true : false}>
+
+                    <option value="" disabled> Choose Your District </option>
 
                     {
 
@@ -243,6 +245,7 @@ const GasRequest = () => {
                             <option key={index} value={districts}>{districts}</option>
                             
                         ))
+
                     }
 
                 </select>
@@ -252,13 +255,14 @@ const GasRequest = () => {
                     cities.length > 0 && (
                         
                         <select onChange={handleCitySelction} value={selectedCity} name="" id="" className='outline-none border border-primary p-3 rounded-md'>
-                            
-                            <option value="">Select Your City </option>
 
+                            <option value="" disabled> Choose Your City </option>
+                            
                             {
                                 cities.map((city , index) => (
 
                                     <option key={index} value={city._id}>{city.city}</option>
+                                    
                                 ))
                             }
 
