@@ -49,21 +49,6 @@ export const submitGasRequest = async (req, res) =>
 
         const qrCodeUrl = await generateQrCode({ tokenNumber, gasType, quantity, userId });
 
-        //====================================== Two Weeks of tolerence ===============================================
-
-        const requestDate = new Date();
-
-        const pickupDeadline = new Date(requestDate);
-
-        pickupDeadline.setDate(requestDate.getDate() + 14); // Two weeks from now
-        
-        const toleranceDeadline = new Date(pickupDeadline); 
-
-        toleranceDeadline.setDate(pickupDeadline.getDate() + 14); // Additional two weeks
-        
-
-
-
         const gasRequest = new GasRequest({
 
             userId,
@@ -80,14 +65,12 @@ export const submitGasRequest = async (req, res) =>
 
             quantity,
 
-            requestDate
-
         });
 
 
         await gasRequest.save();
 
-        const smsMessage = `Gas Request Confirmation:\nToken: ${tokenNumber}\nQR Code: ${qrCodeUrl}\nPickup Deadline: ${pickupDeadline.toDateString()}\nTolerance Deadline: ${toleranceDeadline.toDateString()}`;
+        const smsMessage = `Gas Request Confirmation:\nToken: ${tokenNumber}\nQR Code: ${qrCodeUrl}`;
 
         const smsResponse = await sendSms(normalizedPhone, smsMessage, 'GasByGas');
 
@@ -102,17 +85,14 @@ export const submitGasRequest = async (req, res) =>
 
        const emailText = `Your gas request has been submitted successfully.\nToken: ${tokenNumber}\nPlease show this token or scan the QR code to pick up your gas\nPickup Deadline: ${pickupDeadline.toDateString()}\nTolerance Deadline: ${toleranceDeadline.toDateString()}`;
 
-       const emailHtml = `
-       <h1>Gas Request Confirmation</h1>
-       <p>Your gas request has been submitted successfully.</p>
-       <p><strong>Token:</strong> ${tokenNumber}</p>
-       <p><strong>Pickup Deadline:</strong> ${pickupDeadline.toDateString()}</p>
-       <p><strong>Tolerance Deadline:</strong> ${toleranceDeadline.toDateString()}</p>
-       <p>QR Code:</p>
-       <img src="${qrCodeUrl}" alt="QR Code" style="width:100px;height:100px;" />
-       <p>Thank you for using our service!</p>
-   `;
-   
+        const emailHtml = `
+            <h1>Gas Request Confirmation</h1>
+            <p>Your gas request has been submitted successfully.</p>
+            <p><strong>Token:</strong> ${tokenNumber}</p>
+            <p>QR Code:</p>
+            <img src="${qrCodeUrl}" alt="QR Code" style="width:100px;height:100px;" />
+            <p>Thank you for using our service!</p>
+        `;
 
         const emailResponse = await sendEmail(email, emailSubject, emailText, emailHtml);
 
@@ -132,10 +112,6 @@ export const submitGasRequest = async (req, res) =>
             tokenNumber,
 
             qrCodeUrl,
-
-            pickupDeadline,
-
-            toleranceDeadline,
 
         });
 

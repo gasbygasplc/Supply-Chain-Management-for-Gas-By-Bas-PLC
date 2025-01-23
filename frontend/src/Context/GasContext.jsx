@@ -291,6 +291,9 @@ const GasContextProvider = (props) =>
         updateGasQuantity,
         
         gasOrder,
+
+        setGasOrder,
+
         
         saveGasOrder,
         
