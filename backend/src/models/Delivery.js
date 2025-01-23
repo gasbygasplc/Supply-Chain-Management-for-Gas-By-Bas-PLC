@@ -3,23 +3,80 @@ import mongoose from 'mongoose';
 const deliverySchema = new mongoose.Schema(
 
     {
-        orderId: { type: String, required: true },
+        orderId: 
+        { 
+            type: String, 
+            required: true, 
+            unique: true 
+        },
 
-        customerName: { type: String, required: true },
+        outletName: 
+        { 
+            type: String, 
+            required: true 
+        },
 
-        address: { type: String, required: true },
+        location: 
+        { 
+            type: String, 
+            required: true 
+        },
 
-        deliveryDate: { type: Date, required: true },
+        deliveryDate: 
+        { 
+            type: Date, 
+            required: true,
+            validate: {
+                validator: (v) => v > Date.now(),
+                message: 'Delivery date must be in the future.'
+            }
+        },
 
-        status: { type: String, enum: ['Pending', 'Dispatched', 'Delivered'], default: 'Pending' },
+        stockQuantity: 
+        {
+            type: Number, 
+            required: true 
+        },
 
-        notificationSent: { type: Boolean, default: false },
+        status: 
+        { 
+            type: String, 
+            enum: ['Pending', 'Dispatched', 'Delivered', 'Collected'], 
+            default: 'Pending' 
+        },
+
+        token: 
+        { 
+            type: String, 
+            required: true, 
+            unique: true 
+        },
+
+        notificationSent: 
+        { 
+            type: Boolean, 
+            default: false 
+        }
 
     },
-    
-    { timestamps: true }
+
+
+    { 
+
+        timestamps: true 
+
+    }
+
 );
 
+
+//**************// Add indexes for frequent querying //**************//
+deliverySchema.index({ status: 1 });
+
+deliverySchema.index({ orderId: 1 });
+
+
 const Delivery = mongoose.model('Delivery', deliverySchema);
+
 
 export default Delivery;
