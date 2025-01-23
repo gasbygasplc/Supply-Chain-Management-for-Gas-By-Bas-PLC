@@ -113,7 +113,7 @@ const GasRequest = () => {
     const handleCitySelction = (e) => {
 
         setSelectedCity(e.target.value);
-        
+
     }
 
 
@@ -251,7 +251,7 @@ const GasRequest = () => {
 
                     cities.length > 0 && (
                         
-                        <select name="" id="" className='outline-none border border-primary p-3 rounded-md'>
+                        <select onChange={handleCitySelction} value={selectedCity} name="" id="" className='outline-none border border-primary p-3 rounded-md'>
                             
                             <option value="">Select Your City </option>
 
