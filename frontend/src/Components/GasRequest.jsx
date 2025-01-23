@@ -18,6 +18,8 @@ const GasRequest = () => {
 
     const [uniqueDistricts, setUniqueDistricts] = useState([]);
 
+    const [selectedCity , setSelectedCity] = useState('');
+
     const Navigate = useNavigate();
 
     //===================================== handle save order ======================================================
@@ -34,14 +36,14 @@ const GasRequest = () => {
 
         }
 
-        if(!selectedLocation)
+        if(!selectedCity)
         {
 
-            toast.warn("Please select a location.");
-
-            return;
+            toast.warn('Please select your city.');
 
         }
+
+        
 
         const order = {
 
@@ -57,7 +59,7 @@ const GasRequest = () => {
 
             image: gasDetails.image, 
 
-            locationId: selectedLocation,
+            locationId: selectedCity,
 
         }
 
@@ -106,6 +108,12 @@ const GasRequest = () => {
         setSelectedLocation(selectedDistrict);
 
         getCity(selectedDistrict);
+    }
+
+    const handleCitySelction = (e) => {
+
+        setSelectedCity(e.target.value);
+        
     }
 
 
@@ -244,6 +252,8 @@ const GasRequest = () => {
                     cities.length > 0 && (
                         
                         <select name="" id="" className='outline-none border border-primary p-3 rounded-md'>
+                            
+                            <option value="">Select Your City </option>
 
                             {
                                 cities.map((city , index) => (
