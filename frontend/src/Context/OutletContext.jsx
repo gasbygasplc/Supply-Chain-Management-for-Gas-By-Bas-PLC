@@ -9,6 +9,8 @@ const OutletContextProvider = (props) => {
 
     const [districts , setDistricts] = useState('');
 
+    const [cities , setCities] = useState([]);
+
     //++++++++++++++++++++++++++++++++++++++++++++++++++ Get outlet Location ++++++++++++++++++++++++++++++++++++++++++++++++
 
     const getOutletLocation = async() => {
@@ -42,7 +44,34 @@ const OutletContextProvider = (props) => {
 
     //+++++++++++++++++++++++++++++++++++++++++++++ Get City Using Districts ++++++++++++++++++++++++++++++++++++++++++++++++
 
-    
+    const getCity = async(district) => {
+
+        try 
+        {
+
+            const response = await axios.get(`http://localhost:4000/api/outlet/city/${district}`)
+
+            if(response.data.success)
+            {
+
+                setCities(response.data.city);
+
+            }
+            else
+            {
+
+                console.error("Failed to fetch cities:", response.data.message);
+
+            }
+            
+        } catch (error) 
+        {
+
+            console.error("Error fetching cities:", error.response ? error.response.data : error.message);
+
+        }
+    }
+
     
 
     const value = 
@@ -52,6 +81,8 @@ const OutletContextProvider = (props) => {
         getOutletLocation,
         setDistricts,
         districts,
+        cities,
+        getCity
     }
 
     return (
