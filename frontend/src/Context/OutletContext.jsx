@@ -1,5 +1,5 @@
 import axios from "axios";
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 export const OutletContext = createContext();
 
@@ -72,6 +72,11 @@ const OutletContextProvider = (props) => {
         }
     }
 
+    useEffect(() => {
+
+        console.log(cities);
+
+    }, [cities]);
     
 
     const value = 

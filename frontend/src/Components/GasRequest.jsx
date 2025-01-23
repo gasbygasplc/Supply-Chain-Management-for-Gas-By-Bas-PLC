@@ -10,7 +10,7 @@ const GasRequest = () => {
     
     const {gasDetails , handleGasSelection , gasQuantity , updateGasQuantity , userData , saveGasOrder} = useContext(GasContext);
 
-    const {outletlocation , getOutletLocation , setDistricts , getCity} = useContext(OutletContext);
+    const {outletlocation , getOutletLocation , setDistricts , getCity , cities} = useContext(OutletContext);
 
     const [selectedType , setSelectedType] = useState('Small');
 
@@ -102,7 +102,7 @@ const GasRequest = () => {
         const selectedDistrict = e.target.value;
 
         setDistricts(selectedDistrict);
-        
+
         setSelectedLocation(selectedDistrict);
 
         getCity(selectedDistrict);
