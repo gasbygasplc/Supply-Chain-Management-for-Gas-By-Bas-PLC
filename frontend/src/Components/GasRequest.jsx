@@ -108,11 +108,8 @@ const GasRequest = () => {
 
         setUniqueDistricts(districts);
 
-        const ucities = [...new Set(cities.map((city) => city.city))]
+    }, [outletlocation]); 
 
-        setUniqueCity(ucities);
-
-    }, [outletlocation , cities]); 
     
     const handleDistricts = (e) => {
 
@@ -127,12 +124,17 @@ const GasRequest = () => {
 
     const handleCitySelction = (e) => {
 
-        const selectedCity = e.target.value;
+        const city = e.target.value;
 
-        getOutletName(selectedCity);
+        setSelectedCity(city);
 
-        setSelectedOutlet(selectedCity)
+        getOutletName(city)
 
+    }
+
+    const handleOutletSelection = (e) => {
+
+        setSelectedCity(e.target.value);
     }
 
 
@@ -288,6 +290,35 @@ const GasRequest = () => {
                         </select>
 
                     )
+                }
+
+                {/* =================================== Outlet Drop Down ===========================================*/}
+
+                {
+
+                    outletName.length > 0 && (
+
+                        <select onChange={handleOutletSelection} value={selectedOutlet} className="outline-none border border-primary p-3 rounded-md" >
+
+                            <option value="" disabled> Select Your Outlet </option>
+
+                            {
+
+                                outletName.map((outlet , index) => (
+
+                                    <option key={index} value={outlet._id}>
+
+                                        {outlet.outletName}
+
+                                    </option>
+                                ))
+
+                            }
+
+                        </select>
+                        
+                    )
+
                 }
 
 
