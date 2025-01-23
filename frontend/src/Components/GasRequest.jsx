@@ -10,11 +10,13 @@ const GasRequest = () => {
     
     const {gasDetails , handleGasSelection , gasQuantity , updateGasQuantity , userData , saveGasOrder} = useContext(GasContext);
 
-    const {outletlocation , getOutletLocation} = useContext(OutletContext);
+    const {outletlocation , getOutletLocation , setDistricts} = useContext(OutletContext);
 
     const [selectedType , setSelectedType] = useState('Small');
 
     const [selectedLocation , setSelectedLocation] = useState('');
+
+    const [uniqueDistricts, setUniqueDistricts] = useState([]);
 
     const Navigate = useNavigate();
 
@@ -85,9 +87,14 @@ const GasRequest = () => {
 
         getOutletLocation();
 
-        console.log(outletlocation);
+        const districts = [...new Set(outletlocation.map(location => location.district))];
+
+        setUniqueDistricts(districts);
+
+        setDistricts(selectedLocation);
+
         
-    } , [])
+    } , [outletlocation])
 
 
   return (
@@ -211,9 +218,9 @@ const GasRequest = () => {
 
                     {
 
-                        outletlocation.map((location , index) => (
+                        uniqueDistricts.map((districts , index) => (
 
-                            <option key={index} value={location.district}>{location.district}</option>
+                            <option key={index} value={districts}>{districts}</option>
                             
                         ))
                     }

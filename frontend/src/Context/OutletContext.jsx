@@ -7,6 +7,8 @@ const OutletContextProvider = (props) => {
 
     const [outletlocation , setOutletLocation] = useState([]);
 
+    const [districts , setDistricts] = useState('');
+
     //++++++++++++++++++++++++++++++++++++++++++++++++++ Get outlet Location ++++++++++++++++++++++++++++++++++++++++++++++++
 
     const getOutletLocation = async() => {
@@ -40,11 +42,16 @@ const OutletContextProvider = (props) => {
 
     //+++++++++++++++++++++++++++++++++++++++++++++ Get City Using Districts ++++++++++++++++++++++++++++++++++++++++++++++++
 
+    
+    
+
     const value = 
     {
 
         outletlocation,
-        getOutletLocation
+        getOutletLocation,
+        setDistricts,
+        districts,
     }
 
     return (
