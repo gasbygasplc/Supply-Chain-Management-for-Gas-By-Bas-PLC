@@ -42,12 +42,7 @@ const OutletContextProvider = (props) => {
 
     }
 
-    useEffect(() => {
-
-        getOutletName()
-        console.log('Outlet: ', outletNames)
-
-    },[])
+    
 
 
     const value = {
