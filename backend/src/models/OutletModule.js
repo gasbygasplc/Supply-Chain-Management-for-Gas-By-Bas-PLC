@@ -6,6 +6,8 @@ const outLet = new mongoose.Schema(
 
         outletName : {type:String , required : true},
 
+        district : {type:String , required : true},
+
         Location : {type:String , required : true},
 
         phoneNumber : {type:String , required : true},
