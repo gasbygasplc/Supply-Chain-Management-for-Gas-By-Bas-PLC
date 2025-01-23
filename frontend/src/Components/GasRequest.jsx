@@ -213,7 +213,7 @@ const GasRequest = () => {
 
                         outletlocation.map((location , index) => (
 
-                            <option key={index} value={location._id}>{location.district}</option>
+                            <option key={index} value={location.district}>{location.district}</option>
                             
                         ))
                     }
