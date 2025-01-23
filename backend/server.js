@@ -15,6 +15,8 @@ import gasRouter from './src/routes/gasRoutes.js'; // Gas Routes
 import connectCloudinary from './src/config/Cloudinary.js';
 import fetchGasRouter from './src/routes/GasStockRoutes.js';
 import outletRouter from './src/routes/OutletRoute.js';
+import qrCodeRoutes from './src/routes/qrCodeRoutes.js';
+
 
 
 
@@ -49,6 +51,9 @@ app.use('/api/gas', gasRouter); // User Gas routes
 app.use('/api/gas' , fetchGasRouter);
 
 app.use('/api/outlet' , outletRouter)
+
+app.use('/api', qrCodeRoutes);
+
 
 //================================================ Listener ================================================
 

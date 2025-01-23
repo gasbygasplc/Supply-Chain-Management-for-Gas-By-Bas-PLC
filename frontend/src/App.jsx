@@ -9,6 +9,7 @@ import { ToastContainer} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Cart from './Pages/Cart'
 import DeliveryShedule from './Pages/DeliveryShedule'
+import QRCodePage from './Pages/QRCodePage';
 
 const App = () => {
 
@@ -33,6 +34,8 @@ const App = () => {
         <Route path='/gas-cart' element={<Cart/>}/>
 
         <Route path='/delivery-shedule' element = {<DeliveryShedule/>}/>
+
+        <Route path="/qrcode/:token" element={<QRCodePage />} />
 
       </Routes>
 

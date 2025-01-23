@@ -43,7 +43,7 @@ const Cart = () => {
   
     checkoutCart();
     
-    Navigate('/delivery-shedule');
+    // Navigate('/delivery-shedule');
   };
 
   return (
