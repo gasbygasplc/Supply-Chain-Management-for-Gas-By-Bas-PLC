@@ -9,6 +9,8 @@ const UserSchema = new mongoose.Schema({
     nic: { type: String, unique: true, required: true },
     password: { type: String, required: true },
     role: { type: String, enum: ['User', 'Organization'], default: 'User' },
+    passwordResetToken: { type: String },
+    passwordResetExpires: { type: Date },
 }, { timestamps: true });
 
 export default mongoose.model('User', UserSchema);
