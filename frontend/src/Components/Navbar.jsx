@@ -55,10 +55,10 @@ const Navbar = ({setShowSignIn}) => {
 
                   <div className='min-w-48 bg-[#ffffff] border shadow-md flex flex-col gap-3 p-4 rounded-md'>
 
-                    <p className='hover:text-primary'>My Profile</p>
-                    <p className='hover:text-primary'>My Gas Orders</p>
-                    <p className='hover:text-primary'>Notifications</p>
-                    <p className='hover:text-primary'>Reset Password</p>
+                  <Link to="/my-profile" className='hover:text-primary'>My Profile</Link>
+                   <Link to="/my-gas-orders" className='hover:text-primary'>My Gas Orders</Link>
+                    <Link to="/notifications" className='hover:text-primary'>Notifications</Link>
+                    <Link to="/reset-password" className='hover:text-primary'>Reset Password</Link>
                     <p onClick={() => {
 
                       localStorage.removeItem('token');

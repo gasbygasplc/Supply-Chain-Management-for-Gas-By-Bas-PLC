@@ -10,6 +10,11 @@ import 'react-toastify/dist/ReactToastify.css';
 import Cart from './Pages/Cart'
 import DeliveryShedule from './Pages/DeliveryShedule'
 import QRCodePage from './Pages/QRCodePage';
+import MyProfile from './Pages/MyProfile';
+import MyGasOrders from './Pages/MyGasOrders';
+import Notifications from './Pages/Notifications';
+import ResetPassword from './Pages/ResetPassword';
+import VerifyEmail from "./Pages/VerifyEmail";
 
 const App = () => {
 
@@ -36,6 +41,12 @@ const App = () => {
         <Route path='/delivery-shedule' element = {<DeliveryShedule/>}/>
 
         <Route path="/qrcode/:token" element={<QRCodePage />} />
+
+        <Route path="/my-profile" element={<MyProfile />} />
+        <Route path="/my-gas-orders" element={<MyGasOrders />} />
+        <Route path="/notifications" element={<Notifications />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/verify-email" element={<VerifyEmail />} />
 
       </Routes>
 
