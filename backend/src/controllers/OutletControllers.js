@@ -23,7 +23,7 @@ const outletLogin = async(req , res) => {
         if(!outlet)
         {
 
-            return res.status(400).json({success:false , message:"Invalid Email or Password"});
+            return res.status(400).json({success:false , message:"Invalid Email Please try again"});
         }
 
         const isMatch = await bcrypt.compare(password , outlet.password);
@@ -31,7 +31,7 @@ const outletLogin = async(req , res) => {
         if(!isMatch)
         {
 
-            return res.status(400).json({success:false , message:"Invalid Email or Password"});
+            return res.status(400).json({success:false , message:"Invalid Password Please try again"});
         }
         
         const Otoken = jwt.sign({id:outlet._id} , process.env.JWT_SECRET);
