@@ -35,7 +35,7 @@ const outletLogin = async(req , res) => {
             return res.status(400).json({success:false , message:"Invalid Password Please try again"});
         }
         
-        const Otoken = jwt.sign({id:outlet._id} , process.env.JWT_SECRET);
+        const Otoken = jwt.sign({id:outlet._id} , process.env.JWT_SECRET , { expiresIn: '1d' });
 
         res.json({success:true , message:"Login Success" , Otoken , outlet});
 
@@ -157,7 +157,7 @@ const gasRequest = async(req , res) => {
 
         const {outletId} = req.body;
 
-        const gasRequest = await GasRequest.find({outletId});
+        const gasRequest = await GasRequest.find({locationId: outletId});
 
         res.json({success:true , gasRequest});
         

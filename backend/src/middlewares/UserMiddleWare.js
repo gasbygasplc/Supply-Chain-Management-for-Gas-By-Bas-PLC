@@ -29,4 +29,7 @@ const userMiddleWare = async(req  , res , next ) => {
         res.json({success:false , message:"Error"});
         
     }
+
 }
+
+export default userMiddleWare
