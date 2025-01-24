@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import axios from 'axios';
 import { useEffect } from "react";
+import { toast } from 'react-toastify';
 
 
 export const OutletContext = createContext();
@@ -11,9 +12,11 @@ const OutletContextProvider = (props) => {
 
     const [outletNames , setOutletNames] = useState([]);
 
+    const [gasRequest , setGasRequest] = useState([]);
+
     //============================================== get Outlet ====================================================
 
-    const getOutletName = async(req , res) => {
+    const getOutletName = async() => {
 
         try 
         {
@@ -37,6 +40,43 @@ const OutletContextProvider = (props) => {
         {
 
             console.error('Error fetching outlets:', error);
+            
+        }
+
+    }
+
+
+    //================================================= get Gas request ================================================
+
+    const getGasRequest = async() => {
+
+        try 
+        {
+
+            const {data} = await axios.get('http://localhost:4000/api/outlet/gas-request' , {headers:{Otoken}});
+
+            if(data.success)
+            {
+
+                setGasRequest(data.gasRequest.reverse());
+
+                console.log(data.gasRequest.reverse());
+
+            }
+            else
+            {
+
+                toast.error(data.message);
+                
+            }
+            
+        } 
+        catch (error) 
+        {
+
+            console.log(error);
+
+            toast.error(error.message);
             
         }
 
