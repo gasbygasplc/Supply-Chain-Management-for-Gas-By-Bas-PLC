@@ -3,7 +3,7 @@ import { OutletContext } from '../../Context/OutletContext'
 
 const GasRequest = () => {
 
-  const {Otoken , getGasRequest, gasRequest} = useContext(OutletContext);
+  const {Otoken , getGasRequest} = useContext(OutletContext);
 
   useEffect(() => {
 

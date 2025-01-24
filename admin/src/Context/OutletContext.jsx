@@ -55,14 +55,14 @@ const OutletContextProvider = (props) => {
         try 
         {
 
-            const {data} = await axios.get('http://localhost:4000/api/outlet/outletName' , {headers:{Otoken}});
+            const {data} = await axios.get('http://localhost:4000/api/outlet/gas-request' , {headers:{Otoken}});
 
             if(data.success)
             {
 
-                setGasRequest(data.gasRequest.reverce());
+                setGasRequest(data.gasRequest.reverse());
 
-                console.log(data.gasRequest.reverce());
+                console.log(data.gasRequest.reverse());
 
             }
             else
