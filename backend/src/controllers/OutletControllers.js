@@ -2,6 +2,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import outletModel from '../models/OutletModule.js';
+import GasRequest from '../models/GasRequest.js';
 
 const outletLogin = async(req , res) => {
 
@@ -142,6 +143,33 @@ const getOutletName = async(req , res) => {
         res.status(500).json({ success: false, message: "Server error." });
         
     }
+
 }
 
-export {outletLogin , getOutletLocation , getCity , getOutletName};
+//================================================ Get Gas Request ====================================================
+
+
+const gasRequest = async(req , res) => {
+
+
+    try 
+    {
+
+        const {outletId} = req.body;
+
+        const gasRequest = await GasRequest.find({outletId});
+
+        res.json({success:true , gasRequest});
+        
+    } 
+    catch (error) 
+    {
+
+        console.log(error);
+
+        res.json({success: false , message: error.message});
+        
+    }
+}
+
+export {outletLogin , getOutletLocation , getCity , getOutletName , gasRequest};
