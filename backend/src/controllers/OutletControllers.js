@@ -2,6 +2,7 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import outletModel from '../models/OutletModule.js';
+import GasRequest from '../models/GasRequest.js';
 
 const outletLogin = async(req , res) => {
 
@@ -23,7 +24,7 @@ const outletLogin = async(req , res) => {
         if(!outlet)
         {
 
-            return res.status(400).json({success:false , message:"Invalid Email or Password"});
+            return res.status(400).json({success:false , message:"Invalid Email Please try again"});
         }
 
         const isMatch = await bcrypt.compare(password , outlet.password);
@@ -31,10 +32,10 @@ const outletLogin = async(req , res) => {
         if(!isMatch)
         {
 
-            return res.status(400).json({success:false , message:"Invalid Email or Password"});
+            return res.status(400).json({success:false , message:"Invalid Password Please try again"});
         }
         
-        const Otoken = jwt.sign({id:outlet._id} , process.env.JWT_SECRET);
+        const Otoken = jwt.sign({id:outlet._id} , process.env.JWT_SECRET , { expiresIn: '1d' });
 
         res.json({success:true , message:"Login Success" , Otoken , outlet});
 
@@ -142,6 +143,33 @@ const getOutletName = async(req , res) => {
         res.status(500).json({ success: false, message: "Server error." });
         
     }
+
 }
 
-export {outletLogin , getOutletLocation , getCity , getOutletName};
+//================================================ Get Gas Request ====================================================
+
+
+const gasRequest = async(req , res) => {
+
+
+    try 
+    {
+
+        const {outletId} = req.body;
+
+        const gasRequest = await GasRequest.find({locationId: outletId});
+
+        res.json({success:true , gasRequest});
+        
+    } 
+    catch (error) 
+    {
+
+        console.log(error);
+
+        res.json({success: false , message: error.message});
+        
+    }
+}
+
+export {outletLogin , getOutletLocation , getCity , getOutletName , gasRequest};

@@ -1,5 +1,6 @@
 import express from  'express';
-import { getCity, getOutletLocation, getOutletName, outletLogin } from '../controllers/OutletControllers.js';
+import { gasRequest, getCity, getOutletLocation, getOutletName, outletLogin } from '../controllers/OutletControllers.js';
+import authOutlet from '../middlewares/OutletMiddleWare.js';
 
 const outletRouter = express.Router();
 
@@ -10,5 +11,7 @@ outletRouter.get('/location' , getOutletLocation);
 outletRouter.get('/city/:district' , getCity);
 
 outletRouter.get('/outletName/:city' , getOutletName);
+
+outletRouter.get('/gas-request' , authOutlet , gasRequest)
 
 export default outletRouter;

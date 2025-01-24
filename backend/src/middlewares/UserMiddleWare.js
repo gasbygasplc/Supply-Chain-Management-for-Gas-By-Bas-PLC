@@ -21,6 +21,7 @@ const userMiddleWare = async (req, res, next) => {
         console.error("Error verifying token:", error.message);
         res.status(403).json({ success: false, message: "Invalid or Expired Token" });
     }
+
 };
 
 export default userMiddleWare;
