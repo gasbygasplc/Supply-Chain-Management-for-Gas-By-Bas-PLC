@@ -90,7 +90,9 @@ const OutletContextProvider = (props) => {
         Otoken,
         setOtoken,
         outletNames, // Only provide what's necessary
-        getOutletName
+        getOutletName,
+        getGasRequest,
+        gasRequest,
     }
     
 

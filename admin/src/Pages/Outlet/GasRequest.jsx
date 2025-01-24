@@ -1,6 +1,20 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import { OutletContext } from '../../Context/OutletContext'
 
 const GasRequest = () => {
+
+  const {Otoken , getGasRequest, gasRequest} = useContext(OutletContext);
+
+  useEffect(() => {
+
+    if(Otoken)
+    {
+
+      getGasRequest();
+
+    }
+  }, [Otoken])
+
   return (
     <div>GasRequest</div>
   )
