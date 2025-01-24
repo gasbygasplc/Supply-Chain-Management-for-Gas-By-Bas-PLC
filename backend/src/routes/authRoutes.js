@@ -2,16 +2,19 @@ import express from 'express';
 import {
     registerUser,
     loginUser,
-    resetPassword,
     sendPhoneOTP,
     verifyPhoneOTP,
     sendEmailVerification,
     verifyEmail,
     getUserProfile,
     updateUserProfile,
+    requestPasswordReset,
+    resetPassword,
 } from '../controllers/authController.js';
 import userMiddleware from '../middlewares/UserMiddleWare.js';
 const router = express.Router();
+import { changePassword } from '../controllers/authController.js';
+
 
 const validateRegistration = (req, res, next) => {
     const { name, nic, phone, email, password } = req.body;
@@ -72,16 +75,19 @@ const validateResetPassword = (req, res, next) => {
 
 router.post('/register', validateRegistration, registerUser);
 router.post('/login', validateLogin, loginUser);
-router.post('/reset-password', validateResetPassword, resetPassword);
 
 router.post('/register', validateRegistration, registerUser);
 router.post('/login', validateLogin, loginUser);
-router.post('/reset-password', validateResetPassword, resetPassword);
 router.post('/profile', userMiddleware, getUserProfile);
 router.put('/profile', userMiddleware, updateUserProfile);
 router.post('/send-phone-otp', userMiddleware, sendPhoneOTP);
 router.post('/verify-phone', userMiddleware, verifyPhoneOTP);
 router.post('/send-email-verification', userMiddleware, sendEmailVerification);
 router.get('/verify-email', verifyEmail);
+router.post('/request-password-reset', requestPasswordReset);
+router.post('/reset-password', resetPassword);
+
+
+
 
 export default router;
