@@ -1,5 +1,6 @@
 import jwt from 'jsonwebtoken'; //import jwt to generate token
 
+
 //============================================== Admin authendication middleware =============================================
 
 const AuthAdmin = async(req , res , next) => {

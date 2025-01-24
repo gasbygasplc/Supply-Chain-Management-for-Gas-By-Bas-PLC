@@ -1,32 +1,26 @@
 import jwt from 'jsonwebtoken';
 
-const userMiddleWare = async(req  , res , next ) => {
+const userMiddleWare = async (req, res, next) => {
 
-    const {token} = req.body;
+    const authHeader = req.headers.authorization;
 
-    if(!token)
-    {
-
-        return res.json({success: false , message: "Access Denied"});
-
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+        return res.status(403).json({ success: false, message: "Access Denied: No Token Provided" });
     }
 
-    try 
-    {
+    const token = authHeader.split(' ')[1]; 
 
-        const decode = jwt.verify(token , process.env.JWT_SECRET);
+    try {
 
-        req.body.userId = decode.id;
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-        next()
+        req.body.userId = decoded.id;
 
-
-    } catch (error) 
-    {
-
-        console.log(error);
-
-        res.json({success:false , message:"Error"});
-        
+        next();
+    } catch (error) {
+        console.error("Error verifying token:", error.message);
+        res.status(403).json({ success: false, message: "Invalid or Expired Token" });
     }
-}
+};
+
+export default userMiddleWare;
