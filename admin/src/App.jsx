@@ -16,22 +16,18 @@ import Delivery from './Pages/Outlet/Delivery';
 import DeliveryShedule from './Pages/Admin/DeliveryShedule';
 
 const App = () => {
+  const { aToken } = useContext(AdminContext);
 
-  const {aToken} = useContext(AdminContext);
+  const { Otoken } = useContext(OutletContext);
 
-  const {Otoken} = useContext(OutletContext);
-  
   return aToken || Otoken ? (
-    
-    <div className='bg-gray-50'>
+    <div className="bg-gray-50">
+      <ToastContainer />
 
-      <ToastContainer/>
+      <Navbar />
 
-      <Navbar/>
-
-      <div className='flex items-start'>
-
-        <Sidebar/>
+      <div className="flex items-start">
+        <Sidebar />
 
         <Routes>
 
@@ -41,42 +37,36 @@ const App = () => {
 
           <Route path='/delivery-shedule' element={<DeliveryShedule/>}/>
 
-          <Route path='/add-outlet' element={<AddOutlet/>}/>
+          <Route path="/add-outlet" element={<AddOutlet />} />
 
-          <Route path='/add-outlet-manager' element={<AddOutletManager/>}/>
+          <Route path="/add-outlet-manager" element={<AddOutletManager />} />
 
-          <Route path='/outlet-stock-request' element={<OutletStockRequest/>}/>
+          <Route
+            path="/outlet-stock-request"
+            element={<OutletStockRequest />}
+          />
 
-          <Route path='/manage-stock' element = {<AddMainStock/>}/>
+          <Route path="/manage-stock" element={<AddMainStock />} />
 
           {/* ++++++++++++++++++++++++++++++++++++++++++ Outlet Route ++++++++++++++++++++++++++++++++++++++++++++ */}
 
-          <Route path='/gas-request' element = {<GasRequest/>}/>
+          <Route path="/outlet-dashboard" element={<OutletDashboard />} />
 
-          <Route path='/stock-request' element = {<StockRequest/>}/>
+          <Route path="/gas-request" element={<GasRequest />} />
 
-          <Route path='/delivery-status' element = {<Delivery/>}/>
+          <Route path="/stock-request" element={<StockRequest />} />
 
+          <Route path="/delivery-status" element={<Delivery />} />
         </Routes>
-
       </div>
-
-    </div> 
-
-  ) :
-
-  (
-
+    </div>
+  ) : (
     <>
+      <LoginPage />
 
-      <LoginPage/>
-
-      <ToastContainer/>
-
+      <ToastContainer />
     </>
+  );
+};
 
-  )
-
-}
-
-export default App
+export default App;

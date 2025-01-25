@@ -1,15 +1,13 @@
-import React, { useContext } from 'react'
-import { AdminContext } from '../Context/AdminContext'
-import {NavLink} from 'react-router-dom'
-import { assets } from '../assets/assets';
-import { OutletContext } from '../Context/OutletContext';
-
+import React, { useContext } from "react";
+import { AdminContext } from "../Context/AdminContext";
+import { NavLink } from "react-router-dom";
+import { assets } from "../assets/assets";
+import { OutletContext } from "../Context/OutletContext";
 
 const Sidebar = () => {
+  const { aToken } = useContext(AdminContext);
 
-  const {aToken} = useContext(AdminContext);
-
-  const {Otoken} = useContext(OutletContext);
+  const { Otoken } = useContext(OutletContext);
 
   return (
 
@@ -30,68 +28,119 @@ const Sidebar = () => {
 
           </NavLink>
 
-          <NavLink to={'/add-outlet'} className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#f2f3ff] border-r-4 border-primary-600' : ''}`}>
-
+          <NavLink
+            to={"/add-outlet"}
+            className={({ isActive }) =>
+              `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
+                isActive ? "bg-[#f2f3ff] border-r-4 border-primary-600" : ""
+              }`
+            }
+          >
             <img src={assets.outlet} alt="" />
 
-            <p className='hidden md:block'>Add Outlet</p>
-
+            <p className="hidden md:block">Add Outlet</p>
           </NavLink>
 
-          <NavLink to={'/add-outlet-manager'} className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#f2f3ff] border-r-4 border-primary-600' : ''}`}>
-
+          <NavLink
+            to={"/add-outlet-manager"}
+            className={({ isActive }) =>
+              `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
+                isActive ? "bg-[#f2f3ff] border-r-4 border-primary-600" : ""
+              }`
+            }
+          >
             <img src={assets.person} alt="" />
 
-            <p className='hidden md:block'>Add Manager</p>
-
+            <p className="hidden md:block">Add Manager</p>
           </NavLink>
 
-          <NavLink to={'/manage-stock'} className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#f2f3ff] border-r-4 border-primary-600' : ''}`}>
-
+          <NavLink
+            to={"/manage-stock"}
+            className={({ isActive }) =>
+              `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
+                isActive ? "bg-[#f2f3ff] border-r-4 border-primary-600" : ""
+              }`
+            }
+          >
             <img src={assets.stock} alt="" />
 
-            <p className='hidden md:block'>Manage Stock</p>
-
+            <p className="hidden md:block">Manage Stock</p>
           </NavLink>
-          
+
+
+          <NavLink
+            to={"/outlet-stock-request"}
+            className={({ isActive }) =>
+              `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
+                isActive ? "bg-[#f2f3ff] border-r-4 border-primary-600" : ""
+              }`
+            }
+          >
+            <img src={assets.request} alt="" />
+
+            <p className="hidden md:block">Outlet Request</p>
+          </NavLink>
+
         </ul>
-      }
+      )}
 
-      {
-
-        Otoken && 
-
-        <ul className='text-[#515151] mt-5'>
-
-          <NavLink to={'/gas-request'} className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#f2f3ff] border-r-4 border-primary-600' : ''}`}>
-
+      {Otoken && (
+        <ul className="text-[#515151] mt-5">
+          <NavLink
+            to={"/outlet-dashboard"}
+            className={({ isActive }) =>
+              `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
+                isActive ? "bg-[#f2f3ff] border-r-4 border-primary-600" : ""
+              }`
+            }
+          >
             <img src={assets.outlet} alt="" />
 
-            <p className='hidden md:block'>Gas Request</p>
-
+            <p className="hidden md:block">Dashboard</p>
           </NavLink>
 
-          <NavLink to={'/stock-request'} className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#f2f3ff] border-r-4 border-primary-600' : ''}`}>
+          <NavLink
+            to={"/gas-request"}
+            className={({ isActive }) =>
+              `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
+                isActive ? "bg-[#f2f3ff] border-r-4 border-primary-600" : ""
+              }`
+            }
+          >
+            <img src={assets.outlet} alt="" />
 
+            <p className="hidden md:block">Gas Request</p>
+          </NavLink>
+
+          <NavLink
+            to={"/stock-request"}
+            className={({ isActive }) =>
+              `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
+                isActive ? "bg-[#f2f3ff] border-r-4 border-primary-600" : ""
+              }`
+            }
+          >
             <img src={assets.person} alt="" />
 
-            <p className='hidden md:block'>Stock Request</p>
-
+            <p className="hidden md:block">Stock Request</p>
           </NavLink>
 
-          <NavLink to={'/delivery-status'} className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#f2f3ff] border-r-4 border-primary-600' : ''}`}>
-
+          <NavLink
+            to={"/delivery-status"}
+            className={({ isActive }) =>
+              `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
+                isActive ? "bg-[#f2f3ff] border-r-4 border-primary-600" : ""
+              }`
+            }
+          >
             <img src={assets.stock} alt="" />
 
-            <p className='hidden md:block'>Delivery</p>
-
+            <p className="hidden md:block">Delivery</p>
           </NavLink>
-          
         </ul>
-      }
-    
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;
