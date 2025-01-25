@@ -41,10 +41,10 @@ const Profile = () => {
                     if (response.data.success) {
                         setProfile(response.data.user);
                     } else {
-                        toast.error(response.data.message || "Failed to fetch profile.");
+                        toast.error(response.data.message || "Session Expired, Please login again.");
                     }
                 } catch (error) {
-                    toast.error("Failed to fetch profile.");
+                    toast.error("Session Expired, Please login again.");
                 }
             };
             fetchProfile();
