@@ -14,6 +14,7 @@ import { OutletContext } from './Context/OutletContext';
 import GasRequest from './Pages/Outlet/GasRequest';
 import StockRequest from './Pages/Outlet/StockRequest';
 import Delivery from './Pages/Outlet/Delivery';
+import DeliveryShedule from './Pages/Admin/DeliveryShedule';
 
 const App = () => {
 
@@ -35,11 +36,11 @@ const App = () => {
 
         <Routes>
 
+          <Route path="/" element={<DeliveryShedule/>} />
+
           {/* ++++++++++++++++++++++++++++++++++++++++++ Admin Route ++++++++++++++++++++++++++++++++++++++++++++ */}
 
-          <Route path='/' element={<></>}/>
-
-          <Route path='/admin-dashboard' element={<Dashboard/>}/>
+          <Route path='/delivery-shedule' element={<DeliveryShedule/>}/>
 
           <Route path='/add-outlet' element={<AddOutlet/>}/>
 
