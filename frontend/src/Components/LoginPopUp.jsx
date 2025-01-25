@@ -25,6 +25,8 @@ const LoginPopUp = ({ setShowSignIn }) => {
 
     password: '',
 
+    brnumber: '',
+
   });
 
   // Handle input changes
@@ -109,7 +111,7 @@ const LoginPopUp = ({ setShowSignIn }) => {
 
             <>
             
-              <input name='name' type='text' placeholder='Gayathri Varatharajan' className='outline-none border border-primary p-2 rounded-md' value={formData.name} onChange={handleChange}/>
+              <input name='name' type='text' placeholder='Mathumitha Srikanthan' className='outline-none border border-primary p-2 rounded-md' value={formData.name} onChange={handleChange}/>
 
               <input name='phone' type='text' placeholder='0094771234567' className='outline-none border border-primary p-2 rounded-md' value={formData.phone} onChange={handleChange}/>
 
@@ -123,6 +125,11 @@ const LoginPopUp = ({ setShowSignIn }) => {
 
               </select>
 
+              {
+
+                formData.role === 'Organization' && (<input name='brnumber' type='text' placeholder='br1234' className='outline-none border border-primary p-2 rounded-md' value={formData.brnumber} onChange={handleChange}/>)
+
+              }
             </>
 
           )}
