@@ -15,7 +15,7 @@ const Sidebar = () => {
     
       {
 
-        aToken && (                                                                   
+        aToken && (
 
         <ul className='text-[#515151] mt-5'>
 

@@ -50,8 +50,6 @@ const App = () => {
 
           {/* ++++++++++++++++++++++++++++++++++++++++++ Outlet Route ++++++++++++++++++++++++++++++++++++++++++++ */}
 
-          <Route path="/outlet-dashboard" element={<OutletDashboard />} />
-
           <Route path="/gas-request" element={<GasRequest />} />
 
           <Route path="/stock-request" element={<StockRequest />} />
