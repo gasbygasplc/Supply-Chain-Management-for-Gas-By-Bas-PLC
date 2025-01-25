@@ -4,92 +4,207 @@ import { generateToken } from '../utils/tokenService.js';
 import { sendSms } from '../utils/smsService.js';
 import { generateQrCode } from '../utils/qrCodeService.js';
 import { sendEmail } from '../utils/emailService.js';
-import outletModel from '../models/OutletModule.js';
+import Outlet from '../models/OutletModule.js';
 
 export const submitGasRequest = async (req, res) => {
-    const { userId, gasType, quantity, locationId, expectedPickupDate, tolerance } = req.body;
+    const orders = req.body;
 
-    if (!userId || !gasType || !quantity || !locationId) {
-        return res.status(400).json({ success: false, message: 'Missing required fields' });
+    if (!Array.isArray(orders) || orders.length === 0) {
+        return res.status(400).json({ success: false, message: 'Invalid or empty order data' });
     }
 
     try {
-        const user = await User.findById(userId);
-        if (!user) {
-            return res.status(404).json({ success: false, message: 'User not found' });
-        }
+        const savedRequests = await Promise.all(
+            orders.map(async (order) => {
+                const { userId, gasType, quantity, outletId, expectedPickupDate } = order;
 
-        const outletLocation = await outletModel.findById(locationId);
-        if (!outletLocation) {
-            return res.status(404).json({ success: false, message: 'Outlet Location not found' });
-        }
+                if (!userId || !gasType || !quantity || !outletId) {
+                    throw new Error('Missing required fields');
+                }
 
-        const { email, phone } = user;
-        const normalizedPhone = phone.startsWith('94') ? phone : `94${phone.replace(/^0/, '')}`;
+                const user = await User.findById(userId);
+                if (!user) throw new Error('User not found');
 
-        const tokenNumber = generateToken();
-        const qrCodeUrl = `${process.env.BASE_URL || 'http://localhost:4000'}/api/qrcode/${tokenNumber}`;
+                const outlet = await Outlet.findById(outletId);
+                if (!outlet) throw new Error('Outlet not found');
 
-        const qrCodeImage = await generateQrCode({ tokenNumber, gasType, quantity, userId });
+                const { email, phone } = user;
+                const normalizedPhone = phone.startsWith('94') ? phone : `94${phone.replace(/^0/, '')}`;
+                const tokenNumber = generateToken();
+                const qrCodeUrl = `${process.env.BASE_URL || 'http://localhost:4000'}/api/qrcode/${tokenNumber}`;
+                const qrCodeImage = await generateQrCode({ tokenNumber, gasType, quantity, userId });
 
-        const gasRequest = new GasRequest({
-            userId,
-            requestId: `REQ-${Date.now()}`,
-            tokenNumber,
-            locationId,
-            qrCodeUrl,
-            gasType,
-            quantity,
-            pickupDate,
-            expiration,
-        });
+                const expirationDate = new Date();
+                expirationDate.setDate(expirationDate.getDate() + 14);
 
-        await gasRequest.save();
+                const gasRequest = new GasRequest({
+                    userId,
+                    requestId: `REQ-${Date.now()}`,
+                    tokenNumber,
+                    outletId,
+                    qrCodeUrl,
+                    gasType,
+                    quantity,
+                    expectedPickupDate,
+                    expiration: expirationDate,
+                });
 
-        const smsMessage = `
-            Gas Request Confirmation:
-            - Token: ${tokenNumber}
-            - Gas Type: ${gasType}
-            - Quantity: ${quantity}
-            - Pickup Date: ${expectedPickupDate}
-            - Expiration: ${expiration}%
-            - QR Code: ${qrCodeUrl}
-        `;
-        await sendSms(normalizedPhone, smsMessage.trim(), 'GasByGas');
+                await gasRequest.save();
 
+                const smsMessage = `
+                    Gas Request Confirmation:
+                    - Token: ${tokenNumber}
+                    - Gas Type: ${gasType}
+                    - Quantity: ${quantity}
+                    - Outlet: ${outlet.outletName}, ${outlet.address}, Phone: ${outlet.phone}
+                    - Pickup Date: ${expectedPickupDate}
+                    - Expiration: ${expirationDate.toDateString()}
+                    - QR Code: ${qrCodeUrl}
+                `;
+                await sendSms(normalizedPhone, smsMessage.trim(), 'GasByGas');
 
-        const emailSubject = 'Gas Request Confirmation';
-        const emailHtml = `
-            <h1>Gas Request Confirmation</h1>
-            <p>Your gas request has been submitted successfully.</p>
-            <p><strong>Token:</strong> ${tokenNumber}</p>
-            <p><strong>Gas Type:</strong> ${gasType}</p>
-            <p><strong>Quantity:</strong> ${quantity}</p>
-            <p><strong>Pickup Date:</strong> ${pickupDate}</p>
-            <p><strong>Expiration:</strong> ${expiration}%</p>
-            <p>QR Code:</p>
-            <img src="${qrCodeImage}" alt="QR Code" style="width:150px;height:150px;" />
-            <p>Thank you for using our service!</p>
-        `;
+                const emailSubject = 'Gas Request Confirmation';
+                const emailHtml = `
+                    <h1>Gas Request Confirmation</h1>
+                    <p>Your gas request has been submitted successfully.</p>
+                    <p><strong>Token:</strong> ${tokenNumber}</p>
+                    <p><strong>Gas Type:</strong> ${gasType}</p>
+                    <p><strong>Quantity:</strong> ${quantity}</p>
+                    <p><strong>Outlet:</strong> ${outlet.outletName}, ${outlet.address}, Phone: ${outlet.phone}</p>
+                    <p><strong>Pickup Date:</strong> ${expectedPickupDate}</p>
+                    <p><strong>Expiration:</strong> ${expirationDate.toDateString()}</p>
+                    <p>QR Code:</p>
+                    <img src="${qrCodeImage}" alt="QR Code" style="width:150px;height:150px;" />
+                    <p>Thank you for using our service!</p>
+                `;
+                await sendEmail(email, emailSubject, smsMessage.trim(), emailHtml);
 
-        await sendEmail(email, emailSubject, smsMessage.trim(), emailHtml);
+                return gasRequest;
+            })
+        );
 
-        return res.status(201).json({
+        res.status(201).json({
             success: true,
-            message: 'Gas request submitted successfully',
-            tokenNumber,
-            qrCodeUrl,
+            message: 'Gas requests submitted successfully',
+            requests: savedRequests,
         });
     } catch (error) {
-        console.error('Error submitting gas request:', error);
-        return res.status(500).json({ success: false, message: 'Error submitting gas request' });
+        console.error('Error submitting gas request:', error.message || error);
+        res.status(500).json({ success: false, message: 'Error submitting gas request' });
     }
 };
+
+export const cancelGasOrder = async (req, res) => {
+    const { orderId } = req.body;
+
+    if (!orderId) {
+        return res.status(400).json({ success: false, message: "Order ID is required." });
+    }
+
+    try {
+        const order = await GasRequest.findById(orderId);
+
+        if (!order) {
+            return res.status(404).json({ success: false, message: "Order not found." });
+        }
+
+        if (order.status !== "Pending") {
+            return res.status(400).json({ success: false, message: "Only pending orders can be cancelled." });
+        }
+
+        order.status = "Cancelled";
+        await order.save();
+
+        res.status(200).json({ success: true, message: "Order cancelled successfully." });
+    } catch (error) {
+        console.error("Error cancelling order:", error.message || error);
+        res.status(500).json({ success: false, message: "Failed to cancel order." });
+    }
+};
+
+export const updateGasRequestStatus = async (req, res) => {
+    const { requestId, status } = req.body;
+
+    if (!requestId || !status) {
+        return res.status(400).json({ success: false, message: 'Missing required fields.' });
+    }
+
+    try {
+        const validStatuses = ['Pending', 'Approved', 'Collected', 'Rescheduled', 'Cancelled'];
+
+        if (!validStatuses.includes(status)) {
+            return res.status(400).json({ success: false, message: 'Invalid status value.' });
+        }
+
+        const gasRequest = await GasRequest.findOne({ requestId });
+
+        if (!gasRequest) {
+            return res.status(404).json({ success: false, message: 'Gas request not found.' });
+        }
+
+        gasRequest.status = status;
+        await gasRequest.save();
+
+        res.status(200).json({
+            success: true,
+            message: 'Gas request status updated successfully.',
+            gasRequest,
+        });
+    } catch (error) {
+        console.error('Error updating gas request status:', error);
+        res.status(500).json({ success: false, message: 'Error updating status.' });
+    }
+};
+
+export const getPendingOrders = async (req, res) => {
+    const { userId } = req.query;
+
+    if (!userId) {
+        return res.status(400).json({ success: false, message: "User ID is required." });
+    }
+
+    try {
+        const orders = await GasRequest.find({
+            userId,
+            status: { $in: ["Pending", "Approved"] },
+        });
+
+        res.status(200).json({ success: true, orders });
+    } catch (error) {
+        console.error("Error fetching pending orders:", error);
+        res.status(500).json({ success: false, message: "Failed to fetch pending orders." });
+    }
+};
+
+export const getGasOrders = async (req, res) => {
+    const { userId } = req.body;
+
+    if (!userId) {
+        return res.status(400).json({ success: false, message: "User ID is required." });
+    }
+
+    try {
+        const orders = await GasRequest.find({ userId }).populate("outletId");
+
+        if (!orders || orders.length === 0) {
+            return res.status(404).json({ success: false, message: "No gas orders found." });
+        }
+
+        res.status(200).json({ success: true, orders });
+    } catch (error) {
+        console.error("Error fetching gas orders:", error);
+        res.status(500).json({ success: false, message: "Error fetching gas orders." });
+    }
+};
+
+
 
 export const handleCheckout = async (req, res) => {
     const { userId, items } = req.body;
 
-    if (!userId || !items || items.length === 0 || items.some((item) => !item.locationId)) {
+    console.log("Received Checkout Payload:", req.body);
+
+    if (!userId || !items || items.length === 0 || items.some((item) => !item.outletId)) {
         return res.status(400).json({ success: false, message: 'Missing required fields or cart is empty.' });
     }
 
@@ -99,31 +214,65 @@ export const handleCheckout = async (req, res) => {
             return res.status(404).json({ success: false, message: 'User not found.' });
         }
 
-        const { email, phone } = user;
-        const normalizedPhone = phone.startsWith('94') ? phone : `94${phone.replace(/^0/, '')}`;
+
+        const existingRequests = await GasRequest.find({
+            userId,
+            status: { $in: ["Pending", "Approved"] },
+        });
+
+        const totalGases = existingRequests.reduce((count, request) => count + request.quantity, 0);
+        const maxGasesAllowed = user.role === "Organization" ? 10 : 2;
+
+        if (totalGases + items.reduce((count, item) => count + item.quantity, 0) > maxGasesAllowed) {
+            return res.status(400).json({
+                success: false,
+                message: `You cannot have more than ${maxGasesAllowed} gases in pending or active requests.`,
+            });
+        }
 
         const requests = await Promise.all(
             items.map(async (item) => {
+                const outlet = await Outlet.findById(item.outletId);
+                if (!outlet) throw new Error(`Outlet not found for ID: ${item.outletId}`);
+
                 const tokenNumber = generateToken();
                 const qrCodeUrl = `${process.env.BASE_URL || 'http://localhost:4000'}/api/qrcode/${tokenNumber}`;
+                const qrCodeImage = await generateQrCode({
+                    tokenNumber,
+                    gasType: item.type,
+                    quantity: item.quantity,
+                    userId,
+                });
 
-                const qrCodeImage = await generateQrCode({ tokenNumber, gasType: item.type, quantity: item.quantity, userId });
+                const expirationDate = new Date();
+                expirationDate.setDate(expirationDate.getDate() + 14);
 
                 const gasRequest = new GasRequest({
                     userId,
                     requestId: `REQ-${Date.now()}`,
                     tokenNumber,
+                    outletId: item.outletId,
                     qrCodeUrl,
                     gasType: item.type,
                     quantity: item.quantity,
-                    locationId: item.locationId,
                     expectedPickupDate: item.expectedPickupDate,
-                    expiration: item.expiration,
+                    expiration: expirationDate,
                 });
 
                 await gasRequest.save();
 
-                return { tokenNumber, qrCodeUrl, qrCodeImage, gasType: item.type, quantity: item.quantity, expectedPickupDate: item.expectedPickupDate, expiration: item.expiration };
+                return {
+                    tokenNumber,
+                    qrCodeUrl,
+                    qrCodeImage,
+                    gasType: item.type,
+                    quantity: item.quantity,
+                    expectedPickupDate: item.expectedPickupDate,
+                    outletName: outlet.outletName,
+                    outletAddress: outlet.address,
+                    outletPhone: outlet.phone,
+                    expiration: expirationDate,
+                };
             })
         );
 
@@ -132,21 +281,21 @@ export const handleCheckout = async (req, res) => {
                 (request) => `
                 Gas Type: ${request.gasType}
                 Quantity: ${request.quantity}
+                Outlet: ${request.outletName}, ${request.outletAddress}, Phone: ${request.outletPhone}
                 Token: ${request.tokenNumber}
                 Expected Pickup Date: ${request.expectedPickupDate}
-                Expiration: ${request.expiration}%
+                Expiration: ${request.expiration.toDateString()}
                 QR Code: ${request.qrCodeUrl}
             `
             )
             .join('\n\n');
 
-        await sendSms(normalizedPhone, smsMessage.trim(), 'GasByGas');
+        await sendSms(user.phone, smsMessage.trim(), 'GasByGas');
 
         const emailSubject = 'Gas Order Confirmation';
         const emailHtml = `
             <h1>Gas Order Confirmation</h1>
             <p>Your gas order has been successfully placed.</p>
-            <p>Below are the details of your order:</p>
             <ul>
                 ${requests
                     .map(
@@ -154,9 +303,10 @@ export const handleCheckout = async (req, res) => {
                         <li>
                             <strong>Gas Type:</strong> ${request.gasType}<br/>
                             <strong>Quantity:</strong> ${request.quantity}<br/>
+                            <strong>Outlet:</strong> ${request.outletName}, ${request.outletAddress}, Phone: ${request.outletPhone}<br/>
                             <strong>Token:</strong> ${request.tokenNumber}<br/>
                             <strong>Expected Pickup Date:</strong> ${request.expectedPickupDate}<br/>
-                            <strong>Expiration:</strong> ${request.expiration}%<br/>
+                            <strong>Expiration:</strong> ${request.expiration.toDateString()}<br/>
                             <img src="${request.qrCodeImage}" alt="QR Code" style="width:150px;height:150px;" />
                         </li>`
                     )
@@ -165,15 +315,15 @@ export const handleCheckout = async (req, res) => {
             <p>Thank you for using our service!</p>
         `;
 
-        await sendEmail(email, emailSubject, smsMessage.trim(), emailHtml);
+        await sendEmail(user.email, emailSubject, smsMessage.trim(), emailHtml);
 
-        return res.status(201).json({
+        res.status(201).json({
             success: true,
             message: 'Checkout successful!',
             requests,
         });
     } catch (error) {
         console.error('Error during checkout:', error);
-        return res.status(500).json({ success: false, message: 'Error during checkout.' });
+        res.status(500).json({ success: false, message: 'Error during checkout.' });
     }
 };

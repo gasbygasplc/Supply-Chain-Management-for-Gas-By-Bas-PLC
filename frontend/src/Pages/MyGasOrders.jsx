@@ -1,12 +1,155 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const MyGasOrders = () => {
-  return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold">My Gas Orders</h1>
-      <p>Here are your past and current gas orders.</p>
-    </div>
-  );
+    const [orders, setOrders] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [userId, setUserId] = useState(null);
+    const [token, setToken] = useState(null);
+
+    useEffect(() => {
+        const storedToken = localStorage.getItem("token");
+        const storedUserData = localStorage.getItem("userdata");
+
+        if (storedToken && storedUserData) {
+            const parsedUserData = JSON.parse(storedUserData);
+            setUserId(parsedUserData._id);
+            setToken(storedToken);
+        } else {
+            toast.error("User not logged in. Please log in to view orders.");
+            setLoading(false);
+        }
+    }, []);
+
+    useEffect(() => {
+        const fetchOrders = async () => {
+            if (!userId || !token) return;
+
+            try {
+                const response = await axios.post(
+                    `${import.meta.env.VITE_BACKEND_URL}/api/gas/orders`,
+                    { userId },
+                    { headers: { Authorization: `Bearer ${token}` } }
+                );
+
+                if (response.data.success) {
+                    setOrders(response.data.orders);
+                } else {
+                    toast.error(response.data.message || "Failed to fetch orders.");
+                }
+            } catch (error) {
+                console.error("Error fetching orders:", error);
+                toast.error("Error fetching orders.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchOrders();
+    }, [userId, token]);
+
+    const handleCancelOrder = async (orderId) => {
+        try {
+            const response = await axios.put(
+                `${import.meta.env.VITE_BACKEND_URL}/api/gas/cancel`,
+                { orderId },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+
+            if (response.data.success) {
+                toast.success("Order cancelled successfully.");
+                setOrders((prevOrders) =>
+                    prevOrders.map((order) =>
+                        order._id === orderId ? { ...order, status: "Cancelled" } : order
+                    )
+                );
+            } else {
+                toast.error(response.data.message || "Failed to cancel order.");
+            }
+        } catch (error) {
+            console.error("Error cancelling order:", error);
+            toast.error("Error cancelling order.");
+        }
+    };
+
+    const isExpired = (expirationDate) => {
+        return new Date() > new Date(expirationDate);
+    };
+
+    if (loading) {
+        return <p className="text-center text-gray-500">Loading orders...</p>;
+    }
+
+    return (
+        <div className="container mx-auto p-4">
+            <h1 className="text-2xl font-bold mb-4">My Gas Orders</h1>
+            {orders.length === 0 ? (
+                <p className="text-center text-gray-500">No gas orders found.</p>
+            ) : (
+                <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                    {orders.map((order) => (
+                        <div
+                            key={order._id}
+                            className="border rounded-lg p-4 shadow-md bg-white"
+                        >
+                            <h2 className="text-xl font-semibold mb-2">
+                                Request ID: {order.requestId}
+                            </h2>
+                            <p>
+                                <strong>Status:</strong> {order.status}{" "}
+                                {isExpired(order.expiration) && order.status === "Pending" && "(Expired)"}
+                            </p>
+                            <p>
+                                <strong>Token Number:</strong> {order.tokenNumber}
+                            </p>
+                            <p>
+                                <strong>Pickup Outlet:</strong> {order.outletId?.outletName || "Unknown"}
+                            </p>
+                            <p>
+                                <strong>Address:</strong> {order.outletId?.address || "Unknown"}
+                            </p>
+                            <p>
+                                <strong>Phone Number:</strong> {order.outletId?.phoneNumber || "Unknown"}
+                            </p>
+                            <p>
+                                <strong>Gas Type:</strong> {order.gasType}
+                            </p>
+                            <p>
+                                <strong>Quantity:</strong> {order.quantity}
+                            </p>
+                            <p>
+                                <strong>Estimated Pickup Date:</strong>{" "}
+                                {order.expectedPickupDate
+                                    ? new Date(order.expectedPickupDate).toLocaleDateString()
+                                    : "Not specified"}
+                            </p>
+                            <p>
+                                <strong>Expiration:</strong>{" "}
+                                {new Date(order.expiration).toLocaleDateString()}
+                            </p>
+                            <p>
+                                <strong>QR Code:</strong>
+                            </p>
+                            <img
+                                src={order.qrCodeUrl}
+                                alt="QR Code"
+                                className="mt-2 w-32 h-32"
+                            />
+                            {order.status === "Pending" && !isExpired(order.expiration) && (
+                                <button
+                                    onClick={() => handleCancelOrder(order._id)}
+                                    className="mt-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
+                                >
+                                    Cancel Order
+                                </button>
+                            )}
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+    );
 };
 
 export default MyGasOrders;

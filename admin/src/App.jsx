@@ -1,20 +1,19 @@
-import React, { useContext } from "react";
-import LoginPage from "./Pages/LoginPage";
-import { ToastContainer, toast } from "react-toastify";
-import { AdminContext } from "./Context/AdminContext";
-import Navbar from "./Components/Navbar";
-import Sidebar from "./Components/Sidebar";
-import { Route, Routes } from "react-router-dom";
-import Dashboard from "./Pages/Admin/Dashboard";
-import AddOutlet from "./Pages/Admin/AddOutlet";
-import AddOutletManager from "./Pages/Admin/AddOutletManager";
-import OutletStockRequest from "./Pages/Admin/OutletStockRequest";
-import AddMainStock from "./Pages/Admin/AddMainStock";
-import { OutletContext } from "./Context/OutletContext";
-import GasRequest from "./Pages/Outlet/GasRequest";
-import StockRequest from "./Pages/Outlet/StockRequest";
-import Delivery from "./Pages/Outlet/Delivery";
-import OutletDashboard from "./Pages/Outlet/OutletDashboard";
+import React, { useContext } from 'react'
+import LoginPage from './Pages/LoginPage'
+import { ToastContainer, toast } from 'react-toastify';
+import { AdminContext } from './Context/AdminContext';
+import Navbar from './Components/Navbar';
+import Sidebar from './Components/Sidebar';
+import { Route, Routes } from 'react-router-dom';
+import AddOutlet from './Pages/Admin/AddOutlet';
+import AddOutletManager from './Pages/Admin/AddOutletManager';
+import OutletStockRequest from './Pages/Admin/OutletStockRequest';
+import AddMainStock from './Pages/Admin/AddMainStock';
+import { OutletContext } from './Context/OutletContext';
+import GasRequest from './Pages/Outlet/GasRequest';
+import StockRequest from './Pages/Outlet/StockRequest';
+import Delivery from './Pages/Outlet/Delivery';
+import DeliveryShedule from './Pages/Admin/DeliveryShedule';
 
 const App = () => {
   const { aToken } = useContext(AdminContext);
@@ -31,11 +30,12 @@ const App = () => {
         <Sidebar />
 
         <Routes>
+
+          {aToken && <Route path="/" element={<DeliveryShedule/>} />}
+
           {/* ++++++++++++++++++++++++++++++++++++++++++ Admin Route ++++++++++++++++++++++++++++++++++++++++++++ */}
 
-          <Route path="/" element={<></>} />
-
-          <Route path="/admin-dashboard" element={<Dashboard />} />
+          <Route path='/delivery-shedule' element={<DeliveryShedule/>}/>
 
           <Route path="/add-outlet" element={<AddOutlet />} />
 

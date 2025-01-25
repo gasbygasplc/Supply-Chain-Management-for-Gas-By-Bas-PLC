@@ -7,6 +7,7 @@ import person from './person_add.svg'
 import outlet from './add_business.svg'
 import stock from './Stock.svg'
 import request from './Request.svg'
+import delivery_shedule from './delivery.svg'
 
 export const assets = {
     logo,
@@ -17,5 +18,6 @@ export const assets = {
     person,
     outlet,
     stock,
-    request
+    request,
+    delivery_shedule
 }

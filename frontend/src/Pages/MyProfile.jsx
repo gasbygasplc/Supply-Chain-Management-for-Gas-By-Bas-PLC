@@ -15,6 +15,8 @@ const Profile = () => {
     const [token, setToken] = useState(null);
     const [otp, setOtp] = useState("");
     const [verifying, setVerifying] = useState({ type: null, requested: false });
+    const [isSaving, setIsSaving] = useState(false);
+    const [isRequesting, setIsRequesting] = useState(false);
 
     useEffect(() => {
         const storedToken = localStorage.getItem("token");
@@ -50,6 +52,12 @@ const Profile = () => {
     }, [userId, token]);
 
     const handleUpdate = async () => {
+        if (!profile.name.trim() || !profile.phone.trim() || !/\S+@\S+\.\S+/.test(profile.email)) {
+            toast.error("Please fill out all fields with valid information.");
+            return;
+        }
+
+        setIsSaving(true);
         try {
             const response = await axios.put(
                 `${import.meta.env.VITE_BACKEND_URL}/api/auth/profile`,
@@ -64,10 +72,13 @@ const Profile = () => {
             }
         } catch (error) {
             toast.error("Failed to update profile.");
+        } finally {
+            setIsSaving(false);
         }
     };
 
     const requestVerification = async (type) => {
+        setIsRequesting(true);
         try {
             const endpoint = type === "phone" ? "send-phone-otp" : "send-email-verification";
             const response = await axios.post(
@@ -83,10 +94,18 @@ const Profile = () => {
             }
         } catch (error) {
             toast.error(`Failed to request ${type} verification.`);
+        } finally {
+            setIsRequesting(false);
         }
     };
 
     const handleOtpSubmit = async () => {
+        if (!otp.trim()) {
+            toast.error("Please enter the OTP.");
+            return;
+        }
+
+        setIsRequesting(true);
         try {
             const endpoint = verifying.type === "phone" ? "verify-phone" : "verify-email";
             const response = await axios.post(
@@ -104,6 +123,8 @@ const Profile = () => {
             }
         } catch (error) {
             toast.error("Failed to verify.");
+        } finally {
+            setIsRequesting(false);
         }
     };
 
@@ -128,91 +149,55 @@ const Profile = () => {
                     </div>
                     <div>
                         <label className="block text-gray-600 font-medium mb-1">Phone:</label>
-                        <div className="flex flex-col gap-2">
-                            <div className="flex items-center gap-4">
-                                <input
-                                    type="text"
-                                    value={profile.phone}
-                                    disabled={!editing}
-                                    onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
-                                    className={`w-full px-4 py-2 border ${
-                                        editing ? "border-blue-400" : "border-gray-300"
-                                    } rounded-md focus:outline-none ${
-                                        editing ? "focus:border-blue-600" : "cursor-not-allowed"
-                                    }`}
-                                />
-                                {profile.phoneVerified ? (
-                                    <span className="text-green-500 text-sm">Verified</span>
-                                ) : (
-                                    <button
-                                        onClick={() => requestVerification("phone")}
-                                        className="text-red-500 text-sm underline"
-                                    >
-                                        Verify
-                                    </button>
-                                )}
-                            </div>
-                            {verifying.type === "phone" && verifying.requested && (
-                                <div className="flex gap-2 mt-2">
-                                    <input
-                                        type="text"
-                                        placeholder="Enter OTP"
-                                        value={otp}
-                                        onChange={(e) => setOtp(e.target.value)}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-600"
-                                    />
-                                    <button
-                                        onClick={handleOtpSubmit}
-                                        className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
-                                    >
-                                        Submit OTP
-                                    </button>
-                                </div>
+                        <div className="flex items-center gap-4">
+                            <input
+                                type="text"
+                                value={profile.phone}
+                                disabled={!editing}
+                                onChange={(e) => setProfile({ ...profile, phone: e.target.value })}
+                                className={`w-full px-4 py-2 border ${
+                                    editing ? "border-blue-400" : "border-gray-300"
+                                } rounded-md focus:outline-none ${
+                                    editing ? "focus:border-blue-600" : "cursor-not-allowed"
+                                }`}
+                            />
+                            {profile.phoneVerified ? (
+                                <span className="text-green-500 text-sm">Verified</span>
+                            ) : (
+                                <button
+                                    onClick={() => requestVerification("phone")}
+                                    className={`text-red-500 text-sm underline ${isRequesting ? "opacity-50 pointer-events-none" : ""}`}
+                                    disabled={isRequesting}
+                                >
+                                    {isRequesting ? "Requesting..." : "Verify"}
+                                </button>
                             )}
                         </div>
                     </div>
                     <div>
                         <label className="block text-gray-600 font-medium mb-1">Email:</label>
-                        <div className="flex flex-col gap-2">
-                            <div className="flex items-center gap-4">
-                                <input
-                                    type="email"
-                                    value={profile.email}
-                                    disabled={!editing}
-                                    onChange={(e) => setProfile({ ...profile, email: e.target.value })}
-                                    className={`w-full px-4 py-2 border ${
-                                        editing ? "border-blue-400" : "border-gray-300"
-                                    } rounded-md focus:outline-none ${
-                                        editing ? "focus:border-blue-600" : "cursor-not-allowed"
-                                    }`}
-                                />
-                                {profile.emailVerified ? (
-                                    <span className="text-green-500 text-sm">Verified</span>
-                                ) : (
-                                    <button
-                                        onClick={() => requestVerification("email")}
-                                        className="text-red-500 text-sm underline"
-                                    >
-                                        Verify
-                                    </button>
-                                )}
-                            </div>
-                            {verifying.type === "email" && verifying.requested && (
-                                <div className="flex gap-2 mt-2">
-                                    <input
-                                        type="text"
-                                        placeholder="Enter OTP"
-                                        value={otp}
-                                        onChange={(e) => setOtp(e.target.value)}
-                                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-600"
-                                    />
-                                    <button
-                                        onClick={handleOtpSubmit}
-                                        className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
-                                    >
-                                        Submit OTP
-                                    </button>
-                                </div>
+                        <div className="flex items-center gap-4">
+                            <input
+                                type="email"
+                                value={profile.email}
+                                disabled={!editing}
+                                onChange={(e) => setProfile({ ...profile, email: e.target.value })}
+                                className={`w-full px-4 py-2 border ${
+                                    editing ? "border-blue-400" : "border-gray-300"
+                                } rounded-md focus:outline-none ${
+                                    editing ? "focus:border-blue-600" : "cursor-not-allowed"
+                                }`}
+                            />
+                            {profile.emailVerified ? (
+                                <span className="text-green-500 text-sm">Verified</span>
+                            ) : (
+                                <button
+                                    onClick={() => requestVerification("email")}
+                                    className={`text-red-500 text-sm underline ${isRequesting ? "opacity-50 pointer-events-none" : ""}`}
+                                    disabled={isRequesting}
+                                >
+                                    {isRequesting ? "Requesting..." : "Verify"}
+                                </button>
                             )}
                         </div>
                     </div>
@@ -220,16 +205,22 @@ const Profile = () => {
                 <div className="flex justify-between items-center mt-6">
                     <button
                         onClick={() => setEditing(!editing)}
-                        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+                        className={`px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition ${
+                            isSaving ? "opacity-50 pointer-events-none" : ""
+                        }`}
+                        disabled={isSaving}
                     >
                         {editing ? "Cancel" : "Edit"}
                     </button>
                     {editing && (
                         <button
                             onClick={handleUpdate}
-                            className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
+                            className={`px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition ${
+                                isSaving ? "opacity-50 pointer-events-none" : ""
+                            }`}
+                            disabled={isSaving}
                         >
-                            Save
+                            {isSaving ? "Saving..." : "Save"}
                         </button>
                     )}
                 </div>
