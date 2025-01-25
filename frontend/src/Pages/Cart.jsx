@@ -1,10 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
 import { GasContext } from "../Context/GasContext";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
     const { gasOrder, setGasOrder, checkoutCart } = useContext(GasContext);
     const [cartItems, setCartItems] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         setCartItems(gasOrder || []);
@@ -21,12 +24,28 @@ const Cart = () => {
         toast.info("Item removed from cart.");
     };
 
-    const handleCheckout = () => {
+    const handleCheckout = async () => {
         if (cartItems.length === 0) {
             toast.error("Your cart is empty!");
             return;
         }
-        checkoutCart();
+
+        setLoading(true);
+
+        try {
+            await checkoutCart();
+
+            toast.success("Checkout successful! You will receive notifications shortly.");
+
+            setTimeout(() => {
+                navigate("/my-gas-orders");
+                setLoading(false);
+            }, 2000);
+        } catch (error) {
+            console.error("Error during checkout:", error);
+            toast.error("Checkout failed. Please try again.");
+            setLoading(false);
+        }
     };
 
     if (cartItems.length === 0) {
@@ -36,7 +55,7 @@ const Cart = () => {
     return (
         <section className="max-w-full p-4">
             <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
-            <div className="overflow-x-scroll max-w-full">
+            <div className="overflow-x-auto max-w-full">
                 <table className="min-w-full table-auto text-sm text-gray-700">
                     <thead className="bg-gray-100">
                         <tr>
@@ -76,12 +95,19 @@ const Cart = () => {
                 </table>
             </div>
             <div className="mt-4 justify-end flex">
-                <button
-                    className="bg-primary text-white px-4 py-2 rounded hover:bg-blue-600"
-                    onClick={handleCheckout}
-                >
-                    Checkout
-                </button>
+                {loading ? (
+                    <div className="flex items-center gap-2">
+                        <div className="w-5 h-5 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
+                        <span className="text-blue-500">Processing...</span>
+                    </div>
+                ) : (
+                    <button
+                        className="bg-primary text-white px-4 py-2 rounded hover:bg-blue-600"
+                        onClick={handleCheckout}
+                    >
+                        Checkout
+                    </button>
+                )}
             </div>
         </section>
     );

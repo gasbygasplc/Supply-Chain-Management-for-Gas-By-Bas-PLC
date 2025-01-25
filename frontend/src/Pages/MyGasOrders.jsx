@@ -7,6 +7,13 @@ const MyGasOrders = () => {
     const [loading, setLoading] = useState(true);
     const [userId, setUserId] = useState(null);
     const [token, setToken] = useState(null);
+    const [collapsedSections, setCollapsedSections] = useState({
+        pending: false,
+        approved: false,
+        collected: false,
+        cancelled: false,
+        expired: false,
+    });
 
     useEffect(() => {
         const storedToken = localStorage.getItem("token");
@@ -77,6 +84,17 @@ const MyGasOrders = () => {
         return new Date() > new Date(expirationDate);
     };
 
+    const toggleSection = (section) => {
+        setCollapsedSections((prev) => ({
+            ...prev,
+            [section]: !prev[section],
+        }));
+    };
+
+    const categorizeOrders = (filterFunc) => {
+        return orders.filter(filterFunc);
+    };
+
     if (loading) {
         return <p className="text-center text-gray-500">Loading orders...</p>;
     }
@@ -87,66 +105,92 @@ const MyGasOrders = () => {
             {orders.length === 0 ? (
                 <p className="text-center text-gray-500">No gas orders found.</p>
             ) : (
-                <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-                    {orders.map((order) => (
-                        <div
-                            key={order._id}
-                            className="border rounded-lg p-4 shadow-md bg-white"
-                        >
-                            <h2 className="text-xl font-semibold mb-2">
-                                Request ID: {order.requestId}
-                            </h2>
-                            <p>
-                                <strong>Status:</strong> {order.status}{" "}
-                                {isExpired(order.expiration) && order.status === "Pending" && "(Expired)"}
-                            </p>
-                            <p>
-                                <strong>Token Number:</strong> {order.tokenNumber}
-                            </p>
-                            <p>
-                                <strong>Pickup Outlet:</strong> {order.outletId?.outletName || "Unknown"}
-                            </p>
-                            <p>
-                                <strong>Address:</strong> {order.outletId?.address || "Unknown"}
-                            </p>
-                            <p>
-                                <strong>Phone Number:</strong> {order.outletId?.phoneNumber || "Unknown"}
-                            </p>
-                            <p>
-                                <strong>Gas Type:</strong> {order.gasType}
-                            </p>
-                            <p>
-                                <strong>Quantity:</strong> {order.quantity}
-                            </p>
-                            <p>
-                                <strong>Estimated Pickup Date:</strong>{" "}
-                                {order.expectedPickupDate
-                                    ? new Date(order.expectedPickupDate).toLocaleDateString()
-                                    : "Not specified"}
-                            </p>
-                            <p>
-                                <strong>Expiration:</strong>{" "}
-                                {new Date(order.expiration).toLocaleDateString()}
-                            </p>
-                            <p>
-                                <strong>QR Code:</strong>
-                            </p>
-                            <img
-                                src={order.qrCodeUrl}
-                                alt="QR Code"
-                                className="mt-2 w-32 h-32"
-                            />
-                            {order.status === "Pending" && !isExpired(order.expiration) && (
-                                <button
-                                    onClick={() => handleCancelOrder(order._id)}
-                                    className="mt-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
-                                >
-                                    Cancel Order
-                                </button>
+                ["Pending", "Approved", "Collected", "Cancelled", "Expired"].map((status) => {
+                    const filterFunc =
+                        status === "Expired"
+                            ? (order) => isExpired(order.expiration) && order.status === "Pending"
+                            : (order) => order.status === status;
+                    const ordersByStatus = categorizeOrders(filterFunc);
+
+                    return (
+                        <div key={status} className="mb-6">
+                            <div
+                                className="cursor-pointer bg-gray-200 p-4 rounded-md"
+                                onClick={() => toggleSection(status.toLowerCase())}
+                            >
+                                <h2 className="text-lg font-semibold">
+                                    {status} Orders ({ordersByStatus.length}){" "}
+                                    <span>
+                                        {collapsedSections[status.toLowerCase()] ? "▼" : "▲"}
+                                    </span>
+                                </h2>
+                            </div>
+                            {!collapsedSections[status.toLowerCase()] && (
+                                <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-4">
+                                    {ordersByStatus.map((order) => (
+                                        <div
+                                            key={order._id}
+                                            className="border rounded-lg p-4 shadow-md bg-white"
+                                        >
+                                            <h2 className="text-xl font-semibold mb-2">
+                                                Request ID: {order.requestId}
+                                            </h2>
+                                            <p>
+                                                <strong>Status:</strong> {order.status}
+                                            </p>
+                                            <p>
+                                                <strong>Token Number:</strong> {order.tokenNumber}
+                                            </p>
+                                            <p>
+                                                <strong>Pickup Outlet:</strong>{" "}
+                                                {order.outletId?.outletName || "Unknown"}
+                                            </p>
+                                            <p>
+                                                <strong>Address:</strong>{" "}
+                                                {order.outletId?.address || "Unknown"}
+                                            </p>
+                                            <p>
+                                                <strong>Phone Number:</strong>{" "}
+                                                {order.outletId?.phoneNumber || "Unknown"}
+                                            </p>
+                                            <p>
+                                                <strong>Gas Type:</strong> {order.gasType}
+                                            </p>
+                                            <p>
+                                                <strong>Quantity:</strong> {order.quantity}
+                                            </p>
+                                            <p>
+                                                <strong>Estimated Pickup Date:</strong>{" "}
+                                                {order.expectedPickupDate
+                                                    ? new Date(order.expectedPickupDate).toLocaleDateString()
+                                                    : "Not specified"}
+                                            </p>
+                                            <p>
+                                                <strong>Expiration:</strong>{" "}
+                                                {new Date(order.expiration).toLocaleDateString()}
+                                            </p>
+                                            {status !== "Cancelled" && status !== "Expired" && (
+                                                <img
+                                                    src={order.qrCodeUrl}
+                                                    alt="QR Code"
+                                                    className="mt-2 w-32 h-32"
+                                                />
+                                            )}
+                                            {status === "Pending" && !isExpired(order.expiration) && (
+                                                <button
+                                                    onClick={() => handleCancelOrder(order._id)}
+                                                    className="mt-2 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition"
+                                                >
+                                                    Cancel Order
+                                                </button>
+                                            )}
+                                        </div>
+                                    ))}
+                                </div>
                             )}
                         </div>
-                    ))}
-                </div>
+                    );
+                })
             )}
         </div>
     );
