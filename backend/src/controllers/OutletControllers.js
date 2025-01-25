@@ -155,9 +155,12 @@ const gasRequest = async(req , res) => {
     try 
     {
 
-        const {outletId} = req.body;
+        const { outletId } = req.body;
 
-        const gasRequest = await GasRequest.find({locationId: outletId});
+        console.log('Received outletId in gasRequest:', outletId);
+
+
+        const gasRequest = await GasRequest.find({ outletId: outletId });
 
         res.json({success:true , gasRequest});
         

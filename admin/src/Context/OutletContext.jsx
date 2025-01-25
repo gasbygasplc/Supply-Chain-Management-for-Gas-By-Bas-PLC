@@ -49,40 +49,37 @@ const OutletContextProvider = (props) => {
     //================================================= get Gas request ================================================
 
     // Fetch Gas Requests
-    const getGasRequest = async() => {
-
+    const getGasRequest = async () => {
 
         try 
         {
 
-            const {data} = await axios.get('http://localhost:4000/api/outlet/gas-request' , {headers:{Otoken}});
+            console.log('Sending Otoken in Authorization Header:', Otoken);
 
-            if(data.success)
+            const { data } = await axios.get('http://localhost:4000/api/outlet/gas-request', { headers: { Authorization: `Bearer ${Otoken}` }, });
+    
+            if (data.success) 
             {
 
                 setGasRequest(data.gasRequest.reverse());
 
-                console.log(data.gasRequest.reverse());
-
-            }
-            else
+            } 
+            else 
             {
 
                 toast.error(data.message);
 
             }
 
-        
         } catch (error) 
         {
-
-            console.log(error);
+            console.log('Error in getGasRequest:', error.message);
 
             toast.error(error.message);
-        
-        }
 
-    }
+        }
+    };
+    
 
     
 
