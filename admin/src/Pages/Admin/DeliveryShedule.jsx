@@ -2,7 +2,17 @@ import React from 'react'
 
 const DeliveryShedule = () => {
   return (
-    <div>DeliveryShedule</div>
+    
+    <section className='w-full'>
+
+        <form className='w-[50%] bg-white '>
+
+            
+            
+        </form>
+
+    </section>
+
   )
 }
 
