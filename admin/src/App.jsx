@@ -7,7 +7,6 @@ import Sidebar from './Components/Sidebar';
 import { Route, Routes } from 'react-router-dom';
 import AddOutlet from './Pages/Admin/AddOutlet';
 import AddOutletManager from './Pages/Admin/AddOutletManager';
-import OutletStockRequest from './Pages/Admin/OutletStockRequest';
 import AddMainStock from './Pages/Admin/AddMainStock';
 import { OutletContext } from './Context/OutletContext';
 import GasRequest from './Pages/Outlet/GasRequest';
@@ -40,11 +39,6 @@ const App = () => {
           <Route path="/add-outlet" element={<AddOutlet />} />
 
           <Route path="/add-outlet-manager" element={<AddOutletManager />} />
-
-          <Route
-            path="/outlet-stock-request"
-            element={<OutletStockRequest />}
-          />
 
           <Route path="/manage-stock" element={<AddMainStock />} />
 
