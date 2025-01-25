@@ -50,7 +50,7 @@ const OutletContextProvider = (props) => {
 
     // Fetch Gas Requests
     const getGasRequest = async () => {
-        
+
         try 
         {
 
@@ -62,8 +62,6 @@ const OutletContextProvider = (props) => {
             {
 
                 setGasRequest(data.gasRequest.reverse());
-
-                console.log('Gas Requests:', data.gasRequest.reverse());
 
             } 
             else 

@@ -25,11 +25,6 @@ const authOutlet = async (req, res, next) => {
 
         req.body.outletId = tokenDecode.id;
 
-        
-        console.log('Authorization Header:', req.headers.authorization);
-        
-        console.log('Extracted Otoken:', Otoken);
-
         next();
 
     } catch (error) 
