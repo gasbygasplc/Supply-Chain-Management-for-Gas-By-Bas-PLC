@@ -5,6 +5,7 @@ import { sendSms } from '../utils/smsService.js';
 import { generateQrCode } from '../utils/qrCodeService.js';
 import { sendEmail } from '../utils/emailService.js';
 import Outlet from '../models/OutletModule.js';
+import deliveryShedule from '../models/DeliverySheduleModel.js';
 
 export const submitGasRequest = async (req, res) => {
     const orders = req.body;
@@ -27,6 +28,56 @@ export const submitGasRequest = async (req, res) => {
 
                 const outlet = await Outlet.findById(outletId);
                 if (!outlet) throw new Error('Outlet not found');
+
+                // if(outlet.currentStock < quantity)
+                // {
+
+                //     const nextDelivery = await deliveryShedule.findOne({outletId , deliveryDate : {$gte: new Date()} , status : 'Scheduled' }).sort({deliveryDate: 1});
+
+                //     if(!nextDelivery)
+                //     {
+
+                //         return {status:'Rejected', message: `No stock available and no upcoming deliveries for outlet: ${outlet.outletName}`,}
+
+                //     };
+
+                //     const pendingRequest = new gasRequest({
+
+                //         userId,
+                //         requestId: `REQ-${Date.now()}`,
+                //         tokenNumber : generateToken(),
+                //         outletId,
+                //         quantity,
+                //         expectedPickupDate: nextDelivery.deliveryDate,
+                //         status:'Pending'
+
+                //     });
+
+                //     await pendingRequest.save();
+
+                //     const smsMessage = `
+                //     gas Request Update
+                //     - Your request is pending due to insufficient stock.
+                //     - Expected Delivery Date: ${nextDelivery.deliveryDate.toDateString()}`;
+
+                //     await sendSms(user.phone , smsMessage.trim(), 'Gas By Gas');
+
+                //     return{
+
+                //         status: 'Pending',
+
+                //         message : 'Request saved as pending due to stock unavailability.',
+
+                //         request: pendingRequest,
+                //     };
+
+                // };
+
+                // //=============================== Deduct STock From Outlet =============================================
+
+                // outlet.currentStock -= quantity;
+
+                // await outlet.save()
 
                 const { email, phone } = user;
                 const normalizedPhone = phone.startsWith('94') ? phone : `94${phone.replace(/^0/, '')}`;
