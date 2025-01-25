@@ -54,8 +54,6 @@ const OutletContextProvider = (props) => {
         try 
         {
 
-            console.log('Sending Otoken in Authorization Header:', Otoken);
-
             const { data } = await axios.get('http://localhost:4000/api/outlet/gas-request', { headers: { Authorization: `Bearer ${Otoken}` }, });
     
             if (data.success) 
