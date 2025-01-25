@@ -36,7 +36,7 @@ const App = () => {
 
         <Routes>
 
-          <Route path="/" element={<DeliveryShedule/>} />
+          {aToken && <Route path="/" element={<DeliveryShedule/>} />}
 
           {/* ++++++++++++++++++++++++++++++++++++++++++ Admin Route ++++++++++++++++++++++++++++++++++++++++++++ */}
 
