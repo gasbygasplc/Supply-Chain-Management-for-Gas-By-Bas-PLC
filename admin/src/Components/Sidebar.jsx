@@ -20,12 +20,13 @@ const Sidebar = () => {
         aToken && 
 
         <ul className='text-[#515151] mt-5'>
-  
-          <NavLink to={'/admin-dashboard'} className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#f2f3ff] border-r-4 border-primary-600' : ''}` }>
 
-            <img src={assets.dashboard} alt="" />
+          
+          <NavLink to={'/delivery-shedule'} className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#f2f3ff] border-r-4 border-primary-600' : ''}`}>
 
-            <p className='hidden md:block'>Dashboard</p>
+            <img src={assets.delivery_shedule} alt="" />
+
+            <p className='hidden md:block'>Delivery Shedule</p>
 
           </NavLink>
 
@@ -58,14 +59,6 @@ const Sidebar = () => {
             <img src={assets.request} alt="" />
 
             <p className='hidden md:block'>Outlet Request</p>
-
-          </NavLink>
-
-          <NavLink to={'/delivery-shedule'} className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#f2f3ff] border-r-4 border-primary-600' : ''}`}>
-
-            <img src={assets.delivery_shedule} alt="" />
-
-            <p className='hidden md:block'>Delivery Shedule</p>
 
           </NavLink>
           
