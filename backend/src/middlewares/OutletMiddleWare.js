@@ -7,11 +7,12 @@ const authOutlet = async (req, res, next) => {
 
         const authHeader = req.headers.authorization;
 
-        const Otoken = authHeader && authHeader.startsWith('Bearer ')
+        const Otoken = authHeader && authHeader.startsWith('Bearer ') 
 
-            ? authHeader.split(' ')[1] 
+        ? authHeader.split(' ')[1] 
 
-            : req.headers.otoken;
+        : req.headers.otoken; 
+    
 
         if (!Otoken) 
         {
@@ -23,6 +24,11 @@ const authOutlet = async (req, res, next) => {
         const tokenDecode = jwt.verify(Otoken, process.env.JWT_SECRET);
 
         req.body.outletId = tokenDecode.id;
+
+        
+        console.log('Authorization Header:', req.headers.authorization);
+        
+        console.log('Extracted Otoken:', Otoken);
 
         next();
 
