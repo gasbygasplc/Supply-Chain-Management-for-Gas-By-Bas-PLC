@@ -173,6 +173,11 @@ const gasRequest = async(req , res) => {
 
 }
 
-//=============================================== check Delivery ==========================================================
+//=============================================== Send Gas Request ==========================================================
+
+const sendGasRequestForDeliveryShedule = async(req , res) => {
+
+    
+}
 
 export {outletLogin , getOutletLocation , getCity , getOutletName , gasRequest};
