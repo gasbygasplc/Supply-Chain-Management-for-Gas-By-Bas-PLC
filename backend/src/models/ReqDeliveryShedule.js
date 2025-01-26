@@ -8,3 +8,7 @@ const reqDeliveryShedule = new mongoose.Schema({
     current_Quantity_Of_Outlet: {type:Number , required:true}
 
 })
+
+const reqDeliveryModel = mongoose.models.reqDeliveryShedule || mongoose.model('reqDeliveryShedule' , reqDeliveryShedule);
+
+export default reqDeliveryModel;
