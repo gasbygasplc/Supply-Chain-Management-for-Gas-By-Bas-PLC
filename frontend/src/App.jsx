@@ -9,7 +9,7 @@ import ResetPassword from './Pages/ResetPassword';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Cart from './Pages/Cart';
-import DeliveryShedule from './Pages/DeliveryShedule';
+import DeliverySchedule from './Pages/DeliverySchedule';
 import QRCodePage from './Pages/QRCodePage';
 import MyProfile from './Pages/MyProfile';
 import MyGasOrders from './Pages/MyGasOrders';
@@ -37,7 +37,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/gas-cart" element={<Cart />} />
-          <Route path="/delivery-shedule" element={<DeliveryShedule />} />
+          <Route path="/delivery-schedule" element={<DeliverySchedule />} />
           <Route path="/qrcode/:token" element={<QRCodePage />} />
           <Route path="/my-profile" element={<MyProfile />} />
           <Route path="/my-gas-orders" element={<MyGasOrders />} />

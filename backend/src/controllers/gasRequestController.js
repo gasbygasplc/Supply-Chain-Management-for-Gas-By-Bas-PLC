@@ -5,7 +5,7 @@ import { sendSms } from '../utils/smsService.js';
 import { generateQrCode } from '../utils/qrCodeService.js';
 import { sendEmail } from '../utils/emailService.js';
 import Outlet from '../models/OutletModule.js';
-import deliveryShedule from '../models/DeliverySheduleModel.js';
+import deliverySchedule from '../models/DeliveryScheduleModel.js';
 
 export const submitGasRequest = async (req, res) => {
     const orders = req.body;
@@ -32,7 +32,7 @@ export const submitGasRequest = async (req, res) => {
                 // if(outlet.currentStock < quantity)
                 // {
 
-                //     const nextDelivery = await deliveryShedule.findOne({outletId , deliveryDate : {$gte: new Date()} , status : 'Scheduled' }).sort({deliveryDate: 1});
+                //     const nextDelivery = await deliverySchedule.findOne({outletId , deliveryDate : {$gte: new Date()} , status : 'Scheduled' }).sort({deliveryDate: 1});
 
                 //     if(!nextDelivery)
                 //     {

@@ -20,7 +20,7 @@ const Sidebar = () => {
         <ul className='text-[#515151] mt-5'>
 
           
-          <NavLink to={'/delivery-shedule'} className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#f2f3ff] border-r-4 border-primary-600' : ''}`}>
+          <NavLink to={'/delivery-schedule'} className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#f2f3ff] border-r-4 border-primary-600' : ''}`}>
 
             <img src={assets.delivery_shedule} alt="" />
 
