@@ -12,7 +12,7 @@ import { OutletContext } from './Context/OutletContext';
 import GasRequest from './Pages/Outlet/GasRequest';
 import StockRequest from './Pages/Outlet/StockRequest';
 import Delivery from './Pages/Outlet/Delivery';
-import DeliveryShedule from './Pages/Admin/DeliveryShedule';
+import DeliverySchedule from './Pages/Admin/DeliverySchedule';
 
 const App = () => {
   const { aToken } = useContext(AdminContext);
@@ -30,11 +30,11 @@ const App = () => {
 
         <Routes>
 
-          {aToken && <Route path="/" element={<DeliveryShedule/>} />}
+          {aToken && <Route path="/" element={<DeliverySchedule/>} />}
 
           {/* ++++++++++++++++++++++++++++++++++++++++++ Admin Route ++++++++++++++++++++++++++++++++++++++++++++ */}
 
-          <Route path='/delivery-shedule' element={<DeliveryShedule/>}/>
+          <Route path='/delivery-schedule' element={<DeliverySchedule/>}/>
 
           <Route path="/add-outlet" element={<AddOutlet />} />
 
