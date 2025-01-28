@@ -13,6 +13,7 @@ import GasRequest from './Pages/Outlet/GasRequest';
 import StockRequest from './Pages/Outlet/StockRequest';
 import Delivery from './Pages/Outlet/Delivery';
 import DeliverySchedule from './Pages/Admin/DeliverySchedule';
+import OutletDashboard from './Pages/Outlet/OutletDashboard';
 
 const App = () => {
   const { aToken } = useContext(AdminContext);
@@ -43,6 +44,8 @@ const App = () => {
           <Route path="/manage-stock" element={<AddMainStock />} />
 
           {/* ++++++++++++++++++++++++++++++++++++++++++ Outlet Route ++++++++++++++++++++++++++++++++++++++++++++ */}
+
+          {Otoken && <Route path='/outlet-dashboard' element = {<OutletDashboard/>}/>}
 
           <Route path="/gas-request" element={<GasRequest />} />
 
