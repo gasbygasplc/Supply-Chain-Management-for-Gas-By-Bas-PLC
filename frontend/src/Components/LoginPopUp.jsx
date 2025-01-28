@@ -61,7 +61,7 @@ const LoginPopUp = ({ setShowSignIn }) => {
     <div className="absolute inset-0 z-10 bg-black bg-opacity-70 grid place-items-center">
       <form
         onSubmit={handleSubmit}
-        className="bg-white flex flex-col gap-6 p-6 rounded-lg w-[95%] sm:w-[330px] md:w-[24vw] fadeIn"
+        className="bg-white flex flex-col gap-4 p-6 rounded-lg w-[95%] sm:w-[330px] md:w-[24vw] fadeIn"
       >
         <div className="flex justify-between items-center text-black">
           <h2 className="text-lg font-semibold">{currentState}</h2>
@@ -132,6 +132,13 @@ const LoginPopUp = ({ setShowSignIn }) => {
             value={formData.password}
             onChange={handleChange}
           />
+
+          {
+            currentState === 'Sign In' ? (<p onClick={() => {
+              setShowSignIn(false);
+              navigate('/reset-password-request');
+            }} className='text-[13px] text-gray-700 cursor-pointer text-right'>Forgot <span className='text-primary'>Password?</span></p>) : ("")
+          }
         </div>
 
         <button
@@ -154,7 +161,7 @@ const LoginPopUp = ({ setShowSignIn }) => {
 
         {currentState === 'Sign In' ? (
           <>
-            <p className="text-sm">
+            {/* <p className="text-sm">
               Forgot your password?{' '}
               <span
                 onClick={() => {
@@ -165,7 +172,7 @@ const LoginPopUp = ({ setShowSignIn }) => {
               >
                 Reset Password
               </span>
-            </p>
+            </p> */}
             <p className="text-sm">
               Create a new account?{' '}
               <span
