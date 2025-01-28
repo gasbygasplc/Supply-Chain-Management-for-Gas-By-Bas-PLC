@@ -49,7 +49,6 @@
 - Harishanth Kandeepan  
 - Srikanthan Mathumitha  
 - Diyath Sahan Rajapakshe  
-- Rajanayagam Renuga
 
 ---
 
