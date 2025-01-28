@@ -63,6 +63,51 @@ const StockRequest = () => {
 
         <div className='overflow-x-auto max-w-full'>
 
+          <table className='min-w-full table-auto text-sm text-gray-700'>
+
+            <thead className='bg-gray-100'>
+
+              <tr>
+                <th className="px-4 py-2 font-medium text-left">Date of Request</th>
+                <th className="px-4 py-2 font-medium text-left">Type of Cylinder</th>
+                <th className="px-4 py-2 font-medium text-left">QTY per Type</th>
+                <th className="px-4 py-2 font-medium text-left">Expected Date</th>
+                <th className="px-4 py-2 font-medium text-left">Status</th>
+                <th className="px-4 py-2 font-medium text-left">Delivery Scheduled</th>
+                <th className="px-4 py-2 font-medium text-left">Delivery Date</th>
+              </tr>
+
+            </thead>
+
+            <tbody>
+
+              <tr className='border-t'>
+
+                <td className="px-4 py-2">1/28/2025</td>
+                <td className="px-4 py-2">Small</td>
+                <td className="px-4 py-2">100</td>
+                <td className="px-4 py-2">02/02/2025</td>
+                <td className="px-4 py-2">Pending</td>
+                <td className="px-4 py-2">Yes</td>
+                <td className="px-4 py-2">30/01/2024</td>
+
+              </tr>
+
+              <tr className='border-t'>
+
+                <td className="px-4 py-2">1/28/2025</td>
+                <td className="px-4 py-2">Medium</td>
+                <td className="px-4 py-2">200</td>
+                <td className="px-4 py-2">02/04/2025</td>
+                <td className="px-4 py-2">Approved</td>
+                <td className="px-4 py-2">Yes</td>
+                <td className="px-4 py-2">30/01/2024</td>
+                
+              </tr>
+
+            </tbody>
+
+          </table>
 
         </div>
 
