@@ -80,7 +80,7 @@ const Sidebar = () => {
               }`
             }
           >
-            <img src={assets.outlet} alt="" />
+            <img src={assets.dashboard} alt="" />
 
             <p className="hidden md:block">Dashboard</p>
           </NavLink>
