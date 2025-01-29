@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import outletModel from '../models/OutletModule.js';
 import GasRequest from '../models/GasRequest.js';
 import outletManagermodel from '../models/outletManager.js';
+import User from '../models/User.js';
 import gasDeliveryRequest from '../models/ReqDeliveryShedule.js';
 
 // const outletLogin = async(req , res) => {
@@ -199,29 +200,34 @@ const getOutletName = async(req , res) => {
 //================================================ Get Gas Request ====================================================
 
 
-const gasRequest = async(req , res) => {
-
-
-    try 
-    {
-
+const gasRequest = async (req, res) => {
+    try {
         const { outletId } = req.body;
 
-        const gasRequest = await GasRequest.find({ outletId: outletId });
+        if (!outletId) {
+            return res.status(400).json({ success: false, message: "Outlet ID is required." });
+        }
 
-        res.json({success:true , gasRequest});
-        
-    } 
-    catch (error) 
-    {
+        const gasRequests = await GasRequest.find({ outletId });
 
-        console.log(error);
+        const requestsWithUserInfo = await Promise.all(
+            gasRequests.map(async (request) => {
+                const user = await User.findById(request.userId).select('name nic email phone');
 
-        res.json({success: false , message: error.message});
-        
+                return {
+                    ...request.toObject(),
+                    user: user || {},
+                };
+            })
+        );
+
+        res.json({ success: true, gasRequests: requestsWithUserInfo });
+
+    } catch (error) {
+        console.error("Error fetching gas requests:", error);
+        res.status(500).json({ success: false, message: "Error fetching gas requests." });
     }
-
-}
+};
 
 //=============================================== Send Gas Request ==========================================================
 
