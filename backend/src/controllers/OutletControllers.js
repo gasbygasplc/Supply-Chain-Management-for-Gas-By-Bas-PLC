@@ -166,36 +166,27 @@ const getCity = async(req , res) => {
 
 //============================================== Get Outlet Name ====================================================
 
-const getOutletName = async(req , res) => {
+const getOutletName = async (req, res) => {
+    try {
+        const { city } = req.params;
 
-
-    try 
-    {
-
-        const {city} = req.params;
-
-        const outletName = await outletModel.find({city} , 'outletName _id');
-
-        if(!outletName.length)
-        {
-
-            return res.status(400).json({success:false , message:"No Outlet Found"});
-
+        let filter = {};
+        if (city) {
+            filter.city = city;
         }
-        
-        res.status(200).json({success:true , message:"Outlet Name retrieved successfully" , outletName});
-        
-    } 
-    catch (error) 
-    {
 
+        const outlets = await outletModel.find(filter, 'outletName _id');
+
+        if (!outlets.length) {
+            return res.status(404).json({ success: false, message: "No Outlet Found" });
+        }
+
+        res.status(200).json({ success: true, message: "Outlet Name retrieved successfully", outletName: outlets });
+    } catch (error) {
         console.error(error);
-
         res.status(500).json({ success: false, message: "Server error." });
-        
     }
-
-}
+};
 
 //================================================ Get Gas Request ====================================================
 

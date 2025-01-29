@@ -18,4 +18,6 @@ outletRouter.post('/request-delivery' , authOutlet , sendGasRequestForDeliverySh
 
 outletRouter.get('/fetch-gas-request' , authOutlet , fetchDeliveryShedule);
 
+outletRouter.get('/outletName', getOutletName);
+
 export default outletRouter;
