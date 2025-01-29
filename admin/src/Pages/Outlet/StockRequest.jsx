@@ -5,11 +5,11 @@ import { OutletContext } from '../../Context/OutletContext';
 
 const StockRequest = () => {
 
-  const [smallQty , setSmallQty] = useState(0);
+  const [smallQty , setSmallQty] = useState();
   
-  const [mediumQty , setMediumQty] = useState(0);
+  const [mediumQty , setMediumQty] = useState();
 
-  const [largeQty , setLargeQty] = useState(0);
+  const [largeQty , setLargeQty] = useState();
 
   const [expectedDate, setExpectedDate] = useState('');
 
@@ -18,15 +18,7 @@ const StockRequest = () => {
   const handleSubmit = async(event) => {
     event.preventDefault();
 
-    if(!smallQty || !mediumQty || !largeQty)
-    {
-
-      toast.warn("Please enter the Data");
-      return;
-
-    }
-
-    if (smallGasQuantity <= 0 && mediumGasQuantity <= 0 && largeGasQuantity <= 0) {
+    if (smallQty <= 0 && mediumQty <= 0 && largeQty <= 0) {
       toast.warn('Please enter at least one gas quantity.');
       return;
     }
@@ -36,14 +28,23 @@ const StockRequest = () => {
       smallQty,
       mediumQty,
       largeQty,
-      expectedDate
+      expectedDeliveryDate: new Date(expectedDate).toISOString(),
     }
 
     try {
 
       const response = await axios.post('http://localhost:4000/api/outlet/request-delivery' , payload , {headers:{Otoken}});
+
+      if (response.data.success) {
+        toast.success('Delivery request submitted successfully!');
+      }
+
+      
       
     } catch (error) {
+
+      console.error('Error submitting delivery request:', error);
+      alert('Failed to submit request. Please try again.');
       
     }
 
@@ -53,7 +54,7 @@ const StockRequest = () => {
 
     <div className='w-full flex flex-col'>
 
-      <div className='w-full flex flex-col md:w-[60%] text-gray-700 text-base mt-6 rounded-md py-6 px-4  md:px-6 mx-4 md:mx-[2%] bg-white border'>
+      <form onSubmit={handleSubmit} className='w-full flex flex-col md:w-[60%] text-gray-700 text-base mt-6 rounded-md py-6 px-4  md:px-6 mx-4 md:mx-[2%] bg-white border'>
 
         <h1 className='font-semibold text-2xl md:text-2xl mb-4'>Delivery Shedule Stock Request</h1>
 
@@ -65,7 +66,7 @@ const StockRequest = () => {
 
               <label className='block' htmlFor="smallGas">Small Gas</label>
 
-              <input className='w-full p-2 border border-gray-300 rounded-md focus:outline-1 focus:outline-primary-700' type="number" placeholder='Small Gas Quantity'/>
+              <input onChange={(e) => setSmallQty(Number(e.target.value))} value={smallQty} className='w-full p-2 border border-gray-300 rounded-md focus:outline-1 focus:outline-primary-700' type="number" placeholder='Small Gas Quantity'/>
 
             </div>
 
@@ -73,7 +74,7 @@ const StockRequest = () => {
 
               <label htmlFor="smallGas">Medium Gas</label>
 
-              <input className='w-full p-2 border border-gray-300 rounded-md focus:outline-1 focus:outline-primary-700' type="number" placeholder='Medium Gas Quantity'/>
+              <input onChange={(e) => setMediumQty(Number(e.target.value))} value={mediumQty} className='w-full p-2 border border-gray-300 rounded-md focus:outline-1 focus:outline-primary-700' type="number" placeholder='Medium Gas Quantity'/>
 
             </div>
 
@@ -81,7 +82,7 @@ const StockRequest = () => {
 
               <label htmlFor="smallGas">Large Gas</label>
 
-              <input className='w-full p-2 border border-gray-300 rounded-md focus:outline-1 focus:outline-primary-700' type="number" placeholder='Large Gas Quantity'/>
+              <input onChange={(e) => setLargeQty(Number(e.target.value))} value={largeQty} className='w-full p-2 border border-gray-300 rounded-md focus:outline-1 focus:outline-primary-700' type="number" placeholder='Large Gas Quantity'/>
 
             </div>
 
@@ -89,13 +90,13 @@ const StockRequest = () => {
 
               <label htmlFor="smallGas">Expected Date</label>
 
-              <input className='w-full cursor-pointer p-2 border border-gray-300 rounded-md focus:outline-1 focus:outline-primary-700' type="date"/>
+              <input onChange={(e) => setExpectedDate(e.target.value)} value={expectedDate} className='w-full cursor-pointer p-2 border border-gray-300 rounded-md focus:outline-1 focus:outline-primary-700' type="date"/>
 
             </div>
 
             <div className='w-full flex flex-col md:col-span-6 gap-2'>
 
-              <button className='bg-[#2563EB] py-[10px] text-white text-base rounded-md'>Request Delivery Shedule</button>
+              <button type='submit' className='bg-[#2563EB] py-[10px] text-white text-base rounded-md'>Request Delivery Shedule</button>
 
             </div>
 
@@ -103,7 +104,7 @@ const StockRequest = () => {
 
         </div>
 
-      </div>
+      </form>
 
       <div className=' text-gray-700 text-base mt-6 rounded-md py-6 px-4  md:px-6 mx-4 md:mx-[2%] bg-white border'>
 
