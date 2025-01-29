@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import {toast} from 'react-toastify'
 import axios from 'axios'
 import { OutletContext } from '../../Context/OutletContext';
@@ -13,7 +13,15 @@ const StockRequest = () => {
 
   const [expectedDate, setExpectedDate] = useState('');
 
-  const {Otoken} = useContext(OutletContext);
+  const {Otoken , gasSheduleReq , fetchGasReq} = useContext(OutletContext);
+
+  useEffect(() => {
+
+    if(Otoken)
+    {
+        fetchGasReq();
+    }
+} , [Otoken])
 
   const handleSubmit = async(event) => {
     event.preventDefault();
@@ -118,41 +126,42 @@ const StockRequest = () => {
 
               <tr>
                 <th className="px-4 py-2 font-medium text-left">Date of Request</th>
-                <th className="px-4 py-2 font-medium text-left">Type of Cylinder</th>
-                <th className="px-4 py-2 font-medium text-left">QTY per Type</th>
+                <th className="px-4 py-2 font-medium text-left">Type & QTY</th>
                 <th className="px-4 py-2 font-medium text-left">Expected Date</th>
                 <th className="px-4 py-2 font-medium text-left">Status</th>
                 <th className="px-4 py-2 font-medium text-left">Delivery Scheduled</th>
-                <th className="px-4 py-2 font-medium text-left">Delivery Date</th>
               </tr>
 
             </thead>
 
             <tbody>
 
-              <tr className='border-t'>
+              {
+                gasSheduleReq.map((req , index) => (
 
-                <td className="px-4 py-2">1/28/2025</td>
-                <td className="px-4 py-2">Small</td>
-                <td className="px-4 py-2">100</td>
-                <td className="px-4 py-2">02/02/2025</td>
-                <td className="px-4 py-2">Pending</td>
-                <td className="px-4 py-2">Yes</td>
-                <td className="px-4 py-2">30/01/2024</td>
+                  <tr key={index} className='border-t'>
 
-              </tr>
+                    <td className="px-4 py-2">{new Date(req.createdAt).toLocaleDateString()}</td>
+                    <td className="px-4 py-2"> 
+                      Small : {req.gasQuantity.Small} <br />
+                      Medium : {req.gasQuantity.Medium} <br />
+                      Large : {req.gasQuantity.Large}
+                    </td>
+                    <td className="px-4 py-2">{new Date(req.expectedDeliveryDate).toLocaleDateString()}</td>
+                    <td className="px-4 py-2"><span className={`text-xs font-medium me-2 px-[13px] py-[5px] rounded-full ${
+                      req.status === "Pending" ? "bg-yellow-100 text-yellow-800" :
+                      req.status === "Approved" ? "bg-green-100 text-green-800" :
+                      req.status === "Rejected" ? "bg-red-100 text-red-800" : "bg-gray-100 text-gray-800"
+                      }`}>
 
-              <tr className='border-t'>
-
-                <td className="px-4 py-2">1/28/2025</td>
-                <td className="px-4 py-2">Medium</td>
-                <td className="px-4 py-2">200</td>
-                <td className="px-4 py-2">02/04/2025</td>
-                <td className="px-4 py-2">Approved</td>
-                <td className="px-4 py-2">Yes</td>
-                <td className="px-4 py-2">30/01/2024</td>
-                
-              </tr>
+                      {req.status}
+                        
+                      </span>
+                    </td>
+                    <td className="px-4 py-2">{req.deliveryScheduled ? 'Yes' : 'No'}</td>
+                  </tr>
+                ))
+              }
 
             </tbody>
 

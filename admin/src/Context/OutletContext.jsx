@@ -87,7 +87,7 @@ const OutletContextProvider = (props) => {
         try 
         {
 
-            const response = await axios.get("http://localhost:4000/api/outlet/gas-requests" , {} , {headers:{Otoken}});
+            const response = await axios.get("http://localhost:4000/api/outlet/fetch-gas-request" , {headers:{Otoken}});
 
             if(response.data.success)
             {
@@ -102,14 +102,6 @@ const OutletContextProvider = (props) => {
         }
 
     }
-
-    useEffect(() => {
-
-        if(Otoken)
-        {
-            fetchGasReq();
-        }
-    } , [Otoken])
     
 
     
@@ -123,7 +115,8 @@ const OutletContextProvider = (props) => {
         getOutletName,
         getGasRequest,
         gasRequest,
-        gasSheduleReq
+        gasSheduleReq,
+        fetchGasReq
     }
     
 
