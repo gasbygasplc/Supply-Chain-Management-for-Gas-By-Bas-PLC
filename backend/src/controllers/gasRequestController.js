@@ -138,18 +138,27 @@ export const updateGasRequestStatus = async (req, res) => {
         const validPriorityLevels = ["Standard", "Priority"];
         const validYesNo = ["Yes", "No"];
 
-        const gasRequest = await GasRequest.findOne({ requestId });
+        const gasRequest = await GasRequest.findOne({ requestId }).populate("userId", "name email phone");
 
         if (!gasRequest) {
             return res.status(404).json({ success: false, message: "Gas request not found." });
         }
 
+        let hasStatusChanged = false;
+        let hasPriorityChanged = false;
+
         if (status && validStatuses.includes(status)) {
-            gasRequest.status = status;
+            if (gasRequest.status !== status) {
+                gasRequest.status = status;
+                hasStatusChanged = true;
+            }
         }
 
         if (priorityLevel && validPriorityLevels.includes(priorityLevel)) {
-            gasRequest.priorityLevel = priorityLevel;
+            if (gasRequest.priorityLevel !== priorityLevel) {
+                gasRequest.priorityLevel = priorityLevel;
+                hasPriorityChanged = true;
+            }
         }
 
         if (paymentReceived && validYesNo.includes(paymentReceived)) {
@@ -164,7 +173,40 @@ export const updateGasRequestStatus = async (req, res) => {
             gasRequest.collectionOverdue = collectionOverdue;
         }
 
+        if (gasRequest.paymentReceived === "Yes" && gasRequest.cylinderReceived === "Yes") {
+            gasRequest.priorityLevel = "Priority";
+            hasPriorityChanged = true;
+        }
+
         await gasRequest.save();
+
+        const { name, email, phone } = gasRequest.userId;
+        const normalizedPhone = phone.startsWith('94') ? phone : `94${phone.replace(/^0/, '')}`;
+        const tokenNumber = gasRequest.tokenNumber;
+        const gasType = gasRequest.gasType;
+        const quantity = gasRequest.quantity;
+        const updatedStatus = gasRequest.status;
+        const updatedPriority = gasRequest.priorityLevel;
+
+        let smsMessage = `Gas Request Update:\n- Token: ${tokenNumber}\n- Status: ${updatedStatus}\n- Priority: ${updatedPriority}\n- Gas Type: ${gasType}\n- Quantity: ${quantity}`;
+
+        let emailSubject = "Gas Request Status Update";
+        let emailHtml = `
+            <h1>Gas Request Update</h1>
+            <p>Hello ${name},</p>
+            <p>Your gas request status has been updated.</p>
+            <p><strong>Token:</strong> ${tokenNumber}</p>
+            <p><strong>Status:</strong> ${updatedStatus}</p>
+            <p><strong>Priority Level:</strong> ${updatedPriority}</p>
+            <p><strong>Gas Type:</strong> ${gasType}</p>
+            <p><strong>Quantity:</strong> ${quantity}</p>
+            <p>Thank you for using our service!</p>
+        `;
+
+        if (hasStatusChanged || hasPriorityChanged) {
+            await sendSms(normalizedPhone, smsMessage.trim(), "GasByGas");
+            await sendEmail(email, emailSubject, smsMessage.trim(), emailHtml);
+        }
 
         res.status(200).json({
             success: true,
@@ -176,7 +218,6 @@ export const updateGasRequestStatus = async (req, res) => {
         res.status(500).json({ success: false, message: "Error updating status." });
     }
 };
-
 
 export const getPendingOrders = async (req, res) => {
     const { userId } = req.query;
