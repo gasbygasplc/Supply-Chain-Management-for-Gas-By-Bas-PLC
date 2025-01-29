@@ -35,7 +35,7 @@ const Cart = () => {
         try {
             await checkoutCart();
 
-            toast.success("Checkout successful! You will receive notifications shortly.");
+            // toast.success("Checkout successful! You will receive notifications shortly.");
 
             setTimeout(() => {
                 navigate("/my-gas-orders");
