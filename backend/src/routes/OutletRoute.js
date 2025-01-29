@@ -14,4 +14,6 @@ outletRouter.get('/outletName/:city' , getOutletName);
 
 outletRouter.get('/gas-request' , authOutlet, gasRequest)
 
+outletRouter.get('/outletName', getOutletName);
+
 export default outletRouter;
