@@ -28,7 +28,7 @@ const gasDeliveryRequestSchema = new mongoose.Schema({
 
     status: {
         type: String,
-        enum: ['Pending', 'Approved', 'Rejected', 'Delivered'],
+        enum: ['Pending', 'Approved', 'Rejected'],
         default: 'Pending'
     },
 

@@ -260,4 +260,33 @@ const sendGasRequestForDeliveryShedule = async(req , res) => {
     
 }
 
-export {outletLogin , getOutletLocation , getCity , getOutletName , gasRequest , sendGasRequestForDeliveryShedule};
+const fetchDeliveryShedule = async(req , res) => {
+
+    try {
+
+        const {outletId} = req.body;
+    
+        if(!outletId)
+        {
+            return res.status(400).json({ success: false, message: "Outlet ID is required." });
+        }
+
+        const request = await gasDeliveryRequest.find({outletId}).sort({createdAt: -1});
+
+        if(!request.length)
+        {
+            return res.status(404).json({ success: false, message: "No gas requests found for this outlet." });
+        }
+
+        res.status(200).json({ success: true, request });
+
+    } catch (error) {
+
+        console.error("Error fetching outlet gas requests:", error);
+        res.status(500).json({ success: false, message: "Server Error" });
+
+    }
+
+}
+
+export {outletLogin , getOutletLocation , getCity , getOutletName , gasRequest , sendGasRequestForDeliveryShedule , fetchDeliveryShedule};
