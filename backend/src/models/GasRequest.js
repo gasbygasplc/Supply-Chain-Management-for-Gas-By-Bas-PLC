@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const GasRequestSchema = new mongoose.Schema(
   {
@@ -17,8 +17,14 @@ const GasRequestSchema = new mongoose.Schema(
     quantity: { type: Number, required: true },
     expectedPickupDate: { type: Date },
     expiration: { type: Date, required: true },
+    priorityLevel: {
+      type: String,
+      enum: ['Standard', 'Priority'],
+      default: 'Standard',
+    },
   },
   { timestamps: true }
 );
 
 export default mongoose.model('GasRequest', GasRequestSchema);
+

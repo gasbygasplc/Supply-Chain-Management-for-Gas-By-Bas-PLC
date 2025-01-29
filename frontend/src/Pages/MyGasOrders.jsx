@@ -139,6 +139,10 @@ const MyGasOrders = () => {
                                                 <strong>Status:</strong> {order.status}
                                             </p>
                                             <p>
+                                                <strong>Priority Level:</strong>{" "}
+                                                {order.priorityLevel || "Standard"}
+                                            </p>
+                                            <p>
                                                 <strong>Token Number:</strong> {order.tokenNumber}
                                             </p>
                                             <p>

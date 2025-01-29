@@ -17,9 +17,9 @@ export const submitGasRequest = async (req, res) => {
     try {
         const savedRequests = await Promise.all(
             orders.map(async (order) => {
-                const { userId, gasType, quantity, outletId, expectedPickupDate } = order;
+                const { userId, gasType, quantity, outletId, expectedPickupDate, priorityLevel } = order;
 
-                if (!userId || !gasType || !quantity || !outletId) {
+                if (!userId || !gasType || !quantity || !outletId || !priorityLevel) {
                     throw new Error('Missing required fields');
                 }
 
@@ -28,56 +28,6 @@ export const submitGasRequest = async (req, res) => {
 
                 const outlet = await Outlet.findById(outletId);
                 if (!outlet) throw new Error('Outlet not found');
-
-                // if(outlet.currentStock < quantity)
-                // {
-
-                //     const nextDelivery = await deliverySchedule.findOne({outletId , deliveryDate : {$gte: new Date()} , status : 'Scheduled' }).sort({deliveryDate: 1});
-
-                //     if(!nextDelivery)
-                //     {
-
-                //         return {status:'Rejected', message: `No stock available and no upcoming deliveries for outlet: ${outlet.outletName}`,}
-
-                //     };
-
-                //     const pendingRequest = new gasRequest({
-
-                //         userId,
-                //         requestId: `REQ-${Date.now()}`,
-                //         tokenNumber : generateToken(),
-                //         outletId,
-                //         quantity,
-                //         expectedPickupDate: nextDelivery.deliveryDate,
-                //         status:'Pending'
-
-                //     });
-
-                //     await pendingRequest.save();
-
-                //     const smsMessage = `
-                //     gas Request Update
-                //     - Your request is pending due to insufficient stock.
-                //     - Expected Delivery Date: ${nextDelivery.deliveryDate.toDateString()}`;
-
-                //     await sendSms(user.phone , smsMessage.trim(), 'Gas By Gas');
-
-                //     return{
-
-                //         status: 'Pending',
-
-                //         message : 'Request saved as pending due to stock unavailability.',
-
-                //         request: pendingRequest,
-                //     };
-
-                // };
-
-                // //=============================== Deduct STock From Outlet =============================================
-
-                // outlet.currentStock -= quantity;
-
-                // await outlet.save()
 
                 const { email, phone } = user;
                 const normalizedPhone = phone.startsWith('94') ? phone : `94${phone.replace(/^0/, '')}`;
@@ -98,6 +48,7 @@ export const submitGasRequest = async (req, res) => {
                     quantity,
                     expectedPickupDate,
                     expiration: expirationDate,
+                    priorityLevel,
                 });
 
                 await gasRequest.save();
@@ -110,6 +61,7 @@ export const submitGasRequest = async (req, res) => {
                     - Outlet: ${outlet.outletName}, ${outlet.address}, Phone: ${outlet.phone}
                     - Pickup Date: ${expectedPickupDate}
                     - Expiration: ${expirationDate.toDateString()}
+                    - Priority: ${priorityLevel}
                     - QR Code: ${qrCodeUrl}
                 `;
                 await sendSms(normalizedPhone, smsMessage.trim(), 'GasByGas');
@@ -124,6 +76,7 @@ export const submitGasRequest = async (req, res) => {
                     <p><strong>Outlet:</strong> ${outlet.outletName}, ${outlet.address}, Phone: ${outlet.phone}</p>
                     <p><strong>Pickup Date:</strong> ${expectedPickupDate}</p>
                     <p><strong>Expiration:</strong> ${expirationDate.toDateString()}</p>
+                    <p><strong>Priority:</strong> ${priorityLevel}</p>
                     <p>QR Code:</p>
                     <img src="${qrCodeImage}" alt="QR Code" style="width:150px;height:150px;" />
                     <p>Thank you for using our service!</p>
@@ -248,8 +201,6 @@ export const getGasOrders = async (req, res) => {
     }
 };
 
-
-
 export const handleCheckout = async (req, res) => {
     const { userId, items } = req.body;
 
@@ -264,7 +215,6 @@ export const handleCheckout = async (req, res) => {
         if (!user) {
             return res.status(404).json({ success: false, message: 'User not found.' });
         }
-
 
         const existingRequests = await GasRequest.find({
             userId,
@@ -285,6 +235,8 @@ export const handleCheckout = async (req, res) => {
             items.map(async (item) => {
                 const outlet = await Outlet.findById(item.outletId);
                 if (!outlet) throw new Error(`Outlet not found for ID: ${item.outletId}`);
+
+                const priorityLevel = item.priorityLevel || "Standard";
 
                 const tokenNumber = generateToken();
                 const qrCodeUrl = `${process.env.BASE_URL || 'http://localhost:4000'}/api/qrcode/${tokenNumber}`;
@@ -308,6 +260,7 @@ export const handleCheckout = async (req, res) => {
                     quantity: item.quantity,
                     expectedPickupDate: item.expectedPickupDate,
                     expiration: expirationDate,
+                    priorityLevel,
                 });
 
                 await gasRequest.save();
@@ -323,6 +276,7 @@ export const handleCheckout = async (req, res) => {
                     outletAddress: outlet.address,
                     outletPhone: outlet.phone,
                     expiration: expirationDate,
+                    priorityLevel,
                 };
             })
         );
@@ -336,6 +290,7 @@ export const handleCheckout = async (req, res) => {
                 Token: ${request.tokenNumber}
                 Expected Pickup Date: ${request.expectedPickupDate}
                 Expiration: ${request.expiration.toDateString()}
+                Priority: ${request.priorityLevel}
                 QR Code: ${request.qrCodeUrl}
             `
             )
@@ -358,6 +313,7 @@ export const handleCheckout = async (req, res) => {
                             <strong>Token:</strong> ${request.tokenNumber}<br/>
                             <strong>Expected Pickup Date:</strong> ${request.expectedPickupDate}<br/>
                             <strong>Expiration:</strong> ${request.expiration.toDateString()}<br/>
+                            <strong>Priority:</strong> ${request.priorityLevel}</p>
                             <img src="${request.qrCodeImage}" alt="QR Code" style="width:150px;height:150px;" />
                         </li>`
                     )
