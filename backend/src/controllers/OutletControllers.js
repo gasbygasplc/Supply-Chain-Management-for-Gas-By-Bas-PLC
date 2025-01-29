@@ -3,42 +3,92 @@ import jwt from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import outletModel from '../models/OutletModule.js';
 import GasRequest from '../models/GasRequest.js';
+import outletManagermodel from '../models/outletManager.js';
+
+// const outletLogin = async(req , res) => {
+
+
+//     try 
+//     {
+
+//         const {email , password} = req.body;
+
+//         if(!email , !password)
+//         {
+
+//             return res.status(400).json({success: false , message: "Missing Information"});
+            
+//         }
+
+//         const outlet = await outletModel.findOne({email});
+
+//         if(!outlet)
+//         {
+
+//             return res.status(400).json({success:false , message:"Invalid Email Please try again"});
+//         }
+
+//         const isMatch = await bcrypt.compare(password , outlet.password);
+
+//         if(!isMatch)
+//         {
+
+//             return res.status(400).json({success:false , message:"Invalid Password Please try again"});
+//         }
+        
+//         const Otoken = jwt.sign({id:outlet._id} , process.env.JWT_SECRET , { expiresIn: '1d' });
+
+//         res.json({success:true , message:"Login Success" , Otoken , outlet});
+
+        
+//     } catch (error) 
+//     {
+
+//         console.error(error);
+
+//         res.status(500).json({success:false , message:"Server Error"});
+        
+//     }
+
+// }
 
 const outletLogin = async(req , res) => {
-
 
     try 
     {
 
         const {email , password} = req.body;
 
-        if(!email , !password)
+        if(!email || !password)
         {
 
             return res.status(400).json({success: false , message: "Missing Information"});
-            
+
         }
 
-        const outlet = await outletModel.findOne({email});
+        const outletManager = await outletManagermodel.findOne({email});
 
-        if(!outlet)
+        if(!outletManager)
         {
 
             return res.status(400).json({success:false , message:"Invalid Email Please try again"});
+
         }
 
-        const isMatch = await bcrypt.compare(password , outlet.password);
+        const isMatch = await bcrypt.compare(password , outletManager.password);
 
         if(!isMatch)
         {
 
             return res.status(400).json({success:false , message:"Invalid Password Please try again"});
+
         }
+
+        const Otoken = jwt.sign({id:outletManager.outletId} , process.env.JWT_SECRET , { expiresIn: '1d' });
+
+        res.json({success:true , message:"Login Success" , Otoken , outletManager})
+
         
-        const Otoken = jwt.sign({id:outlet._id} , process.env.JWT_SECRET , { expiresIn: '1d' });
-
-        res.json({success:true , message:"Login Success" , Otoken , outlet});
-
         
     } catch (error) 
     {
@@ -48,7 +98,6 @@ const outletLogin = async(req , res) => {
         res.status(500).json({success:false , message:"Server Error"});
         
     }
-
 }
 
 //============================================== get the outlet Location ====================================================
