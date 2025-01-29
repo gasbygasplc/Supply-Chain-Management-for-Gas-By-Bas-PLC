@@ -78,32 +78,55 @@ const GasContextProvider = (props) => {
 
     const checkoutCart = async () => {
         if (isProcessingCheckout) return;
-
+    
         setIsProcessingCheckout(true);
-
+    
         if (!token) {
             toast.error("You must be logged in to complete the checkout.");
             setIsProcessingCheckout(false);
             return;
         }
-
+    
         if (gasOrder.length === 0) {
             toast.error("Your cart is empty. Add items before checking out.");
             setIsProcessingCheckout(false);
             return;
         }
-
-        const userId = userData._id || null;
-
-        if (!userId) {
-            toast.error("User ID is missing. Please log in again.");
+    
+        try {
+            const response = await axios.post(
+                `${backendURL}/api/auth/profile`,
+                { userId },
+                { headers: { Authorization: `Bearer ${token}` } }
+            );
+    
+            if (!response.data.success) {
+                toast.error("Session expired. Please log in again.");
+                setIsProcessingCheckout(false);
+                return;
+            }
+    
+            const { emailVerified, phoneVerified } = response.data.user;
+    
+            if (!emailVerified || !phoneVerified) {
+                toast.error("You must verify your email and phone number before checkout.");
+                setIsProcessingCheckout(false);
+    
+                setTimeout(() => {
+                    window.location.href = "/my-profile";
+                }, 2000);
+    
+                return;
+            }
+        } catch (error) {
+            toast.error("Error verifying user status. Please log in again.");
             setIsProcessingCheckout(false);
             return;
         }
-
+    
         const payload = { userId, items: gasOrder };
         console.log("Payload being sent to backend:", payload);
-
+    
         try {
             const response = await axios.post(`${backendURL}/api/gas/checkout`, payload, {
                 headers: { Authorization: `Bearer ${token}` },
