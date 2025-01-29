@@ -84,7 +84,7 @@ const outletLogin = async(req , res) => {
 
         }
 
-        const Otoken = jwt.sign({id:outletManager.outletId} , process.env.JWT_SECRET , { expiresIn: '1d' });
+        const Otoken = jwt.sign({id:outletManager.outletId , name:outletManager.name} , process.env.JWT_SECRET , { expiresIn: '1d' });
 
         res.json({success:true , message:"Login Success" , Otoken , outletManager})
 

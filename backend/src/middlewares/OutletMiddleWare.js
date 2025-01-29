@@ -25,6 +25,8 @@ const authOutlet = async (req, res, next) => {
 
         req.body.outletId = tokenDecode.id;
 
+        req.body.outletManagerName = tokenDecode.name;
+
         next();
 
     } catch (error) 
