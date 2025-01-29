@@ -1,6 +1,54 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
+import {toast} from 'react-toastify'
+import axios from 'axios'
+import { OutletContext } from '../../Context/OutletContext';
 
 const StockRequest = () => {
+
+  const [smallQty , setSmallQty] = useState(0);
+  
+  const [mediumQty , setMediumQty] = useState(0);
+
+  const [largeQty , setLargeQty] = useState(0);
+
+  const [expectedDate, setExpectedDate] = useState('');
+
+  const {Otoken} = useContext(OutletContext);
+
+  const handleSubmit = async(event) => {
+    event.preventDefault();
+
+    if(!smallQty || !mediumQty || !largeQty)
+    {
+
+      toast.warn("Please enter the Data");
+      return;
+
+    }
+
+    if (smallGasQuantity <= 0 && mediumGasQuantity <= 0 && largeGasQuantity <= 0) {
+      toast.warn('Please enter at least one gas quantity.');
+      return;
+    }
+
+    const payload = {
+
+      smallQty,
+      mediumQty,
+      largeQty,
+      expectedDate
+    }
+
+    try {
+
+      const response = await axios.post('http://localhost:4000/api/outlet/request-delivery' , payload , {headers:{Otoken}});
+      
+    } catch (error) {
+      
+    }
+
+  }
+  
   return (
 
     <div className='w-full flex flex-col'>
