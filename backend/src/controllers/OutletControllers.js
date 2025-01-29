@@ -284,9 +284,9 @@ const fetchDeliveryShedule = async(req , res) => {
 
         console.error("Error fetching outlet gas requests:", error);
         res.status(500).json({ success: false, message: "Server Error" });
-        
+
     }
 
 }
 
-export {outletLogin , getOutletLocation , getCity , getOutletName , gasRequest , sendGasRequestForDeliveryShedule};
+export {outletLogin , getOutletLocation , getCity , getOutletName , gasRequest , sendGasRequestForDeliveryShedule , fetchDeliveryShedule};
