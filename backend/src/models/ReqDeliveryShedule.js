@@ -7,6 +7,12 @@ const gasDeliveryRequestSchema = new mongoose.Schema({
         ref:'Outlet',
         required:true
     },
+
+    outletManagerName : {
+        
+        type:String,
+        required:true
+    },
     
     gasQuantity: {
 
