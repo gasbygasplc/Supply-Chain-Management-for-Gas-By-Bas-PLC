@@ -21,6 +21,12 @@ const LoginPage = () => {
     {
         event.preventDefault();
 
+        if(!email || !password)
+        {
+            toast.error("Please enter both email and password");
+            return;
+        }
+
         try 
         {
 

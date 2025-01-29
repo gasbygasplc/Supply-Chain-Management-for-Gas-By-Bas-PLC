@@ -1,5 +1,5 @@
 import express from  'express';
-import { gasRequest, getCity, getOutletLocation, getOutletName, outletLogin } from '../controllers/OutletControllers.js';
+import { fetchDeliveryShedule, gasRequest, getCity, getOutletLocation, getOutletName, outletLogin, sendGasRequestForDeliveryShedule } from '../controllers/OutletControllers.js';
 import authOutlet from '../middlewares/OutletMiddleWare.js';
 
 const outletRouter = express.Router();
@@ -12,7 +12,11 @@ outletRouter.get('/city/:district' , getCity);
 
 outletRouter.get('/outletName/:city' , getOutletName);
 
-outletRouter.get('/gas-request' , authOutlet, gasRequest)
+outletRouter.get('/gas-request' , authOutlet, gasRequest);
+
+outletRouter.post('/request-delivery' , authOutlet , sendGasRequestForDeliveryShedule);
+
+outletRouter.get('/fetch-gas-request' , authOutlet , fetchDeliveryShedule);
 
 outletRouter.get('/outletName', getOutletName);
 

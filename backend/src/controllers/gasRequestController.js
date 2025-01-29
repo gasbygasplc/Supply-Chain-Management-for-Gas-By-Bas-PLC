@@ -127,38 +127,56 @@ export const cancelGasOrder = async (req, res) => {
 };
 
 export const updateGasRequestStatus = async (req, res) => {
-    const { requestId, status } = req.body;
+    const { requestId, status, priorityLevel, paymentReceived, cylinderReceived, collectionOverdue } = req.body;
 
-    if (!requestId || !status) {
-        return res.status(400).json({ success: false, message: 'Missing required fields.' });
+    if (!requestId) {
+        return res.status(400).json({ success: false, message: "Request ID is required." });
     }
 
     try {
-        const validStatuses = ['Pending', 'Approved', 'Collected', 'Rescheduled', 'Cancelled'];
-
-        if (!validStatuses.includes(status)) {
-            return res.status(400).json({ success: false, message: 'Invalid status value.' });
-        }
+        const validStatuses = ["Pending", "Approved", "Collected", "Rescheduled", "Cancelled"];
+        const validPriorityLevels = ["Standard", "Priority"];
+        const validYesNo = ["Yes", "No"];
 
         const gasRequest = await GasRequest.findOne({ requestId });
 
         if (!gasRequest) {
-            return res.status(404).json({ success: false, message: 'Gas request not found.' });
+            return res.status(404).json({ success: false, message: "Gas request not found." });
         }
 
-        gasRequest.status = status;
+        if (status && validStatuses.includes(status)) {
+            gasRequest.status = status;
+        }
+
+        if (priorityLevel && validPriorityLevels.includes(priorityLevel)) {
+            gasRequest.priorityLevel = priorityLevel;
+        }
+
+        if (paymentReceived && validYesNo.includes(paymentReceived)) {
+            gasRequest.paymentReceived = paymentReceived;
+        }
+
+        if (cylinderReceived && validYesNo.includes(cylinderReceived)) {
+            gasRequest.cylinderReceived = cylinderReceived;
+        }
+
+        if (collectionOverdue && validYesNo.includes(collectionOverdue)) {
+            gasRequest.collectionOverdue = collectionOverdue;
+        }
+
         await gasRequest.save();
 
         res.status(200).json({
             success: true,
-            message: 'Gas request status updated successfully.',
+            message: "Gas request updated successfully.",
             gasRequest,
         });
     } catch (error) {
-        console.error('Error updating gas request status:', error);
-        res.status(500).json({ success: false, message: 'Error updating status.' });
+        console.error("Error updating gas request status:", error);
+        res.status(500).json({ success: false, message: "Error updating status." });
     }
 };
+
 
 export const getPendingOrders = async (req, res) => {
     const { userId } = req.query;
@@ -188,7 +206,9 @@ export const getGasOrders = async (req, res) => {
     }
 
     try {
-        const orders = await GasRequest.find({ userId }).populate("outletId");
+        const orders = await GasRequest.find({ userId })
+            .populate("outletId")
+            .populate("userId", "name nic email phone");
 
         if (!orders || orders.length === 0) {
             return res.status(404).json({ success: false, message: "No gas orders found." });

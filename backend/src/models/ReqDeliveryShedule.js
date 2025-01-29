@@ -1,14 +1,44 @@
-import mongoose from "mongoose";
+import mongoose from 'mongoose';
 
-const reqDeliveryShedule = new mongoose.Schema({
+const gasDeliveryRequestSchema = new mongoose.Schema({
 
-    outletId:{type:mongoose.Schema.Types.ObjectId , ref:'Outlet' , required : true},
-    outletManagerId: {type:mongoose.Schema.Types.ObjectId , ref:'outletManager' , required : true},
-    quantityNeeded:{type:Number , required:true},
-    current_Quantity_Of_Outlet: {type:Number , required:true}
+    outletId: {
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Outlet',
+        required:true
+    },
 
-})
+    outletManagerName : {
+        
+        type:String,
+        required:true
+    },
+    
+    gasQuantity: {
 
-const reqDeliveryModel = mongoose.models.reqDeliveryShedule || mongoose.model('reqDeliveryShedule' , reqDeliveryShedule);
+        Small: {type: Number, default: 0, min: 0 },
+        Medium : {type: Number, default: 0, min: 0},
+        Large : {type: Number, default: 0, min: 0}
+    },
 
-export default reqDeliveryModel;
+    expectedDeliveryDate: {
+        type: Date,
+        required: true
+    },
+
+    status: {
+        type: String,
+        enum: ['Pending', 'Approved', 'Rejected'],
+        default: 'Pending'
+    },
+
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }
+
+});
+
+const gasDeliveryRequest = mongoose.models.GasDeliveryRequest || mongoose.model('GasDeliveryRequest' , gasDeliveryRequestSchema);
+
+export default gasDeliveryRequest;

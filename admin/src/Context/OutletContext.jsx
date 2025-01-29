@@ -8,6 +8,7 @@ const OutletContextProvider = (props) => {
     const [Otoken, setOtoken] = useState(localStorage.getItem('Otoken') || "");
     const [outletNames, setOutletNames] = useState([]);
     const [gasRequest, setGasRequest] = useState([]);
+    const [gasSheduleReq, setGasSheduleReq] = useState([]);
     const [loadingOutlets, setLoadingOutlets] = useState(false);
 
     const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000';
@@ -44,10 +45,10 @@ const OutletContextProvider = (props) => {
                 headers: { Authorization: `Bearer ${Otoken}` },
             });
 
-            if (data.success) {
-                setGasRequest(data.gasRequest.reverse());
+            if (data.success && Array.isArray(data.gasRequests)) {
+                setGasRequest([...data.gasRequests].reverse());
             } else {
-                toast.error(data.message);
+                toast.error(data.message || "Failed to fetch gas requests.");
             }
         } catch (error) {
             console.error('Error in getGasRequest:', error.message);
@@ -55,9 +56,26 @@ const OutletContextProvider = (props) => {
         }
     };
 
+    //============================================ Get Gas Schedule Requests ===============================================
+    const fetchGasReq = async () => {
+        try {
+            const response = await axios.get(`${backendURL}/api/outlet/fetch-gas-request`, {
+                headers: { Authorization: `Bearer ${Otoken}` },
+            });
+
+            if (response.data.success) {
+                setGasSheduleReq(response.data.request);
+            } else {
+                console.error("Error fetching scheduled gas requests:", response.data.message);
+            }
+        } catch (error) {
+            console.error("Error fetching gas schedule requests:", error);
+        }
+    };
+
     useEffect(() => {
         getOutletName();
-    }, []); 
+    }, []);
 
     const value = {
         Otoken,
@@ -66,6 +84,8 @@ const OutletContextProvider = (props) => {
         getOutletName,
         getGasRequest,
         gasRequest,
+        gasSheduleReq,
+        fetchGasReq,
         loadingOutlets,
     };
 
