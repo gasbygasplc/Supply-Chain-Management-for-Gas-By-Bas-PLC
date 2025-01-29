@@ -14,6 +14,8 @@ const OutletContextProvider = (props) => {
 
     const [gasRequest , setGasRequest] = useState([]);
 
+    const [gasSheduleReq , setGasSheduleReq] = useState([]);
+
     //============================================== get Outlet ====================================================
 
     const getOutletName = async() => {
@@ -63,6 +65,29 @@ const OutletContextProvider = (props) => {
             toast.error("Error fetching gas requests.");
         }
     };
+
+    //============================================ get Gas Shedule request ===============================================
+
+    const fetchGasReq = async() => {
+
+        try 
+        {
+
+            const response = await axios.get("http://localhost:4000/api/outlet/fetch-gas-request" , {headers:{Otoken}});
+
+            if(response.data.success)
+            {
+                setGasSheduleReq(response.data.request);
+            }
+
+            
+            
+        } catch (error) 
+        {
+            console.error("Error fetching gas requests:", error);
+        }
+
+    }
     
 
     const value = {
@@ -73,6 +98,8 @@ const OutletContextProvider = (props) => {
         getOutletName,
         getGasRequest,
         gasRequest,
+        gasSheduleReq,
+        fetchGasReq
     }
     
 

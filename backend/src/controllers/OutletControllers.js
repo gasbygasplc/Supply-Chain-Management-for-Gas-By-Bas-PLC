@@ -5,6 +5,7 @@ import outletModel from '../models/OutletModule.js';
 import GasRequest from '../models/GasRequest.js';
 import outletManagermodel from '../models/outletManager.js';
 import User from '../models/User.js';
+import gasDeliveryRequest from '../models/ReqDeliveryShedule.js';
 
 // const outletLogin = async(req , res) => {
 
@@ -232,7 +233,66 @@ const gasRequest = async (req, res) => {
 
 const sendGasRequestForDeliveryShedule = async(req , res) => {
     
+ try {
+
+    const {outletManagerName , outletId , smallQty , mediumQty , largeQty , expectedDeliveryDate} = req.body;
+
+    if(smallQty <= 0 && mediumQty <= 0 && largeQty <= 0)
+    {
+        return res.status(400).json({ success: false, message: "At least one gas type must be requested." });
+    }
+
+    const newRequest = new gasDeliveryRequest({
+        outletId,
+        outletManagerName,
+        gasQuantity : {
+            Small:smallQty,
+            Medium : mediumQty,
+            Large : largeQty
+        },
+        expectedDeliveryDate
+    });
+    await newRequest.save();
+
+    res.status(201).json({ success: true, message: "Delivery request submitted successfully", request: newRequest });
+
+    
+ } catch (error) {
+
+    console.error("Error submitting delivery request:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
+    
+ }
     
 }
 
-export {outletLogin , getOutletLocation , getCity , getOutletName , gasRequest};
+const fetchDeliveryShedule = async(req , res) => {
+
+    try {
+
+        const {outletId} = req.body;
+    
+        if(!outletId)
+        {
+            return res.status(400).json({ success: false, message: "Outlet ID is required." });
+        }
+
+        const request = await gasDeliveryRequest.find({outletId}).sort({createdAt: -1});
+
+        if(!request.length)
+        {
+            return res.status(404).json({ success: false, message: "No gas requests found for this outlet." });
+        }
+
+        res.status(200).json({ success: true, request });
+
+    } catch (error) {
+
+        console.error("Error fetching outlet gas requests:", error);
+        res.status(500).json({ success: false, message: "Server Error" });
+
+    }
+
+}
+
+export {outletLogin , getOutletLocation , getCity , getOutletName , gasRequest , sendGasRequestForDeliveryShedule , fetchDeliveryShedule};

@@ -7,6 +7,12 @@ const gasDeliveryRequestSchema = new mongoose.Schema({
         ref:'Outlet',
         required:true
     },
+
+    outletManagerName : {
+        
+        type:String,
+        required:true
+    },
     
     gasQuantity: {
 
@@ -22,7 +28,7 @@ const gasDeliveryRequestSchema = new mongoose.Schema({
 
     status: {
         type: String,
-        enum: ['Pending', 'Approved', 'Rejected', 'Delivered'],
+        enum: ['Pending', 'Approved', 'Rejected'],
         default: 'Pending'
     },
 
