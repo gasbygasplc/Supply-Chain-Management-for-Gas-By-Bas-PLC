@@ -4,6 +4,7 @@ import bcrypt from 'bcrypt';
 import outletModel from '../models/OutletModule.js';
 import GasRequest from '../models/GasRequest.js';
 import outletManagermodel from '../models/outletManager.js';
+import gasDeliveryRequest from '../models/ReqDeliveryShedule.js';
 
 // const outletLogin = async(req , res) => {
 
@@ -226,7 +227,37 @@ const gasRequest = async(req , res) => {
 
 const sendGasRequestForDeliveryShedule = async(req , res) => {
     
+ try {
+
+    const {outletManagerName , outletId , smallQty , mediumQty , largeQty , expectedDeliveryDate} = req.body;
+
+    if(smallQty <= 0 && mediumQty <= 0 && largeQty <= 0)
+    {
+        return res.status(400).json({ success: false, message: "At least one gas type must be requested." });
+    }
+
+    const newRequest = new gasDeliveryRequest({
+        outletId,
+        outletManagerName,
+        gasQuantity : {
+            Small:smallQty,
+            Medium : mediumQty,
+            Large : largeQty
+        },
+        expectedDeliveryDate
+    });
+    await newRequest.save();
+
+    res.status(201).json({ success: true, message: "Delivery request submitted successfully", request: newRequest });
+
+    
+ } catch (error) {
+
+    console.error("Error submitting delivery request:", error);
+    res.status(500).json({ success: false, message: "Server Error" });
+    
+ }
     
 }
 
-export {outletLogin , getOutletLocation , getCity , getOutletName , gasRequest};
+export {outletLogin , getOutletLocation , getCity , getOutletName , gasRequest , sendGasRequestForDeliveryShedule};
