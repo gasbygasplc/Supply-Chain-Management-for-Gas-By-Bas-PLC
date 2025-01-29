@@ -47,46 +47,29 @@ const OutletContextProvider = (props) => {
 
 
     //================================================= get Gas request ================================================
-
-    // Fetch Gas Requests
     const getGasRequest = async () => {
-
-        try 
-        {
-
-            const { data } = await axios.get('http://localhost:4000/api/outlet/gas-request', { headers: { Authorization: `Bearer ${Otoken}` }, });
+        try {
+            const { data } = await axios.get('http://localhost:4000/api/outlet/gas-request', {
+                headers: { Authorization: `Bearer ${Otoken}` },
+            });
     
-            if (data.success) 
-            {
-
-                setGasRequest(data.gasRequest.reverse());
-
-            } 
-            else 
-            {
-
-                toast.error(data.message);
-
+            if (data.success && Array.isArray(data.gasRequests)) {
+                setGasRequest([...data.gasRequests].reverse());
+            } else {
+                toast.error(data.message || "Failed to fetch gas requests.");
             }
-
-        } catch (error) 
-        {
+        } catch (error) {
             console.log('Error in getGasRequest:', error.message);
-
-            toast.error(error.message);
-
+            toast.error("Error fetching gas requests.");
         }
     };
     
-
-    
-
 
     const value = {
 
         Otoken,
         setOtoken,
-        outletNames, // Only provide what's necessary
+        outletNames,
         getOutletName,
         getGasRequest,
         gasRequest,
