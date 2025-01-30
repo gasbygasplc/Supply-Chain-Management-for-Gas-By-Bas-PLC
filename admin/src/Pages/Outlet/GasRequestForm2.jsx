@@ -117,10 +117,11 @@ const GasRequestForm2 = () => {
   }, [searchQuery, filters, gasRequests]);
 
   return (
-    <>
-        <div className="w-full">
+    <form className="text-gray-700 text-base">
 
-            <div className="flex flex-col items-center gap-4 md:text-start md:flex-row md:items-center md:gap-5">
+        <div className="w-full flex flex-col gap-4 mx-auto border py-6 px-6 rounded">
+
+            <div className="flex flex-col items-center gap-4 md:items-start md:gap-5">
 
                 <h1 className='font-semibold text-2xl md:text-3xl'>
                     <span className='text-primary-700'>Gas Request</span> Managment
@@ -128,22 +129,80 @@ const GasRequestForm2 = () => {
 
             </div>
 
-            <div className="">
+            <div className="flex flex-col gap-4">
 
-                <div>
-
-                    <label htmlFor="search">Search by Req ID , Token number & Consumer name</label>
-                    <input id="search" type="text" />
-
-                </div>
-                <div>
-
-
+                <div className="flex flex-col w-full gap-3">
+                        
+                    <label className="block" htmlFor="search">Search by Request Id  , Token Number , Consumer Name</label>
+                    <input  value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)} className="w-full md:w-1/2 p-2 border border-gray-300 rounded-md focus:outline-none focus:border-primary" type="text" id="search" placeholder="Search by Request Id , Token Number , Consumer Name"/>
 
                 </div>
-                <div>
+
+                <div className="flex flex-col gap-3 md:grid md:grid-cols-5">
+
+                    {
+                        [
+                            {
+                                label: "Status",
+                                key: "status",
+                                options: [
+                                    "Pending",
+                                    "Approved",
+                                    "Collected",
+                                    "Rescheduled",
+                                    "Cancelled",
+                                ],
+                            },
+
+                            {
+
+                                label: "Priority Level",
+                                key: "priorityLevel",
+                                options: ["Standard", "Priority"],
+                            },
+
+                            {
+
+                                label: "Payment Received",
+                                key: "paymentReceived",
+                                options: ["Yes", "No"],
+                            },
+
+                            {
+
+                                label: "Cylinder Received",
+                                key: "cylinderReceived",
+                                options: ["Yes", "No"],
+                            },
+
+                            {
+
+                                label: "Collection Overdue",
+                                key: "collectionOverdue",
+                                options: ["Yes", "No"],
+                            },
+                            
+                        ].map((filter) => (
+
+                            
+                            <div className="md:col-span-1 flex flex-col gap-2" key={filter.key}>
+
+                                <label className="block" htmlFor={filter.label}>{filter.label}</label>
+                                <select
+                                    id={filter.label}
+                                    className="border p-1 rounded"
+                                    value={filters[filter.key]}
+                                    onChange={(e) =>
+                                        setFilters({ ...filters, [filter.key]: e.target.value })
+                                    } 
+                                >
 
 
+                                </select>
+
+                            </div>
+                        ))
+                    }
 
                 </div>
 
@@ -151,7 +210,7 @@ const GasRequestForm2 = () => {
 
         </div>
     
-    </>
+    </form>
   );
 };
 
