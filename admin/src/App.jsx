@@ -14,6 +14,7 @@ import Delivery from "./Pages/Outlet/Delivery";
 import DeliverySchedule from "./Pages/Admin/DeliverySchedule";
 import OutletDashboard from "./Pages/Outlet/OutletDashboard";
 import LoginPage from "./Pages/LoginPage";
+import Dashboard from "./Pages/Admin/Dashboard";
 
 const App = () => {
 
@@ -44,7 +45,7 @@ const App = () => {
 
           <Routes>
 
-            {aToken && <Route path="/" element={<DeliverySchedule/>} />}
+            {aToken && <Route path="/" element={<Dashboard/>} />}
 
             {/* ++++++++++++++++++++++++++++++++++++++++++ Admin Route ++++++++++++++++++++++++++++++++++++++++++++ */}
 
