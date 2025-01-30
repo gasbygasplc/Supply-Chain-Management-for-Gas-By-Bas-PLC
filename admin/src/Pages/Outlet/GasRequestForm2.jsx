@@ -222,9 +222,9 @@ const GasRequestForm2 = () => {
                     !loading && Array.isArray(filteredRequests) &&
                     filteredRequests.length > 0 ? (
 
-                        <div>
+                        <div className="text-gray-700 text-base mt-6 rounded-md py-6  md:px-6 bg-white border">
 
-                            
+                            <h1 className="font-semibold text-1xl md:text-2xl mb-4">Your Gas Request Here!</h1>
                             
                         </div>
                     ) : ""
