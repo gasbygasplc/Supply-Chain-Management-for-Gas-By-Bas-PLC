@@ -427,7 +427,13 @@ const GasRequestForm2 = () => {
                             </div>
                             
                         </div>
-                    ) : ""
+                    ) : (
+                        !loading && (
+                            <p className="text-center text-gray-500 mt-4">
+                                No gas requests found.
+                            </p>
+                        )
+                    )
                 }
 
             </div>
