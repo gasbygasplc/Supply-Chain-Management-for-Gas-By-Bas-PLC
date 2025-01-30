@@ -119,7 +119,7 @@ const GasRequestForm2 = () => {
   return (
     <form className="text-gray-700 text-base">
 
-        <div className="w-full flex flex-col gap-4 mx-auto border py-6 px-6 rounded">
+        <div className="w-full flex flex-col gap-6 mx-auto border py-6 px-6 rounded">
 
             <div className="flex flex-col items-center gap-4 md:items-start md:gap-5">
 
@@ -129,7 +129,7 @@ const GasRequestForm2 = () => {
 
             </div>
 
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-col gap-6">
 
                 <div className="flex flex-col w-full gap-3">
                         
@@ -190,13 +190,13 @@ const GasRequestForm2 = () => {
                                 <label className="block" htmlFor={filter.label}>{filter.label}</label>
                                 <select
                                     id={filter.label}
-                                    className="border p-1 rounded"
+                                    className="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-primary"
                                     value={filters[filter.key]}
                                     onChange={(e) =>
                                         setFilters({ ...filters, [filter.key]: e.target.value })
                                     } 
                                 >
-
+                                    
 
                                 </select>
 
