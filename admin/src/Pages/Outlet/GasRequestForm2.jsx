@@ -319,6 +319,102 @@ const GasRequestForm2 = () => {
                                                             </div>
                                                         ))}
                                                     </td>
+                                                    <td className="px-4 py-2 font-semibold whitespace-nowrap">
+                                                        LKR {Number(request.totalPrice || 0).toFixed(2)}
+                                                    </td>
+                                                    <td className="px-4 py-2 whitespace-nowrap">
+                                                    {request.expectedPickupDate || "Not specified"}
+                                                    </td>
+                                                    <td className="px-4 py-2 whitespace-nowrap">
+                                                    {new Date(request.expiration).toLocaleDateString()}
+                                                    </td>
+                                                    <td className="px-4 py-2 whitespace-nowrap">
+                                                    <select
+                                                        className="border p-1 rounded whitespace-nowrap"
+                                                        value={request.paymentReceived || "No"}
+                                                        onChange={(e) =>
+                                                        handleUpdate(
+                                                            request.requestId,
+                                                            "paymentReceived",
+                                                            e.target.value
+                                                        )
+                                                        }
+                                                    >
+                                                        <option value="No">No</option>
+                                                        <option value="Yes">Yes</option>
+                                                    </select>
+                                                    </td>
+
+                                                    <td className="px-4 py-2 whitespace-nowrap">
+                                                    <select
+                                                        className="border p-1 rounded whitespace-nowrap"
+                                                        value={request.cylinderReceived || "No"}
+                                                        onChange={(e) =>
+                                                        handleUpdate(
+                                                            request.requestId,
+                                                            "cylinderReceived",
+                                                            e.target.value
+                                                        )
+                                                        }
+                                                    >
+                                                        <option value="No">No</option>
+                                                        <option value="Yes">Yes</option>
+                                                    </select>
+                                                    </td>
+
+                                                    <td className="px-4 py-2 whitespace-nowrap">
+                                                    <select
+                                                        className="border p-1 rounded"
+                                                        value={request.collectionOverdue || "No"}
+                                                        onChange={(e) =>
+                                                        handleUpdate(
+                                                            request.requestId,
+                                                            "collectionOverdue",
+                                                            e.target.value
+                                                        )
+                                                        }
+                                                    >
+                                                        <option value="No">No</option>
+                                                        <option value="Yes">Yes</option>
+                                                    </select>
+                                                    </td>
+
+                                                    <td className="px-4 py-2 whitespace-nowrap">
+                                                    <select
+                                                        className="border p-1 rounded"
+                                                        value={request.reminderSent || "Not Sent"}
+                                                        onChange={(e) =>
+                                                        handleUpdate(
+                                                            request.requestId,
+                                                            "reminderSent",
+                                                            e.target.value
+                                                        )
+                                                        }
+                                                    >
+                                                        <option value="Not Sent">Not Sent</option>
+                                                        <option value="Sent">Sent</option>
+                                                    </select>
+                                                    </td>
+
+                                                    <td className="px-4 py-2 whitespace-nowrap">
+                                                    {request.reminderSent === "Sent" ? (
+                                                        <span className="text-green-600 font-semibold">
+                                                        Reminder Sent
+                                                        </span>
+                                                    ) : (
+                                                        (request.paymentReceived === "No" ||
+                                                        request.cylinderReceived === "No" ||
+                                                        request.collectionOverdue === "Yes") && (
+                                                        <button
+                                                            className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition"
+                                                            onClick={() => sendReminder(request._id)}
+                                                            disabled={request.reminderSent === "Sent"}
+                                                        >
+                                                            Send Reminder
+                                                        </button>
+                                                        )
+                                                    )}
+                                                    </td>
 
                                                 </tr>
                                             ))
