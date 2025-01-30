@@ -202,7 +202,7 @@ const GasRequestForm2 = () => {
                                             <option key={option} value={option}>{option}</option>
                                         ))
                                     }
-                                    
+
 
                                 </select>
 
@@ -211,6 +211,12 @@ const GasRequestForm2 = () => {
                     }
 
                 </div>
+
+                {
+                    loading && (
+                        <p className="">Loading gas requests...</p>
+                    )
+                }
 
             </div>
 
