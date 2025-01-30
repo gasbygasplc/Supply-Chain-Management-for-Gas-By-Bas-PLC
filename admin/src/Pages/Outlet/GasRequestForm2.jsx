@@ -256,6 +256,55 @@ const GasRequestForm2 = () => {
 
                                     </thead>
 
+                                    <tbody>
+
+                                        {
+                                            filteredRequests.map((request) => (
+
+                                                <tr key={request._id} className="border-t">
+
+                                                    <td className="px-4 py-2 whitespace-nowrap">{request.requestId}</td>
+                                                    <td className="px-4 py-2 whitespace-nowrap">{request.userId || "N/A"}</td>
+                                                    <td className="px-4 py-2 whitespace-nowrap">{new Date(request.requestedDate).toLocaleString() ||"N/A"}</td>
+                                                    <td className="px-4 py-2">
+                                                        <select className="border p-1 rounded"
+                                                            value={request.status}
+                                                            onChange={(e) =>
+                                                            handleUpdate(
+                                                                request.requestId,
+                                                                "status",
+                                                                e.target.value
+                                                            )
+                                                            }>
+                                                            <option value="Pending">Pending</option>
+                                                            <option value="Approved">Approved</option>
+                                                            <option value="Collected">Collected</option>
+                                                            <option value="Rescheduled">Rescheduled</option>
+                                                            <option value="Cancelled">Cancelled</option>
+                                                        </select>
+                                                    </td>
+                                                    <td className="px-4 py-2">
+                                                        <select
+                                                            className="border p-1 rounded"
+                                                            value={request.priorityLevel}
+                                                            onChange={(e) =>
+                                                            handleUpdate(
+                                                                request.requestId,
+                                                                "priorityLevel",
+                                                                e.target.value
+                                                            )
+                                                            }>
+                                                            <option value="Standard">Standard</option>
+                                                            <option value="Priority">Priority</option>
+                                                        </select>
+                                                    </td>
+
+                                                </tr>
+                                            ))
+                                        }
+
+                                    </tbody>
+
                                 </table>
 
                             </div>
