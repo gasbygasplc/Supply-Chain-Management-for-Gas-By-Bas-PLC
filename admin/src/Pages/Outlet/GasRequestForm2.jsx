@@ -196,6 +196,12 @@ const GasRequestForm2 = () => {
                                         setFilters({ ...filters, [filter.key]: e.target.value })
                                     } 
                                 >
+                                    <option disabled>Choose {filter.label}</option>
+                                    {
+                                        filter.options.map((option) => (
+                                            <option key={option} value={option}>{option}</option>
+                                        ))
+                                    }
                                     
 
                                 </select>
