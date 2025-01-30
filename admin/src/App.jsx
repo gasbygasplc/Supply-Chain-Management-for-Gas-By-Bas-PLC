@@ -15,6 +15,7 @@ import DeliverySchedule from "./Pages/Admin/DeliverySchedule";
 import OutletDashboard from "./Pages/Outlet/OutletDashboard";
 import LoginPage from "./Pages/LoginPage";
 import Dashboard from "./Pages/Admin/Dashboard";
+import GasRequestForm2 from "./Pages/Outlet/GasRequestForm2";
 
 const App = () => {
 
@@ -61,7 +62,7 @@ const App = () => {
 
             {Otoken && <Route path='/outlet-dashboard' element = {<OutletDashboard/>}/>}
 
-            <Route path="/gas-request" element={<GasRequest />} />
+            <Route path="/gas-request" element={<GasRequestForm2/>} />
 
             <Route path="/stock-request" element={<StockRequest />} />
 
