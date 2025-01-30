@@ -1,50 +1,46 @@
-import React, { useContext } from 'react';
-import { assets } from '../assets/assets';
-import { AdminContext } from '../Context/AdminContext';
-import {useNavigate} from 'react-router-dom'
-import { OutletContext } from '../Context/OutletContext';
+import React, { useContext } from "react";
+import { assets } from "../assets/assets";
+import { IoMenu, IoClose } from "react-icons/io5"; // Import icons
+import { OutletContext } from "../Context/OutletContext";
+import { AdminContext } from "../Context/AdminContext";
 
-
-const Navbar = () => {
-
-  const { aToken ,SetAToken } = useContext(AdminContext);
+const Navbar = ({ isSidebarOpen, toggleSidebar }) => {
 
   const {Otoken , setOtoken} = useContext(OutletContext);
+  const {aToken , SetAToken} = useContext(AdminContext);
 
-  const navigate = useNavigate();
+  const handleLogout = () => {
 
-  const logout = () => 
-  {
-    navigate('/');
-
-    aToken && SetAToken("");
-
-    aToken && localStorage.removeItem('aToken')
-
-    Otoken && setOtoken("");
-
-    Otoken && localStorage.removeItem('Otoken');
-
+    setOtoken('');
+    localStorage.removeItem('Otoken');
+    SetAToken('');
+    localStorage.removeItem('aToken');
   }
-
   return (
+    <div className="flex items-center justify-between px-4 sm:px-10 py-3 border-b bg-white">
 
-    <div className='flex justify-between items-center px-4 sm:px-10 py-3 border-b bg-white'>
+      <div className="flex items-center gap-4">
 
-        <div className='flex items-center gap-2 text-xs'>
 
-            <img className='w-36 cursor-pointer' src={assets.admin_logo} alt="" />
+        <button 
+          onClick={toggleSidebar} 
+          className="md:hidden bg-primary-600 text-white p-2 rounded-md border"
+        >
+          {isSidebarOpen ? <IoClose size={24} /> : <IoMenu size={24} />}
+        </button>
 
-            <p className='border hidden sm:block px-2.5 py-0.5 rounded-full border-gray-500'>{aToken ? "Admin" : "Outlet"}</p>
+        {/* Logo */}
+        <img className="w-28 sm:w-36 cursor-pointer" src={assets.admin_logo} alt="Logo" />
+      </div>
 
-        </div>
-
-        <button onClick={logout} className='bg-primary-600 text-white font-medium text-sm px-10 py-3 rounded-lg'>Signout</button>
-
+      {/* Signout Button */}
+      <button onClick={handleLogout}
+        className="bg-primary-600 text-white font-medium text-sm px-6 sm:px-10 py-2 sm:py-3 rounded-lg"
+      >
+        Sign Out
+      </button>
     </div>
-
   );
-
 };
 
 export default Navbar;

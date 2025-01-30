@@ -60,59 +60,77 @@ const StockRequest = () => {
   
   return (
 
-    <div className='w-full flex flex-col'>
+    <div className='w-full flex flex-col min-h-full'>
 
-      <form onSubmit={handleSubmit} className='w-full flex flex-col md:w-[60%] text-gray-700 text-base mt-6 rounded-md py-6 px-4  md:px-6 mx-4 md:mx-[2%] bg-white border'>
+<form 
+  onSubmit={handleSubmit} 
+  className='w-full max-w-[90%] md:max-w-[60%] flex flex-col text-gray-700 text-base mt-6 rounded-md py-6 px-4 md:px-6 mx-5 bg-white border'>
 
-        <h1 className='font-semibold text-2xl md:text-2xl mb-4'>Delivery Shedule Stock Request</h1>
+  <h1 className='font-semibold text-2xl md:text-2xl mb-4 text-center'>
+    Delivery Schedule Stock Request
+  </h1>
 
-        <div className='w-full flex flex-col'>
+  <div className='w-full flex flex-col'>
 
-          <div className='flex flex-col md:grid grid-cols-6 gap-4 md:gap-6'>
+    <div className='flex flex-col md:grid grid-cols-6 gap-4 md:gap-6'>
 
-            <div className='w-full flex flex-col md:col-span-3 gap-2'>
+      <div className='w-full flex flex-col md:col-span-3 gap-2'>
+        <label htmlFor="smallGas">Small Gas</label>
+        <input 
+          onChange={(e) => setSmallQty(Number(e.target.value))} 
+          value={smallQty} 
+          className='w-full p-2 border border-gray-300 rounded-md focus:outline-1 focus:outline-primary-700' 
+          type="number" 
+          placeholder='Small Gas Quantity'
+        />
+      </div>
 
-              <label className='block' htmlFor="smallGas">Small Gas</label>
+      <div className='w-full flex flex-col md:col-span-3 gap-2'>
+        <label htmlFor="mediumGas">Medium Gas</label>
+        <input 
+          onChange={(e) => setMediumQty(Number(e.target.value))} 
+          value={mediumQty} 
+          className='w-full p-2 border border-gray-300 rounded-md focus:outline-1 focus:outline-primary-700' 
+          type="number" 
+          placeholder='Medium Gas Quantity'
+        />
+      </div>
 
-              <input onChange={(e) => setSmallQty(Number(e.target.value))} value={smallQty} className='w-full p-2 border border-gray-300 rounded-md focus:outline-1 focus:outline-primary-700' type="number" placeholder='Small Gas Quantity'/>
+      <div className='w-full flex flex-col md:col-span-3 gap-2'>
+        <label htmlFor="largeGas">Large Gas</label>
+        <input 
+          onChange={(e) => setLargeQty(Number(e.target.value))} 
+          value={largeQty} 
+          className='w-full p-2 border border-gray-300 rounded-md focus:outline-1 focus:outline-primary-700' 
+          type="number" 
+          placeholder='Large Gas Quantity'
+        />
+      </div>
 
-            </div>
+      <div className='w-full flex flex-col md:col-span-3 gap-2'>
+        <label htmlFor="expectedDate">Expected Date</label>
+        <input 
+          onChange={(e) => setExpectedDate(e.target.value)} 
+          value={expectedDate} 
+          className='w-full cursor-pointer p-2 border border-gray-300 rounded-md focus:outline-1 focus:outline-primary-700' 
+          type="date"
+        />
+      </div>
 
-            <div className='w-full flex flex-col md:col-span-3 gap-2'>
+      <div className='w-full flex flex-col md:col-span-6 gap-2'>
+        <button 
+          type='submit' 
+          className='bg-[#2563EB] py-[10px] text-white text-base rounded-md'>
+          Request Delivery Schedule
+        </button>
+      </div>
 
-              <label htmlFor="smallGas">Medium Gas</label>
+    </div>
 
-              <input onChange={(e) => setMediumQty(Number(e.target.value))} value={mediumQty} className='w-full p-2 border border-gray-300 rounded-md focus:outline-1 focus:outline-primary-700' type="number" placeholder='Medium Gas Quantity'/>
+  </div>
 
-            </div>
+</form>
 
-            <div className='w-full flex flex-col md:col-span-3 gap-2'>
-
-              <label htmlFor="smallGas">Large Gas</label>
-
-              <input onChange={(e) => setLargeQty(Number(e.target.value))} value={largeQty} className='w-full p-2 border border-gray-300 rounded-md focus:outline-1 focus:outline-primary-700' type="number" placeholder='Large Gas Quantity'/>
-
-            </div>
-
-            <div className='w-full flex flex-col md:col-span-3 gap-2'>
-
-              <label htmlFor="smallGas">Expected Date</label>
-
-              <input onChange={(e) => setExpectedDate(e.target.value)} value={expectedDate} className='w-full cursor-pointer p-2 border border-gray-300 rounded-md focus:outline-1 focus:outline-primary-700' type="date"/>
-
-            </div>
-
-            <div className='w-full flex flex-col md:col-span-6 gap-2'>
-
-              <button type='submit' className='bg-[#2563EB] py-[10px] text-white text-base rounded-md'>Request Delivery Shedule</button>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </form>
 
       <div className=' text-gray-700 text-base mt-6 rounded-md py-6 px-4  md:px-6 mx-4 md:mx-[2%] bg-white border'>
 
