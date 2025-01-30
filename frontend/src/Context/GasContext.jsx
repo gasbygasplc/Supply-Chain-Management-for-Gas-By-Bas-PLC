@@ -78,7 +78,6 @@ const GasContextProvider = (props) => {
 
     const checkoutCart = async () => {
         if (isProcessingCheckout) return;
-    
         setIsProcessingCheckout(true);
     
         if (!token) {
@@ -89,6 +88,14 @@ const GasContextProvider = (props) => {
     
         if (gasOrder.length === 0) {
             toast.error("Your cart is empty. Add items before checking out.");
+            setIsProcessingCheckout(false);
+            return;
+        }
+    
+        const totalAmount = gasOrder.reduce((sum, item) => sum + Number(item.totalPrice || 0), 0);
+    
+        if (isNaN(totalAmount) || totalAmount <= 0) {
+            toast.error("Invalid total amount. Please check your cart.");
             setIsProcessingCheckout(false);
             return;
         }
@@ -124,17 +131,39 @@ const GasContextProvider = (props) => {
             return;
         }
     
-        const payload = { userId, items: gasOrder };
-        console.log("Payload being sent to backend:", payload);
+        if (!gasOrder[0]?.outletId) {
+            toast.error("Error: Missing Outlet ID. Please try again.");
+            setIsProcessingCheckout(false);
+            return;
+        }
+    
+        const checkoutRequest = {
+            userId,
+            outletId: gasOrder[0]?.outletId,
+            items: gasOrder.map((item) => ({
+                gasType: item.type,
+                quantity: item.quantity,
+                price: item.price,
+                totalPrice: item.totalPrice,
+            })),
+            totalPrice: Number(totalAmount || 0),
+            expectedPickupDate: gasOrder[0]?.expectedPickupDate || null,
+        };
+    
+        console.log("Payload being sent to backend:", checkoutRequest);
     
         try {
-            const response = await axios.post(`${backendURL}/api/gas/checkout`, payload, {
+            const response = await axios.post(`${backendURL}/api/gas/checkout`, checkoutRequest, {
                 headers: { Authorization: `Bearer ${token}` },
             });
+    
+            console.log("Checkout Response:", response);
+    
             if (response.status === 201) {
-                toast.success("Checkout successful! You will receive notifications shortly.");
+                toast.success(`Checkout successful! Total: LKR ${Number(totalAmount || 0).toFixed(2)}. You will receive notifications shortly.`);
                 clearCart();
             } else {
+                console.error("Checkout failed. Response:", response.data);
                 toast.error("Checkout failed. Please try again later.");
             }
         } catch (error) {
@@ -144,7 +173,8 @@ const GasContextProvider = (props) => {
             setIsProcessingCheckout(false);
         }
     };
-
+    
+    
     const updateGasQuantity = (operation) => {
         setGasQuantity((prev) => {
             const maxQuantity = userData.role === "Organization" ? 10 : 2;

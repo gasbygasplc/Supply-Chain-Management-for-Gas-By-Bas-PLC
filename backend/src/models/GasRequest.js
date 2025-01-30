@@ -13,10 +13,17 @@ const GasRequestSchema = new mongoose.Schema(
       enum: ["Pending", "Approved", "Collected", "Rescheduled", "Cancelled"],
       default: "Pending",
     },
-    gasType: { type: String, required: true },
-    quantity: { type: Number, required: true },
+    items: [
+      {
+        gasType: { type: String, required: true },
+        quantity: { type: Number, required: true },
+        price: { type: Number, required: true },
+        totalPrice: { type: Number, required: true },
+      },
+    ],
     expectedPickupDate: { type: Date },
     expiration: { type: Date, required: true },
+    totalPrice: { type: Number, required: true },
     priorityLevel: {
       type: String,
       enum: ["Standard", "Priority"],

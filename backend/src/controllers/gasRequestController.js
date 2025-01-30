@@ -49,6 +49,7 @@ export const submitGasRequest = async (req, res) => {
                     expectedPickupDate,
                     expiration: expirationDate,
                     priorityLevel,
+                    totalPrice,
                 });
 
                 await gasRequest.save();
@@ -63,6 +64,7 @@ export const submitGasRequest = async (req, res) => {
                     - Expiration: ${expirationDate.toDateString()}
                     - Priority: ${priorityLevel}
                     - QR Code: ${qrCodeUrl}
+                    - Total: ${totalPrice}
                 `;
                 await sendSms(normalizedPhone, smsMessage.trim(), 'GasByGas');
 
@@ -79,6 +81,7 @@ export const submitGasRequest = async (req, res) => {
                     <p><strong>Priority:</strong> ${priorityLevel}</p>
                     <p>QR Code:</p>
                     <img src="${qrCodeImage}" alt="QR Code" style="width:150px;height:150px;" />
+                    <p><strong>Total:</strong> ${totalPrice}</p>
                     <p>Thank you for using our service!</p>
                 `;
                 await sendEmail(email, emailSubject, smsMessage.trim(), emailHtml);
@@ -263,135 +266,119 @@ export const getGasOrders = async (req, res) => {
 };
 
 export const handleCheckout = async (req, res) => {
-    const { userId, items } = req.body;
-
-    console.log("Received Checkout Payload:", req.body);
-
-    if (!userId || !items || items.length === 0 || items.some((item) => !item.outletId)) {
-        return res.status(400).json({ success: false, message: 'Missing required fields or cart is empty.' });
-    }
-
     try {
+        console.log("Received Checkout Payload:", req.body);
+
+        const { userId, outletId, items, totalPrice, expectedPickupDate } = req.body;
+
+        if (!userId || !outletId || !items || items.length === 0) {
+            console.error("Error: Missing required fields in request.");
+            return res.status(400).json({ success: false, message: "Missing required fields or cart is empty." });
+        }
+
+        if (isNaN(totalPrice) || totalPrice <= 0) {
+            console.error("Error: Invalid Total Price.");
+            return res.status(400).json({ success: false, message: "Invalid total price." });
+        }
+
         const user = await User.findById(userId);
         if (!user) {
-            return res.status(404).json({ success: false, message: 'User not found.' });
+            console.error("Error: User not found.");
+            return res.status(404).json({ success: false, message: "User not found." });
         }
 
-        const existingRequests = await GasRequest.find({
+        const outlet = await Outlet.findById(outletId);
+        if (!outlet) {
+            console.error("Error: Outlet not found.");
+            return res.status(404).json({ success: false, message: "Outlet not found." });
+        }
+
+        const tokenNumber = generateToken();
+
+        const qrCodeUrl = `${process.env.BASE_URL || "http://localhost:4000"}/api/qrcode/${tokenNumber}`;
+        const qrCodeImage = await generateQrCode({ tokenNumber, items, userId });
+
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 14);
+
+        const formattedItems = items.map((item) => ({
+            gasType: item.gasType,
+            quantity: Number(item.quantity),
+            price: Number(item.price),
+            totalPrice: Number(item.totalPrice),
+        }));
+
+        const gasRequest = new GasRequest({
             userId,
-            status: { $in: ["Pending", "Approved"] },
+            requestId: `REQ-${Date.now()}`,
+            tokenNumber,
+            outletId,
+            qrCodeUrl,
+            items: formattedItems,
+            expectedPickupDate: expectedPickupDate || null,
+            expiration: expirationDate,
+            totalPrice: Number(totalPrice || 0),
+            priorityLevel: "Standard",
         });
 
-        const totalGases = existingRequests.reduce((count, request) => count + request.quantity, 0);
-        const maxGasesAllowed = user.role === "Organization" ? 10 : 2;
+        await gasRequest.save();
+        console.log("Gas Request Saved:", gasRequest);
 
-        if (totalGases + items.reduce((count, item) => count + item.quantity, 0) > maxGasesAllowed) {
-            return res.status(400).json({
-                success: false,
-                message: `You cannot have more than ${maxGasesAllowed} gases in pending or active requests.`,
-            });
-        }
-
-        const requests = await Promise.all(
-            items.map(async (item) => {
-                const outlet = await Outlet.findById(item.outletId);
-                if (!outlet) throw new Error(`Outlet not found for ID: ${item.outletId}`);
-
-                const priorityLevel = item.priorityLevel || "Standard";
-
-                const tokenNumber = generateToken();
-                const qrCodeUrl = `${process.env.BASE_URL || 'http://localhost:4000'}/api/qrcode/${tokenNumber}`;
-                const qrCodeImage = await generateQrCode({
-                    tokenNumber,
-                    gasType: item.type,
-                    quantity: item.quantity,
-                    userId,
-                });
-
-                const expirationDate = new Date();
-                expirationDate.setDate(expirationDate.getDate() + 14);
-
-                const gasRequest = new GasRequest({
-                    userId,
-                    requestId: `REQ-${Date.now()}`,
-                    tokenNumber,
-                    outletId: item.outletId,
-                    qrCodeUrl,
-                    gasType: item.type,
-                    quantity: item.quantity,
-                    expectedPickupDate: item.expectedPickupDate,
-                    expiration: expirationDate,
-                    priorityLevel,
-                });
-
-                await gasRequest.save();
-
-                return {
-                    tokenNumber,
-                    qrCodeUrl,
-                    qrCodeImage,
-                    gasType: item.type,
-                    quantity: item.quantity,
-                    expectedPickupDate: item.expectedPickupDate,
-                    outletName: outlet.outletName,
-                    outletAddress: outlet.address,
-                    outletPhone: outlet.phone,
-                    expiration: expirationDate,
-                    priorityLevel,
-                };
-            })
-        );
-
-        const smsMessage = requests
+        const itemsDetails = formattedItems
             .map(
-                (request) => `
-                Gas Type: ${request.gasType}
-                Quantity: ${request.quantity}
-                Outlet: ${request.outletName}, ${request.outletAddress}, Phone: ${request.outletPhone}
-                Token: ${request.tokenNumber}
-                Expected Pickup Date: ${request.expectedPickupDate}
-                Expiration: ${request.expiration.toDateString()}
-                Priority: ${request.priorityLevel}
-                QR Code: ${request.qrCodeUrl}
-            `
+                (item) => `- ${item.gasType} Gas x${item.quantity} → LKR ${item.totalPrice.toFixed(2)}`
             )
-            .join('\n\n');
+            .join("\n");
 
-        await sendSms(user.phone, smsMessage.trim(), 'GasByGas');
+        const smsMessage = `
+        Gas Order:
+        Token: ${tokenNumber}
+        Outlet: ${outlet.outletName}, ${outlet.address || "N/A"}
+        Pickup: ${expectedPickupDate || "Not Specified"}
+        Exp: ${expirationDate.toDateString()}
+        Items: ${formattedItems.map((item) => `${item.gasType} x${item.quantity} - LKR ${item.totalPrice.toFixed(0)}`).join(", ")}
+        Total: LKR ${Number(totalPrice || 0).toFixed(0)}
+        QR: ${qrCodeUrl}
+        `;
+        await sendSms(user.phone, smsMessage.trim(), "GasByGas");
+        
 
-        const emailSubject = 'Gas Order Confirmation';
+        const emailSubject = "Gas Order Confirmation";
         const emailHtml = `
             <h1>Gas Order Confirmation</h1>
             <p>Your gas order has been successfully placed.</p>
+            <p><strong>Token:</strong> ${tokenNumber}</p>
+            <p><strong>Outlet:</strong> ${outlet.outletName}, ${outlet.address}, Phone: ${outlet.phone}</p>
+            <p><strong>Pickup Date:</strong> ${expectedPickupDate || "Not Specified"}</p>
+            <p><strong>Expiration:</strong> ${expirationDate.toDateString()}</p>
+            <h2>Items Ordered:</h2>
             <ul>
-                ${requests
+                ${formattedItems
                     .map(
-                        (request) => `
+                        (item) => `
                         <li>
-                            <strong>Gas Type:</strong> ${request.gasType}<br/>
-                            <strong>Quantity:</strong> ${request.quantity}<br/>
-                            <strong>Outlet:</strong> ${request.outletName}, ${request.outletAddress}, Phone: ${request.outletPhone}<br/>
-                            <strong>Token:</strong> ${request.tokenNumber}<br/>
-                            <strong>Expected Pickup Date:</strong> ${request.expectedPickupDate}<br/>
-                            <strong>Expiration:</strong> ${request.expiration.toDateString()}<br/>
-                            <strong>Priority:</strong> ${request.priorityLevel}</p>
-                            <img src="${request.qrCodeImage}" alt="QR Code" style="width:150px;height:150px;" />
-                        </li>`
+                            <strong>Type:</strong> ${item.gasType} Gas<br/>
+                            <strong>Quantity:</strong> ${item.quantity}<br/>
+                            <strong>Price:</strong> LKR ${item.totalPrice.toFixed(2)}
+                        </li>
+                    `
                     )
-                    .join('')}
+                    .join("")}
             </ul>
+            <p><strong>Total:</strong> LKR ${Number(totalPrice || 0).toFixed(2)}</p>
+            <p>QR Code:</p>
+            <img src="${qrCodeImage}" alt="QR Code" style="width:150px;height:150px;" />
             <p>Thank you for using our service!</p>
         `;
-
         await sendEmail(user.email, emailSubject, smsMessage.trim(), emailHtml);
 
         res.status(201).json({
             success: true,
-            message: 'Checkout successful!',
-            requests,
+            message: "Checkout successful!",
+            gasRequest,
         });
     } catch (error) {
-        console.error('Error during checkout:', error);
-        res.status(500).json({ success: false, message: 'Error during checkout.' });
+        console.error("Error during checkout:", error);
+        res.status(500).json({ success: false, message: "Error during checkout." });
     }
 };

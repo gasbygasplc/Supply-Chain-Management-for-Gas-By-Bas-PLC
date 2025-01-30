@@ -13,6 +13,8 @@ const Cart = () => {
         setCartItems(gasOrder || []);
     }, [gasOrder]);
 
+    const totalAmount = cartItems.reduce((sum, item) => sum + Number(item.totalPrice || 0), 0);
+
     const handleRemoveItem = (index) => {
         const updatedItems = [...cartItems];
         updatedItems.splice(index, 1);
@@ -34,8 +36,6 @@ const Cart = () => {
 
         try {
             await checkoutCart();
-
-            // toast.success("Checkout successful! You will receive notifications shortly.");
 
             setTimeout(() => {
                 navigate("/my-gas-orders");
@@ -77,10 +77,10 @@ const Cart = () => {
                                 <td className="px-4 py-2">{item.city}</td>
                                 <td className="px-4 py-2">{item.outletName}</td>
                                 <td className="px-4 py-2">{item.type}</td>
-                                <td className="px-4 py-2">{item.price}</td>
+                                <td className="px-4 py-2">LKR {item.price.toFixed(2)}</td>
                                 <td className="px-4 py-2">{item.quantity}</td>
                                 <td className="px-4 py-2">{item.weightKG}</td>
-                                <td className="px-4 py-2">{item.totalPrice}</td>
+                                <td className="px-4 py-2">LKR {Number(item.totalPrice || 0).toFixed(2)}</td>
                                 <td className="px-4 py-2 text-left">
                                     <button
                                         className="text-primary hover:text-red-800"
@@ -94,6 +94,11 @@ const Cart = () => {
                     </tbody>
                 </table>
             </div>
+
+            <div className="mt-4 flex justify-end text-lg font-semibold">
+            <p>Total: <span className="text-blue-600">LKR {Number(totalAmount || 0).toFixed(2)}</span></p>
+            </div>
+
             <div className="mt-4 justify-end flex">
                 {loading ? (
                     <div className="flex items-center gap-2">

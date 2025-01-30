@@ -135,44 +135,30 @@ const MyGasOrders = () => {
                                             <h2 className="text-xl font-semibold mb-2">
                                                 Request ID: {order.requestId}
                                             </h2>
-                                            <p>
-                                                <strong>Status:</strong> {order.status}
+                                            <p><strong>Status:</strong> {order.status}</p>
+                                            <p><strong>Priority:</strong> {order.priorityLevel || "Standard"}</p>
+                                            <p><strong>Token:</strong> {order.tokenNumber}</p>
+                                            <p><strong>Outlet:</strong> {order.outletId?.outletName || "Unknown"}</p>
+                                            <p><strong>Address:</strong> {order.outletId?.address || "Unknown"}</p>
+                                            <p><strong>Phone:</strong> {order.outletId?.phoneNumber || "Unknown"}</p>
+
+                                            <div className="mt-2">
+                                                <h3 className="font-semibold">Ordered Items:</h3>
+                                                <ul className="list-disc list-inside">
+                                                    {order.items?.map((item, index) => (
+                                                        <li key={index}>
+                                                            {item.gasType} Gas x{item.quantity} - LKR {Number(item.totalPrice || 0).toFixed(2)}
+                                                        </li>
+                                                    ))}
+                                                </ul>
+                                            </div>
+
+                                            <p><strong>Pickup Date:</strong> {order.expectedPickupDate ? new Date(order.expectedPickupDate).toLocaleDateString() : "Not specified"}</p>
+                                            <p><strong>Expiration:</strong> {new Date(order.expiration).toLocaleDateString()}</p>
+                                            <p className="text-lg font-semibold text-blue-600">
+                                                Total: LKR {Number(order.totalPrice || 0).toFixed(2)}
                                             </p>
-                                            <p>
-                                                <strong>Priority Level:</strong>{" "}
-                                                {order.priorityLevel || "Standard"}
-                                            </p>
-                                            <p>
-                                                <strong>Token Number:</strong> {order.tokenNumber}
-                                            </p>
-                                            <p>
-                                                <strong>Pickup Outlet:</strong>{" "}
-                                                {order.outletId?.outletName || "Unknown"}
-                                            </p>
-                                            <p>
-                                                <strong>Address:</strong>{" "}
-                                                {order.outletId?.address || "Unknown"}
-                                            </p>
-                                            <p>
-                                                <strong>Phone Number:</strong>{" "}
-                                                {order.outletId?.phoneNumber || "Unknown"}
-                                            </p>
-                                            <p>
-                                                <strong>Gas Type:</strong> {order.gasType}
-                                            </p>
-                                            <p>
-                                                <strong>Quantity:</strong> {order.quantity}
-                                            </p>
-                                            <p>
-                                                <strong>Estimated Pickup Date:</strong>{" "}
-                                                {order.expectedPickupDate
-                                                    ? new Date(order.expectedPickupDate).toLocaleDateString()
-                                                    : "Not specified"}
-                                            </p>
-                                            <p>
-                                                <strong>Expiration:</strong>{" "}
-                                                {new Date(order.expiration).toLocaleDateString()}
-                                            </p>
+
                                             {status !== "Cancelled" && status !== "Expired" && (
                                                 <img
                                                     src={order.qrCodeUrl}
@@ -180,6 +166,7 @@ const MyGasOrders = () => {
                                                     className="mt-2 w-32 h-32"
                                                 />
                                             )}
+
                                             {status === "Pending" && !isExpired(order.expiration) && (
                                                 <button
                                                     onClick={() => handleCancelOrder(order._id)}
