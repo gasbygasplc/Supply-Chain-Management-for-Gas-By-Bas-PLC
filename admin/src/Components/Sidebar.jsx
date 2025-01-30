@@ -20,6 +20,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
         <ul className="text-[#515151] mt-10 md:mt-4 space-y-2 visible">
           {aToken && (
             <ul>
+              <SidebarItem to="/" img={assets.dashboard} label="Dashboard" toggleSidebar={toggleSidebar} />
               <SidebarItem to="/delivery-schedule" img={assets.delivery_shedule} label="Delivery Shedule" toggleSidebar={toggleSidebar} />
               <SidebarItem to="/add-outlet" img={assets.outlet} label="Add Outlets" toggleSidebar={toggleSidebar} />
               <SidebarItem to="/add-outlet-manager" img={assets.person} label="Add Outlet manager" toggleSidebar={toggleSidebar} />
