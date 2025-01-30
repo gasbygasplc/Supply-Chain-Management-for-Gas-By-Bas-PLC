@@ -91,7 +91,7 @@ const Dashboard = () => {
         </div>
 
         {/* Chart Section */}
-        <div className='w-[60%] bg-white p-4 rounded-lg shadow-lg'>
+        <div className='w-full  md:w-[60%] bg-white p-4 rounded-md border border-primary-700'>
           <h2 className='text-lg font-semibold text-center mb-2'>Daily Sales Chart</h2>
           <div className='h-[250px]'>
           <Bar data={data} options={options} />
