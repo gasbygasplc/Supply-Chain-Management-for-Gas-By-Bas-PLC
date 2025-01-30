@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import PieChart from './Charts/PieChart';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -97,6 +98,12 @@ const Dashboard = () => {
           <Bar data={data} options={options} />
           </div>
         </div>
+
+      </div>
+
+      <div className='mt-6 flex justify-center'>
+
+        <PieChart/>
 
       </div>
     </div>
