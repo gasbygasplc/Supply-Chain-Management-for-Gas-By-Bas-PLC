@@ -266,7 +266,7 @@ const GasRequestForm2 = () => {
                                                     <td className="px-4 py-2 whitespace-nowrap">{request.requestId}</td>
                                                     <td className="px-4 py-2 whitespace-nowrap">{request.userId || "N/A"}</td>
                                                     <td className="px-4 py-2 whitespace-nowrap">{new Date(request.requestedDate).toLocaleString() ||"N/A"}</td>
-                                                    <td className="px-4 py-2">
+                                                    <td className="px-4 py-2 whitespace-nowrap">
                                                         <select className="border p-1 rounded"
                                                             value={request.status}
                                                             onChange={(e) =>
@@ -283,7 +283,7 @@ const GasRequestForm2 = () => {
                                                             <option value="Cancelled">Cancelled</option>
                                                         </select>
                                                     </td>
-                                                    <td className="px-4 py-2">
+                                                    <td className="px-4 py-2 whitespace-nowrap">
                                                         <select
                                                             className="border p-1 rounded"
                                                             value={request.priorityLevel}
@@ -297,6 +297,27 @@ const GasRequestForm2 = () => {
                                                             <option value="Standard">Standard</option>
                                                             <option value="Priority">Priority</option>
                                                         </select>
+                                                    </td>
+                                                    <td className="px-4 py-2 whitespace-nowrap">{request.tokenNumber}</td>
+                                                    <td className="px-4 py-2 whitespace-nowrap">
+                                                        {request.user?.name ?? "Not Available"}
+                                                    </td>
+                                                    <td className="px-4 py-2 whitespace-nowrap">
+                                                        {request.user?.nic ?? "Not Available"}
+                                                    </td>
+                                                    <td className="px-4 py-2 whitespace-nowrap">
+                                                        {request.user?.email ?? "Not Available"}
+                                                    </td>
+                                                    <td className="px-4 py-2 whitespace-nowrap">
+                                                        {request.user?.phone ?? "Not Available"}
+                                                    </td>
+                                                    <td className="px-4 py-2 whitespace-nowrap">
+                                                        {request.items?.map((item, index) => (
+                                                            <div key={index}>
+                                                            {item.gasType} x{item.quantity} - LKR{" "}
+                                                            {Number(item.totalPrice || 0).toFixed(2)}
+                                                            </div>
+                                                        ))}
                                                     </td>
 
                                                 </tr>
