@@ -225,6 +225,40 @@ const GasRequestForm2 = () => {
                         <div className="text-gray-700 text-base mt-6 rounded-md py-6  md:px-6 bg-white border">
 
                             <h1 className="font-semibold text-1xl md:text-2xl mb-4">Your Gas Request Here!</h1>
+
+                            <div className="overflow-x-auto max-w-full">
+
+                                <table className="min-w-full table-auto text-sm text-gray-700">
+
+                                    <thead className="bg-gray-100">
+
+                                        <tr>
+                                            <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Request ID</th>
+                                            <th className="px-6 whitespace-nowrap py-2 font-medium text-left">User ID</th>
+                                            <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Requested Date</th>
+                                            <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Status</th>
+                                            <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Priority Level</th>
+                                            <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Token Number</th>
+                                            <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Consumer Name</th>
+                                            <th className="px-6 whitespace-nowrap py-2 font-medium text-left">NIC</th>
+                                            <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Email</th>
+                                            <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Phone</th>
+                                            <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Gas Orders</th>
+                                            <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Total Price</th>
+                                            <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Pickup Date</th>
+                                            <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Expiration</th>
+                                            <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Payment Received</th>
+                                            <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Cylinder Received</th>
+                                            <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Collection Overdue</th>
+                                            <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Reminder Status</th>
+                                            <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Send Reminder</th>
+                                        </tr>
+
+                                    </thead>
+
+                                </table>
+
+                            </div>
                             
                         </div>
                     ) : ""
