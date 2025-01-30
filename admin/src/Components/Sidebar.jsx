@@ -1,132 +1,65 @@
 import React, { useContext } from "react";
 import { AdminContext } from "../Context/AdminContext";
+import { OutletContext } from "../Context/OutletContext";
 import { NavLink } from "react-router-dom";
 import { assets } from "../assets/assets";
-import { OutletContext } from "../Context/OutletContext";
 
-const Sidebar = () => {
+const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
   const { aToken } = useContext(AdminContext);
-
   const { Otoken } = useContext(OutletContext);
 
   return (
+    <>
 
-    <div className=' min-h-screen bg-white border-r '>
-    
-      {
+      <div
+        className={`fixed md:relative h-screen w-64 md:w-72 bg-white border-r z-40 transform transition-transform duration-300 ${
+          isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
+        } `} 
+      >
 
-        aToken && (
-
-        <ul className='text-[#515151] mt-5'>
-
-          
-          <NavLink to={'/delivery-schedule'} className={({isActive}) => `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${isActive ? 'bg-[#f2f3ff] border-r-4 border-primary-600' : ''}`}>
-
-            <img src={assets.delivery_shedule} alt="" />
-
-            <p className='hidden md:block'>Delivery Shedule</p>
-
-          </NavLink>
-
-          <NavLink
-            to={"/add-outlet"}
-            className={({ isActive }) =>
-              `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
-                isActive ? "bg-[#f2f3ff] border-r-4 border-primary-600" : ""
-              }`
-            }
-          >
-            <img src={assets.outlet} alt="" />
-
-            <p className="hidden md:block">Add Outlet</p>
-          </NavLink>
-
-          <NavLink
-            to={"/add-outlet-manager"}
-            className={({ isActive }) =>
-              `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
-                isActive ? "bg-[#f2f3ff] border-r-4 border-primary-600" : ""
-              }`
-            }
-          >
-            <img src={assets.person} alt="" />
-
-            <p className="hidden md:block">Add Manager</p>
-          </NavLink>
-
-          <NavLink
-            to={"/manage-stock"}
-            className={({ isActive }) =>
-              `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
-                isActive ? "bg-[#f2f3ff] border-r-4 border-primary-600" : ""
-              }`
-            }
-          >
-            <img src={assets.stock} alt="" />
-
-            <p className="hidden md:block">Manage Stock</p>
-          </NavLink>
-
+        <ul className="text-[#515151] mt-10 md:mt-4 space-y-2 visible">
+          {aToken && (
+            <ul>
+              <SidebarItem to="/delivery-schedule" img={assets.delivery_shedule} label="Delivery Shedule" toggleSidebar={toggleSidebar} />
+              <SidebarItem to="/add-outlet" img={assets.outlet} label="Add Outlets" toggleSidebar={toggleSidebar} />
+              <SidebarItem to="/add-outlet-manager" img={assets.person} label="Add Outlet manager" toggleSidebar={toggleSidebar} />
+              <SidebarItem to="/manage-stock" img={assets.stock} label="Manage Stock" toggleSidebar={toggleSidebar} />
+            </ul>
+          )}
+          {Otoken && (
+            <>
+              <SidebarItem to="/outlet-dashboard" img={assets.dashboard} label="Dashboard" toggleSidebar={toggleSidebar} />
+              <SidebarItem to="/gas-request" img={assets.outlet} label="Gas Request" toggleSidebar={toggleSidebar} />
+              <SidebarItem to="/stock-request" img={assets.person} label="Stock Request" toggleSidebar={toggleSidebar} />
+              <SidebarItem to="/delivery-status" img={assets.stock} label="Delivery" toggleSidebar={toggleSidebar} />
+            </>
+          )}
         </ul>
+      </div>
+
+      {isSidebarOpen && (
+        <div
+          onClick={toggleSidebar}
+          className="fixed inset-0 bg-black bg-opacity-50 md:hidden z-30"
+        ></div>
       )}
-
-      {Otoken && (
-        <ul className="text-[#515151] mt-5">
-          <NavLink
-            to={"/outlet-dashboard"}
-            className={({ isActive }) =>
-              `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
-                isActive ? "bg-[#f2f3ff] border-r-4 border-primary-600" : ""
-              }`
-            }
-          >
-            <img src={assets.dashboard} alt="" />
-
-            <p className="hidden md:block">Dashboard</p>
-          </NavLink>
-
-          <NavLink
-            to={"/gas-request"}
-            className={({ isActive }) =>
-              `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
-                isActive ? "bg-[#f2f3ff] border-r-4 border-primary-600" : ""
-              }`
-            }
-          >
-            <img src={assets.outlet} alt="" />
-
-            <p className="hidden md:block">Gas Request</p>
-          </NavLink>
-
-          <NavLink
-            to={"/stock-request"}
-            className={({ isActive }) =>
-              `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
-                isActive ? "bg-[#f2f3ff] border-r-4 border-primary-600" : ""
-              }`
-            }
-          >
-            <img src={assets.person} alt="" />
-
-            <p className="hidden md:block">Stock Request</p>
-          </NavLink>
-
-          <NavLink
-            to={"/delivery-status"}
-            className={({ isActive }) =>
-              `flex items-center gap-3 py-3.5 px-3 md:px-9 md:min-w-72 cursor-pointer ${
-                isActive ? "bg-[#f2f3ff] border-r-4 border-primary-600" : ""
-              }`
-            }
-          >
-            <img src={assets.stock} alt="" />
-
-            <p className="hidden md:block">Delivery</p>
-          </NavLink>
-        </ul>
-      )}
-    </div>
+    </>
   );
 };
+
+const SidebarItem = ({ to, img, label, toggleSidebar }) => (
+  <NavLink
+    to={to}
+    className={({ isActive }) =>
+      `flex items-center gap-3 py-3.5 px-4 md:px-6 cursor-pointer ${
+        isActive ? "bg-[#f2f3ff] border-r-4 border-primary-600" : ""
+      }`
+    }
+    onClick={toggleSidebar} 
+  >
+    <img src={img} alt={label} className="w-6 h-6 text-black visible" />
+    <p className="block text-black visible">{label}</p>
+  </NavLink>
+);
 
 export default Sidebar;
