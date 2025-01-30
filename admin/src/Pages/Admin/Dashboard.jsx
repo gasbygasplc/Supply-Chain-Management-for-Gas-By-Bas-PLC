@@ -22,47 +22,42 @@ const Dashboard = () => {
 
         </div>
 
-        <div className='flex flex-col md:grid grid-cols-6'>
+        <div className='w-full flex flex-col md:flex-row mt-6 gap-4'>
 
-          <div className='flex '>
+          <div className='w-full md:w-[40%] flex flex-col md:grid md:grid-cols-4 gap-4'>
 
-            <div className='flex flex-col border mt-4 p-5 gap-2 rounded text-gray-600'>
+            <div className='md:col-span-2 flex flex-col gap-2 border w-full p-4 rounded border-primary-700 text-gray-600'>
 
-              <label className='font-medium'>Customers</label>
-              <label className='font-bold text-black'>12,000</label>
-              <label className='text-sm text-gray-400'>Since this month</label>
-
-            </div>
-
-            <div className='flex flex-col border mt-4 p-5 gap-2 rounded text-gray-600'>
-
-              <label className='font-medium'>Gas Requests</label>
-              <label className='font-bold text-black'>1200</label>
-              <label className='text-sm text-gray-400'>Since this month</label>
+              <p className='font-semibold text-base'>Customers</p>
+              <p className='text-lg font-semibold text-black'>12,000</p>
+              <p className='text-sm text-gray-400'>Since this month</p>
 
             </div>
+            <div className='md:col-span-2 flex flex-col gap-2 border w-full p-4 rounded border-primary-700 text-gray-600'>
 
-            <div className='flex flex-col border mt-4 p-5 gap-2 rounded text-gray-600'>
-
-              <label className='font-medium'>Earnings</label>
-              <label className='font-bold text-black'>32000</label>
-              <label className='text-sm text-gray-400'>Since this month</label>
+              <p className='font-semibold text-base'>Gas Request</p>
+              <p className='text-lg font-semibold text-black'>1000</p>
+              <p className='text-sm text-gray-400'>Since this month</p>
 
             </div>
+            <div className='md:col-span-2 flex flex-col gap-2 border w-full p-4 rounded border-primary-700 text-gray-600'>
 
-            <div className='flex flex-col border mt-4 p-5 gap-2 rounded text-gray-600'>
+              <p className='font-semibold text-base'>Earning</p>
+              <p className='text-lg font-semibold text-black'>200000</p>
+              <p className='text-sm text-gray-400'>Since this month</p>
 
-              <label className='font-medium'>Outlet Delivery</label>
-              <label className='font-bold text-black'>20</label>
-              <label className='text-sm text-gray-400'>Since this month</label>
+            </div>
+            <div className='md:col-span-2 flex flex-col gap-2 border w-full p-4 rounded border-primary-700 text-gray-600'>
+
+              <p className='font-semibold text-base'>Outlet Request</p>
+              <p className='text-lg font-semibold text-black'>20</p>
+              <p className='text-sm text-gray-400'>Since this month</p>
+
+            </div>
             
-            </div>
-
           </div>
-
-          <div className='md:col-span-3'>
-
-
+          <div className='w-[60%]'>
+            
           </div>
 
         </div>
