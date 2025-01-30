@@ -382,3 +382,67 @@ export const handleCheckout = async (req, res) => {
         res.status(500).json({ success: false, message: "Error during checkout." });
     }
 };
+
+export const sendReminder = async (req, res) => {
+    try {
+        const { requestId } = req.body;
+
+        if (!requestId) {
+            return res.status(400).json({ success: false, message: "Request ID is required." });
+        }
+
+        const gasRequest = await GasRequest.findById(requestId).populate("userId", "email phone name");
+
+        if (!gasRequest) {
+            return res.status(404).json({ success: false, message: "Gas request not found." });
+        }
+
+        if (gasRequest.reminderSent === "Sent") {
+            return res.status(400).json({ success: false, message: "Reminder already sent." });
+        }
+
+        const { name, email, phone } = gasRequest.userId;
+        const tokenNumber = gasRequest.tokenNumber;
+        const gasDetails = gasRequest.items
+            .map((item) => `${item.gasType} x${item.quantity} → LKR ${item.totalPrice.toFixed(2)}`)
+            .join(", ");
+
+        const smsMessage = `
+            Reminder: Gas Order Pending!
+            - Token: ${tokenNumber}
+            - Gas: ${gasDetails}
+            - Status: ${gasRequest.status}
+            - Payment: ${gasRequest.paymentReceived}
+            - Cylinder Received: ${gasRequest.cylinderReceived}
+            - Please take necessary action.
+        `;
+        await sendSms(phone, smsMessage.trim(), "GasByGas");
+
+        const emailSubject = "Reminder: Pending Gas Order";
+        const emailHtml = `
+            <h1>Reminder: Pending Gas Order</h1>
+            <p>Hello ${name},</p>
+            <p>This is a reminder regarding your gas request.</p>
+            <p><strong>Token:</strong> ${tokenNumber}</p>
+            <p><strong>Gas:</strong> ${gasDetails}</p>
+            <p><strong>Status:</strong> ${gasRequest.status}</p>
+            <p><strong>Payment:</strong> ${gasRequest.paymentReceived}</p>
+            <p><strong>Cylinder Received:</strong> ${gasRequest.cylinderReceived}</p>
+            <p>Please take necessary action as soon as possible.</p>
+            <p>Thank you!</p>
+        `;
+        await sendEmail(email, emailSubject, smsMessage.trim(), emailHtml);
+
+        gasRequest.reminderSent = "Sent";
+        await gasRequest.save();
+
+        return res.status(200).json({ success: true, message: "Reminder sent successfully!" });
+    } catch (error) {
+        console.error("Error sending reminder:", error);
+        return res.status(500).json({ success: false, message: "Error sending reminder." });
+    }
+};
+
+
+
+

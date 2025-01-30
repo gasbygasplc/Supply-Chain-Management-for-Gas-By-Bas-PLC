@@ -44,6 +44,11 @@ const GasRequestSchema = new mongoose.Schema(
       enum: ["Yes", "No"],
       default: "No",
     },
+    reminderSent: {
+      type: String,
+      enum: ["Sent", "Not Sent"],
+      default: "Not Sent",
+    },
   },
   { timestamps: true }
 );

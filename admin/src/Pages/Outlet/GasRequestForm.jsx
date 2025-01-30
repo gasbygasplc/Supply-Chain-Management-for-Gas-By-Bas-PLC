@@ -44,6 +44,32 @@ const GasRequestForm = () => {
         fetchGasRequests();
     }, []);
 
+    const sendReminder = async (requestId) => {
+        try {
+            const response = await axios.post(
+                `http://localhost:4000/api/gas/send-reminder`,
+                { requestId },
+                { headers: { Authorization: `Bearer ${Otoken}` } }
+            );
+    
+            if (response.data.success) {
+                toast.success("Reminder sent successfully!");
+                
+                handleUpdate(requestId, "reminderSent", "Sent");
+    
+                fetchGasRequests();
+            } else {
+                toast.error(response.data.message || "Failed to send reminder.");
+            }
+        } catch (error) {
+            console.error("Error sending reminder:", error);
+            toast.error("Error sending reminder.");
+        }
+    };
+    
+    
+   
+    
     const handleUpdate = async (requestId, field, value) => {
         try {
             const response = await axios.put(
@@ -51,10 +77,16 @@ const GasRequestForm = () => {
                 { requestId, [field]: value },
                 { headers: { Authorization: `Bearer ${Otoken}` } }
             );
-
+    
             if (response.data.success) {
                 toast.success(`${field} updated successfully`);
-                fetchGasRequests();
+    
+                setGasRequests((prevRequests) =>
+                    prevRequests.map((request) =>
+                        request.requestId === requestId ? { ...request, [field]: value } : request
+                    )
+                );
+    
             } else {
                 toast.error('Failed to update');
             }
@@ -63,6 +95,7 @@ const GasRequestForm = () => {
             toast.error('Error updating request.');
         }
     };
+    
 
     useEffect(() => {
         let filtered = gasRequests.filter(request => {
@@ -131,6 +164,8 @@ const GasRequestForm = () => {
                             <thead className='bg-gray-100'>
                                 <tr>
                                     <th className='px-4 py-2'>Request ID</th>
+                                    <th className='px-4 py-2'>User ID</th> 
+                                    <th className='px-4 py-2'>Requested Date</th>
                                     <th className='px-4 py-2'>Status</th>
                                     <th className='px-4 py-2'>Priority Level</th>
                                     <th className='px-4 py-2'>Token Number</th>
@@ -138,19 +173,25 @@ const GasRequestForm = () => {
                                     <th className='px-4 py-2'>NIC</th>
                                     <th className='px-4 py-2'>Email</th>
                                     <th className='px-4 py-2'>Phone</th>
-                                    <th className='px-4 py-2'>Gas Type</th>
-                                    <th className='px-4 py-2'>Quantity</th>
+                                    <th className='px-4 py-2'>Gas Orders</th>
+                                    <th className='px-4 py-2'>Total Price</th> 
                                     <th className='px-4 py-2'>Pickup Date</th>
                                     <th className='px-4 py-2'>Expiration</th>
                                     <th className='px-4 py-2'>Payment Received</th>
-                                    <th className='px-4 py-2'>Cylinder Received</th>
-                                    <th className='px-4 py-2'>Collection Overdue</th>
+<th className='px-4 py-2'>Cylinder Received</th>
+<th className='px-4 py-2'>Collection Overdue</th>
+<th className='px-4 py-2'>Reminder Status</th>
+<th className='px-4 py-2'>Send Reminder</th>
+
                                 </tr>
                             </thead>
                             <tbody>
                                 {filteredRequests.map((request) => (
                                     <tr key={request._id} className='border-t'>
                                         <td className='px-4 py-2'>{request.requestId}</td>
+                                        <td className='px-4 py-2'>{request.userId || "N/A"}</td>
+<td className='px-4 py-2'>{new Date(request.requestedDate).toLocaleString() || "N/A"}</td>
+
                                         <td className='px-4 py-2'>
                                             <select className="border p-1 rounded"
                                                 value={request.status}
@@ -175,34 +216,73 @@ const GasRequestForm = () => {
                                         <td className='px-4 py-2'>{request.user?.nic ?? "Not Available"}</td>
                                         <td className='px-4 py-2'>{request.user?.email ?? "Not Available"}</td>
                                         <td className='px-4 py-2'>{request.user?.phone ?? "Not Available"}</td>
-                                        <td className='px-4 py-2'>{request.gasType}</td>
-                                        <td className='px-4 py-2'>{request.quantity}</td>
+                                        <td className='px-4 py-2'>
+    {request.items?.map((item, index) => (
+        <div key={index}>
+            {item.gasType} x{item.quantity} - LKR {Number(item.totalPrice || 0).toFixed(2)}
+        </div>
+    ))}
+</td>
+<td className='px-4 py-2 font-semibold'>
+    LKR {Number(request.totalPrice || 0).toFixed(2)}
+</td>
                                         <td className='px-4 py-2'>{request.expectedPickupDate || "Not specified"}</td>
                                         <td className='px-4 py-2'>{new Date(request.expiration).toLocaleDateString()}</td>
-                                        <td className='px-4 py-2'>
-                                            <select className="border p-1 rounded"
-                                                value={request.paymentReceived || "No"}
-                                                onChange={(e) => handleUpdate(request.requestId, 'paymentReceived', e.target.value)}>
-                                                <option value="No">No</option>
-                                                <option value="Yes">Yes</option>
-                                            </select>
-                                        </td>
-                                        <td className='px-4 py-2'>
-                                            <select className="border p-1 rounded"
-                                                value={request.cylinderReceived || "No"}
-                                                onChange={(e) => handleUpdate(request.requestId, 'cylinderReceived', e.target.value)}>
-                                                <option value="No">No</option>
-                                                <option value="Yes">Yes</option>
-                                            </select>
-                                        </td>
-                                        <td className='px-4 py-2'>
-                                            <select className="border p-1 rounded"
-                                                value={request.collectionOverdue || "No"}
-                                                onChange={(e) => handleUpdate(request.requestId, 'collectionOverdue', e.target.value)}>
-                                                <option value="No">No</option>
-                                                <option value="Yes">Yes</option>
-                                            </select>
-                                        </td>
+<td className='px-4 py-2'>
+    <select className="border p-1 rounded"
+        value={request.paymentReceived || "No"}
+        onChange={(e) => handleUpdate(request.requestId, 'paymentReceived', e.target.value)}>
+        <option value="No">No</option>
+        <option value="Yes">Yes</option>
+    </select>
+</td>
+
+<td className='px-4 py-2'>
+    <select className="border p-1 rounded"
+        value={request.cylinderReceived || "No"}
+        onChange={(e) => handleUpdate(request.requestId, 'cylinderReceived', e.target.value)}>
+        <option value="No">No</option>
+        <option value="Yes">Yes</option>
+    </select>
+</td>
+
+<td className='px-4 py-2'>
+    <select className="border p-1 rounded"
+        value={request.collectionOverdue || "No"}
+        onChange={(e) => handleUpdate(request.requestId, 'collectionOverdue', e.target.value)}>
+        <option value="No">No</option>
+        <option value="Yes">Yes</option>
+    </select>
+</td>
+
+<td className='px-4 py-2'>
+    <select className="border p-1 rounded"
+        value={request.reminderSent || "Not Sent"}
+        onChange={(e) => handleUpdate(request.requestId, 'reminderSent', e.target.value)}
+    >
+        <option value="Not Sent">Not Sent</option>
+        <option value="Sent">Sent</option>
+    </select>
+</td>
+
+<td className="px-4 py-2">
+    {request.reminderSent === "Sent" ? (
+        <span className="text-green-600 font-semibold">Reminder Sent</span>
+    ) : (
+        (request.paymentReceived === "No" || 
+         request.cylinderReceived === "No" || 
+         request.collectionOverdue === "Yes") && (
+            <button
+                className="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition"
+                onClick={() => sendReminder(request._id)}
+                disabled={request.reminderSent === "Sent"}
+            >
+                Send Reminder
+            </button>
+        )
+    )}
+</td>
+
                                     </tr>
                                 ))}
                             </tbody>
