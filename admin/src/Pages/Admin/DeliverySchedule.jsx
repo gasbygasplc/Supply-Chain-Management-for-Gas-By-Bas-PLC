@@ -48,16 +48,19 @@ const DeliverySchedule = () => {
             const response = await axios.get(
                 `http://localhost:4000/api/delivery-schedule/outlet/${outletId}/gas-requests`
             );
-            if (response.data.success) {
+    
+            if (response.data.success && Array.isArray(response.data.gasRequests)) {
                 setGasRequests(response.data.gasRequests);
             } else {
+                console.warn("No gas requests found for the selected outlet.");
                 setGasRequests([]);
             }
         } catch (err) {
-            console.error('Error fetching gas requests:', err);
+            console.error("Error fetching gas requests:", err);
             setGasRequests([]);
         }
     };
+    
 
     const handleSelectOutlet = (outlet) => {
         setSelectedOutlet(outlet);
@@ -163,10 +166,19 @@ const DeliverySchedule = () => {
     
 
     const handleStatusChange = async (scheduleId, newStatus) => {
-        if (newStatus === "Rescheduled" && !rescheduledDates[scheduleId]) {
-            alert("Please select a new delivery date before rescheduling.");
-            return;
+        const selectedSchedule = deliverySchedules.find(s => s._id === scheduleId);
+        if (!selectedSchedule) return;
+    
+        if (newStatus === "Rescheduled") {
+            setRescheduledDates((prev) => ({
+                ...prev,
+                [scheduleId]: selectedSchedule.deliveryDate || "",
+            }));
         }
+    
+        const updatedDeliveryDate = newStatus === "Rescheduled" ? rescheduledDates[scheduleId] : selectedSchedule.deliveryDate;
+    
+        await updateGasRequests(selectedSchedule.outletId, updatedDeliveryDate, newStatus);
     
         const payload = { status: newStatus };
         if (newStatus === "Rescheduled") {
@@ -178,15 +190,66 @@ const DeliverySchedule = () => {
                 `http://localhost:4000/api/delivery-schedule/${scheduleId}/status`,
                 payload
             );
+    
             if (response.data.success) {
-                alert("Status updated successfully");
+                alert("Status updated successfully!");
                 fetchDeliverySchedules();
             } else {
-                alert("Failed to update status");
+                alert("Failed to update status.");
             }
         } catch (error) {
-            console.error("Error updating status:", error);
-            alert("Error updating status");
+            console.error("Error updating status:", error.response?.data || error.message);
+            alert("Failed to update status: " + (error.response?.data?.message || "Unknown error"));
+        }
+    };
+    
+    
+    
+    const updateGasRequests = async (outletId, deliveryDate, status) => {
+        try {
+            const response = await axios.post(
+                `http://localhost:4000/api/delivery-schedule/update-requests`, 
+                { outletId, deliveryDate, status }
+            );
+    
+            if (response.data.success) {
+                console.log("Gas requests updated successfully.");
+            } else {
+                console.warn("Failed to update gas requests.");
+            }
+        } catch (error) {
+            console.error("Error updating gas requests:", error);
+        }
+    };
+
+    const handleConfirmReschedule = async (scheduleId) => {
+        const newDeliveryDate = rescheduledDates[scheduleId];
+    
+        if (!newDeliveryDate) {
+            alert("Please select a new delivery date.");
+            return;
+        }
+    
+        const payload = {
+            status: "Rescheduled",
+            newDeliveryDate,
+        };
+    
+        try {
+            const response = await axios.patch(
+                `http://localhost:4000/api/delivery-schedule/${scheduleId}/status`,
+                payload
+            );
+    
+            if (response.data.success) {
+                alert("Delivery rescheduled successfully!");
+                fetchDeliverySchedules();
+            } else {
+                alert("Failed to reschedule delivery.");
+            }
+        } catch (error) {
+            console.error("Error rescheduling delivery:", error);
+            alert("Error rescheduling delivery.");
         }
     };
     
@@ -311,23 +374,31 @@ const DeliverySchedule = () => {
                                 <option value="Cancelled">Cancelled</option>
                             </select>
                             {schedule.status === "Rescheduled" && (
-                                <div className="mt-2">
-                                    <label className="block text-sm font-semibold">
-                                        New Delivery Date:
-                                    </label>
-                                    <input
-                                        type="datetime-local"
-                                        value={rescheduledDates[schedule._id] || ""}
-                                        onChange={(e) =>
-                                            setRescheduledDates((prev) => ({
-                                                ...prev,
-                                                [schedule._id]: e.target.value,
-                                            }))
-                                        }
-                                        className="mt-1 px-2 py-1 border rounded-md w-full"
-                                    />
-                                </div>
-                            )}
+    <div className="mt-2">
+        <label className="block text-sm font-semibold">New Delivery Date:</label>
+        <input
+            type="datetime-local"
+            value={rescheduledDates[schedule._id] || ""}
+            onChange={(e) =>
+                setRescheduledDates((prev) => ({
+                    ...prev,
+                    [schedule._id]: e.target.value,
+                }))
+            }
+            className="mt-1 px-2 py-1 border rounded-md w-full"
+        />
+
+        <button
+            className="bg-blue-500 text-white px-4 py-2 mt-2 rounded-md hover:bg-blue-600 transition"
+            onClick={() => handleConfirmReschedule(schedule._id)}
+            disabled={!rescheduledDates[schedule._id]}
+        >
+            Confirm Reschedule
+        </button>
+    </div>
+)}
+
+
                         </td>
                     </tr>
                 ))
@@ -371,18 +442,23 @@ const DeliverySchedule = () => {
                 <p className="text-gray-500">No gas type information available.</p>
             )}
 
-            <h3 className="font-bold text-lg mt-6">Total Gas Requests</h3>
-            {gasRequests.length > 0 ? (
-                <ul className="mt-2">
-                    {gasRequests.map((request) => (
-                        <li key={request._id} className="mb-2">
-                            <span className="font-semibold">{request._id || 'Unknown'}:</span> {request.totalQuantity || 0} units
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p className="text-gray-500">No gas requests for this outlet.</p>
-            )}
+{gasRequests.length > 0 && (
+    <div>
+        <h3 className="font-bold text-lg mt-6">Total Gas Requests</h3>
+        <ul className="mt-2">
+            {gasRequests.map((request) => (
+                <li key={request.gasType} className="mb-2">
+                    <span className="font-semibold">{request.gasType}:</span> {request.totalQuantity} units
+                </li>
+            ))}
+        </ul>
+    </div>
+)}
+
+{gasRequests.length === 0 && (
+    <p className="text-gray-500">No gas requests for this outlet.</p>
+)}
+
 
             <h3 className="font-bold text-lg mt-6">Delivery Date & Time</h3>
             <input

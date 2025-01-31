@@ -3,6 +3,8 @@ import { searchOutlets, getGasRequestsForOutlet } from '../controllers/DeliveryS
 import { createDeliverySchedule } from '../controllers/DeliveryScheduleController.js';
 import { getDeliverySchedules } from '../controllers/DeliveryScheduleController.js';
 import { updateDeliveryStatus } from '../controllers/DeliveryScheduleController.js';
+import { updateGasRequestsOnDeliveryStatusChange } from "../controllers/DeliveryScheduleController.js";
+
 
 const deliveryScheduleRouter = express.Router();
 
@@ -11,5 +13,7 @@ deliveryScheduleRouter.get('/outlet/:outletId/gas-requests', getGasRequestsForOu
 deliveryScheduleRouter.post('/create', createDeliverySchedule);
 deliveryScheduleRouter.get('/', getDeliverySchedules);
 deliveryScheduleRouter.patch('/:scheduleId/status', updateDeliveryStatus);
+deliveryScheduleRouter.post("/update-requests", updateGasRequestsOnDeliveryStatusChange);
+
 
 export default deliveryScheduleRouter;

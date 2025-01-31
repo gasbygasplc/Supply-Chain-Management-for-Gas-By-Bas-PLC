@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import axios from 'axios';
 import { asstets } from '../assets/Assets';
 import { GasContext } from '../Context/GasContext';
 import { toast } from 'react-toastify';
@@ -16,6 +17,7 @@ const GasRequest = () => {
     const [uniqueDistricts, setUniqueDistricts] = useState([]);
     const [selectedCity, setSelectedCity] = useState('');
     const [selectedOutlet, setSelectedOutlet] = useState('');
+    const [filteredOutlets, setFilteredOutlets] = useState([]);
     const [UniqueCity, setUniqueCity] = useState([]);
     const Navigate = useNavigate();
 
@@ -87,11 +89,26 @@ const GasRequest = () => {
         getCity(selectedDistrict);
     };
 
-    const handleCitySelection = (e) => {
+    const handleCitySelection = async (e) => {
         const city = e.target.value;
         setSelectedCity(city);
-        getOutletName(city);
+    
+        try {
+            const response = await axios.get(`http://localhost:4000/api/outlet/api/outlets/${city}`);
+            if (response.data.success) {
+                setFilteredOutlets(response.data.outletName);
+            } else {
+                toast.warn("No available outlets with sufficient stock.");
+                setFilteredOutlets([]);
+            }
+        } catch (error) {
+            console.error("Error fetching filtered outlets:", error);
+            toast.error("Error fetching available outlets.");
+        }
     };
+    
+    
+    
 
     const handleOutletSelection = (e) => {
         setSelectedOutlet(e.target.value);
@@ -210,22 +227,26 @@ const GasRequest = () => {
                             </select>
                         )}
 
-                        {outletName.length > 0 && (
-                            <select
-                                onChange={handleOutletSelection}
-                                value={selectedOutlet}
-                                className="outline-none border border-primary p-3 rounded-md"
-                            >
-                                <option value="" disabled>
-                                    Select Your Outlet
-                                </option>
-                                {outletName.map((outlet, index) => (
-                                    <option key={index} value={outlet._id}>
-                                        {outlet.outletName}
-                                    </option>
-                                ))}
-                            </select>
-                        )}
+{filteredOutlets.length > 0 && (
+    <select
+        onChange={handleOutletSelection}
+        value={selectedOutlet}
+        className="outline-none border border-primary p-3 rounded-md"
+    >
+        <option value="" disabled>
+            Select Your Outlet
+        </option>
+        {filteredOutlets.map((outlet, index) => (
+            <option key={index} value={outlet._id}>
+                {outlet.outletName} - 
+                {outlet.stockDetails.map(stock => (
+                    ` ${stock.cylinderType}: ${stock.availableQuantity}`
+                )).join(", ")}
+            </option>
+        ))}
+    </select>
+)}
+
                     </div>
                 </div>
 

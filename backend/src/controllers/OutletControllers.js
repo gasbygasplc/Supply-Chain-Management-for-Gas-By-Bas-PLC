@@ -6,6 +6,9 @@ import GasRequest from '../models/GasRequest.js';
 import outletManagermodel from '../models/outletManager.js';
 import User from '../models/User.js';
 import gasDeliveryRequest from '../models/ReqDeliveryShedule.js';
+import DeliverySchedule from '../models/DeliveryScheduleModel.js';
+import mongoose from 'mongoose';
+
 
 // const outletLogin = async(req , res) => {
 
@@ -166,27 +169,98 @@ const getCity = async(req , res) => {
 
 //============================================== Get Outlet Name ====================================================
 
-const getOutletName = async (req, res) => {
+export const getOutletName = async (req, res) => {
     try {
         const { city } = req.params;
-
-        let filter = {};
-        if (city) {
-            filter.city = city;
+        if (!city) {
+            return res.status(400).json({ success: false, message: "City is required" });
         }
 
-        const outlets = await outletModel.find(filter, 'outletName _id');
+        const today = new Date();
+        const twoWeeksLater = new Date();
+        twoWeeksLater.setDate(today.getDate() + 14);
 
+        const outlets = await outletModel.find({ city }).lean();
         if (!outlets.length) {
-            return res.status(404).json({ success: false, message: "No Outlet Found" });
+            return res.status(404).json({ success: false, message: "No outlets found in this city." });
         }
 
-        res.status(200).json({ success: true, message: "Outlet Name retrieved successfully", outletName: outlets });
+        const validOutlets = [];
+
+        for (const outlet of outlets) {
+            let hasStockAvailable = false;
+            let stockDetails = [];
+
+            for (const gasType of outlet.gasTypes) {
+                try {
+                    const approvedRequests = await GasRequest.aggregate([
+                        {
+                            $match: {
+                                outletId: new mongoose.Types.ObjectId(outlet._id),
+                                status: "Approved",
+                                "items.gasType": gasType.gasType,
+                            },
+                        },
+                        { $unwind: "$items" },
+                        {
+                            $match: {
+                                "items.gasType": gasType.gasType,
+                            },
+                        },
+                        {
+                            $group: {
+                                _id: "$items.gasType",
+                                totalRequested: { $sum: "$items.quantity" },
+                            },
+                        },
+                    ]);
+
+                    const totalApproved = approvedRequests.length > 0 ? approvedRequests[0].totalRequested : 0;
+                    const availableStock = gasType.currentStock - totalApproved;
+
+                    if (availableStock > 0) {
+                        hasStockAvailable = true;
+                    }
+
+                    stockDetails.push({
+                        cylinderType: gasType.gasType,
+                        availableQuantity: availableStock,
+                    });
+                } catch (err) {
+                    console.error("Error fetching gas stock for:", gasType.gasType, err);
+                }
+            }
+
+            const upcomingDeliveries = await DeliverySchedule.find({
+                outletId: outlet._id,
+                deliveryDate: { $gte: today, $lte: twoWeeksLater },
+                status: "Scheduled",
+            }).lean();
+
+            if (hasStockAvailable || upcomingDeliveries.length > 0) {
+                validOutlets.push({
+                    _id: outlet._id,
+                    outletName: outlet.outletName,
+                    city: outlet.city,
+                    district: outlet.district,
+                    stockDetails,
+                });
+            }
+        }
+
+        if (!validOutlets.length) {
+            return res.status(404).json({ success: false, message: "No available outlets with stock or scheduled deliveries." });
+        }
+
+        res.status(200).json({ success: true, message: "Filtered outlets retrieved successfully.", outletName: validOutlets });
+
     } catch (error) {
-        console.error(error);
-        res.status(500).json({ success: false, message: "Server error." });
+        console.error("Error fetching filtered outlets:", error);
+        res.status(500).json({ success: false, message: "Failed to fetch filtered outlets.", error: error.message });
     }
 };
+
+
 
 //================================================ Get Gas Request ====================================================
 
@@ -286,4 +360,4 @@ const fetchDeliveryShedule = async(req , res) => {
 
 }
 
-export {outletLogin , getOutletLocation , getCity , getOutletName , gasRequest , sendGasRequestForDeliveryShedule , fetchDeliveryShedule};
+export {outletLogin , getOutletLocation , getCity , gasRequest , sendGasRequestForDeliveryShedule , fetchDeliveryShedule};
