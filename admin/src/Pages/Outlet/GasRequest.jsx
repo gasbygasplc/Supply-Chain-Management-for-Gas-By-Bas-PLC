@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { OutletContext } from '../../Context/OutletContext';
-import GasRequestForm from './GasRequestForm';
+import GasRequestForm from './GasRequestForm2';
 
 const GasRequest = () => {
   const { Otoken, getGasRequest, gasRequest } = useContext(OutletContext);

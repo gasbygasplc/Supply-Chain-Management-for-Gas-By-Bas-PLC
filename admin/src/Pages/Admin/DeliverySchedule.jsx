@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 
 import axios from 'axios';
 
+
+
 const DeliverySchedule = () => {
     const [searchQuery, setSearchQuery] = useState('');
     const [outlets, setOutlets] = useState([]);
@@ -15,6 +17,8 @@ const DeliverySchedule = () => {
     const [filterDeliveryDate, setFilterDeliveryDate] = useState('');
     const [filterStatus, setFilterStatus] = useState('');
     const [rescheduledDates, setRescheduledDates] = useState({});
+    const [stockRequests, setStockRequests] = useState([]);
+    
 
 
 
@@ -60,6 +64,24 @@ const DeliverySchedule = () => {
             setGasRequests([]);
         }
     };
+
+    const fetchStockRequests = async (outletId) => {
+        try {
+            const response = await axios.get(
+                `http://localhost:4000/api/outlet/outlet/${outletId}/stock-requests`
+            );
+            if (response.data.success) {
+                setStockRequests(response.data.stockRequests);
+            } else {
+                setStockRequests([]);
+            }
+        } catch (err) {
+            console.error("Error fetching stock requests:", err);
+            setStockRequests([]);
+        }
+    };
+
+    
     
 
     const handleSelectOutlet = (outlet) => {
@@ -67,6 +89,7 @@ const DeliverySchedule = () => {
         setOutlets([]);
         setSearchQuery(outlet.outletName);
         fetchGasRequests(outlet._id);
+        fetchStockRequests(outlet._id);
     };
 
     const handleStockAllocationChange = (gasType, quantity) => {
@@ -128,22 +151,36 @@ const DeliverySchedule = () => {
         }
     };
        
-    useEffect(() => {
-        if (selectedOutlet && gasRequests.length) {
-            const allocation = selectedOutlet.gasTypes.map((type) => {
-                const gasRequest = gasRequests.find((request) => request._id === type.gasType);
-                const requestedQuantity = gasRequest ? gasRequest.totalQuantity : 0;
+useEffect(() => {
+    if (selectedOutlet && gasRequests.length) {
+        const allocation = selectedOutlet.gasTypes.map((type) => {
+            const pendingGasRequestsForType = gasRequests
+                .filter((request) => request.gasType === type.gasType && request.status === "Pending")
+                .reduce((sum, request) => sum + request.totalQuantity, 0);
+
+            const pendingStockRequestsForType = stockRequests
+                .filter(request => request.status === "Pending")
+                .reduce((sum, request) => sum + (request.gasQuantity[type.gasType] || 0), 0);
+
+            const upcomingDeliveryForType = deliverySchedules
+                .filter(schedule => schedule.status === "Scheduled")
+                .reduce((sum, schedule) => {
+                    return sum + (schedule.stockAllocation.find(allocation => allocation.gasType === type.gasType)?.quantity || 0);
+                }, 0);
+
+            const availableCapacity = type.maxCapacity - type.currentStock;
+
+            const updatedAvailableStock = type.currentStock + pendingStockRequestsForType + upcomingDeliveryForType - pendingGasRequestsForType;
+
+            const recommendedAllocation = Math.min(availableCapacity, updatedAvailableStock);
+
+            return { gasType: type.gasType, quantity: recommendedAllocation };
+        });
+
+        setStockAllocation(allocation);
+    }
+}, [selectedOutlet, gasRequests, stockRequests, deliverySchedules]);
     
-                const availableCapacity = type.maxCapacity - type.currentStock;
-    
-                const recommendedAllocation = Math.min(availableCapacity, requestedQuantity + availableCapacity);
-    
-                return { gasType: type.gasType, quantity: recommendedAllocation };
-            });
-    
-            setStockAllocation(allocation);
-        }
-    }, [selectedOutlet, gasRequests]);
 
     const fetchDeliverySchedules = async () => {
         try {
@@ -267,7 +304,53 @@ const DeliverySchedule = () => {
         return matchesOutletName && matchesDeliveryDate && matchesStatus;
     });
     
+    const getPendingStockRequestsSummary = (stockRequests = [], deliverySchedules = []) => {
+        if (!Array.isArray(stockRequests)) stockRequests = [];
+        if (!Array.isArray(deliverySchedules)) deliverySchedules = [];
     
+        const pendingRequests = stockRequests.filter(req => req.status === "Pending");
+    
+        if (pendingRequests.length === 0 && deliverySchedules.length === 0) {
+            return { gasSummary: {}, latestExpectedDelivery: "No pending requests", allocations: {} };
+        }
+    
+        const gasSummary = pendingRequests.reduce((acc, req) => {
+            if (req.gasQuantity) {
+                Object.keys(req.gasQuantity).forEach(gasType => {
+                    acc[gasType] = (acc[gasType] || 0) + req.gasQuantity[gasType];
+                });
+            }
+            return acc;
+        }, {});
+    
+        const latestExpectedDelivery = pendingRequests.length > 0 
+            ? pendingRequests.map(req => new Date(req.expectedDeliveryDate))
+                .sort((a, b) => b - a)[0]
+                .toLocaleDateString()
+            : "No pending requests";
+    
+        const allocations = deliverySchedules.reduce((acc, schedule) => {
+            if (schedule.stockAllocation) {
+                schedule.stockAllocation.forEach(({ gasType, quantity }) => {
+                    acc[gasType] = (acc[gasType] || 0) + quantity;
+                });
+            }
+            return acc;
+        }, {});
+    
+        const latestScheduledDelivery = deliverySchedules.length > 0
+            ? deliverySchedules.map(schedule => new Date(schedule.deliveryDate))
+                .sort((a, b) => b - a)[0]
+                .toLocaleDateString()
+            : "No scheduled deliveries";
+    
+        return { gasSummary, latestExpectedDelivery, allocations, latestScheduledDelivery };
+    };
+    
+    const { gasSummary, latestExpectedDelivery, allocations, latestScheduledDelivery } = 
+        getPendingStockRequestsSummary(stockRequests, deliverySchedules);
+    
+
     
     
 
@@ -458,6 +541,40 @@ const DeliverySchedule = () => {
 {gasRequests.length === 0 && (
     <p className="text-gray-500">No gas requests for this outlet.</p>
 )}
+
+
+{Object.keys(gasSummary).length > 0 ? (
+    <div>
+        <h3 className="font-bold text-lg mt-6">Outlet Stock Requests (Pending Only)</h3>
+        <p><strong>Most Recent Expected Delivery:</strong> {latestExpectedDelivery}</p>
+        <ul>
+            {Object.entries(gasSummary).map(([gasType, totalQuantity]) => (
+                <li key={gasType} className="ml-4">
+                    <span className="font-semibold">{gasType}:</span> {totalQuantity} units
+                </li>
+            ))}
+        </ul>
+
+        {Object.keys(allocations).length > 0 ? (
+            <div className="mt-4">
+                <h3 className="font-bold text-lg mt-6">Stock Allocations Scheduled</h3>
+                <p><strong>Most Recent Scheduled Delivery:</strong> {latestScheduledDelivery}</p>
+                <ul>
+                    {Object.entries(allocations).map(([gasType, totalQuantity]) => (
+                        <li key={gasType} className="ml-4">
+                            <span className="font-semibold">{gasType}:</span> {totalQuantity} units
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        ) : (
+            <p className="text-gray-500 mt-2">No upcoming stock allocations.</p>
+        )}
+    </div>
+) : (
+    <p className="text-gray-500">No pending stock requests available.</p>
+)}
+
 
 
             <h3 className="font-bold text-lg mt-6">Delivery Date & Time</h3>

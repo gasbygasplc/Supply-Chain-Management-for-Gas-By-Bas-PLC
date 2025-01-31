@@ -2,6 +2,7 @@ import express from  'express';
 import { fetchDeliveryShedule, gasRequest, getCity, getOutletLocation, outletLogin, sendGasRequestForDeliveryShedule } from '../controllers/OutletControllers.js';
 import authOutlet from '../middlewares/OutletMiddleWare.js';
 import { getOutletName } from "../controllers/OutletControllers.js";
+import { getOutletStockRequests } from "../controllers/OutletControllers.js";
 
 
 const outletRouter = express.Router();
@@ -22,7 +23,10 @@ outletRouter.get('/fetch-gas-request' , authOutlet , fetchDeliveryShedule);
 
 outletRouter.get('/outletName', getOutletName);
 
-outletRouter.get("/api/outlets/:city", getOutletName);
+outletRouter.get("/api/outlets/:city", getOutletName)
+
+outletRouter.get("/outlet/:outletId/stock-requests", getOutletStockRequests);
+
 
 
 export default outletRouter;
