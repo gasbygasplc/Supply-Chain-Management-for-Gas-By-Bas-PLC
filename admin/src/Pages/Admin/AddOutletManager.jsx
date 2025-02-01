@@ -15,7 +15,7 @@ const AddOutletManager = () => {
   const [loadingOutlets, setLoadingOutlets] = useState(true);
 
   const { aToken, backendURL } = useContext(AdminContext);
-  const { getOutletName, outletNames } = useContext(OutletContext);
+  const { getOutletName, outletNames , getOutletNames, outletId } = useContext(OutletContext);
 
   useEffect(() => {
     const fetchOutlets = async () => {

@@ -10,19 +10,24 @@ const OutletContextProvider = (props) => {
     const [gasRequest, setGasRequest] = useState([]);
     const [gasSheduleReq, setGasSheduleReq] = useState([]);
     const [loadingOutlets, setLoadingOutlets] = useState(false);
+    const [outletId , setOutletId] = useState([]);
 
     const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000';
 
     //============================================== Get Outlet Names ====================================================
-    const getOutletName = async () => {
+    const getOutletNames = async () => {
         try 
         {
 
-            const {data} = await axios.get()
+            const {data} = await axios.get(`${backendURL}/api/outlet/outletId`);
+
+            setOutletId(data.data.outlets);
+
             
         } catch (error) 
         {
-            
+            setError("Failed to fetch outlet names");
+            setLoading(false);
         }
     };
 
@@ -75,6 +80,8 @@ const OutletContextProvider = (props) => {
         gasSheduleReq,
         fetchGasReq,
         loadingOutlets,
+        getOutletNames,
+        outletId
     };
 
     return (
