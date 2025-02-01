@@ -15,7 +15,7 @@ const AddOutletManager = () => {
   const [loadingOutlets, setLoadingOutlets] = useState(true);
 
   const { aToken, backendURL } = useContext(AdminContext);
-  const { getOutletName, outletNames , getOutletNames, outletId } = useContext(OutletContext);
+  const { getOutletName, outletNames, error } = useContext(OutletContext);
 
   useEffect(() => {
     const fetchOutlets = async () => {
@@ -95,25 +95,29 @@ const AddOutletManager = () => {
 
           <div className="sm:col-span-3">
             <label className="mb-3 block text-base font-medium text-[#07074D]" htmlFor="Outlet-name">Outlet Name</label>
-            {loadingOutlets ? (
-              <p className="text-gray-500">Loading Outlets...</p>
-            ) : (
-              <select
-                id="Outlet-name"
-                className="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#FED500]"
-                value={outletName}
-                onChange={(e) => setOutletName(e.target.value)}
-              >
-                <option value="" disabled>Select an Outlet</option>
-                {outletNames.length > 0 ? (
-                  outletNames.map((outlet) => (
-                    <option key={outlet._id} value={outlet._id}>{outlet.outletName}</option>
-                  ))
-                ) : (
-                  <option value="" disabled>No outlets available</option>
-                )}
-              </select>
-            )}
+
+              {loadingOutlets ? (
+                <p className="text-gray-500">Loading Outlets...</p>
+              ) : error ? (
+                <p className="text-red-500">{error}</p>
+              ) : (
+                <select
+                  id="Outlet-name"
+                  className="w-full rounded-md border border-[#e0e0e0] bg-white py-2 px-4 text-base font-medium text-[#6B7280] outline-none focus:border-[#FED500]"
+                  value={outletName}
+                  onChange={(e) => setOutletName(e.target.value)}
+                >
+                  <option value="" disabled>Select an Outlet</option>
+                  {outletNames.length > 0 ? (
+                    outletNames.map((outlet) => (
+                      <option key={outlet._id} value={outlet._id}>{outlet.outletName}</option>
+                    ))
+                  ) : (
+                    <option value="" disabled>No outlets available</option>
+                  )}
+                </select>
+              )}
+
           </div>
 
           <div className="sm:col-span-3">

@@ -10,26 +10,35 @@ const OutletContextProvider = (props) => {
     const [gasRequest, setGasRequest] = useState([]);
     const [gasSheduleReq, setGasSheduleReq] = useState([]);
     const [loadingOutlets, setLoadingOutlets] = useState(false);
-    const [outletId , setOutletId] = useState([]);
+    const [error, setError] = useState(null); // 🔹 Added error state
 
     const backendURL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000';
 
     //============================================== Get Outlet Names ====================================================
-    const getOutletNames = async () => {
-        try 
-        {
-
-            const {data} = await axios.get(`${backendURL}/api/outlet/outletId`);
-
-            setOutletId(data.data.outlets);
-
-            
-        } catch (error) 
-        {
+    const getOutletName = async () => {
+        setLoadingOutlets(true);
+        setError(null);
+    
+        try {
+            const { data } = await axios.get(`${backendURL}/api/outlet/outletId`);
+    
+            console.log("Outlet API Response:", data); // 🔹 Debugging log
+    
+            // Correcting how we access outlets
+            if (data && data.success && Array.isArray(data.outlets)) {
+                setOutletNames(data.outlets); // ✅ Assign correctly
+            } else {
+                throw new Error("Invalid response format");
+            }
+        } catch (error) {
             setError("Failed to fetch outlet names");
-            setLoading(false);
+            console.error("Error fetching outlet names:", error);
+        } finally {
+            setLoadingOutlets(false);
         }
     };
+    
+    
 
     //============================================== Get Gas Requests ====================================================
     const getGasRequest = async () => {
@@ -80,8 +89,7 @@ const OutletContextProvider = (props) => {
         gasSheduleReq,
         fetchGasReq,
         loadingOutlets,
-        getOutletNames,
-        outletId
+        error, // 🔹 Expose error state
     };
 
     return (
