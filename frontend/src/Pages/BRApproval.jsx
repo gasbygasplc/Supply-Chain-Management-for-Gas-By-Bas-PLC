@@ -4,13 +4,13 @@ const BRApproval = () => {
   return (
     <>
 
-        <div className='h-screen w-full flex flex-col items-center'>
+        <div className='min-h-fit  w-full flex flex-col items-center'>
 
             <h1 className="py-6 mt-4 text-2xl font-bold text-center text-gray-900 sm:text-4xl">
                 <span className="text-primary">Submit</span> your BR Here
             </h1>
 
-            <div className='flex flex-col items-center justify-center w-full md:w-1/2'>
+            <div className='flex flex-col items-center gap-6 justify-center w-full md:w-1/2'>
 
                 <label htmlFor="dropzone-file" className='flex flex-col items-center border-primary mt-8 justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50'>
 
@@ -32,13 +32,15 @@ const BRApproval = () => {
 
                 </label>
 
-                <div className='w-full gap-2 text-gray-700 text-base'>
+                <div className='w-full gap-2 flex flex-col text-gray-700 text-base'>
 
-                    <label className='block' htmlFor="Phone">Phone number</label>
+                    <label className='block' htmlFor="BR">BR number</label>
 
-                    <input type="text" className='w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-primary' placeholder='0761234567' id='Phone' />
+                    <input type="text" className='w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-primary' placeholder='Enter your BR number' id='BR' />
 
                 </div>
+
+                <button type='submit' className='w-full p-2 border-none rounded-md bg-primary text-white text-base'>Register</button>
 
             </div>
 
