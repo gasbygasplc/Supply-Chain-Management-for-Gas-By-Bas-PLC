@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from 'react';
 import { OutletContext } from '../../Context/OutletContext';
-import GasRequestForm from './GasRequestForm';
+import GasRequestForm2 from './GasRequestForm2';
 
 const GasRequest = () => {
   const { Otoken, getGasRequest, gasRequest } = useContext(OutletContext);
@@ -13,7 +13,7 @@ const GasRequest = () => {
 
   return (
     <div className=' mx-auto sm:mx-10 px-10 sm:px-[5%] sm:py-7 w-full'>
-      <GasRequestForm />
+      <GasRequestForm2 />
     </div>
   );
 };
