@@ -94,6 +94,9 @@ const Navbar = ({ setShowSignIn }) => {
                 <Link to="/my-profile" className="hover:text-primary">
                   My Profile
                 </Link>
+                <Link to="/br-approval" className="hover:text-primary">
+                  BR Approval
+                </Link>
                 <Link to="/my-gas-orders" className="hover:text-primary">
                   My Gas Orders
                 </Link>
