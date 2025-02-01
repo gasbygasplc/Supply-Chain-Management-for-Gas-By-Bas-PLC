@@ -389,4 +389,29 @@ const fetchDeliveryShedule = async(req , res) => {
 
 }
 
-export {outletLogin , getOutletLocation , getCity , gasRequest , sendGasRequestForDeliveryShedule , fetchDeliveryShedule};
+//============================================== get outlet name =========================================================
+
+const getOutletId = async(req , res) => {
+
+    try 
+    {
+        
+        const outlets = await outletModel.find({} , "outletName _id");
+
+        if(!outlets.length)
+        {
+            return res.status(400).json({ success: false, message: "No Outlets Found" });
+        }
+
+        res.status(200).json({success:true , message:"Outlet names and IDs retrieved successfully." , outlets})
+
+    } catch (error) 
+    {
+
+        console.error(error);
+        res.status(500).json({success:false , message: "An error occurred while fetching outlet names and IDs."});
+        
+    }
+}
+
+export {outletLogin , getOutletLocation , getCity , gasRequest , sendGasRequestForDeliveryShedule , fetchDeliveryShedule , getOutletId};
