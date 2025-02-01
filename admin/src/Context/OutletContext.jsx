@@ -22,11 +22,11 @@ const OutletContextProvider = (props) => {
         try {
             const { data } = await axios.get(`${backendURL}/api/outlet/outletId`);
     
-            console.log("Outlet API Response:", data); // 🔹 Debugging log
+            console.log("Outlet API Response:", data); 
     
             // Correcting how we access outlets
             if (data && data.success && Array.isArray(data.outlets)) {
-                setOutletNames(data.outlets); // ✅ Assign correctly
+                setOutletNames(data.outlets); 
             } else {
                 throw new Error("Invalid response format");
             }
