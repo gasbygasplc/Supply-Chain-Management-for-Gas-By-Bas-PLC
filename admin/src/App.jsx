@@ -18,6 +18,7 @@ import Dashboard from "./Pages/Admin/Dashboard";
 import GasRequestForm2 from "./Pages/Outlet/GasRequestForm2";
 import RegisterConsumer from "./Pages/Outlet/RegisterConsumer";
 import Consumers from "./Pages/Outlet/Consumers";
+import OutletReport from "./Pages/Outlet/OutletReport";
 
 const App = () => {
 
@@ -71,6 +72,7 @@ const App = () => {
             <Route path="/delivery-status" element={<Delivery />} />
             <Route path="/register-consumer" element={<RegisterConsumer />} />
             <Route path="/consumers" element={<Consumers />} />
+            <Route path="/outlet-report" element={<OutletReport/>}/>
 
           </Routes>
 
