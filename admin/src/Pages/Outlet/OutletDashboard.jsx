@@ -4,7 +4,7 @@ import { OutletContext } from '../../Context/OutletContext.jsx';
 const OutletDashboard = () => {
     const [currentDate, setCurrentDate] = useState('');
 
-    const {outletStock} = useContext(OutletContext);
+    const {outletStock , allGasReq} = useContext(OutletContext);
   
     useEffect(() => {
       const today = new Date().toLocaleDateString();
@@ -47,7 +47,7 @@ const OutletDashboard = () => {
 
             <div className='flex flex-col w-full gap-2 border p-4 rounded border-primary-700 text-gray-600 md:w-60'>
               <p className='font-semibold text-base'>Gas Request</p>
-              <p className='text-lg font-semibold text-black'>12,000</p>
+              <p className='text-lg font-semibold text-black'>{allGasReq.length}</p>
               <p className='text-sm text-gray-400'>Since this month</p>
             </div>
 

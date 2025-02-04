@@ -22,11 +22,11 @@ const OutletContextProvider = (props) => {
 
     try {
 
-      const response = await axios.get(`${backendURL}/api/outlet/all-gas-requests` , {headers: {Authorization: `Bearer ${Otoken}`}});
+      const response = await axios.get(`${backendURL}/api/outlet/all-gas-request` , {headers: {Authorization: `Bearer ${Otoken}`}});
 
       if(response.data.success)
       {
-        setAllGasReq(response.data.gasRequests);
+        setAllGasReq(response.data.gasRequest);
       }
       else
       {
@@ -132,6 +132,7 @@ const OutletContextProvider = (props) => {
     getOutletName();
     getOutletStock();
     getAllGasReq();
+    console.log(gasRequest)
   }, []);
 
   useEffect(() => {
@@ -149,7 +150,8 @@ const OutletContextProvider = (props) => {
     gasSheduleReq,
     fetchGasReq,
     loadingOutlets,
-    outletStock
+    outletStock,
+    allGasReq
   };
 
   return (
