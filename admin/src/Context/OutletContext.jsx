@@ -17,16 +17,23 @@ const OutletContextProvider = (props) => {
 
   //============================================== Get outlet Stock ===================================================
 
-  const getOutletStock = async(req , res) => {
+  const getOutletStock = async() => {
     try {
       const response = await axios.get(`${backendURL}/api/outlet/outlet-stock` , {headers: {Authorization:`Bearer ${Otoken}`}});
 
       if(response.data.success)
       {
-        
+        setOutletStock(response.data.gasTypes);
+      }
+      else
+      {
+        toast.error(response.data.message || "Failed to fetch outlet stock.")
       }
       
     } catch (error) {
+
+      console.error("Error fetching outlet stock:", error.message);
+      toast.error("Failed to fetch outlet stock.");
       
     }
   }
@@ -99,7 +106,13 @@ const OutletContextProvider = (props) => {
 
   useEffect(() => {
     getOutletName();
+    getOutletStock();
   }, []);
+
+  useEffect(() => {
+    console.log("Updated Outlet Stock:", outletStock);
+  }, [outletStock]);w
+  
 
   const value = {
     Otoken,
@@ -111,6 +124,7 @@ const OutletContextProvider = (props) => {
     gasSheduleReq,
     fetchGasReq,
     loadingOutlets,
+    outletStock
   };
 
   return (
