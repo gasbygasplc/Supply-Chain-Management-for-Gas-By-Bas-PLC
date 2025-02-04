@@ -1,8 +1,49 @@
 import React, { useContext, useState } from 'react'
 import { OutletContext } from '../../Context/OutletContext';
 import { assets } from '../../assets/assets';
+import jsPDF from 'jspdf';
+import "jspdf-autotable"
 
 const OutletReport = () => {
+
+  //============================================= download Report =================================================
+
+  const downloadPDF = () => {
+    const doc = new jsPDF();
+    doc.setFontSize(16);
+    doc.text("Outlet Report", 14, 15);
+
+    if(navbutton === "Stock Report" && Array.isArray(outletStock) && outletStock.length > 0)
+    {
+      doc.setFontSize(12);
+      doc.text("Stock Report", 14, 25);
+
+      doc.autoTable({
+        startY: 30,
+        head: [["Gas Type", "Current Stock", "Max Capacity"]],
+        body: outletStock.map((item) => [item.gasType, item.currentStock, item.maxCapacity]),
+      })
+      
+    }
+
+    if (navbutton === "Gas Request" && Array.isArray(allGasReq) && allGasReq.length > 0) {
+      doc.setFontSize(12);
+      doc.text("Total Gas Request Report", 14, 25);
+  
+      doc.autoTable({
+        startY: 30,
+        head: [["Request ID", "User Name", "Requested Date", "Status"]],
+        body: allGasReq.map((request) => [
+          request.requestId,
+          request.userId?.name || "N/A",
+          new Date(request.requestedDate).toLocaleDateString(),
+          request.status,
+        ]),
+      });
+    }
+
+    doc.save(`${navbutton}.pdf`); 
+  }
 
   const [navbutton , setNavButton] = useState('Stock Report');
 
@@ -49,7 +90,7 @@ const OutletReport = () => {
 
                     <h1 className="font-semibold text-xl md:text-2xl text-gray-800">Current Stock Report</h1>
 
-                    <div className="bg-white hover:border-primary-600 transition p-2 rounded-md cursor-pointer flex items-center justify-center border border-gray-300 shadow-sm">
+                    <div onClick={downloadPDF} className="bg-white hover:border-primary-600 transition p-2 rounded-md cursor-pointer flex items-center justify-center border border-gray-300 shadow-sm">
 
                       <img src={assets.download} alt="Download" className="w-6 h-6" />
 
