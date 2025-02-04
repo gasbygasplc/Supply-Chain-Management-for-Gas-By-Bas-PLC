@@ -11,9 +11,33 @@ const OutletContextProvider = (props) => {
   const [gasSheduleReq, setGasSheduleReq] = useState([]);
   const [loadingOutlets, setLoadingOutlets] = useState(false);
   const [outletStock , setOutletStock] = useState(null);
+  const [allGasReq , setAllGasReq] = useState([]);
 
   const backendURL =
     import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
+
+  //============================================== get all gas req ====================================================
+
+  const getAllGasReq = async() => {
+
+    try {
+
+      const response = await axios.get(`${backendURL}/api/outlet/all-gas-requests` , {headers: {Authorization: `Bearer ${Otoken}`}});
+
+      if(response.data.success)
+      {
+        setAllGasReq(response.data.gasRequests);
+      }
+      else
+      {
+        toast.error(response.data.message || "Failed to fetch gas requests.");
+      }
+      
+    } catch (error) {
+      console.error("Error fetching gas requests:", error.message);
+      toast.error("Failed to fetch gas requests.");
+    }
+  }
 
   //============================================== Get outlet Stock ===================================================
 
@@ -107,6 +131,7 @@ const OutletContextProvider = (props) => {
   useEffect(() => {
     getOutletName();
     getOutletStock();
+    getAllGasReq();
   }, []);
 
   useEffect(() => {
