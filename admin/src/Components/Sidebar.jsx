@@ -10,20 +10,18 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
 
   return (
     <>
-
       <div
         className={`fixed md:relative h-screen w-64 md:w-72 bg-white border-r z-40 transform transition-transform duration-300 ${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"
         } `} 
       >
-
         <ul className="text-[#515151] mt-10 md:mt-4 space-y-2 visible">
           {aToken && (
             <ul>
               <SidebarItem to="/" img={assets.dashboard} label="Dashboard" toggleSidebar={toggleSidebar} />
-              <SidebarItem to="/delivery-schedule" img={assets.delivery_shedule} label="Delivery Shedule" toggleSidebar={toggleSidebar} />
+              <SidebarItem to="/delivery-schedule" img={assets.delivery_shedule} label="Delivery Schedule" toggleSidebar={toggleSidebar} />
               <SidebarItem to="/add-outlet" img={assets.outlet} label="Add Outlets" toggleSidebar={toggleSidebar} />
-              <SidebarItem to="/add-outlet-manager" img={assets.person} label="Add Outlet manager" toggleSidebar={toggleSidebar} />
+              <SidebarItem to="/add-outlet-manager" img={assets.person} label="Add Outlet Manager" toggleSidebar={toggleSidebar} />
               <SidebarItem to="/manage-stock" img={assets.stock} label="Manage Stock" toggleSidebar={toggleSidebar} />
             </ul>
           )}
@@ -33,16 +31,14 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
               <SidebarItem to="/gas-request" img={assets.outlet} label="Gas Request" toggleSidebar={toggleSidebar} />
               <SidebarItem to="/stock-request" img={assets.person} label="Stock Request" toggleSidebar={toggleSidebar} />
               <SidebarItem to="/delivery-status" img={assets.stock} label="Delivery" toggleSidebar={toggleSidebar} />
+              <SidebarItem to="/consumers" img={assets.consumers} label="Consumers" toggleSidebar={toggleSidebar} />
             </>
           )}
         </ul>
       </div>
 
       {isSidebarOpen && (
-        <div
-          onClick={toggleSidebar}
-          className="fixed inset-0 bg-black bg-opacity-50 md:hidden z-30"
-        ></div>
+        <div onClick={toggleSidebar} className="fixed inset-0 bg-black bg-opacity-50 md:hidden z-30"></div>
       )}
     </>
   );

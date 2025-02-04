@@ -16,6 +16,8 @@ import OutletDashboard from "./Pages/Outlet/OutletDashboard";
 import LoginPage from "./Pages/LoginPage";
 import Dashboard from "./Pages/Admin/Dashboard";
 import GasRequestForm2 from "./Pages/Outlet/GasRequestForm2";
+import RegisterConsumer from "./Pages/Outlet/RegisterConsumer";
+import Consumers from "./Pages/Outlet/Consumers";
 
 const App = () => {
 
@@ -67,6 +69,8 @@ const App = () => {
             <Route path="/stock-request" element={<StockRequest />} />
 
             <Route path="/delivery-status" element={<Delivery />} />
+            <Route path="/register-consumer" element={<RegisterConsumer />} />
+            <Route path="/consumers" element={<Consumers />} />
 
           </Routes>
 
