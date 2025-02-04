@@ -31,7 +31,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
               <SidebarItem to="/gas-request" img={assets.outlet} label="Gas Request" toggleSidebar={toggleSidebar} />
               <SidebarItem to="/stock-request" img={assets.person} label="Stock Request" toggleSidebar={toggleSidebar} />
               <SidebarItem to="/delivery-status" img={assets.stock} label="Delivery" toggleSidebar={toggleSidebar} />
-              <SidebarItem to="/consumers" img={assets.consumers} label="Consumers" toggleSidebar={toggleSidebar} />
+              <SidebarItem to="/consumers" img={assets.group} label="Consumers" toggleSidebar={toggleSidebar} />
             </>
           )}
         </ul>
