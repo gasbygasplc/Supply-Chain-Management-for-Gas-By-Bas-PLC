@@ -395,7 +395,7 @@ const getOutletStock = async(req , res) => {
 
     try 
     {
-        const outletId = req.outletId;
+        const outletId = req.body.outletId;
 
         const outlet = await outletModel.findById(outletId).select('gasTypes');
 
