@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const OutletReport = () => {
+
+  const [navbutton , setNavButton] = useState('Stock Report');
+
   return (
     <>
-      <form className="text-gray-700 text-base">
+      <form onSubmit={(e) => e.preventDefault()} className="text-gray-700 text-base">
 
         <div className='w-full flex flex-col gap-6 mx-auto border py-6 px-6 rounded'>
 
@@ -13,18 +16,26 @@ const OutletReport = () => {
               <span className='text-primary-700'>Outlet Report</span> Section
             </h1>
 
-            <div className='w-full flex flex-col justify-center items-center'>
+            <div className='flex w-full flex-col justify-center items-center md:flex-row gap-4 bg-gray-100 py-1 px-1.5 rounded-e-lg md:rounded-full'>
+              <button type="button" className={navbutton === 'Stock Report' ? "bg-white w-full md:w-fit py-[10px] px-[18px] text-[15px] text-primary-700 rounded-[100px]" : "bg-transparent py-[10px] px-[18px] text-[15px] text-gray-800"}  onClick={() => setNavButton('Stock Report')}>
+                Stock Report
+              </button>
 
-              <div className='p-6 bg-gray-100 rounded-md w-full flex items-end justify-center gap-2 md:gap-12'>
+              <button  type="button" className={navbutton === 'Gas Request' ? "bg-white w-full md:w-fit py-[10px] px-[18px] text-[15px] text-primary-700 rounded-[100px]" : "bg-transparent py-[10px] px-[18px] text-[15px] text-gray-800"} onClick={() => setNavButton('Gas Request')}>
+                Total Gas Request
+              </button>
 
-                <button className='py-[10px] px-[18px] bg-white rounded-full'>Stock</button>
-                <button className='py-[10px] px-[18px] bg-white rounded-full'>Gas Stock</button>
-                <button className='py-[10px] px-[18px] bg-white rounded-full'>Gas Request</button>
-                <button className='py-[10px] px-[18px] bg-white rounded-full'>Total Users</button>
+              <button  type="button" className={navbutton === 'Stock Request' ? "bg-white w-full md:w-fit py-[10px] px-[18px] text-[15px] text-primary-700 rounded-[100px]" : "bg-transparent py-[10px] px-[18px] text-[15px] text-gray-800"} onClick={() => setNavButton('Stock Request')}>
+                Total Stock Request
+              </button>
 
-              </div>
+              <button  type="button" className={navbutton === 'Total Registered Users' ? "bg-white w-full md:w-fit py-[10px] px-[18px] text-[15px] text-primary-700 rounded-[100px]" : "bg-transparent py-[10px] px-[18px] text-[15px] text-gray-800"} onClick={() => setNavButton('Total Registered Users')}>
+                Total Registered Users
+              </button>
 
             </div>
+
+            
 
           </div>
 
