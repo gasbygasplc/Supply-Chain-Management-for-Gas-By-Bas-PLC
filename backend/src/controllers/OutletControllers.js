@@ -422,7 +422,7 @@ const getAllGasRequest = async(req , res) => {
 
         const outletId = req.body.outletId;
 
-        const gasRequest = await GasRequest.find({outletId});
+        const gasRequest = await GasRequest.find({outletId}).select('_id userId requestId outletId tokenNumber expectedPickupDate status items requestedDate');
 
         if(!gasRequest || gasRequest.length === 0)
         {
