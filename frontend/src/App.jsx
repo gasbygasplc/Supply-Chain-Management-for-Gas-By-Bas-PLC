@@ -17,6 +17,7 @@ import Notifications from './Pages/Notifications';
 import ChangePassword from './Pages/ChangePassword';
 import VerifyEmail from "./Pages/VerifyEmail";
 import ScrollToAnchor from "./Components/ScrollToAnchor";
+import BRApproval from './Pages/BRApproval';
 
 const App = () => {
   const [showSignIn, setShowSignIn] = useState(false);
@@ -40,6 +41,7 @@ const App = () => {
           <Route path="/delivery-schedule" element={<DeliverySchedule />} />
           <Route path="/qrcode/:token" element={<QRCodePage />} />
           <Route path="/my-profile" element={<MyProfile />} />
+          <Route path="/br-approval" element={<BRApproval/>} />
           <Route path="/my-gas-orders" element={<MyGasOrders />} />
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/change-password" element={<ChangePassword />} />

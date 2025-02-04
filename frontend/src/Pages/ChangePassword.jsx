@@ -57,8 +57,8 @@ const ChangePassword = () => {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100">
-            <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
+        <div className="flex justify-center mt-6 items-center min-h-fit">
+            <div className="bg-white border rounded-lg py-8 px-3 w-full max-w-md">
                 <h1 className="text-2xl font-semibold text-center text-gray-800 mb-6">
                     Change Password
                 </h1>
@@ -100,7 +100,7 @@ const ChangePassword = () => {
                 <div className="flex justify-end mt-6">
                     <button
                         onClick={handleChangePassword}
-                        className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+                        className="px-4 py-2 w-full bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
                     >
                         Change Password
                     </button>

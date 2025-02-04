@@ -172,17 +172,16 @@ const getCity = async(req , res) => {
 export const getOutletName = async (req, res) => {
     try {
         const { city } = req.params;
-        if (!city) {
-            return res.status(400).json({ success: false, message: "City is required" });
-        }
 
         const today = new Date();
         const twoWeeksLater = new Date();
         twoWeeksLater.setDate(today.getDate() + 14);
 
-        const outlets = await outletModel.find({ city }).lean();
+        const query = city ? { city } : {};
+        const outlets = await outletModel.find(query).lean();
+
         if (!outlets.length) {
-            return res.status(404).json({ success: false, message: "No outlets found in this city." });
+            return res.status(404).json({ success: false, message: "No outlets found." });
         }
 
         const validOutlets = [];
@@ -300,12 +299,16 @@ const sendGasRequestForDeliveryShedule = async(req , res) => {
     
  try {
 
-    const {outletManagerName , outletId , smallQty , mediumQty , largeQty , expectedDeliveryDate} = req.body;
+    const { outletManagerName, outletId, smallQty, mediumQty, largeQty, expectedDeliveryDate } = req.body;
 
-    if(smallQty <= 0 && mediumQty <= 0 && largeQty <= 0)
-    {
+    if (!outletId) {
+        return res.status(400).json({ success: false, message: "Outlet ID is required in the request body." });
+    }
+    
+    if (smallQty <= 0 && mediumQty <= 0 && largeQty <= 0) {
         return res.status(400).json({ success: false, message: "At least one gas type must be requested." });
     }
+    
 
     const newRequest = new gasDeliveryRequest({
         outletId,
@@ -330,6 +333,32 @@ const sendGasRequestForDeliveryShedule = async(req , res) => {
  }
     
 }
+
+export const getOutletStockRequests = async (req, res) => {
+    try {
+        const { outletId } = req.params;
+
+        if (!outletId) {
+            return res.status(400).json({ success: false, message: "Outlet ID is required." });
+        }
+
+        const stockRequests = await gasDeliveryRequest.find({
+            outletId,
+            status: "Pending",
+        });
+
+        res.status(200).json({
+            success: true,
+            message: "Stock requests retrieved successfully.",
+            stockRequests,
+        });
+
+    } catch (error) {
+        console.error("Error fetching stock requests:", error);
+        res.status(500).json({ success: false, message: "Error fetching stock requests." });
+    }
+};
+
 
 const fetchDeliveryShedule = async(req , res) => {
 
@@ -360,4 +389,54 @@ const fetchDeliveryShedule = async(req , res) => {
 
 }
 
-export {outletLogin , getOutletLocation , getCity , gasRequest , sendGasRequestForDeliveryShedule , fetchDeliveryShedule};
+//============================================ Get outlet Stocks ==================================================
+
+const getOutletStock = async(req , res) => {
+
+    try 
+    {
+        const outletId = req.body.outletId;
+
+        const outlet = await outletModel.findById(outletId).select('gasTypes');
+
+        if(!outlet)
+        {
+            return res.status(404).json({ message: 'Outlet not found' });
+        }
+
+        return res.status(200).json({ success: true, gasTypes: outlet.gasTypes });
+        
+    } catch (error) 
+    {
+
+        return res.status(500).json({ success: false, message: 'Server error', error: error.message });
+        
+    }
+}
+
+//================================================== get All Gas Request ===================================================
+
+const getAllGasRequest = async(req , res) => {
+
+    try {
+
+        const outletId = req.body.outletId;
+
+        const gasRequest = await GasRequest.find({outletId}).select('_id userId requestId outletId tokenNumber expectedPickupDate status items requestedDate').populate('userId', 'name phone nic');;
+
+        if(!gasRequest || gasRequest.length === 0)
+        {
+            return res.status(404).json({ success: false, message: 'No gas requests found for this outlet' });
+        }
+
+        return res.status(200).json({success:true , gasRequest});
+        
+    } catch (error) {
+
+        return res.status(500).json({ success: false, message: 'Server error', error: error.message });
+
+    }
+
+}
+
+export {outletLogin , getOutletLocation , getCity , gasRequest , sendGasRequestForDeliveryShedule , fetchDeliveryShedule , getOutletStock , getAllGasRequest};

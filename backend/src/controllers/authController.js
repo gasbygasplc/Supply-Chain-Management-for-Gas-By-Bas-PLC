@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import User from '../models/User.js';
+import Outlet from "../models/OutletModule.js"; 
 import { sendSms } from '../utils/smsService.js';
 import { sendEmail } from '../utils/emailService.js';
 import { generateOTP, validateOTP, saveOTP } from '../utils/otpService.js';
@@ -291,3 +292,73 @@ export const resetPassword = async (req, res) => {
     }
 };
 
+    export const registerConsumerByOutlet = async (req, res) => {
+        const { name, nic, phone, email, password, role, outletId } = req.body;
+    
+        try {
+            if (!outletId) {
+                return res.status(400).json({ success: false, message: "Outlet ID is required." });
+            }
+    
+            const normalizedPhone = phone.startsWith("94") ? phone.slice(2) : phone.replace(/^0/, "");
+            if (!/^\d{9}$/.test(normalizedPhone)) {
+                return res.status(400).json({ success: false, message: "Invalid phone number format." });
+            }
+    
+            const existingUser = await User.findOne({ $or: [{ nic }, { phone: normalizedPhone }, { email }] });
+            if (existingUser) {
+                return res.status(400).json({ success: false, message: "User already exists." });
+            }
+    
+            const hashedPassword = await bcrypt.hash(password, 10);
+            const newUser = new User({ name, nic, phone: normalizedPhone, email, password: hashedPassword, role, outletId });
+            await newUser.save();
+    
+            res.status(201).json({ success: true, message: "User registered successfully.", user: newUser });
+        } catch (error) {
+            console.error("Error during registration:", error);
+            res.status(500).json({ message: "Error registering user.", error });
+        }
+    };
+    
+
+
+    export const getConsumers = async (req, res) => {
+        try {
+            const { outletId } = req.query;
+    
+            if (!outletId) {
+                return res.status(400).json({ success: false, message: "Outlet ID is required." });
+            }
+    
+            const consumers = await User.find({ role: "User", outletId }).select("-password");
+    
+            if (!consumers.length) {
+                return res.status(404).json({ success: false, message: "No consumers found for this outlet." });
+            }
+    
+            res.status(200).json({ success: true, consumers });
+        } catch (error) {
+            console.error("Error fetching consumers:", error);
+            res.status(500).json({ success: false, message: "Failed to fetch consumers." });
+        }
+    };
+
+
+export const getOutletManagerOutletId = async (req, res) => {
+    try {
+        const { userId } = req.params;
+
+        const outlet = await Outlet.findOne({ managerId: userId });
+
+        if (!outlet) {
+            return res.status(404).json({ success: false, message: "No Outlet found for this manager." });
+        }
+
+        res.status(200).json({ success: true, outletId: outlet._id });
+
+    } catch (error) {
+        console.error("Error fetching outlet ID:", error);
+        res.status(500).json({ success: false, message: "Failed to fetch outlet ID." });
+    }
+};

@@ -8,6 +8,9 @@ import outlet from './add_business.svg'
 import stock from './Stock.svg'
 import request from './Request.svg'
 import delivery_shedule from './delivery.svg'
+import group from './group.svg'
+import summarize from './summarize.svg'
+import download from './download.svg'
 
 export const assets = {
     logo,
@@ -19,5 +22,8 @@ export const assets = {
     outlet,
     stock,
     request,
-    delivery_shedule
+    delivery_shedule,
+    group,
+    summarize,
+    download
 }
