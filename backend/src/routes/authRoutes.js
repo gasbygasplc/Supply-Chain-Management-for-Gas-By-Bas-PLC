@@ -10,10 +10,15 @@ import {
     updateUserProfile,
     requestPasswordReset,
     resetPassword,
+    getConsumers,
 } from '../controllers/authController.js';
 import userMiddleware from '../middlewares/UserMiddleWare.js';
 const router = express.Router();
 import { changePassword } from '../controllers/authController.js';
+import { registerConsumerByOutlet } from "../controllers/authController.js";
+import { getOutletManagerOutletId } from "../controllers/authController.js";
+
+
 
 
 const validateRegistration = (req, res, next) => {
@@ -86,6 +91,11 @@ router.post('/send-email-verification', userMiddleware, sendEmailVerification);
 router.get('/verify-email', verifyEmail);
 router.post('/request-password-reset', requestPasswordReset);
 router.post('/reset-password', resetPassword);
+router.post("/register-consumer", registerConsumerByOutlet);
+router.get("/consumers", getConsumers);
+router.get("/outlet-manager/:userId", getOutletManagerOutletId);
+
+
 
 
 
