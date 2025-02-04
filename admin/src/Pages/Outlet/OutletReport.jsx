@@ -141,7 +141,7 @@ const OutletReport = () => {
 
                     <h1 className="font-semibold text-xl md:text-2xl text-gray-800">Total Gas Request Report</h1>
 
-                    <div className="bg-white hover:border-primary-600 transition p-2 rounded-md cursor-pointer flex items-center justify-center border border-gray-300 shadow-sm">
+                    <div onClick={downloadPDF} className="bg-white hover:border-primary-600 transition p-2 rounded-md cursor-pointer flex items-center justify-center border border-gray-300 shadow-sm">
 
                       <img src={assets.download} alt="Download" className="w-6 h-6" />
 
