@@ -111,7 +111,7 @@ const OutletContextProvider = (props) => {
 
   useEffect(() => {
     console.log("Updated Outlet Stock:", outletStock);
-  }, [outletStock]);w
+  }, [outletStock]);
   
 
   const value = {
