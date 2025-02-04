@@ -30,7 +30,6 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
               <SidebarItem to="/outlet-dashboard" img={assets.dashboard} label="Dashboard" toggleSidebar={toggleSidebar} />
               <SidebarItem to="/gas-request" img={assets.outlet} label="Gas Request" toggleSidebar={toggleSidebar} />
               <SidebarItem to="/stock-request" img={assets.person} label="Stock Request" toggleSidebar={toggleSidebar} />
-              <SidebarItem to="/delivery-status" img={assets.stock} label="Delivery" toggleSidebar={toggleSidebar} />
               <SidebarItem to="/consumers" img={assets.group} label="Consumers" toggleSidebar={toggleSidebar} />
               <SidebarItem to="/outlet-report" img={assets.summarize} label="Report" toggleSidebar={toggleSidebar} />
             </>
