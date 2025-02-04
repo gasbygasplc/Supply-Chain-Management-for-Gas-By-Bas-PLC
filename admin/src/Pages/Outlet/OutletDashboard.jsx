@@ -1,7 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
+import { OutletContext } from '../../Context/OutletContext.jsx';
 
 const OutletDashboard = () => {
     const [currentDate, setCurrentDate] = useState('');
+
+    const {outletStock} = useContext(OutletContext);
   
     useEffect(() => {
       const today = new Date().toLocaleDateString();
@@ -25,11 +28,22 @@ const OutletDashboard = () => {
 
           <div className='flex flex-wrap w-full cursor-pointer gap-4'>
 
-            <div className='flex flex-col w-full gap-2 border p-4 rounded border-primary-700 text-gray-600 md:w-60'>
-              <p className='font-semibold text-base'>Current Stock</p>
-              <p className='text-lg font-semibold text-black'>S - 100 | M - 200 | L - 280</p>
-              <p className='text-sm text-gray-400'>Since this month</p>
-            </div>
+          <div className="flex flex-col w-full gap-2 border p-4 rounded border-primary-700 text-gray-600 md:w-60">
+            <p className="font-semibold text-base">Current Stock</p>
+
+            {outletStock && outletStock.length > 0 ? (
+              <p className="text-lg font-semibold text-black">
+                {outletStock
+                  .map((gas) => `${gas.gasType.charAt(0).toUpperCase()} - ${gas.currentStock}`)
+                  .join(" | ")}
+              </p>
+            ) : (
+              <p className="text-lg font-semibold text-black">No Stock Data Available</p>
+            )}
+
+            <p className="text-sm text-gray-400">Since this month</p>
+          </div>
+
 
             <div className='flex flex-col w-full gap-2 border p-4 rounded border-primary-700 text-gray-600 md:w-60'>
               <p className='font-semibold text-base'>Gas Request</p>
