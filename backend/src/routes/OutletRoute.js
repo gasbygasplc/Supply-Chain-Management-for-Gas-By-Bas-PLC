@@ -1,5 +1,5 @@
 import express from  'express';
-import { fetchDeliveryShedule, gasRequest, getCity, getOutletLocation, outletLogin, sendGasRequestForDeliveryShedule } from '../controllers/OutletControllers.js';
+import { fetchDeliveryShedule, gasRequest, getAllGasRequest, getCity, getOutletLocation, getOutletStock, outletLogin, sendGasRequestForDeliveryShedule } from '../controllers/OutletControllers.js';
 import authOutlet from '../middlewares/OutletMiddleWare.js';
 import { getOutletName } from "../controllers/OutletControllers.js";
 import { getOutletStockRequests } from "../controllers/OutletControllers.js";
@@ -26,6 +26,10 @@ outletRouter.get('/outletName', getOutletName);
 outletRouter.get("/api/outlets/:city", getOutletName)
 
 outletRouter.get("/outlet/:outletId/stock-requests", getOutletStockRequests);
+
+outletRouter.get('/outlet-stock' , authOutlet , getOutletStock);
+
+outletRouter.get('/all-gas-request' , authOutlet  , getAllGasRequest);
 
 
 

@@ -389,4 +389,54 @@ const fetchDeliveryShedule = async(req , res) => {
 
 }
 
-export {outletLogin , getOutletLocation , getCity , gasRequest , sendGasRequestForDeliveryShedule , fetchDeliveryShedule};
+//============================================ Get outlet Stocks ==================================================
+
+const getOutletStock = async(req , res) => {
+
+    try 
+    {
+        const outletId = req.body.outletId;
+
+        const outlet = await outletModel.findById(outletId).select('gasTypes');
+
+        if(!outlet)
+        {
+            return res.status(404).json({ message: 'Outlet not found' });
+        }
+
+        return res.status(200).json({ success: true, gasTypes: outlet.gasTypes });
+        
+    } catch (error) 
+    {
+
+        return res.status(500).json({ success: false, message: 'Server error', error: error.message });
+        
+    }
+}
+
+//================================================== get All Gas Request ===================================================
+
+const getAllGasRequest = async(req , res) => {
+
+    try {
+
+        const outletId = req.body.outletId;
+
+        const gasRequest = await GasRequest.find({outletId}).select('_id userId requestId outletId tokenNumber expectedPickupDate status items requestedDate').populate('userId', 'name phone nic');;
+
+        if(!gasRequest || gasRequest.length === 0)
+        {
+            return res.status(404).json({ success: false, message: 'No gas requests found for this outlet' });
+        }
+
+        return res.status(200).json({success:true , gasRequest});
+        
+    } catch (error) {
+
+        return res.status(500).json({ success: false, message: 'Server error', error: error.message });
+
+    }
+
+}
+
+export {outletLogin , getOutletLocation , getCity , gasRequest , sendGasRequestForDeliveryShedule , fetchDeliveryShedule , getOutletStock , getAllGasRequest};

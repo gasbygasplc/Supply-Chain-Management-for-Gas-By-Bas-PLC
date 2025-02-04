@@ -10,7 +10,6 @@ import AddOutletManager from "./Pages/Admin/AddOutletManager";
 import AddMainStock from "./Pages/Admin/AddMainStock";
 import GasRequest from "./Pages/Outlet/GasRequest";
 import StockRequest from "./Pages/Outlet/StockRequest";
-import Delivery from "./Pages/Outlet/Delivery";
 import DeliverySchedule from "./Pages/Admin/DeliverySchedule";
 import OutletDashboard from "./Pages/Outlet/OutletDashboard";
 import LoginPage from "./Pages/LoginPage";
@@ -18,6 +17,7 @@ import Dashboard from "./Pages/Admin/Dashboard";
 import GasRequestForm2 from "./Pages/Outlet/GasRequestForm2";
 import RegisterConsumer from "./Pages/Outlet/RegisterConsumer";
 import Consumers from "./Pages/Outlet/Consumers";
+import OutletReport from "./Pages/Outlet/OutletReport";
 
 const App = () => {
 
@@ -65,12 +65,10 @@ const App = () => {
             {Otoken && <Route path='/outlet-dashboard' element = {<OutletDashboard/>}/>}
 
             <Route path="/gas-request" element={<GasRequestForm2/>} />
-
             <Route path="/stock-request" element={<StockRequest />} />
-
-            <Route path="/delivery-status" element={<Delivery />} />
             <Route path="/register-consumer" element={<RegisterConsumer />} />
             <Route path="/consumers" element={<Consumers />} />
+            <Route path="/outlet-report" element={<OutletReport/>}/>
 
           </Routes>
 
