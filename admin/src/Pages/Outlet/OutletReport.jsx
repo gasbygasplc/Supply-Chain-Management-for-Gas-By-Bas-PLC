@@ -1,11 +1,12 @@
 import React, { useContext, useState } from 'react'
 import { OutletContext } from '../../Context/OutletContext';
+import { assets } from '../../assets/assets';
 
 const OutletReport = () => {
 
   const [navbutton , setNavButton] = useState('Stock Report');
 
-  const {outletStock} = useContext(OutletContext);
+  const {outletStock , allGasReq} = useContext(OutletContext);
 
   return (
     <>
@@ -39,35 +40,111 @@ const OutletReport = () => {
             </div>
 
             <div className='w-full'>
+              
+              {
+                navbutton === 'Stock Report' && Array.isArray(outletStock) && outletStock.length > 0 && (
+                  <div className="text-gray-700 text-base mt-6 rounded-md py-6 md:px-6 bg-white border">
 
-              {Array.isArray(outletStock) && outletStock.length > 0 ? (
-              <div className="text-gray-700 text-base mt-6 rounded-md py-6 md:px-6 bg-white border">
-                <h1 className="font-semibold text-1xl md:text-2xl mb-4">Current Stock Details</h1>
+                  <div className="flex items-center justify-between bg-white p-4 rounded-md">
 
-                <div className="overflow-x-auto max-w-full">
-                  <table className="min-w-full table-auto text-sm text-gray-700">
-                    <thead className="bg-gray-100">
-                      <tr>
-                        <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Gas Type</th>
-                        <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Current Stock</th>
-                        <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Max Capacity</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {outletStock.map((stockItem) => (
-                        <tr key={stockItem.gasType} className="border-t">
-                          <td className="px-4 py-2 whitespace-nowrap">{stockItem.gasType}</td>
-                          <td className="px-4 py-2 whitespace-nowrap font-semibold">{stockItem.currentStock}</td>
-                          <td className="px-4 py-2 whitespace-nowrap">{stockItem.maxCapacity}</td>
+                    <h1 className="font-semibold text-xl md:text-2xl text-gray-800">Current Stock Report</h1>
+
+                    <div className="bg-white hover:border-primary-600 transition p-2 rounded-md cursor-pointer flex items-center justify-center border border-gray-300 shadow-sm">
+
+                      <img src={assets.download} alt="Download" className="w-6 h-6" />
+
+                    </div>
+
+                  </div>
+
+
+                  <div className="overflow-x-auto max-w-full">
+
+                    <table className="min-w-full table-auto text-sm text-gray-700">
+
+                      <thead className="bg-gray-100">
+
+                        <tr>
+
+                          <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Gas Type</th>
+                          <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Current Stock</th>
+                          <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Max Capacity</th>
+
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
+
+                      </thead>
+
+                      <tbody>
+                        {outletStock.map((stockItem) => (
+                          <tr key={stockItem.gasType} className="border-t">
+                            <td className="px-4 py-2 whitespace-nowrap">{stockItem.gasType}</td>
+                            <td className="px-4 py-2 whitespace-nowrap font-semibold">{stockItem.currentStock}</td>
+                            <td className="px-4 py-2 whitespace-nowrap">{stockItem.maxCapacity}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+
+                    </table>
+
+                  </div>
+
                 </div>
-              </div>
-            ) : (
-              <p className="text-center text-gray-500 mt-4">No stock data available.</p>
-            )}
+
+                )
+              }
+              {
+                navbutton === 'Gas Request' && Array.isArray(allGasReq) && allGasReq.length > 0 && (
+                  <div className="text-gray-700 text-base mt-6 rounded-md py-6 md:px-6 bg-white border">
+
+                  <div className="flex items-center justify-between bg-white p-4 rounded-md">
+
+                    <h1 className="font-semibold text-xl md:text-2xl text-gray-800">Total Gas Request Report</h1>
+
+                    <div className="bg-white hover:border-primary-600 transition p-2 rounded-md cursor-pointer flex items-center justify-center border border-gray-300 shadow-sm">
+
+                      <img src={assets.download} alt="Download" className="w-6 h-6" />
+
+                    </div>
+
+                  </div>
+
+                  <div className="overflow-x-auto max-w-full">
+
+                    <table className="min-w-full table-auto text-sm text-gray-700">
+
+                      <thead className="bg-gray-100">
+
+                        <tr>
+                          <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Request ID</th>
+                          <th className="px-6 whitespace-nowrap py-2 font-medium text-left">User Name</th>
+                          <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Requested Date</th>
+                          <th className="px-6 whitespace-nowrap py-2 font-medium text-left">Status</th>
+                        </tr>
+
+                      </thead>
+
+                      <tbody>
+
+                        {allGasReq.map((request) => (
+                          <tr key={request._id} className="border-t">
+                            <td className="px-4 py-2 whitespace-nowrap">{request.requestId}</td>
+                            <td className="px-4 py-2 whitespace-nowrap">{request.userId?.name || 'N/A'}</td>
+                            <td className="px-4 py-2 whitespace-nowrap">{new Date(request.requestedDate).toLocaleDateString()}</td>
+                            <td className="px-4 py-2 whitespace-nowrap">{request.status}</td>
+                          </tr>
+                        ))}
+
+                      </tbody>
+
+                    </table>
+
+                  </div>
+
+                </div>
+
+                )
+              }
+              
             </div>
 
           </div>
