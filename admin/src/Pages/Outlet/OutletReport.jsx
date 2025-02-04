@@ -3,7 +3,19 @@ import React from 'react'
 const OutletReport = () => {
   return (
     <>
-      <form className='w-full max-w-[90%] md:max-w-[60%] flex flex-col text-gray-700 text-base mt-6 rounded-md py-6 px-4 md:px-6 mx-5 bg-white border'>
+      <form className="text-gray-700 text-base">
+
+        <div className='w-full flex flex-col gap-6 mx-auto border py-6 px-6 rounded'>
+
+        <div className="flex flex-col items-center gap-4 md:items-start md:gap-5">
+
+          <h1 className='font-semibold text-2xl md:text-3xl'>
+            <span className='text-primary-700'>Outlet Report</span> Section
+          </h1>
+
+        </div>
+
+        </div>
         
       </form>
     </>
