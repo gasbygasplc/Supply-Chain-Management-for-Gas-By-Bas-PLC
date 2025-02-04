@@ -404,12 +404,12 @@ const getOutletStock = async(req , res) => {
             return res.status(404).json({ message: 'Outlet not found' });
         }
 
-        return res.status(200).json({ gasTypes: outlet.gasTypes });
+        return res.status(200).json({ success: true, gasTypes: outlet.gasTypes });
         
     } catch (error) 
     {
 
-        return res.status(500).json({ message: 'Server error', error: error.message });
+        return res.status(500).json({ success: false, message: 'Server error', error: error.message });
         
     }
 }

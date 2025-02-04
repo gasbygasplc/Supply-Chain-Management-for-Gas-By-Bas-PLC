@@ -10,9 +10,26 @@ const OutletContextProvider = (props) => {
   const [gasRequest, setGasRequest] = useState([]);
   const [gasSheduleReq, setGasSheduleReq] = useState([]);
   const [loadingOutlets, setLoadingOutlets] = useState(false);
+  const [outletStock , setOutletStock] = useState(null);
 
   const backendURL =
     import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
+
+  //============================================== Get outlet Stock ===================================================
+
+  const getOutletStock = async(req , res) => {
+    try {
+      const response = await axios.get(`${backendURL}/api/outlet/outlet-stock` , {headers: {Authorization:`Bearer ${Otoken}`}});
+
+      if(response.data.success)
+      {
+        
+      }
+      
+    } catch (error) {
+      
+    }
+  }
 
   //============================================== Get Outlet Names ====================================================
   const getOutletName = async () => {
