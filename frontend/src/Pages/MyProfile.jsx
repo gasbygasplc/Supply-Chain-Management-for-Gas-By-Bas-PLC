@@ -129,8 +129,8 @@ const Profile = () => {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-screen bg-gray-100">
-            <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
+        <div className="flex justify-center mt-4 items-center min-h-fit">
+            <div className="bg-white border rounded-lg py-8 px-4 w-full md:max-w-md">
                 <h1 className="text-2xl font-semibold text-center text-gray-800 mb-6">My Profile</h1>
                 <div className="space-y-4">
                     <div>
@@ -149,7 +149,7 @@ const Profile = () => {
                     </div>
                     <div>
                         <label className="block text-gray-600 font-medium mb-1">Phone:</label>
-                        <div className="flex items-center gap-4">
+                        <div className="flex flex-col items-start gap-1">
                             <input
                                 type="text"
                                 value={profile.phone}
@@ -176,7 +176,7 @@ const Profile = () => {
                     </div>
                     <div>
                         <label className="block text-gray-600 font-medium mb-1">Email:</label>
-                        <div className="flex items-center gap-4">
+                        <div className="flex flex-col items-start gap-1">
                             <input
                                 type="email"
                                 value={profile.email}
@@ -202,10 +202,10 @@ const Profile = () => {
                         </div>
                     </div>
                 </div>
-                <div className="flex justify-between items-center mt-6">
+                <div className="flex flex-col gap-4 items-center mt-6">
                     <button
                         onClick={() => setEditing(!editing)}
-                        className={`px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition ${
+                        className={`${editing ? 'px-4 w-full py-2 bg-white text-gray-800 border rounded-md hover:bg-gray-100 transition' : "px-4 w-full py-2 bg-primary text-white border rounded-md hover:bg-blue-600 transition"} ${
                             isSaving ? "opacity-50 pointer-events-none" : ""
                         }`}
                         disabled={isSaving}
@@ -215,7 +215,7 @@ const Profile = () => {
                     {editing && (
                         <button
                             onClick={handleUpdate}
-                            className={`px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition ${
+                            className={`px-4 w-full py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition ${
                                 isSaving ? "opacity-50 pointer-events-none" : ""
                             }`}
                             disabled={isSaving}
