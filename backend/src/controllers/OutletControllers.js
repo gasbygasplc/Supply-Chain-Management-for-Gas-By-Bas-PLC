@@ -414,4 +414,29 @@ const getOutletStock = async(req , res) => {
     }
 }
 
-export {outletLogin , getOutletLocation , getCity , gasRequest , sendGasRequestForDeliveryShedule , fetchDeliveryShedule , getOutletStock};
+//================================================== get All Gas Request ===================================================
+
+const getAllGasRequest = async(req , res) => {
+
+    try {
+
+        const outletId = req.body.outletId;
+
+        const gasRequest = await GasRequest.find({outletId});
+
+        if(!gasRequest || gasRequest.length === 0)
+        {
+            return res.status(404).json({ success: false, message: 'No gas requests found for this outlet' });
+        }
+
+        return res.status(200).json({success:true , gasRequest});
+        
+    } catch (error) {
+
+        return res.status(500).json({ success: false, message: 'Server error', error: error.message });
+
+    }
+
+}
+
+export {outletLogin , getOutletLocation , getCity , gasRequest , sendGasRequestForDeliveryShedule , fetchDeliveryShedule , getOutletStock , getAllGasRequest};
