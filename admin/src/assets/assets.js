@@ -9,6 +9,7 @@ import stock from './Stock.svg'
 import request from './Request.svg'
 import delivery_shedule from './delivery.svg'
 import group from './group.svg'
+import summarize from './summarize.svg'
 
 export const assets = {
     logo,
@@ -21,5 +22,6 @@ export const assets = {
     stock,
     request,
     delivery_shedule,
-    group
+    group,
+    summarize
 }
