@@ -129,11 +129,14 @@ const OutletContextProvider = (props) => {
   };
 
   useEffect(() => {
-    getOutletName();
-    getOutletStock();
-    getAllGasReq();
-    console.log(gasRequest)
-  }, []);
+    if(Otoken)
+    {
+      getOutletName();
+      getOutletStock();
+      getAllGasReq();
+      console.log(gasRequest)
+    }
+  }, [Otoken]);
 
   useEffect(() => {
     console.log("Updated Outlet Stock:", outletStock);
