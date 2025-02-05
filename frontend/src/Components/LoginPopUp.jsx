@@ -79,7 +79,7 @@ const LoginPopUp = ({ setShowSignIn }) => {
               <input
                 name="name"
                 type="text"
-                placeholder="Gayathri Varatharajan"
+                placeholder="Mathumitha Srikanthan"
                 className="outline-none border border-primary p-2 rounded-md"
                 value={formData.name}
                 onChange={handleChange}
