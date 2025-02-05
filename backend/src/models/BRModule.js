@@ -6,3 +6,7 @@ const BRschema = new mongoose.Schema({
     image : {type:String , required:true},
     BRNumber:{type:Number , required:true}
 });
+
+const BRModel = mongoose.models.BRModel || mongoose.model('BRModel' , BRschema);
+
+export default BRModel;

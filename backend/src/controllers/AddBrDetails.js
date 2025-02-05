@@ -1,4 +1,5 @@
 import { v2 as cloudinary } from 'cloudinary';
+import BRModel from '../models/BRModule';
 
 const addBr = async(req , res) => {
     try {
@@ -28,9 +29,22 @@ const addBr = async(req , res) => {
 
         const imageURL = imageUpload.secure_url;
 
-        
+        const BRData = {
+            userId,
+            image : imageURL,
+            BRNumber
+        }
+
+        const BR = new BRModel(BRData);
+
+        await BR.save();
+
+        return res.status(201).json({ success: true, message: "BR sended" });
         
     } catch (error) {
-        
+        console.error(error);
+
+        return res.status(500).json({ success: false, message: "Error uploading image or saving BR" });
     }
 }
+export {addBr};
