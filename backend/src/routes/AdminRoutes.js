@@ -7,6 +7,7 @@ import { addOutlet, addOutletManager, adminLogin, getOutletDetails } from '../co
 import { addStock, getGasStock } from '../controllers/AddGasStockController.js';
 
 import upload from '../middlewares/Mutler.js';
+import { addBr } from '../controllers/AddBrDetails.js';
 
 
 
@@ -23,5 +24,7 @@ adminRouter.post('/outlet-stock' , AuthAdmin , getOutletDetails)
 adminRouter.post('/get-gas-stock' , AuthAdmin , getGasStock)
 
 adminRouter.post('/add-gas',upload.single('image'), addStock)
+
+adminRouter.post('/add-br' , upload.single('image') , addBr);
 
 export default adminRouter;
