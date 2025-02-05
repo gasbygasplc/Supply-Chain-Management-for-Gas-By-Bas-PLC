@@ -11,6 +11,7 @@ const Cart = () => {
 
     useEffect(() => {
         setCartItems(gasOrder || []);
+        console.log(gasOrder)
     }, [gasOrder]);
 
     const totalAmount = cartItems.reduce((sum, item) => sum + Number(item.totalPrice || 0), 0);
@@ -53,7 +54,7 @@ const Cart = () => {
     }
 
     return (
-        <section className="max-w-full p-4">
+        <section className="max-w-full min-h-fit p-4">
             <h1 className="text-2xl font-bold mb-4">Your Cart</h1>
             <div className="overflow-x-auto max-w-full">
                 <table className="min-w-full table-auto text-sm text-gray-700">

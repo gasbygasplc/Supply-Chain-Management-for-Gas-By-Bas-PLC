@@ -25,6 +25,9 @@ const GasContextProvider = (props) => {
             });
     
             if (!response || typeof response.data.orders === "undefined") {
+                console.log("Saving order:", order);
+                console.log("Current gasOrder before update:", gasOrder);
+
                 toast.warning("Could not verify pending orders. Adding to the cart without validation.");
                 const updatedOrder = [...gasOrder, order];
                 setGasOrder(updatedOrder);

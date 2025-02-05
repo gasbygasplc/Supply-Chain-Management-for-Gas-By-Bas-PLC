@@ -44,6 +44,10 @@ const GasRequest = () => {
             toast.error(`You cannot add more than ${maxGasesAllowed} gases.`);
             return;
         }
+
+        const selectedOutletData = filteredOutlets.find((outlet) => outlet._id === selectedOutlet);
+        const selectedOutletName = selectedOutletData ? selectedOutletData.outletName : "Unknown Outlet";
+
     
         const order = {
             type: selectedType,
@@ -55,7 +59,7 @@ const GasRequest = () => {
             outletId: selectedOutlet,
             district: selectedLocation,
             city: selectedCity,
-            outletName: outletName.find((outlet) => outlet._id === selectedOutlet)?.outletName || "",
+            outletName: selectedOutletName,
         };
     
         await saveGasOrder(order);
