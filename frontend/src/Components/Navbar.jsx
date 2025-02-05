@@ -13,10 +13,9 @@ const Navbar = ({ setShowSignIn }) => {
   useEffect(() => {
     const storedUserData = JSON.parse(localStorage.getItem("userdata"));
     if (storedUserData && storedUserData.role) {
-      setUserRole(storedUserData.role)
+      setUserRole(storedUserData.role);  // Update state correctly
     }
-    console.log(userRole)
-  }, []);
+  }, [token]);
 
   useEffect(() => {
     console.log("Updated userRole:", userRole);
