@@ -17,6 +17,8 @@ const router = express.Router();
 import { changePassword } from '../controllers/authController.js';
 import { registerConsumerByOutlet } from "../controllers/authController.js";
 import { getOutletManagerOutletId } from "../controllers/authController.js";
+import { addBr } from '../controllers/AddBrDetails.js';
+import upload from '../middlewares/Mutler.js';
 
 
 
@@ -94,6 +96,7 @@ router.post('/reset-password', resetPassword);
 router.post("/register-consumer", registerConsumerByOutlet);
 router.get("/consumers", getConsumers);
 router.get("/outlet-manager/:userId", getOutletManagerOutletId);
+router.post('/add-br' , upload.single('image'), userMiddleware , addBr);
 
 
 

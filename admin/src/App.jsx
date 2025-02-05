@@ -1,10 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import { AdminContext } from "./Context/AdminContext";
 import { OutletContext } from "./Context/OutletContext";
 import Navbar from "./Components/Navbar";
 import Sidebar from "./Components/Sidebar";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 import AddOutlet from "./Pages/Admin/AddOutlet";
 import AddOutletManager from "./Pages/Admin/AddOutletManager";
 import AddMainStock from "./Pages/Admin/AddMainStock";
@@ -46,30 +46,35 @@ const App = () => {
 
         <div className="flex-1 overflow-y-auto p-4 sm:p-6">
 
-          <Routes>
+        <Routes>
+            {/* Default Route: Redirect Based on Token */}
+            <Route path="/" element={aToken ? <Navigate to="/admin-dashboard" /> : Otoken ? <Navigate to="/outlet-dashboard" /> : <Navigate to="/login" />} />
 
-            {aToken && <Route path="/" element={<Dashboard/>} />}
+            {/* Admin Routes */}
+            {aToken && (
+              <>
+                <Route path="/admin-dashboard" element={<Dashboard />} />
+                <Route path="/delivery-schedule" element={<DeliverySchedule />} />
+                <Route path="/add-outlet" element={<AddOutlet />} />
+                <Route path="/add-outlet-manager" element={<AddOutletManager />} />
+                <Route path="/manage-stock" element={<AddMainStock />} />
+              </>
+            )}
 
-            {/* ++++++++++++++++++++++++++++++++++++++++++ Admin Route ++++++++++++++++++++++++++++++++++++++++++++ */}
+            {/* Outlet Routes */}
+            {Otoken && (
+              <>
+                <Route path="/outlet-dashboard" element={<OutletDashboard />} />
+                <Route path="/gas-request" element={<GasRequestForm2 />} />
+                <Route path="/stock-request" element={<StockRequest />} />
+                <Route path="/register-consumer" element={<RegisterConsumer />} />
+                <Route path="/consumers" element={<Consumers />} />
+                <Route path="/outlet-report" element={<OutletReport />} />
+              </>
+            )}
 
-            <Route path='/delivery-schedule' element={<DeliverySchedule/>}/>
-
-            <Route path="/add-outlet" element={<AddOutlet />} />
-
-            <Route path="/add-outlet-manager" element={<AddOutletManager />} />
-
-            <Route path="/manage-stock" element={<AddMainStock />} />
-
-            {/* ++++++++++++++++++++++++++++++++++++++++++ Outlet Route ++++++++++++++++++++++++++++++++++++++++++++ */}
-
-            {Otoken && <Route path='/outlet-dashboard' element = {<OutletDashboard/>}/>}
-
-            <Route path="/gas-request" element={<GasRequestForm2/>} />
-            <Route path="/stock-request" element={<StockRequest />} />
-            <Route path="/register-consumer" element={<RegisterConsumer />} />
-            <Route path="/consumers" element={<Consumers />} />
-            <Route path="/outlet-report" element={<OutletReport/>}/>
-
+            {/* Catch-All Route (For Unknown Paths) */}
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
 
         </div>

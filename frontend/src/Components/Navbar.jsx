@@ -8,6 +8,19 @@ const Navbar = ({ setShowSignIn }) => {
   const [menu, setMenu] = useState("Home");
   const navigate = useNavigate();
   const location = useLocation();
+  const [userRole, setUserRole] = useState(null); // Store user role
+
+  useEffect(() => {
+    const storedUserData = JSON.parse(localStorage.getItem("userdata"));
+    if (storedUserData && storedUserData.role) {
+      setUserRole(storedUserData.role)
+    }
+    console.log(userRole)
+  }, []);
+
+  useEffect(() => {
+    console.log("Updated userRole:", userRole);
+  }, [userRole]);
 
   useEffect(() => {
     const path = location.pathname;
@@ -94,9 +107,11 @@ const Navbar = ({ setShowSignIn }) => {
                 <Link to="/my-profile" className="hover:text-primary">
                   My Profile
                 </Link>
-                <Link to="/br-approval" className="hover:text-primary">
-                  BR Approval
-                </Link>
+                {userRole === "Organization" && (
+                  <Link to="/br-approval" className="hover:text-primary">
+                    BR Approval
+                  </Link>
+                )}
                 <Link to="/my-gas-orders" className="hover:text-primary">
                   My Gas Orders
                 </Link>
