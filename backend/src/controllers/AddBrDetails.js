@@ -1,5 +1,5 @@
 import { v2 as cloudinary } from 'cloudinary';
-import BRModel from '../models/BRModule';
+import BRModel from '../models/BRModule.js';
 
 const addBr = async(req , res) => {
     try {
