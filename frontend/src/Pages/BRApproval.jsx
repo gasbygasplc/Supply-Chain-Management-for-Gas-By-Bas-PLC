@@ -1,6 +1,52 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useState } from 'react'
+import { toast } from 'react-toastify';
 
 const BRApproval = () => {
+
+    const [BrNumber , setBRNumber] = useState(0);
+
+    const [image , setImage] = useState(null);
+
+    const handleImageChange = (e) => {
+        setImage(e.target.files[0]);
+    }
+
+    const handleSUbmit = async(e) => {
+        e.preventDefault();
+
+        if(!image || !BrNumber)
+        {
+            toast.error('Please upload an image and enter the BR number.');
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('image' , image);
+        formData.append('BRNumber', BrNumber);
+
+        try {
+
+            const token = localStorage.getItem('token');
+            const response  = await axios.post('http://localhost:4000/api/auth/add-br' , formData , {headers:{'Authorization': `Bearer ${token}`,'Content-Type': 'multipart/form-data',}});
+
+            if(response.status === 201 || response.status === 200)
+            {
+                toast.success(response.data.message || 'BR successfully submitted!');
+                setBRNumber('');
+                setImage(null);
+            }
+            else
+            {
+                toast.error('Unexpected response. Please try again.');
+            }
+            
+        } catch (error) {
+            console.error('Error submitting BR:', error);
+            toast.error(error.response?.data?.message || 'Failed to submit BR. Please try again.');
+        }
+    }
+
   return (
     <>
 
@@ -10,7 +56,7 @@ const BRApproval = () => {
                 <span className="text-primary">Submit</span> your BR Here
             </h1>
 
-            <div className='flex flex-col items-center gap-6 justify-center w-full md:w-1/2'>
+            <form onSubmit={handleSUbmit} className='flex flex-col items-center gap-6 justify-center w-full md:w-1/2'>
 
                 <label htmlFor="dropzone-file" className='flex flex-col items-center border-primary mt-8 justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50'>
 
@@ -28,7 +74,7 @@ const BRApproval = () => {
 
                     </div>
 
-                    <input type="file" id='dropzone-file' className='hidden'/>
+                    <input type="file" accept="image/*" onChange={handleImageChange} id='dropzone-file' className='hidden'/>
 
                 </label>
 
@@ -36,13 +82,13 @@ const BRApproval = () => {
 
                     <label className='block' htmlFor="BR">BR number</label>
 
-                    <input type="text" className='w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-primary' placeholder='Enter your BR number' id='BR' />
+                    <input type="text" value={BrNumber} onChange={(e) => setBRNumber(e.target.value)} className='w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-primary' placeholder='Enter your BR number' id='BR' />
 
                 </div>
 
-                <button type='submit' className='w-full p-2 border-none rounded-md bg-primary text-white text-base'>Register</button>
+                <button type='submit' className='w-full p-2 border-none rounded-md bg-primary text-white text-base'>Submit your BR</button>
 
-            </div>
+            </form>
 
         </div>
     
