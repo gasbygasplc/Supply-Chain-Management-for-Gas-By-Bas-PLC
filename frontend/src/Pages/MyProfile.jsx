@@ -107,15 +107,14 @@ const Profile = () => {
 
         setIsRequesting(true);
         try {
-            const endpoint = verifying.type === "phone" ? "verify-phone" : "verify-email";
             const response = await axios.post(
-                `${import.meta.env.VITE_BACKEND_URL}/api/auth/${endpoint}`,
+                `${import.meta.env.VITE_BACKEND_URL}/api/auth/verify-phone`,
                 { userId, otp },
                 { headers: { Authorization: `Bearer ${token}` } }
             );
             if (response.data.success) {
-                toast.success(`${verifying.type.charAt(0).toUpperCase() + verifying.type.slice(1)} verified successfully.`);
-                setProfile({ ...profile, [`${verifying.type}Verified`]: true });
+                toast.success("Phone verified successfully.");
+                setProfile({ ...profile, phoneVerified: true });
                 setVerifying({ type: null, requested: false });
                 setOtp("");
             } else {
@@ -164,13 +163,34 @@ const Profile = () => {
                             {profile.phoneVerified ? (
                                 <span className="text-green-500 text-sm">Verified</span>
                             ) : (
-                                <button
-                                    onClick={() => requestVerification("phone")}
-                                    className={`text-red-500 text-sm underline ${isRequesting ? "opacity-50 pointer-events-none" : ""}`}
-                                    disabled={isRequesting}
-                                >
-                                    {isRequesting ? "Requesting..." : "Verify"}
-                                </button>
+                                <>
+                                    {!verifying.requested ? (
+                                        <button
+                                            onClick={() => requestVerification("phone")}
+                                            className="text-red-500 text-sm underline"
+                                            disabled={isRequesting}
+                                        >
+                                            {isRequesting ? "Requesting..." : "Verify Phone"
+                                            }
+                                        </button>
+                                    ) : (
+                                        <>
+                                            <label className="block text-gray-600 font-medium mt-2">Enter OTP:</label>
+                                            <input
+                                                type="text"
+                                                value={otp}
+                                                onChange={(e) => setOtp(e.target.value)}
+                                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-600"
+                                            />
+                                            <button
+                                                onClick={handleOtpSubmit}
+                                                className="mt-2 px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition"
+                                            >
+                                                Submit OTP
+                                            </button>
+                                        </>
+                                    )}
+                                </>
                             )}
                         </div>
                     </div>
@@ -182,45 +202,29 @@ const Profile = () => {
                                 value={profile.email}
                                 disabled={!editing}
                                 onChange={(e) => setProfile({ ...profile, email: e.target.value })}
-                                className={`w-full px-4 py-2 border ${
-                                    editing ? "border-blue-400" : "border-gray-300"
-                                } rounded-md focus:outline-none ${
-                                    editing ? "focus:border-blue-600" : "cursor-not-allowed"
-                                }`}
+                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-600"
                             />
                             {profile.emailVerified ? (
                                 <span className="text-green-500 text-sm">Verified</span>
                             ) : (
                                 <button
                                     onClick={() => requestVerification("email")}
-                                    className={`text-red-500 text-sm underline ${isRequesting ? "opacity-50 pointer-events-none" : ""}`}
+                                    className="text-red-500 text-sm underline"
                                     disabled={isRequesting}
                                 >
-                                    {isRequesting ? "Requesting..." : "Verify"}
+                                    {isRequesting ? "Requesting..." : "Verify Email"}
                                 </button>
                             )}
                         </div>
                     </div>
                 </div>
                 <div className="flex flex-col gap-4 items-center mt-6">
-                    <button
-                        onClick={() => setEditing(!editing)}
-                        className={`${editing ? 'px-4 w-full py-2 bg-white text-gray-800 border rounded-md hover:bg-gray-100 transition' : "px-4 w-full py-2 bg-primary text-white border rounded-md hover:bg-blue-600 transition"} ${
-                            isSaving ? "opacity-50 pointer-events-none" : ""
-                        }`}
-                        disabled={isSaving}
-                    >
+                    <button onClick={() => setEditing(!editing)} className="px-4 w-full py-2 bg-primary text-white rounded-md hover:bg-blue-600 transition">
                         {editing ? "Cancel" : "Edit"}
                     </button>
                     {editing && (
-                        <button
-                            onClick={handleUpdate}
-                            className={`px-4 w-full py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition ${
-                                isSaving ? "opacity-50 pointer-events-none" : ""
-                            }`}
-                            disabled={isSaving}
-                        >
-                            {isSaving ? "Saving..." : "Save"}
+                        <button onClick={handleUpdate} className="px-4 w-full py-2 bg-green-500 text-white rounded-md hover:bg-green-600 transition">
+                            Save
                         </button>
                     )}
                 </div>
