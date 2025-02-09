@@ -43,7 +43,7 @@ export const createDeliverySchedule = async (req, res) => {
         }
         await outlet.save();
 
-        const parsedDeliveryDate = new Date(deliveryDate);
+        const parsedDeliveryDate = new Date(deliveryDate);   
         if (parsedDeliveryDate <= new Date()) {
             return res.status(400).json({ success: false, message: "Delivery date must be in the future." });
         }
