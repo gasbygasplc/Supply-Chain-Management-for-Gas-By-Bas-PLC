@@ -12,7 +12,7 @@ const DeliveryShedule = () => {
 
           <h1 className='font-semibold py-2 text-2xl md:text-3xl my-4' >Delivery Information</h1>
 
-          <div className='w-full flex flex-col gap-6'>  
+          <div className='w-full flex flex-col gap-6'>    
 
             <div className = ' flex flex-col md:grid md:grid-cols-2 gap-4 w-full'>
 
