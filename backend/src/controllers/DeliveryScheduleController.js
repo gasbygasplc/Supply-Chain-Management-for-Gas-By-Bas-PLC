@@ -26,7 +26,7 @@ export const createDeliverySchedule = async (req, res) => {
 
     if (!outletId || !stockAllocation?.length || !deliveryDate) {
         return res.status(400).json({ success: false, message: "Missing required fields." });  
-    }
+    }  
   
     try {
         const outlet = await Outlet.findById(outletId);  
