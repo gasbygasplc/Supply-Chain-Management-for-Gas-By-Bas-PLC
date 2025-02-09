@@ -29,7 +29,7 @@ export const createDeliverySchedule = async (req, res) => {
     }
   
     try {
-        const outlet = await Outlet.findById(outletId);
+        const outlet = await Outlet.findById(outletId);  
         if (!outlet) return res.status(404).json({ success: false, message: "Outlet not found." });
 
         for (const allocation of stockAllocation) {
