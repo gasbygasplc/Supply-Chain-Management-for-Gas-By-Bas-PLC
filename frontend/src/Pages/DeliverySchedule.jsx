@@ -118,4 +118,4 @@ const DeliveryShedule = () => {
   )  
 }
     
-export default DeliveryShedule        
+export default DeliveryShedule          
