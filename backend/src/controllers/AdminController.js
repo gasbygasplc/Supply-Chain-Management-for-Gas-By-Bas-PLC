@@ -204,4 +204,10 @@ export {addOutlet , adminLogin , addOutletManager , getOutletDetails};
 
 
    
+
+
+
+
+
+          
               
