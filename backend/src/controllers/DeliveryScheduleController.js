@@ -15,8 +15,8 @@ const getNextAvailablePickupTime = (startDate, count) => {
 
     while (pickupTime.getHours() >= 20) {
         pickupTime.setDate(pickupTime.getDate() + 1);
-        pickupTime.setHours(8, 0, 0, 0);
-    }       
+        pickupTime.setHours(8, 0, 0, 0);   
+    }     
 
     return pickupTime;
 };
