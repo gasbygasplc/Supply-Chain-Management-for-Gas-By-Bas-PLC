@@ -25,7 +25,7 @@ export const createDeliverySchedule = async (req, res) => {
     const { outletId, stockAllocation, deliveryDate } = req.body;
 
     if (!outletId || !stockAllocation?.length || !deliveryDate) {
-        return res.status(400).json({ success: false, message: "Missing required fields." });
+        return res.status(400).json({ success: false, message: "Missing required fields." });  
     }
   
     try {
