@@ -189,3 +189,10 @@ const getGasDetails = async(req , res) => {
 }
 
 export { addStock , getGasStock , getGasDetails};
+
+
+
+            
+
+
+           
