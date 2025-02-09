@@ -12,7 +12,7 @@ const getNextAvailablePickupTime = async (outletId) => {
     try {
         const latestOrder = await GasRequest.findOne({ outletId })
             .sort({ expectedPickupDate: -1 })
-            .select("expectedPickupDate");
+            .select("expectedPickupDate");  
 
         const openingTime = moment().set({ hour: 8, minute: 0, second: 0 });
         const closingTime = moment().set({ hour: 20, minute: 0, second: 0 });
