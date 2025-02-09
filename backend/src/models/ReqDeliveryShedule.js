@@ -24,7 +24,7 @@ const gasDeliveryRequestSchema = new mongoose.Schema({
     expectedDeliveryDate: {
         type: Date,
         required: true
-    },
+    },  
 
     status: {
         type: String,
