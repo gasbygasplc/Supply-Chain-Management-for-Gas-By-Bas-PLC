@@ -32,7 +32,7 @@ export const createDeliverySchedule = async (req, res) => {
         const outlet = await Outlet.findById(outletId);  
         if (!outlet) return res.status(404).json({ success: false, message: "Outlet not found." });      
 
-        for (const allocation of stockAllocation) {
+        for (const allocation of stockAllocation) {  
             const gasTypeInfo = outlet.gasTypes.find((type) => type.gasType === allocation.gasType);
             if (!gasTypeInfo) return res.status(400).json({ success: false, message: `Gas type '${allocation.gasType}' not found.` });
 
