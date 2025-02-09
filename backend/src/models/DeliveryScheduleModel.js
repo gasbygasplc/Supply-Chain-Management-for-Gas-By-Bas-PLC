@@ -22,7 +22,7 @@ const deliveryScheduleSchema = new mongoose.Schema({
         default: 'Scheduled',
     },
        
-    totalStockAllocated: {
+    totalStockAllocated: {  
         type: Number,   
         required: true,
     },  
