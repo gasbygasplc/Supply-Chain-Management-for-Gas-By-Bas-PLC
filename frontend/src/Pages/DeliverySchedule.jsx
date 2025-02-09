@@ -14,7 +14,7 @@ const DeliveryShedule = () => {
 
           <div className='w-full flex flex-col gap-6'>    
 
-            <div className = ' flex flex-col md:grid md:grid-cols-2 gap-4 w-full'>
+            <div className = ' flex flex-col md:grid md:grid-cols-2 gap-4 w-full'>  
 
               <div className='w-full flex flex-col gap-2'>
 
