@@ -114,7 +114,7 @@ const DeliveryShedule = () => {
         </div>
       </form>
    
-    </section>   
+    </section>      
   )  
 }  
              
