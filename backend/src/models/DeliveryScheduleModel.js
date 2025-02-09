@@ -11,7 +11,7 @@ const deliveryScheduleSchema = new mongoose.Schema({
         },
     ],
 
-    deliveryDate: {
+    deliveryDate: {  
         type: Date,
         required: true,
     },
