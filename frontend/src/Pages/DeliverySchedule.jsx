@@ -100,7 +100,7 @@ const DeliveryShedule = () => {
               </div>
 
             </div>
-
+    
           </div>
 
         </div>
