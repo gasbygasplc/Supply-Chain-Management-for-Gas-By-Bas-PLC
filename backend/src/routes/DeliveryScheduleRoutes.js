@@ -9,7 +9,7 @@ import { updateGasRequestsOnDeliveryStatusChange } from "../controllers/Delivery
 const deliveryScheduleRouter = express.Router();
 
 deliveryScheduleRouter.get('/search-outlets', searchOutlets);
-deliveryScheduleRouter.get('/outlet/:outletId/gas-requests', getGasRequestsForOutlet);
+deliveryScheduleRouter.get('/outlet/:outletId/gas-requests', getGasRequestsForOutlet);  
 deliveryScheduleRouter.post('/create', createDeliverySchedule);
 deliveryScheduleRouter.get('/', getDeliverySchedules);
 deliveryScheduleRouter.patch('/:scheduleId/status', updateDeliveryStatus);  
