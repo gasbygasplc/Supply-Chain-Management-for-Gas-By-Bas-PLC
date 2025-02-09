@@ -14,7 +14,7 @@ const deliveryScheduleSchema = new mongoose.Schema({
         type: Date,
         required: true,
     },
-
+     
     status: {
         type: String,
         enum: ['Scheduled', 'Dispatched', 'Rescheduled', 'Delivered', 'Cancelled'],
