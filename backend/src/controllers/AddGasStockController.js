@@ -192,7 +192,31 @@ export { addStock , getGasStock , getGasDetails};
 
 
 
-            
+    
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+
+
+
+
+       
+
+
+
 
 
            
