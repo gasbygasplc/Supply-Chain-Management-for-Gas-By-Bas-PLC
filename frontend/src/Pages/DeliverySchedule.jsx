@@ -18,7 +18,7 @@ const DeliveryShedule = () => {
 
               <div className='w-full flex flex-col gap-2'>
 
-                <label className='block' htmlFor="first-name">First name</label>
+                <label className='block' htmlFor="first-name">First name</label>  
 
                 <input type="text" className='w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:border-primary' placeholder='Diyath' id='first-name'/>
 
