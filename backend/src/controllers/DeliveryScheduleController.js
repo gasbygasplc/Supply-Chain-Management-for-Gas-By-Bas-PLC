@@ -28,7 +28,7 @@ export const createDeliverySchedule = async (req, res) => {
         return res.status(400).json({ success: false, message: "Missing required fields." });  
     }  
   
-    try {
+    try {  
         const outlet = await Outlet.findById(outletId);  
         if (!outlet) return res.status(404).json({ success: false, message: "Outlet not found." });  
 
