@@ -20,7 +20,7 @@ const gasDeliveryRequestSchema = new mongoose.Schema({
         Medium : {type: Number, default: 0, min: 0},
         Large : {type: Number, default: 0, min: 0}
     },
-
+    
     expectedDeliveryDate: {
         type: Date,
         required: true
