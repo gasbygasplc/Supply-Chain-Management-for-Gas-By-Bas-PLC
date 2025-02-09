@@ -1,7 +1,7 @@
 import React from 'react'
 
 const DeliveryShedule = () => {
-  return (
+  return (  
     
     <section className='w-full min-h-screen'>
 
@@ -105,7 +105,7 @@ const DeliveryShedule = () => {
 
         </div>
 
-        {/* ====================================== Right ========================================= */}
+        {/* ====================================== Right ========================================= */}  
 
         <div className='w-full md:w-1/2'>
 
