@@ -191,4 +191,7 @@ const getOutletDetails = async(req , res) => {
 }
 
 
-export {addOutlet , adminLogin , addOutletManager , getOutletDetails};
+export {addOutlet , adminLogin , addOutletManager , getOutletDetails};    
+
+
+ 
