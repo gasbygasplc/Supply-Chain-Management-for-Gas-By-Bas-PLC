@@ -23,7 +23,7 @@ const deliveryScheduleSchema = new mongoose.Schema({
     },
        
     totalStockAllocated: {
-        type: Number,
+        type: Number,   
         required: true,
     },
         
