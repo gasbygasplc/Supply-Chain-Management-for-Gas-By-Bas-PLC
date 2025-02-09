@@ -7,6 +7,6 @@ const Notifications = () => {
       <p>View your recent notifications here.</p>
     </div>
   );
-};
+};  
 
 export default Notifications;
