@@ -368,15 +368,5 @@ export const getOutletManagerOutletId = async (req, res) => {
                   
             
 
-     
 
-
-
-
-
-
-
-
-
-
-           
+  
