@@ -11,12 +11,12 @@ const gasDeliveryRequestSchema = new mongoose.Schema({
     outletManagerName : {
         
         type:String,
-        required:true
+        required:true  
     },
        
     gasQuantity: {   
 
-        Small: {type: Number, default: 0, min: 0 },   
+        Small: {type: Number, default: 0, min: 0 },    
         Medium : {type: Number, default: 0, min: 0},
         Large : {type: Number, default: 0, min: 0}
     },
