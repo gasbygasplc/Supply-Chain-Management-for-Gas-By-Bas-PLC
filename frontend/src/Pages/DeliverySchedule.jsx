@@ -114,8 +114,8 @@ const DeliveryShedule = () => {
         </div>
       </form>
    
-    </section>      
+    </section>        
   )     
 }  
                 
-export default DeliveryShedule          
+export default DeliveryShedule            
