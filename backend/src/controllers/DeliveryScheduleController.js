@@ -54,7 +54,7 @@ export const createDeliverySchedule = async (req, res) => {
             deliveryDate: parsedDeliveryDate,
             totalStockAllocated: stockAllocation.reduce((sum, item) => sum + item.quantity, 0),
             status: "Scheduled", 
-        });
+        });  
         await newDeliverySchedule.save();
 
         await updateGasRequestsOnSchedule(outletId, parsedDeliveryDate, "Scheduled");
