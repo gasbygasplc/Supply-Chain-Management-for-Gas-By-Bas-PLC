@@ -27,7 +27,7 @@ const deliveryScheduleSchema = new mongoose.Schema({
         required: true,
     },
         
-    comments: {
+    comments: {   
         type: String,
         default: '',
     },
