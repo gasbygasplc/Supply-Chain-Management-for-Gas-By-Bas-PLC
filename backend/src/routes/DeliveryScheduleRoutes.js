@@ -5,7 +5,7 @@ import { getDeliverySchedules } from '../controllers/DeliveryScheduleController.
 import { updateDeliveryStatus } from '../controllers/DeliveryScheduleController.js';
 import { updateGasRequestsOnDeliveryStatusChange } from "../controllers/DeliveryScheduleController.js";  
 
-
+  
 const deliveryScheduleRouter = express.Router();
 
 deliveryScheduleRouter.get('/search-outlets', searchOutlets);
