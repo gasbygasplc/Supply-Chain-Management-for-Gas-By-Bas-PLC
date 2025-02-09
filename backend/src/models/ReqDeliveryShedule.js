@@ -14,7 +14,7 @@ const gasDeliveryRequestSchema = new mongoose.Schema({
         required:true
     },
     
-    gasQuantity: {
+    gasQuantity: {   
 
         Small: {type: Number, default: 0, min: 0 },
         Medium : {type: Number, default: 0, min: 0},
