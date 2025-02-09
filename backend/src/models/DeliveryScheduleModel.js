@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 const deliveryScheduleSchema = new mongoose.Schema({
     outletId: { type: mongoose.Schema.Types.ObjectId, ref: 'Outlet', required: true },
 
-    
+
     stockAllocation: [
         {
             gasType: { type: String, required: true },
@@ -26,7 +26,7 @@ const deliveryScheduleSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
-
+  
     comments: {
         type: String,
         default: '',
