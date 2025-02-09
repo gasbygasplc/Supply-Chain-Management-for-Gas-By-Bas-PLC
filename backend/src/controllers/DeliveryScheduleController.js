@@ -53,7 +53,7 @@ export const createDeliverySchedule = async (req, res) => {
             stockAllocation,
             deliveryDate: parsedDeliveryDate,
             totalStockAllocated: stockAllocation.reduce((sum, item) => sum + item.quantity, 0),
-            status: "Scheduled",
+            status: "Scheduled", 
         });
         await newDeliverySchedule.save();
 
