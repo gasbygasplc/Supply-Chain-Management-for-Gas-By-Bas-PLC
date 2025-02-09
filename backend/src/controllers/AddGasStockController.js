@@ -17,7 +17,7 @@ const addStock = async (req, res) => {
 
         }
 
-        if (totalStock < 0) //check stock is empty
+        if (totalStock < 0) //check stock is empty 
         {
 
             return res.status(400).json({ success: false, message: "Please enter a valid stock amount" });
