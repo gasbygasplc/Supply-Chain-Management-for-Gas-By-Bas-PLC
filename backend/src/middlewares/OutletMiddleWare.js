@@ -9,7 +9,7 @@ const authOutlet = async (req, res, next) => {
 
         const Otoken = authHeader && authHeader.startsWith('Bearer ') 
 
-        ? authHeader.split(' ')[1]   
+        ? authHeader.split(' ')[1]     
   
         : req.headers.otoken; 
     
