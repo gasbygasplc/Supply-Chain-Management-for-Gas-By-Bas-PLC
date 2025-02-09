@@ -327,3 +327,9 @@ export const handleCheckout = async (req, res) => {
         res.status(500).json({ success: false, message: 'Error during checkout.' });
     }
 };
+
+
+
+
+
+
