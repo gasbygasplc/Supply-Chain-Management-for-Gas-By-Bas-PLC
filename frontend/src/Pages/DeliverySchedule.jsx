@@ -112,7 +112,7 @@ const DeliveryShedule = () => {
           <h1 className='font-semibold py-2 text-2xl md:text-3xl' >Gas  Information</h1>
 
         </div>
-      </form>
+      </form>  
    
     </section>          
   )     
