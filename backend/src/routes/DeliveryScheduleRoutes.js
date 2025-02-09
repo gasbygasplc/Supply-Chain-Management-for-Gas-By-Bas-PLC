@@ -11,7 +11,7 @@ const deliveryScheduleRouter = express.Router();
 deliveryScheduleRouter.get('/search-outlets', searchOutlets);
 deliveryScheduleRouter.get('/outlet/:outletId/gas-requests', getGasRequestsForOutlet);  
 deliveryScheduleRouter.post('/create', createDeliverySchedule);  
-deliveryScheduleRouter.get('/', getDeliverySchedules);
+deliveryScheduleRouter.get('/', getDeliverySchedules);  
 deliveryScheduleRouter.patch('/:scheduleId/status', updateDeliveryStatus);  
 deliveryScheduleRouter.post("/update-requests", updateGasRequestsOnDeliveryStatusChange);
       
