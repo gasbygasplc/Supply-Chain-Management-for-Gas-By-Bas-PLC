@@ -362,3 +362,10 @@ export const getOutletManagerOutletId = async (req, res) => {
         res.status(500).json({ success: false, message: "Failed to fetch outlet ID." });
     }
 };
+
+
+
+
+
+
+           
