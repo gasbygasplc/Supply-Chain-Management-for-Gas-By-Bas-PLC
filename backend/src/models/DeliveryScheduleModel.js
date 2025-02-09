@@ -35,3 +35,4 @@ const DeliverySchedule =
     mongoose.models.DeliverySchedule || mongoose.model('DeliverySchedule', deliveryScheduleSchema);
 
 export default DeliverySchedule;
+    
