@@ -21,12 +21,12 @@ const deliveryScheduleSchema = new mongoose.Schema({
         enum: ['Scheduled', 'Dispatched', 'Rescheduled', 'Delivered', 'Cancelled'],
         default: 'Scheduled',
     },
-    
+       
     totalStockAllocated: {
         type: Number,
         required: true,
     },
-  
+    
     comments: {
         type: String,
         default: '',
