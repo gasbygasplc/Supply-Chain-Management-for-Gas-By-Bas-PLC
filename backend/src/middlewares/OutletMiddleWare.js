@@ -11,7 +11,7 @@ const authOutlet = async (req, res, next) => {
 
         ? authHeader.split(' ')[1]     
   
-        : req.headers.otoken; 
+        : req.headers.otoken;   
     
 
         if (!Otoken) 
