@@ -15,6 +15,6 @@ deliveryScheduleRouter.get('/', getDeliverySchedules);
 deliveryScheduleRouter.patch('/:scheduleId/status', updateDeliveryStatus);
 deliveryScheduleRouter.post("/update-requests", updateGasRequestsOnDeliveryStatusChange);
 
-  
+     
 export default deliveryScheduleRouter;
    
