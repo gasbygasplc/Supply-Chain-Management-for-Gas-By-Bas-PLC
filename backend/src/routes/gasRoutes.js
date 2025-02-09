@@ -14,7 +14,7 @@ gasRouter.put('/update-status', updateGasRequestStatus);
 gasRouter.post('/orders', getGasOrders);
 gasRouter.get('/pending-orders', getPendingOrders);  
 gasRouter.put("/cancel", cancelGasOrder);
-gasRouter.post("/send-reminder", sendReminder);
+gasRouter.post("/send-reminder", sendReminder);  
   
 
 
