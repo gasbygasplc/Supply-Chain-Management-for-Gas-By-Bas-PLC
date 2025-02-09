@@ -176,3 +176,9 @@ const gasRequest = async(req , res) => {
 //=============================================== check Delivery ==========================================================
 
 export {outletLogin , getOutletLocation , getCity , getOutletName , gasRequest};
+
+
+
+
+
+
