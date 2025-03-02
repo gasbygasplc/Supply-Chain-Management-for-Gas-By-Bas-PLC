@@ -23,6 +23,7 @@ const Sidebar = ({ isSidebarOpen, toggleSidebar }) => {
               <SidebarItem to="/add-outlet" img={assets.outlet} label="Add Outlets" toggleSidebar={toggleSidebar} />
               <SidebarItem to="/add-outlet-manager" img={assets.person} label="Add Outlet Manager" toggleSidebar={toggleSidebar} />
               <SidebarItem to="/manage-stock" img={assets.stock} label="Manage Stock" toggleSidebar={toggleSidebar} />
+              <SidebarItem to="/add-organization-gas" img={assets.LargeGas} label="Organization Gas" toggleSidebar={toggleSidebar} />
             </ul>
           )}
           {Otoken && (

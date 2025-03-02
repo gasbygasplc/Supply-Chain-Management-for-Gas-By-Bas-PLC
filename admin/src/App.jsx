@@ -18,6 +18,7 @@ import GasRequestForm2 from "./Pages/Outlet/GasRequestForm2";
 import RegisterConsumer from "./Pages/Outlet/RegisterConsumer";
 import Consumers from "./Pages/Outlet/Consumers";
 import OutletReport from "./Pages/Outlet/OutletReport";
+import AddOrganizationGas from "./Pages/Admin/AddOrganizationGas";
 
 const App = () => {
 
@@ -58,6 +59,7 @@ const App = () => {
                 <Route path="/add-outlet" element={<AddOutlet />} />
                 <Route path="/add-outlet-manager" element={<AddOutletManager />} />
                 <Route path="/manage-stock" element={<AddMainStock />} />
+                <Route path="/add-organization-gas" element={<AddOrganizationGas/>}/>
               </>
             )}
 
