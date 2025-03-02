@@ -11,6 +11,7 @@ import delivery_shedule from './delivery.svg'
 import group from './group.svg'
 import summarize from './summarize.svg'
 import download from './download.svg'
+import LargeGas from './Gas Add.png'
 
 export const assets = {
     logo,
@@ -21,6 +22,7 @@ export const assets = {
     person,
     outlet,
     stock,
+    LargeGas,
     request,
     delivery_shedule,
     group,
