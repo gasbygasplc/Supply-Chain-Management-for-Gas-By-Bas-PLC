@@ -69,6 +69,8 @@ const AddOrganizationGas = () => {
             <div className="w-full flex flex-col md:col-span-3 gap-2">
               <label htmlFor="Weight">Weight</label>
               <input
+                onChange={(e) => setWeight(e.target.value)}
+                value={weight}
                 type="text"
                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-1 focus:outline-primary-700"
               />
@@ -77,6 +79,8 @@ const AddOrganizationGas = () => {
             <div className="w-full flex flex-col md:col-span-3 gap-2">
               <label htmlFor="Price">Price</label>
               <input
+                onChange={(e) => setPrice(e.target.value)}
+                value={price}
                 type="text"
                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-1 focus:outline-primary-700"
               />
@@ -85,6 +89,8 @@ const AddOrganizationGas = () => {
             <div className="w-full flex flex-col md:col-span-3 gap-2">
               <label htmlFor="Stock">Stock</label>
               <input
+                onChange={(e) => setStock(e.target.value)}
+                value={stock}
                 type="number"
                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-1 focus:outline-primary-700"
               />
@@ -94,6 +100,7 @@ const AddOrganizationGas = () => {
               <label htmlFor="Gas Image">Gas Image</label>
               <div className="relative mb-5.5 block w-full cursor-pointer appearance-none rounded border border-dashed border-primary-700 bg-gray-50 px-4 py-4 sm:py-7.5">
                 <input
+                  
                   onChange={(e) => setGasImg(e.target.files[0])}
                   accept="image/*"
                   className="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none "
