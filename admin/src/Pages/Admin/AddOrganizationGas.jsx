@@ -15,7 +15,15 @@ const AddOrganizationGas = () => {
     try {
       if(!gasImg)
       {
-        toast.error('Gas image does not selected.')
+        toast.error('Gas image does not selected.');
+
+        const formData = new FormData();
+
+        formData.append('image' , gasImg);
+        formData.append('gasType', gasType);
+        formData.append('weight', weight);
+        formData.append('price', price);
+        formData.append('stock', stock);
       }
     } catch (error) {
       
