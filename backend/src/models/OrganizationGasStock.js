@@ -34,3 +34,4 @@ const organizationGasSchema = new mongoose.Schema({
 const organizationGasModel  = mongoose.models.organizationGas || mongoose.model('organizationGas', organizationGasSchema);
 
 export default organizationGasModel;
+
