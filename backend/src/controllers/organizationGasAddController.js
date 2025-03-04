@@ -1,4 +1,5 @@
 import {v2 as cloudinary} from 'cloudinary';
+import organizationGasModel from '../models/OrganizationGasStock';
 
 const organizationGasAdd = async(request , response) => {
 
@@ -29,9 +30,18 @@ const organizationGasAdd = async(request , response) => {
             } catch (error) {
 
                 return res.status(400).json({ success: false, message: "Invalid JSON format for stockHistroy" });
-                
+
             }
         }
+
+        const existingStockType = await organizationGasModel.findOne({type});
+
+        const newGasStockHistory = {
+            dateReceived: new Date(),
+            quantity : stock
+        }
+
+        
 
 
     } catch (error) {
