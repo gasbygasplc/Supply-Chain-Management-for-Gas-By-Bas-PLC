@@ -14,3 +14,19 @@ const StockHistorySchema = new mongoose.Schema(
 
 );
 
+const organizationGasSchema = new mongoose.Schema({
+
+    type: {type:String , required: true , enum: ['Small' , 'Medium' , 'Large']},
+
+    weightKG : {type: Number , required: true},
+
+    image : {type : String , required : true},
+
+    price : {type : Number , required : true},
+
+    totalStock : {type: Number , default: 0},
+
+    stockHistroy : [StockHistorySchema] ,//i make it as an array
+
+
+} , {timestamps: true});
