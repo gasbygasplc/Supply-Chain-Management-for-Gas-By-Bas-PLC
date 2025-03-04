@@ -13,36 +13,47 @@ const AddOrganizationGas = () => {
 
   const {backendURL} = useContext(AdminContext);
 
-  const onsubmitHandler = async(event) => {
-    event.preventDefault();
-
+  const onsubmitHandler = async (event) => {
+    event.preventDefault(); 
+  
     try {
-      if(!gasImg)
-      {
-        toast.error('Gas image does not selected.')
+      console.log("Submitting form...");
+  
+      if (!gasImg) {
+        toast.error("Gas image is not selected.");
+        return;
       }
+  
       const formData = new FormData();
-
-      formData.append('image' , gasImg);
-      formData.append('gasType', gasType);
-      formData.append('weight', weight);
-      formData.append('price', price);
-      formData.append('stock', stock);
-
-      const {data} = await axios.post(backendURL + '/api/admin/add-organization-gas' ,  formData , {headers:{atoken}});
-
-      if(data.success)
-      {
+      formData.append("image", gasImg);
+      formData.append("gasType", gasType);
+      formData.append("weight", weight);
+      formData.append("price", price);
+      formData.append("stock", stock);
+  
+      const authToken = localStorage.getItem("token");
+  
+      const { data } = await axios.post(
+        `${backendURL}/api/admin/add-organization-gas`,
+        formData,
+        { headers: { 
+            "Authorization": `Bearer ${authToken}`,
+            "Content-Type": "multipart/form-data"
+          }
+        }
+      );
+  
+      if (data.success) {
         toast.success(data.message);
-      }
-      else
-      {
-        toast.error(data.message)
+      } else {
+        toast.error(data.message);
       }
     } catch (error) {
-      toast.error(error)
+      console.error("Error submitting form:", error);
+      toast.error(error.response?.data?.message || "Something went wrong!");
     }
-  }
+  };
+  
   return (
     <div className="w-full flex flex-col min-h-full">
       <form onSubmit={onsubmitHandler} className="w-full max-w-[90%] md:max-w-[60%] flex flex-col text-gray-700 text-base mt-6 rounded-md py-6 px-4 md:px-6 mx-5 bg-white border">
@@ -100,7 +111,7 @@ const AddOrganizationGas = () => {
               <label htmlFor="Gas Image">Gas Image</label>
               <div className="relative mb-5.5 block w-full cursor-pointer appearance-none rounded border border-dashed border-primary-700 bg-gray-50 px-4 py-4 sm:py-7.5">
                 <input
-                  
+
                   onChange={(e) => setGasImg(e.target.files[0])}
                   accept="image/*"
                   className="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none "
