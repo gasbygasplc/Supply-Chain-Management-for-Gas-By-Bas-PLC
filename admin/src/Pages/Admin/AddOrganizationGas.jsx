@@ -11,7 +11,7 @@ const AddOrganizationGas = () => {
   const [stock , setStock] = useState("");
   const [gasImg , setGasImg] = useState("");
 
-  const {} = useContext(AdminContext);
+  const {backendURL} = useContext(AdminContext);
 
   const onsubmitHandler = async(event) => {
     event.preventDefault();
@@ -29,7 +29,16 @@ const AddOrganizationGas = () => {
       formData.append('price', price);
       formData.append('stock', stock);
 
-      const {data} = await axios.post()
+      const {data} = await axios.post(backendURL + '/api/admin/add-organization-gas' ,  formData , {headers:{atoken}});
+
+      if(data.success)
+            {
+              toast.success(data.message);
+            }
+            else
+            {
+              toast.error(data.message)
+            }
     } catch (error) {
       
     }
