@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 const AddOrganizationGas = () => {
 
@@ -8,7 +9,18 @@ const AddOrganizationGas = () => {
   const [stock , setStock] = useState("");
   const [gasImg , setGasImg] = useState("");
 
-  
+  const onsubmitHandler = async(event) => {
+    event.preventDefault();
+
+    try {
+      if(!gasImg)
+      {
+        toast.error('Gas image does not selected.')
+      }
+    } catch (error) {
+      
+    }
+  }
   return (
     <div className="w-full flex flex-col min-h-full">
       <form className="w-full max-w-[90%] md:max-w-[60%] flex flex-col text-gray-700 text-base mt-6 rounded-md py-6 px-4 md:px-6 mx-5 bg-white border">
