@@ -7,6 +7,7 @@ const AddOrganizationGas = () => {
   const [price , setPrice] = useState("");
   const [stock , setStock] = useState("");
   const [gasImg , setGasImg] = useState("");
+
   
   return (
     <div className="w-full flex flex-col min-h-full">
