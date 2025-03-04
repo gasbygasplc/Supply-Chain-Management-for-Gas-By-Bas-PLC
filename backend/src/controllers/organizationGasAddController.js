@@ -1,5 +1,5 @@
 import {v2 as cloudinary} from 'cloudinary';
-import organizationGasModel from '../models/OrganizationGasStock';
+import organizationGasModel from '../models/OrganizationGasStock.js';
 
 const organizationGasAdd = async(request , response) => {
 
