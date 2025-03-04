@@ -14,8 +14,14 @@ const organizationGasAdd = async(request , response) => {
         }
 
         if(stock < 0){
+
             return response.status(400).json({success: false , message : "Please enter a valid stock amount"});
+
         }
+
+        let parsedStockHistory = [];
+
+        
 
 
     } catch (error) {
