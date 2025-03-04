@@ -32,20 +32,20 @@ const AddOrganizationGas = () => {
       const {data} = await axios.post(backendURL + '/api/admin/add-organization-gas' ,  formData , {headers:{atoken}});
 
       if(data.success)
-            {
-              toast.success(data.message);
-            }
-            else
-            {
-              toast.error(data.message)
-            }
+      {
+        toast.success(data.message);
+      }
+      else
+      {
+        toast.error(data.message)
+      }
     } catch (error) {
-      
+      toast.error(error)
     }
   }
   return (
     <div className="w-full flex flex-col min-h-full">
-      <form className="w-full max-w-[90%] md:max-w-[60%] flex flex-col text-gray-700 text-base mt-6 rounded-md py-6 px-4 md:px-6 mx-5 bg-white border">
+      <form  className="w-full max-w-[90%] md:max-w-[60%] flex flex-col text-gray-700 text-base mt-6 rounded-md py-6 px-4 md:px-6 mx-5 bg-white border">
         <h1 className="font-semibold text-2xl md:text-2xl mb-4 text-start">
           Add Organization Gas
         </h1>
