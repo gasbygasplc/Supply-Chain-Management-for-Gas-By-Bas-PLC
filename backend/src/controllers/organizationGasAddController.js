@@ -21,7 +21,9 @@ const organizationGasAdd = async(request , response) => {
 
         let parsedStockHistory = [];
 
-        
+        if(stockHistroy){
+            
+        }
 
 
     } catch (error) {
