@@ -50,7 +50,16 @@ const organizationGasAdd = async(request , response) => {
         else
         {
             try {
-                
+                const imageUpload = await cloudinary.uploader.upload(imageFile.path , {resource_type: "image",});
+
+                const imageURL = imageUpload.secure_url;
+
+                const organizationGasAdd = {
+                    type : gasType,
+                    weightKG: weight,
+                    price: price,
+                    image : imageURL,
+                }
             } catch (error) {
                 
             }
