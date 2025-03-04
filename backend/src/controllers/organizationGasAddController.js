@@ -23,8 +23,12 @@ const organizationGasAdd = async(request , response) => {
 
         if(stockHistroy){
             try {
+
+                parsedStockHistory = JSON.parse(stockHistroy);
                 
             } catch (error) {
+
+                return res.status(400).json({ success: false, message: "Invalid JSON format for stockHistroy" });
                 
             }
         }
