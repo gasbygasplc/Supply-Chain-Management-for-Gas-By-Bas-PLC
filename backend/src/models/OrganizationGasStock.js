@@ -30,3 +30,5 @@ const organizationGasSchema = new mongoose.Schema({
 
 
 } , {timestamps: true});
+
+const organizationGasModel  = mongoose.models.organizationGas || mongoose.model('organizationGas', organizationGasSchema);
