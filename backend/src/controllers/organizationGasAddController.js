@@ -47,6 +47,16 @@ const organizationGasAdd = async(request , response) => {
             await existingStockType.save();
             return res.status(200).json({ success: true, message: "Gas stock updated successfully." });
         }
+        else
+        {
+            try {
+                
+            } catch (error) {
+                
+            }
+        }
+
+
 
 
     } catch (error) {
