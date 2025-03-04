@@ -59,7 +59,13 @@ const organizationGasAdd = async(request , response) => {
                     weightKG: weight,
                     price: price,
                     image : imageURL,
+                    totalStock : stock,
+                    stockHistroy: [newGasStockHistory]
                 }
+
+                const organizationGasStock = new organizationGasModel(organizationGasAdd);
+                await organizationGasStock.save();
+                return response.status(200).json({ success: true, message: "Gas stock added successfully." });
             } catch (error) {
                 
             }
