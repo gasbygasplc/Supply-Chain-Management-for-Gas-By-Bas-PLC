@@ -1,9 +1,62 @@
-import React from "react";
+import axios from "axios";
+import React, { useContext, useState } from "react";
+import { toast } from "react-toastify";
+import { AdminContext } from "../../Context/AdminContext";
 
 const AddOrganizationGas = () => {
+
+  const [gasType , setType] = useState("");
+  const [weight , setWeight] = useState("");
+  const [price , setPrice] = useState("");
+  const [stock , setStock] = useState("");
+  const [gasImg , setGasImg] = useState("");
+
+  const {backendURL} = useContext(AdminContext);
+
+  const onsubmitHandler = async (event) => {
+    event.preventDefault(); 
+  
+    try {
+      console.log("Submitting form...");
+  
+      if (!gasImg) {
+        toast.error("Gas image is not selected.");
+        return;
+      }
+  
+      const formData = new FormData();
+      formData.append("image", gasImg);
+      formData.append("gasType", gasType);
+      formData.append("weight", weight);
+      formData.append("price", price);
+      formData.append("stock", stock);
+  
+      const authToken = localStorage.getItem("token");
+  
+      const { data } = await axios.post(
+        `${backendURL}/api/admin/add-organization-gas`,
+        formData,
+        { headers: { 
+            "Authorization": `Bearer ${authToken}`,
+            "Content-Type": "multipart/form-data"
+          }
+        }
+      );
+  
+      if (data.success) {
+        toast.success(data.message);
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error(error.response?.data?.message || "Something went wrong!");
+    }
+  };
+  
   return (
     <div className="w-full flex flex-col min-h-full">
-      <form className="w-full max-w-[90%] md:max-w-[60%] flex flex-col text-gray-700 text-base mt-6 rounded-md py-6 px-4 md:px-6 mx-5 bg-white border">
+      <form onSubmit={onsubmitHandler} className="w-full max-w-[90%] md:max-w-[60%] flex flex-col text-gray-700 text-base mt-6 rounded-md py-6 px-4 md:px-6 mx-5 bg-white border">
         <h1 className="font-semibold text-2xl md:text-2xl mb-4 text-start">
           Add Organization Gas
         </h1>
@@ -13,6 +66,8 @@ const AddOrganizationGas = () => {
             <div className="w-full flex flex-col md:col-span-3 gap-2">
               <label htmlFor="GasType">Gas Type</label>
               <select
+                onChange={(e) => setType(e.target.value)}
+                value={gasType}
                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-1 focus:outline-primary-700"
                 id="GasType"
               >
@@ -25,6 +80,8 @@ const AddOrganizationGas = () => {
             <div className="w-full flex flex-col md:col-span-3 gap-2">
               <label htmlFor="Weight">Weight</label>
               <input
+                onChange={(e) => setWeight(e.target.value)}
+                value={weight}
                 type="text"
                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-1 focus:outline-primary-700"
               />
@@ -33,6 +90,8 @@ const AddOrganizationGas = () => {
             <div className="w-full flex flex-col md:col-span-3 gap-2">
               <label htmlFor="Price">Price</label>
               <input
+                onChange={(e) => setPrice(e.target.value)}
+                value={price}
                 type="text"
                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-1 focus:outline-primary-700"
               />
@@ -41,6 +100,8 @@ const AddOrganizationGas = () => {
             <div className="w-full flex flex-col md:col-span-3 gap-2">
               <label htmlFor="Stock">Stock</label>
               <input
+                onChange={(e) => setStock(e.target.value)}
+                value={stock}
                 type="number"
                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-1 focus:outline-primary-700"
               />
@@ -50,6 +111,7 @@ const AddOrganizationGas = () => {
               <label htmlFor="Gas Image">Gas Image</label>
               <div className="relative mb-5.5 block w-full cursor-pointer appearance-none rounded border border-dashed border-primary-700 bg-gray-50 px-4 py-4 sm:py-7.5">
                 <input
+
                   onChange={(e) => setGasImg(e.target.files[0])}
                   accept="image/*"
                   className="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none "
