@@ -34,7 +34,7 @@ const organizationGasAdd = async(request , response) => {
             }
         }
 
-        const existingStockType = await organizationGasModel.findOne({type});
+        const existingStockType = await organizationGasModel.findOne({type: gasType});
 
         const newGasStockHistory = {
             dateReceived: new Date(),
