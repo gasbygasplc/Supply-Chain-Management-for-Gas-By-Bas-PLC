@@ -45,7 +45,7 @@ const AddOrganizationGas = () => {
   }
   return (
     <div className="w-full flex flex-col min-h-full">
-      <form  className="w-full max-w-[90%] md:max-w-[60%] flex flex-col text-gray-700 text-base mt-6 rounded-md py-6 px-4 md:px-6 mx-5 bg-white border">
+      <form onSubmit={onsubmitHandler} className="w-full max-w-[90%] md:max-w-[60%] flex flex-col text-gray-700 text-base mt-6 rounded-md py-6 px-4 md:px-6 mx-5 bg-white border">
         <h1 className="font-semibold text-2xl md:text-2xl mb-4 text-start">
           Add Organization Gas
         </h1>
@@ -55,6 +55,8 @@ const AddOrganizationGas = () => {
             <div className="w-full flex flex-col md:col-span-3 gap-2">
               <label htmlFor="GasType">Gas Type</label>
               <select
+                onChange={(e) => setType(e.target.value)}
+                value={gasType}
                 className="w-full p-2 border border-gray-300 rounded-md focus:outline-1 focus:outline-primary-700"
                 id="GasType"
               >
