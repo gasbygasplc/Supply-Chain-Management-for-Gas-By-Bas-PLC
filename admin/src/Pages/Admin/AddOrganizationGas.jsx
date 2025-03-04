@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import axios from "axios";
+import React, { useContext, useState } from "react";
 import { toast } from "react-toastify";
+import { AdminContext } from "../../Context/AdminContext";
 
 const AddOrganizationGas = () => {
 
@@ -9,22 +11,25 @@ const AddOrganizationGas = () => {
   const [stock , setStock] = useState("");
   const [gasImg , setGasImg] = useState("");
 
+  const {} = useContext(AdminContext);
+
   const onsubmitHandler = async(event) => {
     event.preventDefault();
 
     try {
       if(!gasImg)
       {
-        toast.error('Gas image does not selected.');
-
-        const formData = new FormData();
-
-        formData.append('image' , gasImg);
-        formData.append('gasType', gasType);
-        formData.append('weight', weight);
-        formData.append('price', price);
-        formData.append('stock', stock);
+        toast.error('Gas image does not selected.')
       }
+      const formData = new FormData();
+
+      formData.append('image' , gasImg);
+      formData.append('gasType', gasType);
+      formData.append('weight', weight);
+      formData.append('price', price);
+      formData.append('stock', stock);
+
+      const {data} = await axios.post()
     } catch (error) {
       
     }
