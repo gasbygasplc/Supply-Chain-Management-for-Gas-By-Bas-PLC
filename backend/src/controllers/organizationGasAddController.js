@@ -67,15 +67,15 @@ const organizationGasAdd = async(request , response) => {
                 await organizationGasStock.save();
                 return response.status(200).json({ success: true, message: "Gas stock added successfully." });
             } catch (error) {
-                
+                console.error(error);
+                return res.status(500).json({ success: false, message: "Error uploading image or saving stock" });
             }
         }
 
-
-
-
     } catch (error) {
-        
+        console.error(error);
+
+        return res.status(500).json({ success: false, message: "Internal Server Error" });
     }
 
 }
