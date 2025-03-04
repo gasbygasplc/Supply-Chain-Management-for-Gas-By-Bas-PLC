@@ -79,3 +79,5 @@ const organizationGasAdd = async(request , response) => {
     }
 
 }
+
+export {organizationGasAdd};
