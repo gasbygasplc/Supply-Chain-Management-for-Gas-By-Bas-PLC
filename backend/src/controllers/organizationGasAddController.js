@@ -4,7 +4,7 @@ const organizationGasAdd = async(request , response) => {
 
     try {
         
-        const {gasType , weight , price , stock} = request.body;
+        const {gasType , weight , price , stock , stockHistroy} = request.body;
 
         const imageFile = request.file;
 
