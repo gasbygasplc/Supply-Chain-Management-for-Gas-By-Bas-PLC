@@ -6,6 +6,7 @@ export const GasContext = createContext();
 
 const GasContextProvider = (props) => {
     const [gasDetails, setGasDetails] = useState(null);
+    const [organizationGasDetails, setOrganizationGasDetails] = useState([]);
     const [gasQuantity, setGasQuantity] = useState(1);
     const [userData, setUserData] = useState({});
     const [userId, setUserId] = useState(null);
@@ -16,6 +17,31 @@ const GasContextProvider = (props) => {
     const backendURL = import.meta.env.VITE_BACKEND_URL;
     const [token, setToken] = useState(localStorage.getItem("token") || "");
     const [isProcessingCheckout, setIsProcessingCheckout] = useState(false);
+
+    //============================================= fetch organization gas Details ==============================================
+
+    const fetchOrganizationGasDetails = async () => 
+    {
+        try 
+        {
+            const response =  await axios.get(`${backendURL}/api/organization/organization-gas`);
+
+            if(response.status === 200)
+            {
+                setOrganizationGasDetails(response.data.gasTypes);
+            }
+            else
+            {
+                toast.error("Failed to fetch organization gas details.");
+            }
+
+        } catch (error) 
+        {
+            console.error("Error fetching organization gas details:", error);
+            
+            toast.error(`Error fetching organization gas details: ${error.message}`);
+        }
+    }
 
     const saveGasOrder = async (order) => {
         try {
