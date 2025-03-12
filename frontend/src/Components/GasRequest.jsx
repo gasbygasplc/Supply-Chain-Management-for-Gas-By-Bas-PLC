@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { OutletContext } from '../Context/OutletContext';
 
 const GasRequest = () => {
-    const { gasDetails, handleGasSelection, gasQuantity, updateGasQuantity, userData, saveGasOrder, gasOrder } =
+    const { gasDetails, organizationGasDetails, handleGasSelection, gasQuantity, updateGasQuantity, userData, saveGasOrder, gasOrder } =
         useContext(GasContext);
     const { outletlocation, getOutletLocation, setDistricts, getCity, cities, outletName, getOutletName } =
         useContext(OutletContext);
@@ -19,7 +19,20 @@ const GasRequest = () => {
     const [selectedOutlet, setSelectedOutlet] = useState('');
     const [filteredOutlets, setFilteredOutlets] = useState([]);
     const [UniqueCity, setUniqueCity] = useState([]);
+    const [selectedOrgGas, setSelectedOrgGas] = useState(null); // for organization
     const Navigate = useNavigate();
+
+
+    useEffect(() => {
+        if (userData.role === "Organization" && organizationGasDetails.length > 0) {
+            setSelectedOrgGas(organizationGasDetails[0]); // Set first available gas
+        } else {
+            handleGasSelection('Small'); // Default for individual users
+        }
+        getOutletLocation();
+    }, [userData, organizationGasDetails]);
+    
+    
 
     const handleSaveOrder = async () => {
         if (!gasDetails) {
