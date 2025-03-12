@@ -60,7 +60,7 @@ app.use('/api', qrCodeRoutes);
 
 app.use('/api/delivery-schedule', deliveryScheduleRouter);
 
-app.use('/api/organization/organization-gas-details' , organizationRouter);
+app.use('/api/organization' , organizationRouter);
 
 
 
