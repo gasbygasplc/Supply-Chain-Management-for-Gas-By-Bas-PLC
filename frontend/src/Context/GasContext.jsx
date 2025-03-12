@@ -18,6 +18,7 @@ const GasContextProvider = (props) => {
     const [token, setToken] = useState(localStorage.getItem("token") || "");
     const [isProcessingCheckout, setIsProcessingCheckout] = useState(false);
 
+
     //============================================= fetch organization gas Details ==============================================
 
     const fetchOrganizationGasDetails = async () => 
@@ -38,7 +39,7 @@ const GasContextProvider = (props) => {
         } catch (error) 
         {
             console.error("Error fetching organization gas details:", error);
-            
+
             toast.error(`Error fetching organization gas details: ${error.message}`);
         }
     }
@@ -225,10 +226,17 @@ const GasContextProvider = (props) => {
         }
     }, [token]);
 
+    useEffect(() => {
+        if (userData.role === "Organization") {
+            fetchOrganizationGasDetails();
+        }
+    }, [userData]);
+
     const value = {
         gasDetails,
         fetchGasDetails,
         handleGasSelection,
+        organizationGasDetails,
         token,
         setToken,
         userId,
