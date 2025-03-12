@@ -1,6 +1,6 @@
 import express from 'express';
 
-import { getGasDetails } from '../controllers/AddGasStockController.js';
+import { getGasDetails} from '../controllers/AddGasStockController.js';
 
 const fetchGasRouter = express.Router();
 

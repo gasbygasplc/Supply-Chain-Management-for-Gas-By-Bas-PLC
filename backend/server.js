@@ -17,6 +17,7 @@ import fetchGasRouter from './src/routes/GasStockRoutes.js';
 import outletRouter from './src/routes/OutletRoute.js';
 import qrCodeRoutes from './src/routes/qrCodeRoutes.js';
 import deliveryScheduleRouter from './src/routes/DeliveryScheduleRoutes.js';
+import organizationRouter from './src/routes/OrganizationGasRoute.js';
 
 
 
@@ -58,6 +59,8 @@ app.use('/api/outlet' , outletRouter)
 app.use('/api', qrCodeRoutes);
 
 app.use('/api/delivery-schedule', deliveryScheduleRouter);
+
+app.use('/api/organization' , organizationRouter);
 
 
 
