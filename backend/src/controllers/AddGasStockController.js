@@ -1,6 +1,5 @@
 import { v2 as cloudinary } from 'cloudinary';
 import gasStockmodel from '../models/GasStockModels.js';
-import organizationGasModel from '../models/OrganizationGasStock.js';
 
 const addStock = async (req, res) => {
 
@@ -190,22 +189,9 @@ const getGasDetails = async(req , res) => {
 }
 
 
-const getOrganziationGasDetails = async(req , res) =>
-{
-    try 
-    {
-        const gasTypes = await organizationGasModel.find({}) //get all the gas details
 
-        res.status(200).json({ success: true, gasTypes })
-    } catch (error) 
-    {
-        console.error("Error fetching organization gas data:", error);
 
-        res.status(500).json({ success: false, message: "Error fetching organization gas data" });
-    }
-}
-
-export { addStock , getGasStock , getGasDetails , getOrganziationGasDetails};
+export { addStock , getGasStock , getGasDetails};
 
 
 
