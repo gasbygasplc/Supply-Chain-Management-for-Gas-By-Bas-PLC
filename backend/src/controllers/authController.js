@@ -8,23 +8,24 @@ import { generateOTP, validateOTP, saveOTP } from '../utils/otpService.js';
 import crypto from 'crypto';
 
 
-export const registerUser = async (req, res) => {
-    const { name, nic, phone, email, password, role } = req.body;
+export const registerUser = async (req, res) => { //register user function
+    const { name, nic, phone, email, password, role } = req.body; //get the name, nic, phone, email, password and role from the request body
 
     try {
-        const normalizedPhone = phone.startsWith('94') ? phone.slice(2) : phone.replace(/^0/, '');
+        const normalizedPhone = phone.startsWith('94') ? phone.slice(2) : phone.replace(/^0/, ''); //normalize the phone number
         if (!/^\d{9}$/.test(normalizedPhone)) {
             return res.status(400).json({ success: false, message: "Invalid phone number format." });
         }
 
-        const existingUser = await User.findOne({ $or: [{ nic }, { phone: normalizedPhone }, { email }] });
+        const existingUser = await User.findOne({ $or: [{ nic }, { phone: normalizedPhone }, { email }] }); //check if the user already exists
         if (existingUser) {
             return res.status(400).json({ success: false, message: "User already exists." });
         }
 
-        const hashedPassword = await bcrypt.hash(password, 10);
-        const newUser = new User({ name, nic, phone: normalizedPhone, email, password: hashedPassword, role });
-        await newUser.save();
+        const hashedPassword = await bcrypt.hash(password, 10); //Encrypt the password
+
+        const newUser = new User({ name, nic, phone: normalizedPhone, email, password: hashedPassword, role }); //create a new user object
+        await newUser.save(); //save the user to the database
 
         const smsMessage = `Welcome to Gas By Gas, ${name}! Your account has been successfully created.\nEmail: ${email}`;
         const smsResponse = await sendSms(`94${normalizedPhone}`, smsMessage, '');
@@ -63,24 +64,27 @@ export const registerUser = async (req, res) => {
     }
 };
 
+// ====================================== login ======================================
+
 export const loginUser = async (req, res) => {
-    const { email, password } = req.body;
+    const { email, password } = req.body; //get the email and password from the request body
 
     try {
-        const user = await User.findOne({ email });
-        if (!user) return res.status(404).json({ message: "User not found." });
+        const user = await User.findOne({ email }); //find the user by email and save it on variable
+        if (!user) return res.status(404).json({ message: "User not found." }); // check the  user is not found
 
-        const isPasswordValid = await bcrypt.compare(password, user.password);
-        if (!isPasswordValid) return res.status(401).json({ message: "Invalid credentials." });
+        const isPasswordValid = await bcrypt.compare(password, user.password); // compare the password with the hashed password
 
-        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
-        res.status(200).json({ message: "Login successful.", token, user });
+        if (!isPasswordValid) return res.status(401).json({ message: "Invalid credentials." }); // check the password is not valid
+
+        const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' }); // create a token with user id and secret key
+        res.status(200).json({ message: "Login successful.", token, user }); // send the token and user details as response
     } catch (error) {
         console.error("Error during login:", error);
         res.status(500).json({ message: "Error logging in.", error });
     }
 };
-
+//=========================================================================================
 export const getUserProfile = async (req, res) => {
     const { userId } = req.body;
 

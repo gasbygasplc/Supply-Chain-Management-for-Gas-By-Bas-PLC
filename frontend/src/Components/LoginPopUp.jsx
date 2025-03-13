@@ -44,7 +44,7 @@ const LoginPopUp = ({ setShowSignIn }) => {
           const { token, user } = response.data;
 
           setToken(token);
-          localStorage.setItem('token', token);
+          localStorage.setItem('token', token); // save token to local storage
           localStorage.setItem('userdata', JSON.stringify(user));
           setShowSignIn(false);
         } else {
@@ -63,23 +63,24 @@ const LoginPopUp = ({ setShowSignIn }) => {
         onSubmit={handleSubmit}
         className="bg-white flex flex-col gap-4 p-6 rounded-lg w-[95%] sm:w-[330px] md:w-[24vw] fadeIn"
       >
-        <div className="flex justify-between items-center text-black">
+        {/* ============== close button ============ */}
+        <div className="flex justify-between items-center text-black"> 
           <h2 className="text-lg font-semibold">{currentState}</h2>
           <img
-            onClick={() => setShowSignIn((previous) => !previous)}
+            onClick={() => setShowSignIn(false)}
             className="w-4 cursor-pointer"
             src={asstets.cross_icon}
             alt="closer"
           />
         </div>
-
+        {/* ===== current state is Sign in these signup testboxes doent show */}
         <div className="flex flex-col gap-4">
           {currentState === 'Sign In' ? null : (
             <>
               <input
                 name="name"
                 type="text"
-                placeholder="Gayathri Varatharajan"
+                placeholder="Mathumitha"
                 className="outline-none border border-primary p-2 rounded-md"
                 value={formData.name}
                 onChange={handleChange}
@@ -132,7 +133,7 @@ const LoginPopUp = ({ setShowSignIn }) => {
             value={formData.password}
             onChange={handleChange}
           />
-
+          {/* ==== forgot password=== */}
           {
             currentState === 'Sign In' ? (<p onClick={() => {
               setShowSignIn(false);
@@ -140,7 +141,7 @@ const LoginPopUp = ({ setShowSignIn }) => {
             }} className='text-[13px] text-gray-700 cursor-pointer text-right'>Forgot <span className='text-primary'>Password?</span></p>) : ("")
           }
         </div>
-
+        {/* == sign in button === */}
         <button
           type="submit"
           className="bg-primary text-white py-[10px] rounded-md text-sm font-medium cursor-pointer"
@@ -158,7 +159,7 @@ const LoginPopUp = ({ setShowSignIn }) => {
         ) : (
           ''
         )}
-
+        {/* ==== create coount navigatiin==== */}
         {currentState === 'Sign In' ? (
           <>
             {/* <p className="text-sm">
