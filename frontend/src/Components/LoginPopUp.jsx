@@ -159,7 +159,7 @@ const LoginPopUp = ({ setShowSignIn }) => {
         ) : (
           ''
         )}
-        {/* ==== create coount navigatiin==== */}
+        {/* ==== create Acoount navigatiin==== */}
         {currentState === 'Sign In' ? (
           <>
             {/* <p className="text-sm">
