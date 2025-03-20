@@ -127,7 +127,7 @@ const Navbar = ({ setShowSignIn }) => {
                     setToken(null);
                     setUserData(null);
                     setGasQuantity(1);
-                    navigate("/");
+                    // navigate("/");
                   }}
                   className="hover:text-red-700"
                 >

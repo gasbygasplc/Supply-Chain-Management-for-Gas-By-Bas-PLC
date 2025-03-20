@@ -33,7 +33,7 @@ const LoginPopUp = ({ setShowSignIn }) => {
         : 'http://localhost:4000/api/auth/register';
 
     try {
-      const response = await axios.post(url, formData);
+      const response = await axios.post(url, formData); 
 
       if (response.status === 201 || response.status === 200) {
         toast.success(

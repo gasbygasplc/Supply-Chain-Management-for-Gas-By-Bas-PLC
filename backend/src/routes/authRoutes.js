@@ -83,8 +83,9 @@ const validateResetPassword = (req, res, next) => {
 router.post('/register', validateRegistration, registerUser);
 router.post('/login', validateLogin, loginUser);
 
-router.post('/register', validateRegistration, registerUser);
-router.post('/login', validateLogin, loginUser);
+router.post('/register', validateRegistration, registerUser); //register route
+router.post('/login', validateLogin, loginUser); //login route
+router.post('/change-password', changePassword);
 router.post('/profile', userMiddleware, getUserProfile);
 router.put('/profile', userMiddleware, updateUserProfile);
 router.post('/send-phone-otp', userMiddleware, sendPhoneOTP);
