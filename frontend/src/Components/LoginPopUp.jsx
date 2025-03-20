@@ -5,10 +5,10 @@ import { GasContext } from '../Context/GasContext';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
-const LoginPopUp = ({ setShowSignIn }) => {
-  const [currentState, setCurrentState] = useState('Sign In');
-  const { setToken, setUserData } = useContext(GasContext);
-  const [formData, setFormData] = useState({
+const LoginPopUp = ({ setShowSignIn }) => { // show sign in form
+  const [currentState, setCurrentState] = useState('Sign In'); // current state of the form
+  const { setToken, setUserData } = useContext(GasContext); //to access setToken and setUserData for authentication
+  const [formData, setFormData] = useState({ // form data to store user inputs 
     name: '',
     phone: '',
     nic: '',
@@ -17,42 +17,42 @@ const LoginPopUp = ({ setShowSignIn }) => {
     password: '',
   });
 
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // to navigate to different pages
 
-  const handleChange = (e) => {
+  const handleChange = (e) => { // handle change in the form
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); // prevent default form submission
 
     const url =
-      currentState === 'Sign In'
-        ? 'http://localhost:4000/api/auth/login'
-        : 'http://localhost:4000/api/auth/register';
+      currentState === 'Sign In' // check the current state of the form
+        ? 'http://localhost:4000/api/auth/login' // if sign in  Login API
+        : 'http://localhost:4000/api/auth/register'; // if sign up Register API
 
     try {
-      const response = await axios.post(url, formData); 
+      const response = await axios.post(url, formData);  // post the form data to the server
 
-      if (response.status === 201 || response.status === 200) {
+      if (response.status === 201 || response.status === 200) { // if the response is successful
         toast.success(
-          currentState === 'Sign In' ? 'Login successful!' : 'Registration successful!'
+          currentState === 'Sign In' ? 'Login successful!' : 'Registration successful!'  // show success message
         );
 
-        if (currentState === 'Sign In') {
-          const { token, user } = response.data;
+        if (currentState === 'Sign In') {  // if sign in
+          const { token, user } = response.data; // get token and user data from the response
 
-          setToken(token);
+          setToken(token);  // set token
           localStorage.setItem('token', token); // save token to local storage
-          localStorage.setItem('userdata', JSON.stringify(user));
-          setShowSignIn(false);
+          localStorage.setItem('userdata', JSON.stringify(user)); // save user data to local storage
+          setShowSignIn(false); // close the sign in form
         } else {
-          setShowSignIn(false);
+          setShowSignIn(false); 
         }
       }
     } catch (error) {
-      console.error('Error:', error);
+      console.error('Error:', error); // log the error
       toast.error('Error connecting to the server.');
     }
   };
