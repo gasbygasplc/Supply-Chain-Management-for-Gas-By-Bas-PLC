@@ -29,8 +29,8 @@ const LoginPopUp = ({ setShowSignIn }) => { // show sign in form
 
     const url =
       currentState === 'Sign In' // check the current state of the form
-        ? 'http://localhost:4000/api/auth/login' // if sign in  Login API
-        : 'http://localhost:4000/api/auth/register'; // if sign up Register API
+        ? 'http://35.196.212.150:4000/api/auth/login' // if sign in  Login API
+        : 'http://35.196.212.150:4000/api/auth/register'; // if sign up Register API
 
     try {
       const response = await axios.post(url, formData);  // post the form data to the server

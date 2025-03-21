@@ -48,7 +48,7 @@ const RegisterConsumer = ({ onConsumerCreated }) => {
         }
 
         try {
-            const response = await axios.post("http://localhost:4000/api/auth/register-consumer", consumer);
+            const response = await axios.post("http://35.196.212.150:4000/api/auth/register-consumer", consumer);
 
             if (response.data.success) {
                 toast.success("Consumer registered successfully!");

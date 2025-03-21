@@ -37,7 +37,7 @@ const StockRequest = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/outlet/request-delivery",
+        "http://35.196.212.150:4000/api/outlet/request-delivery",
         payload,
         { headers: { Otoken } }
       );

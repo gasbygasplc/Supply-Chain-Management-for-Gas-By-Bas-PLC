@@ -14,7 +14,7 @@ const OutletContextProvider = (props) => {
   const [allGasReq , setAllGasReq] = useState([]);
 
   const backendURL =
-    import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
+    import.meta.env.VITE_BACKEND_URL || "http://35.196.212.150:4000";
 
   //============================================== get all gas req ====================================================
 

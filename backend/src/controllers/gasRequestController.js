@@ -62,7 +62,7 @@ export const submitGasRequest = async (req, res) => {
                 const { email, phone } = user;
                 const normalizedPhone = phone.startsWith('94') ? phone : `94${phone.replace(/^0/, '')}`;
                 const tokenNumber = generateToken();
-                const qrCodeUrl = `${process.env.BASE_URL || 'http://localhost:4000'}/api/qrcode/${tokenNumber}`;
+                const qrCodeUrl = `${process.env.BASE_URL || 'http://35.196.212.150:4000'}/api/qrcode/${tokenNumber}`;
                 const qrCodeImage = await generateQrCode({ tokenNumber, gasType, quantity, userId });
 
                 const expirationDate = new Date();
@@ -347,7 +347,7 @@ export const handleCheckout = async (req, res) => {
         });
         await outlet.save();
 
-        const qrCodeUrl = `${process.env.BASE_URL || "http://localhost:4000"}/api/qrcode/${tokenNumber}`;
+        const qrCodeUrl = `${process.env.BASE_URL || "http://35.196.212.150:4000"}/api/qrcode/${tokenNumber}`;
         const qrCodeImage = await generateQrCode({ tokenNumber, items, userId });
 
         const expirationDate = new Date();

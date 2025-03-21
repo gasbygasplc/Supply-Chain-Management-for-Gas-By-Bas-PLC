@@ -28,7 +28,7 @@ const BRApproval = () => {
         try {
 
             const token = localStorage.getItem('token');
-            const response  = await axios.post('http://localhost:4000/api/auth/add-br' , formData , {headers:{'Authorization': `Bearer ${token}`,'Content-Type': 'multipart/form-data',}});
+            const response  = await axios.post('http://35.196.212.150:4000/api/auth/add-br' , formData , {headers:{'Authorization': `Bearer ${token}`,'Content-Type': 'multipart/form-data',}});
 
             if(response.status === 201 || response.status === 200)
             {

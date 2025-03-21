@@ -1,5 +1,5 @@
 import React from 'react';
-import QRCodeImage from '../components/QRCodeImage';
+import QRCodeImage from '../Components/QRCodeImage';
 import { useParams } from 'react-router-dom';
 
 const QRCodePage = () => {

@@ -32,7 +32,7 @@ const DeliverySchedule = () => {
 
         try {
             const response = await axios.get(
-                `http://localhost:4000/api/delivery-schedule/search-outlets?searchQuery=${searchQuery}`
+                `http://35.196.212.150:4000/api/delivery-schedule/search-outlets?searchQuery=${searchQuery}`
             );
             if (response.data.success && response.data.outlets.length > 0) {
                 setOutlets(response.data.outlets);
@@ -50,7 +50,7 @@ const DeliverySchedule = () => {
     const fetchGasRequests = async (outletId) => {
         try {
             const response = await axios.get(
-                `http://localhost:4000/api/delivery-schedule/outlet/${outletId}/gas-requests`
+                `http://35.196.212.150:4000/api/delivery-schedule/outlet/${outletId}/gas-requests`
             );
     
             if (response.data.success && Array.isArray(response.data.gasRequests)) {
@@ -68,7 +68,7 @@ const DeliverySchedule = () => {
     const fetchStockRequests = async (outletId) => {
         try {
             const response = await axios.get(
-                `http://localhost:4000/api/outlet/outlet/${outletId}/stock-requests`
+                `http://35.196.212.150:4000/api/outlet/outlet/${outletId}/stock-requests`
             );
             if (response.data.success) {
                 setStockRequests(response.data.stockRequests);
@@ -141,7 +141,7 @@ const DeliverySchedule = () => {
         console.log("Payload being sent to backend:", payload);
     
         try {
-            await axios.post(`http://localhost:4000/api/delivery-schedule/create`, payload);
+            await axios.post(`http://35.196.212.150:4000/api/delivery-schedule/create`, payload);
             alert('Stock allocation submitted successfully.');
             setStockAllocation([]);
             setSelectedDateTime('');
@@ -184,7 +184,7 @@ useEffect(() => {
 
     const fetchDeliverySchedules = async () => {
         try {
-            const response = await axios.get('http://localhost:4000/api/delivery-schedule');
+            const response = await axios.get('http://35.196.212.150:4000/api/delivery-schedule');
             console.log("Fetched delivery schedules:", response.data);
             if (response.data.success) {
                 setDeliverySchedules(response.data.deliverySchedules);
@@ -224,7 +224,7 @@ useEffect(() => {
     
         try {
             const response = await axios.patch(
-                `http://localhost:4000/api/delivery-schedule/${scheduleId}/status`,
+                `http://35.196.212.150:4000/api/delivery-schedule/${scheduleId}/status`,
                 payload
             );
     
@@ -245,7 +245,7 @@ useEffect(() => {
     const updateGasRequests = async (outletId, deliveryDate, status) => {
         try {
             const response = await axios.post(
-                `http://localhost:4000/api/delivery-schedule/update-requests`, 
+                `http://35.196.212.150:4000/api/delivery-schedule/update-requests`, 
                 { outletId, deliveryDate, status }
             );
     
@@ -274,7 +274,7 @@ useEffect(() => {
     
         try {
             const response = await axios.patch(
-                `http://localhost:4000/api/delivery-schedule/${scheduleId}/status`,
+                `http://35.196.212.150:4000/api/delivery-schedule/${scheduleId}/status`,
                 payload
             );
     
