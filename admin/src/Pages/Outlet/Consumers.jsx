@@ -65,7 +65,7 @@ const Consumers = () => {
   const fetchConsumers = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:4000/api/auth/consumers?outletId=${outletId}`
+        `https://mw.gasbygas.store/api/auth/consumers?outletId=${outletId}`
       );
       if (response.data.success) {
         setConsumers(response.data.consumers);
@@ -97,7 +97,7 @@ const Consumers = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/gas/request",
+        "https://mw.gasbygas.store/api/gas/request",
         requestPayload
       );
 

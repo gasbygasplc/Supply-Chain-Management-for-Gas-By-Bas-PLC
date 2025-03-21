@@ -20,7 +20,7 @@ const OutletContextProvider = (props) => {
         try 
         {
 
-            const response = await axios.get('http://localhost:4000/api/outlet/location');
+            const response = await axios.get('https://mw.gasbygas.store/api/outlet/location');
 
             if(response.data.success)
             {   
@@ -51,7 +51,7 @@ const OutletContextProvider = (props) => {
         try 
         {
 
-            const response = await axios.get(`http://localhost:4000/api/outlet/city/${district}`)
+            const response = await axios.get(`https://mw.gasbygas.store/api/outlet/city/${district}`)
 
             if(response.data.success)
             {
@@ -81,7 +81,7 @@ const OutletContextProvider = (props) => {
         try 
         {
 
-            const response = await axios.get(`http://localhost:4000/api/outlet/outletName/${city}`)
+            const response = await axios.get(`https://mw.gasbygas.store/api/outlet/outletName/${city}`)
 
             if(response.data.success)
             {

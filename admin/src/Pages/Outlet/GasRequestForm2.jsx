@@ -22,7 +22,7 @@ const GasRequestForm2 = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        `http://localhost:4000/api/outlet/gas-request`,
+        `https://mw.gasbygas.store/api/outlet/gas-request`,
         { headers: { Authorization: `Bearer ${Otoken}` } }
       );
 
@@ -47,7 +47,7 @@ const GasRequestForm2 = () => {
   const sendReminder = async (requestId) => {
     try {
       const response = await axios.post(
-        `http://localhost:4000/api/gas/send-reminder`,
+        `https://mw.gasbygas.store/api/gas/send-reminder`,
         { requestId },
         { headers: { Authorization: `Bearer ${Otoken}` } }
       );
@@ -70,7 +70,7 @@ const GasRequestForm2 = () => {
   const handleUpdate = async (requestId, field, value) => {
     try {
       const response = await axios.put(
-        `http://localhost:4000/api/gas/update-status`,
+        `https://mw.gasbygas.store/api/gas/update-status`,
         { requestId, [field]: value },
         { headers: { Authorization: `Bearer ${Otoken}` } }
       );

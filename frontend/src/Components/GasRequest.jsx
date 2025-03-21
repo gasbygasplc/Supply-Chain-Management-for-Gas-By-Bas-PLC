@@ -134,7 +134,7 @@ const GasRequest = () => {
 
     try {
       const response = await axios.get(
-        `http://localhost:4000/api/outlet/api/outlets/${city}`
+        `https://mw.gasbygas.store/api/outlet/api/outlets/${city}`
       );
       if (response.data.success) {
         setFilteredOutlets(response.data.outletName);

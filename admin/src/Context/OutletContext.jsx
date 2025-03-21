@@ -14,7 +14,7 @@ const OutletContextProvider = (props) => {
   const [allGasReq , setAllGasReq] = useState([]);
 
   const backendURL =
-    import.meta.env.VITE_BACKEND_URL || "http://localhost:4000";
+    import.meta.env.VITE_BACKEND_URL || "https://mw.gasbygas.store";
 
   //============================================== get all gas req ====================================================
 
