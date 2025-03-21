@@ -22,8 +22,6 @@ const Price = () => {
                 <div className='flex flex-row gap-4 bg-gray-100 py-1 px-1.5 rounded-full' >
 
                     <button className={priceMenu === 'Gas Refill' ? "bg-white py-[10px] px-[18px] text-[15px] text-base text-gray-800 rounded-[100px]" : "bg-transparent py-[10] px-[18px] text-[15px] text-base text-gray-800"} onClick={() => setPriceMenu('Gas Refill')}>Refill Gas</button>
-                    
-                    <button className={priceMenu === 'Buy Gas' ? 'bg-white py-[10px] px-[18px] text-[15px] text-base text-gray-800 rounded-[100px]' : 'bg-transparent py-[10] px-[18px] text-[15px] text-base text-gray-800'} onClick={() => setPriceMenu('Buy Gas')}>Buy Gas</button>
 
                 </div>
 
@@ -60,7 +58,7 @@ const Price = () => {
 
                         </div>
 
-                        <button className='bg-primary mt-4 w-[80%] mx-auto py-2 rounded-md text-white hover:bg-transparent border hover:border-primary hover:text-gray-800 transition duration-300'>Start Your Purchase</button>
+                        <a href="#gas-request"><button  className='bg-primary mt-4 w-[80%] mx-auto py-2 rounded-md text-white hover:bg-transparent border hover:border-primary hover:text-gray-800 transition duration-300'>Start Your Purchase</button></a>
 
                     </div>
 
@@ -69,7 +67,7 @@ const Price = () => {
                         <div className='flex flex-col gap-3 text-center mb-6 cursor-pointer'>
 
                             <p className='text-base font-semibold text-gray-700'>Medium Gas</p>
-                            <h1 className='text-2xl font-semibold text-primary'>LKR 800.59</h1>
+                            <h1 className='text-2xl font-semibold text-primary'>LKR 1652.00</h1>
 
                         </div>
 
@@ -93,7 +91,7 @@ const Price = () => {
 
                         </div>
 
-                        <button className='bg-primary mt-4 w-[80%] mx-auto py-2 rounded-md text-white  hover:bg-transparent border hover:border-primary hover:text-gray-800 transition duration-300'>Start Your Purchase</button>
+                        <a href="#gas-request"><button  className='bg-primary mt-4 w-[80%] mx-auto py-2 rounded-md text-white hover:bg-transparent border hover:border-primary hover:text-gray-800 transition duration-300'>Start Your Purchase</button></a>
 
                     </div>
 
@@ -102,7 +100,7 @@ const Price = () => {
                         <div className='flex flex-col gap-3 mb-6 text-center cursor-pointer'>
 
                             <p className='text-base font-semibold text-gray-700'>Large Gas</p>
-                            <h1 className='text-2xl font-semibold text-primary'>LKR 3922.24</h1>
+                            <h1 className='text-2xl font-semibold text-primary'>LKR 3978.00</h1>
 
                         </div>
 
@@ -126,7 +124,7 @@ const Price = () => {
 
                         </div>
 
-                        <button className='bg-primary mt-4 w-[80%] mx-auto py-2 rounded-md text-white hover:bg-transparent border hover:border-primary hover:text-gray-800 transition duration-300'>Start Your purchase</button>
+                        <a href="#gas-request"><button  className='bg-primary mt-4 w-[80%] mx-auto py-2 rounded-md text-white hover:bg-transparent border hover:border-primary hover:text-gray-800 transition duration-300'>Start Your Purchase</button></a>
                         
                     </div>
 
