@@ -70,14 +70,6 @@ const OutletReport = () => {
                 Total Gas Request
               </button>
 
-              <button  type="button" className={navbutton === 'Stock Request' ? "bg-white w-full md:w-fit py-[10px] px-[18px] text-[15px] text-primary-700 rounded-[100px]" : "bg-transparent py-[10px] px-[18px] text-[15px] text-gray-800"} onClick={() => setNavButton('Stock Request')}>
-                Total Stock Request
-              </button>
-
-              <button  type="button" className={navbutton === 'Total Registered Users' ? "bg-white w-full md:w-fit py-[10px] px-[18px] text-[15px] text-primary-700 rounded-[100px]" : "bg-transparent py-[10px] px-[18px] text-[15px] text-gray-800"} onClick={() => setNavButton('Total Registered Users')}>
-                Total Registered Users
-              </button>
-
             </div>
 
             <div className='w-full'>

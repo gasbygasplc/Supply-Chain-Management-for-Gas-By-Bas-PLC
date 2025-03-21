@@ -53,13 +53,13 @@ const OutletDashboard = () => {
 
             <div className='flex flex-col w-full gap-2 border p-4 rounded border-primary-700 text-gray-600 md:w-60'>
               <p className='font-semibold text-base'>Stock Requests</p>
-              <p className='text-lg font-semibold text-black'>12,000</p>
+              <p className='text-lg font-semibold text-black'>12</p>
               <p className='text-sm text-gray-400'>Since this month</p>
             </div>
 
             <div className='flex flex-col w-full gap-2 border p-4 rounded border-primary-700 text-gray-600 md:w-60'>
               <p className='font-semibold text-base'>Delivery Scheduled</p>
-              <p className='text-lg font-semibold text-black'>12,000</p>
+              <p className='text-lg font-semibold text-black'>11</p>
               <p className='text-sm text-gray-400'>Since this month</p>
             </div>
           </div>
