@@ -46,28 +46,25 @@ const GasContextProvider = (props) => {
 
     const saveGasOrder = async (order) => {
         try {
-            const response = await axios.get(`${backendURL}/api/gas/pending-orders`, {
-                headers: { Authorization: `Bearer ${token}` },
-                params: { userId },
-            });
-    
-            if (!response || typeof response.data.orders === "undefined") {
-                console.log("Saving order:", order);
-                console.log("Current gasOrder before update:", gasOrder);
-
-                toast.warning("Could not verify pending orders. Adding to the cart without validation.");
-                const updatedOrder = [...gasOrder, order];
-                setGasOrder(updatedOrder);
-                localStorage.setItem("gasOrder", JSON.stringify(updatedOrder));
+            const idToUse = userId || userData._id;
+            if (!idToUse) {
+                toast.error("User not authenticated.");
                 return;
             }
     
-            const pendingOrders = response.data.orders;
-            const totalPendingGases = pendingOrders.reduce((count, o) => count + o.quantity, 0);
-            const maxGasesAllowed = userData.role === "Organization" ? 10 : 2;
+            const response = await axios.get(`${backendURL}/api/gas/pending-orders`, {
+                headers: { Authorization: `Bearer ${token}` },
+                params: { userId: idToUse },
+            });
     
-            if (totalPendingGases + order.quantity > maxGasesAllowed) {
-                toast.error(`You cannot have more than ${maxGasesAllowed} gases in pending or active requests.`);
+            const userOrders = response.data.orders || [];
+    
+            const activeOrderCount = userOrders.filter(o => ["Pending", "Approved"].includes(o.status)).length;
+    
+            const maxOrdersAllowed = 2;
+    
+            if (activeOrderCount >= maxOrdersAllowed) {
+                toast.error(`You can only have up to ${maxOrdersAllowed} active gas orders (Pending or Approved).`);
                 return;
             }
     
@@ -76,11 +73,10 @@ const GasContextProvider = (props) => {
             localStorage.setItem("gasOrder", JSON.stringify(updatedOrder));
             toast.success("Your gas has been added to the cart!");
         } catch (error) {
-            console.error("Error fetching or verifying pending orders:", error.message || error);
-            toast.error("Unable to verify pending orders. Please try again.");
+            console.error("Error verifying existing orders:", error.message || error);
+            toast.error("Could not verify your active orders. Please try again.");
         }
     };
-    
     
     // Clear the cart
     const clearCart = () => {

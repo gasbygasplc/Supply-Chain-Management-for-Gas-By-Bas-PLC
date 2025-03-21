@@ -15,6 +15,17 @@ const deliveryScheduleSchema = new mongoose.Schema({
         type: Date,
         required: true,
     },
+
+    vehicle: {
+        type: {
+            type: String,
+            required: true,
+        },
+        plateNumber: {
+            type: String,
+            required: true,
+        },
+    },
      
     status: {
         type: String,

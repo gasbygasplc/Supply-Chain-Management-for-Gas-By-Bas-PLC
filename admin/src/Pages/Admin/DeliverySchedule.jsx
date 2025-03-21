@@ -18,10 +18,9 @@ const DeliverySchedule = () => {
     const [filterStatus, setFilterStatus] = useState('');
     const [rescheduledDates, setRescheduledDates] = useState({});
     const [stockRequests, setStockRequests] = useState([]);
-    
-
-
-
+    const [selectedVehicleType, setSelectedVehicleType] = useState('');
+    const [vehiclePlateNumber, setVehiclePlateNumber] = useState('');
+    const vehicleTypes = ["Lorry", "Mini Lorry", "Truck"];
 
     const handleSearch = async () => {
         setError(null);
@@ -131,12 +130,19 @@ const DeliverySchedule = () => {
             setError('Allocation exceeds max capacity of the outlet.');
             return;
         }
+
+        if (!selectedVehicleType || !vehiclePlateNumber.trim()) {
+            setError('Please select vehicle type and enter plate number.');
+            return;
+        }
     
         const payload = {
             outletId: selectedOutlet._id,
             stockAllocation,
             deliveryDate: selectedDateTime,
-        };
+            vehicleType: selectedVehicleType,
+            vehicleNumber: vehiclePlateNumber,
+          };
     
         console.log("Payload being sent to backend:", payload);
     
@@ -426,64 +432,66 @@ useEffect(() => {
                 <th className="px-4 py-2 border">Outlet Name</th>
                 <th className="px-4 py-2 border">Delivery Date</th>
                 <th className="px-4 py-2 border">Stock Allocations</th>
+                <th className="px-4 py-2 border">Vehicle Type</th>
+                <th className="px-4 py-2 border">Vehicle Plate</th>
                 <th className="px-4 py-2 border">Status</th>
             </tr>
         </thead>
         <tbody>
             {filteredSchedules.length > 0 ? (
                 filteredSchedules.map((schedule) => (
-                    <tr key={schedule._id}>
-                        <td className="px-4 py-2 border">{schedule.outletName}</td>
-                        <td className="px-4 py-2 border">
-                            {new Date(schedule.deliveryDate).toLocaleString()}
-                        </td>
-                        <td className="px-4 py-2 border">
-                            {schedule.stockAllocation.map((allocation) => (
-                                <p key={allocation.gasType}>
-                                    {allocation.gasType}: {allocation.quantity}
-                                </p>
-                            ))}
-                        </td>
-                        <td className="px-4 py-2 border">
-                            <select
-                                value={schedule.status}
-                                onChange={(e) => handleStatusChange(schedule._id, e.target.value)}
-                                className="px-2 py-1 border rounded-md"
-                            >
-                                <option value="Scheduled">Scheduled</option>
-                                <option value="Dispatched">Dispatched</option>
-                                <option value="Rescheduled">Rescheduled</option>
-                                <option value="Delivered">Delivered</option>
-                                <option value="Cancelled">Cancelled</option>
-                            </select>
-                            {schedule.status === "Rescheduled" && (
-    <div className="mt-2">
-        <label className="block text-sm font-semibold">New Delivery Date:</label>
-        <input
-            type="datetime-local"
-            value={rescheduledDates[schedule._id] || ""}
-            onChange={(e) =>
-                setRescheduledDates((prev) => ({
-                    ...prev,
-                    [schedule._id]: e.target.value,
-                }))
-            }
-            className="mt-1 px-2 py-1 border rounded-md w-full"
-        />
-
-        <button
-            className="bg-blue-500 text-white px-4 py-2 mt-2 rounded-md hover:bg-blue-600 transition"
-            onClick={() => handleConfirmReschedule(schedule._id)}
-            disabled={!rescheduledDates[schedule._id]}
+<tr key={schedule._id}>
+    <td className="px-4 py-2 border">{schedule.outletName}</td>
+    <td className="px-4 py-2 border">
+        {new Date(schedule.deliveryDate).toLocaleString()}
+    </td>
+    <td className="px-4 py-2 border">
+        {schedule.stockAllocation.map((allocation) => (
+            <p key={allocation.gasType}>
+                {allocation.gasType}: {allocation.quantity}
+            </p>
+        ))}
+    </td>
+    <td className="px-4 py-2 border">{schedule.vehicleType || "N/A"}</td>
+    <td className="px-4 py-2 border">{schedule.vehiclePlateNumber || "N/A"}</td>
+    <td className="px-4 py-2 border">
+        <select
+            value={schedule.status}
+            onChange={(e) => handleStatusChange(schedule._id, e.target.value)}
+            className="px-2 py-1 border rounded-md"
         >
-            Confirm Reschedule
-        </button>
-    </div>
-)}
+            <option value="Scheduled">Scheduled</option>
+            <option value="Dispatched">Dispatched</option>
+            <option value="Rescheduled">Rescheduled</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Cancelled">Cancelled</option>
+        </select>
 
-
-                        </td>
-                    </tr>
+        {schedule.status === "Rescheduled" && (
+            <div className="mt-2">
+                <label className="block text-sm font-semibold">New Delivery Date:</label>
+                <input
+                    type="datetime-local"
+                    value={rescheduledDates[schedule._id] || ""}
+                    onChange={(e) =>
+                        setRescheduledDates((prev) => ({
+                            ...prev,
+                            [schedule._id]: e.target.value,
+                        }))
+                    }
+                    className="mt-1 px-2 py-1 border rounded-md w-full"
+                />
+                <button
+                    className="bg-blue-500 text-white px-4 py-2 mt-2 rounded-md hover:bg-blue-600 transition"
+                    onClick={() => handleConfirmReschedule(schedule._id)}
+                    disabled={!rescheduledDates[schedule._id]}
+                >
+                    Confirm Reschedule
+                </button>
+            </div>
+        )}
+    </td>
+</tr>
                 ))
             ) : (
                 <tr>
@@ -608,12 +616,35 @@ useEffect(() => {
                 <p className="text-gray-500">No gas type information available.</p>
             )}
 
-            <button
-                onClick={handleSubmit}
-                className="bg-[#2563EB] mt-4 rounded-md text-white font-medium py-[10px] w-full"
-            >
-                Submit Allocation
-            </button>
+<h3 className="font-bold text-lg mt-6">Vehicle Information</h3>
+
+<label className="block text-sm font-medium mb-1">Select Vehicle Type:</label>
+<select
+    value={selectedVehicleType}
+    onChange={(e) => setSelectedVehicleType(e.target.value)}
+    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-primary mb-4"
+>
+    <option value="">-- Select Vehicle Type --</option>
+    {vehicleTypes.map((type, idx) => (
+        <option key={idx} value={type}>{type}</option>
+    ))}
+</select>
+
+<label className="block text-sm font-medium mb-1">Enter Vehicle Plate Number:</label>
+<input
+    type="text"
+    value={vehiclePlateNumber}
+    onChange={(e) => setVehiclePlateNumber(e.target.value)}
+    placeholder="e.g., WP ABC 1234"
+    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-primary"
+/>
+<button
+    type="button"
+    onClick={handleSubmit}
+    className="bg-[#2563EB] mt-4 rounded-md text-white font-medium py-[10px] w-full"
+>
+    Submit Allocation
+</button>
         </div>
     ) : (
         <p className="text-gray-500">Select an outlet to see its details.</p>
