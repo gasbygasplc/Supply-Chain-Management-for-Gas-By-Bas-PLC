@@ -22,28 +22,34 @@ const getNextAvailablePickupTime = (startDate, count) => {
 };
 
 export const createDeliverySchedule = async (req, res) => {
-    const { outletId, stockAllocation, deliveryDate } = req.body;
+    const { outletId, stockAllocation, deliveryDate, vehicleType, vehicleNumber } = req.body;
 
-    if (!outletId || !stockAllocation?.length || !deliveryDate) {   
-        return res.status(400).json({ success: false, message: "Missing required fields." });  
-    }  
-       
-    try {  
-        const outlet = await Outlet.findById(outletId);      
-        if (!outlet) return res.status(404).json({ success: false, message: "Outlet not found." });            
+    if (!outletId || !stockAllocation?.length || !deliveryDate || !vehicleType || !vehicleNumber) {
+        return res.status(400).json({ success: false, message: "Missing required fields." });
+    }
 
-        for (const allocation of stockAllocation) {  
+    try {
+        const outlet = await Outlet.findById(outletId);
+        if (!outlet) {
+            return res.status(404).json({ success: false, message: "Outlet not found." });
+        }
+
+        for (const allocation of stockAllocation) {
             const gasTypeInfo = outlet.gasTypes.find((type) => type.gasType === allocation.gasType);
-            if (!gasTypeInfo) return res.status(400).json({ success: false, message: `Gas type '${allocation.gasType}' not found.` });
+            if (!gasTypeInfo) {
+                return res.status(400).json({ success: false, message: `Gas type '${allocation.gasType}' not found.` });
+            }
 
             if (gasTypeInfo.currentStock + allocation.quantity > gasTypeInfo.maxCapacity) {
                 return res.status(400).json({ success: false, message: `Allocation exceeds max capacity for '${allocation.gasType}'.` });
             }
+
             gasTypeInfo.currentStock += allocation.quantity;
         }
+
         await outlet.save();
 
-        const parsedDeliveryDate = new Date(deliveryDate);   
+        const parsedDeliveryDate = new Date(deliveryDate);
         if (parsedDeliveryDate <= new Date()) {
             return res.status(400).json({ success: false, message: "Delivery date must be in the future." });
         }
@@ -53,11 +59,24 @@ export const createDeliverySchedule = async (req, res) => {
             stockAllocation,
             deliveryDate: parsedDeliveryDate,
             totalStockAllocated: stockAllocation.reduce((sum, item) => sum + item.quantity, 0),
-            status: "Scheduled", 
-        });  
+            vehicle: { type: vehicleType, plateNumber: vehicleNumber },
+            status: "Scheduled",
+        });
+
         await newDeliverySchedule.save();
 
         await updateGasRequestsOnSchedule(outletId, parsedDeliveryDate, "Scheduled");
+
+        if (outlet.phoneNumber) {
+            const normalizedPhone = outlet.phoneNumber.startsWith('0')
+                ? outlet.phoneNumber.slice(1)
+                : outlet.phoneNumber;
+
+            const items = stockAllocation.map(item => `${item.gasType}: ${item.quantity} units`).join(", ");
+            const smsMessage = `Delivery Scheduled for ${outlet.outletName} on ${parsedDeliveryDate.toLocaleString()}. Stock: ${items}. Vehicle: ${vehicleType} (${vehicleNumber})`;
+
+            await sendSms(normalizedPhone, smsMessage, "GasByGas");
+        }
 
         res.status(200).json({ success: true, message: "Stock allocated and delivery scheduled successfully." });
     } catch (err) {
@@ -120,10 +139,20 @@ export const updateDeliveryStatus = async (req, res) => {
             updateData.deliveryDate = new Date(newDeliveryDate);
         }
 
-        const schedule = await DeliverySchedule.findByIdAndUpdate(scheduleId, updateData, { new: true });
+        const schedule = await DeliverySchedule.findByIdAndUpdate(scheduleId, updateData, { new: true }).populate("outletId");
         if (!schedule) return res.status(404).json({ success: false, message: "Delivery schedule not found." });
 
-        await updateGasRequestsOnSchedule(schedule.outletId, schedule.deliveryDate, status);
+        await updateGasRequestsOnSchedule(schedule.outletId._id, schedule.deliveryDate, status);
+
+        const outlet = schedule.outletId;
+        if (outlet?.phoneNumber) {
+            const normalizedPhone = outlet.phoneNumber.startsWith('0')
+                ? outlet.phoneNumber.slice(1)
+                : outlet.phoneNumber;
+
+            const smsMessage = `Delivery status for ${outlet.outletName} is now '${status}'. Scheduled on ${new Date(schedule.deliveryDate).toLocaleString()}.`;
+            await sendSms(normalizedPhone, smsMessage, "GasByGas");
+        }
 
         res.status(200).json({ success: true, message: "Status updated successfully.", schedule });
     } catch (err) {
@@ -208,6 +237,8 @@ export const getDeliverySchedules = async (req, res) => {
             outletName: schedule.outletId.outletName,
             city: schedule.outletId.city,
             district: schedule.outletId.district,
+            vehicleType: schedule.vehicle?.type || "",
+            vehiclePlateNumber: schedule.vehicle?.plateNumber || ""
         }));
 
         res.status(200).json({ success: true, deliverySchedules: result });
